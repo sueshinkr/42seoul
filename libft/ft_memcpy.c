@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 23:22:59 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/10 13:12:11 by sueshin          ###   ########.fr       */
+/*   Created: 2022/03/10 11:49:50 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/10 13:12:19 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<unistd.h>
+#include<string.h>
 
-void	*ft_memset(void *ptr, int value, size_t size)
+void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t size)
 {
 	void	*start;
 
-	start = ptr;
+	start = dst;
+	if (dst == NULL && src == NULL)
+		return (0);
 	while (size-- > 0)
-		*(unsigned char *)ptr++ = value;
+		*(unsigned char *)dst++ = *(unsigned char *)src++;
 	return (start);
 }

@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 23:22:59 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/10 13:12:11 by sueshin          ###   ########.fr       */
+/*   Created: 2022/03/10 12:26:57 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/10 13:12:51 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<unistd.h>
+#include<string.h>
 
-void	*ft_memset(void *ptr, int value, size_t size)
+void	*ft_memmove(void *dst, const void *src, size_t size)
 {
 	void	*start;
 
-	start = ptr;
-	while (size-- > 0)
-		*(unsigned char *)ptr++ = value;
+	start = dst;
+	if (dst == NULL && src == NULL)
+		return (0);
+	if (dst < src)
+	{
+		while (size-- > 0)
+			*(unsigned char *)dst++ = *(unsigned char *)src++;
+	}
+	else
+	{
+		while (size-- > 0)
+			*(unsigned char *)(dst + size) = *(unsigned char *)(src + size);
+	}	
 	return (start);
 }

@@ -6,25 +6,46 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/09 20:20:49 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/10 14:41:30 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <ctype.h>
-#include <string.h>
-#include <unistd.h>
-
-int		ft_isascii(int c);
-int		ft_isprint(int c);
-int		ft_strlen(const char *s);
-void	*ft_memset(void *s, int c, size_t n);
+#include "libft.h"
 
 int	main(void)
 {
 	unsigned char	c;
 	const char		*s;
-	char			str[] = "ssssssssasdfas";
+	char			str[] = "abcdefghijklmnop";
+	char			src[] = "12345";
+	int 			a[10] = {1, 2, 3, 4, 5, 6, 7};
+	int				b[10];
+	int 			i = -1;
+	char			*s1;
+	char			*s2;
+
+	s1 = &str[0];
+	s2 = &str[0] + 4;
+
+	printf("strlcpy:::%lu\n", strlcpy(str, src, 7));
+	printf("%s\n", str);
+	
+	printf("before memmove s1 : %s\n", s1);
+	printf("before memmove s2 : %s\n", s2);
+
+	ft_memmove(s1, s2, strlen(s2));
+	printf("s1 : %s\n", s1);
+	printf("s2 : %s\n", s2);
+
+
+	printf("%lu\n", sizeof(a));
+	memcpy(b, a, sizeof(a));
+	while (++i < 100 && b[i] != 0)
+		printf("%d, ", b[i]);
+
+	memcpy(str, src, sizeof(src) - 1);
+	printf("%s\n", str);
+
 
 	memset(str, 'a', 5 * sizeof(char));
 	printf("%s\n", str);
