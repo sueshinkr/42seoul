@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/03/10 16:41:25 by sueshin          ###   ########.fr        #
+#    Updated: 2022/03/10 19:13:26 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ HEADER = .
 SRCS = ./main.c ./ft_isalnum.c ./ft_isalpha.c ./ft_isascii.c\
 ./ft_isdigit.c ./ft_isprint.c ./ft_strlen.c ./ft_memset.c\
 ./ft_bzero.c ./ft_memcpy.c ./ft_memmove.c ./ft_strlcpy.c\
-./ft_strlcat.c ./ft_strncmp.c ./ft_toupper.c ./ft_tolower.c
+./ft_strlcat.c ./ft_strncmp.c ./ft_toupper.c ./ft_tolower.c\
+./ft_strchr.c ./ft_strrchr.c ./ft_memchr.c ./ft_memcmp.c\
+./ft_strnstr.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
