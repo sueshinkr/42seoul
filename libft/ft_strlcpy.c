@@ -6,13 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 13:29:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/10 14:11:43 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/10 16:37:16 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-size_t	ft_strlen(char *str);
+#include "libft.h"
 
 size_t	ft_strlcpy(char *restrict dest, char *restrict src, size_t size)
 {

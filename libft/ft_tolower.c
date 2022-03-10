@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 11:27:26 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/10 16:37:38 by sueshin          ###   ########.fr       */
+/*   Created: 2022/03/10 16:35:17 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/10 16:41:49 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *ptr, size_t size)
+int	ft_tolower(int c)
 {
-	while (size-- > 0)
-	{
-		*(unsigned char *)ptr = 0;
-		ptr++;
-	}
-	return ;
+	if (c >= 'A' && c <= 'Z')
+		return (c + 'a' - 'A');
+	else
+		return (c);
 }

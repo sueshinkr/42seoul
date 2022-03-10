@@ -6,11 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:22:59 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/10 13:12:11 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/10 16:37:25 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<unistd.h>
+#include "libft.h"
 
 void	*ft_memset(void *ptr, int value, size_t size)
 {

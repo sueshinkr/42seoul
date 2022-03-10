@@ -6,35 +6,37 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/03/10 14:40:47 by sueshin          ###   ########.fr        #
+#    Updated: 2022/03/10 16:41:25 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft
+LIBNAME = $(NAME).a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 AR = ar
 
 HEADER = .
-SRCS = ./main.c ./ft_isascii.c ./ft_isprint.c ./ft_strlen.c ./ft_memset.c ./ft_memcpy.c ./ft_memmove.c ./ft_strlcpy.c
+SRCS = ./main.c ./ft_isalnum.c ./ft_isalpha.c ./ft_isascii.c\
+./ft_isdigit.c ./ft_isprint.c ./ft_strlen.c ./ft_memset.c\
+./ft_bzero.c ./ft_memcpy.c ./ft_memmove.c ./ft_strlcpy.c\
+./ft_strlcat.c ./ft_strncmp.c ./ft_toupper.c ./ft_tolower.c
 OBJS = $(SRCS:.c=.o)
- 
+
 all: $(NAME)
- 
+
+$(NAME): $(OBJS)
+	$(AR) -rcs $(LIBNAME) $^
+	$(CC) $(CFLAGS) -o $(NAME) $(LIBNAME)
+
 %.o : %.c
 	$(CC) $(CFLAGS) -c $^ -o $@ -I $(HEADER)
- 
-libft.a : $(OBJS)
-	$(AR) rcs $@ $^
-
-$(NAME): libft.a
-	$(CC) $(CFLAGS) -o $(NAME) libft.a
 	
 clean:
 	rm -f $(OBJS)
  
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) libft.a
  
 re: fclean all
 

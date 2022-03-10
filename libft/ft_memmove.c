@@ -6,11 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:26:57 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/10 13:12:51 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/10 16:37:28 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<string.h>
+#include "libft.h"
 
 void	*ft_memmove(void *dst, const void *src, size_t size)
 {

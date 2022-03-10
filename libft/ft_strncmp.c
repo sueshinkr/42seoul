@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 11:27:26 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/10 16:37:38 by sueshin          ###   ########.fr       */
+/*   Created: 2022/03/10 16:14:27 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/10 16:37:06 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *ptr, size_t size)
+int	ft_strncmp(const char *s1, const char *s2, size_t size)
 {
-	while (size-- > 0)
+	size_t	i;
+
+	i = 0;
+	while ((s1[i] || s2[i]) && i < size)
 	{
-		*(unsigned char *)ptr = 0;
-		ptr++;
+		if (s1[i] > s2[i])
+			return (1);
+		else if (s1[i] < s2[i])
+			return (-1);
+		i++;
 	}
-	return ;
+	return (0);
 }
