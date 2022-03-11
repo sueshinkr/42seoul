@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:31:27 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/11 18:08:02 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/12 01:06:46 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ int	ft_atoi(const char	*str)
 	flag = 0;
 	while ((*str >= 9 && *str <= 13) || *str == ' ')
 		str++;
-	if (flag == 0 && *str == '-')
-		flag = -1;
-	else if (flag == 0 && *str == '+')
-		flag = 1;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			flag = -1;
+		str++;
+	}
 	while (*str)
 	{
 		if (*str >= '0' && *str <= '9')

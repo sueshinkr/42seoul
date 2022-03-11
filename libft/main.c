@@ -6,78 +6,94 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 00:58:50 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/12 01:08:02 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_print_result2(char c)
-{
-	write(1, &c, 1);
-}
-
 void	ft_print_result(int n)
 {
-	if (n >= 0)
-	{
-		if (n >= 10)
-			ft_print_result(n / 10);
-		ft_print_result2(n % 10 + '0');
-	}
-	else
-	{
-		ft_print_result2('-');
-		if (n <= -10)
-			ft_print_result(n / -10);
-		ft_print_result2(n % -10 * -1 + '0');
-	}
+	char c;
+
+	if (n >= 10)
+		ft_print_result(n / 10);
+	c = n % 10 + '0';
+	write (1, &c, 1);
 }
 
-int main(int argc, const char *argv[])
+int		main(int argc, const char *argv[])
 {
+	char	*dest;
 	int		arg;
 
 	alarm(5);
-	if (argc == 1)
+	if (!(dest = (char *)malloc(sizeof(*dest) * 15)) || argc == 1)
 		return (0);
-	else if ((arg = atoi(argv[1])) == 1)
-		ft_print_result(ft_atoi("0"));
+	memset(dest, 0, 15);
+	memset(dest, 'r', 6);
+	if ((arg = atoi(argv[1])) == 1)
+	{
+		dest[11] = 'a';
+		ft_print_result(ft_strlcat(dest, "lorem", 15));
+		write(1, "\n", 1);
+		write(1, dest, 15);
+	}
 	else if (arg == 2)
-		ft_print_result(ft_atoi("546:5"));
+	{
+		ft_print_result(ft_strlcat(dest, "", 15));
+		write(1, "\n", 1);
+		write(1, dest, 15);
+	}
 	else if (arg == 3)
-		ft_print_result(ft_atoi("-4886"));
+	{
+		dest[0] = '\0';
+		dest[11] = 'a';
+		ft_print_result(ft_strlcat(dest, "lorem ipsum", 15));
+		write(1, "\n", 1);
+		write(1, dest, 15);
+	}
 	else if (arg == 4)
-		ft_print_result(ft_atoi("+548"));
+	{
+		dest[14] = 'a';
+		ft_print_result(ft_strlcat(dest, "lorem ipsum dolor sit amet", 15));
+		write(1, "\n", 1);
+		write(1, dest, 15);
+	}
 	else if (arg == 5)
-		ft_print_result(ft_atoi("054854"));
+	{
+		dest[10] = 'a';
+		ft_print_result(ft_strlcat(dest, "lorem ipsum dolor sit amet", 0));
+		write(1, "\n", 1);
+		write(1, dest, 15);
+	}
 	else if (arg == 6)
-		ft_print_result(ft_atoi("000074"));
+	{
+		dest[10] = 'a';
+		ft_print_result(ft_strlcat(dest, "lorem ipsum dolor sit amet", 1));
+		write(1, "\n", 1);
+		write(1, dest, 15);
+	}
 	else if (arg == 7)
-		ft_print_result(ft_atoi("+-54"));
+	{
+		memset(dest, 'r', 15);
+		ft_print_result(ft_strlcat(dest, "lorem ipsum dolor sit amet", 5));
+		write(1, "\n", 1);
+		write(1, dest, 15);
+	}
 	else if (arg == 8)
-		ft_print_result(ft_atoi("-+48"));
+	{
+		dest[10] = 'a';
+		ft_print_result(ft_strlcat(dest, "lorem ipsum dolor sit amet", 6));
+		write(1, "\n", 1);
+		write(1, dest, 15);
+	}
 	else if (arg == 9)
-		ft_print_result(ft_atoi("--47"));
-	else if (arg == 10)
-		ft_print_result(ft_atoi("++47"));
-	else if (arg == 11)
-		ft_print_result(ft_atoi("+47+5"));
-	else if (arg == 12)
-		ft_print_result(ft_atoi("-47-5"));
-	else if (arg == 13)
-		ft_print_result(ft_atoi("\e475"));
-	else if (arg == 14)
-		ft_print_result(ft_atoi("\t\n\r\v\f  469 \n"));
-	else if (arg == 15)
-		ft_print_result(ft_atoi("-2147483648"));
-	else if (arg == 16)
-		ft_print_result(ft_atoi("2147483647"));
-	else if (arg == 17)
-		ft_print_result(ft_atoi("\t\n\r\v\fd469 \n"));
-	else if (arg == 18)
-		ft_print_result(ft_atoi("\n\n\n  -46\b9 \n5d6"));
-	else if (arg == 19)
-		ft_print_result(ft_atoi(""));
+	{
+		memset(dest, 'r', 14);
+		ft_print_result(ft_strlcat(dest, "lorem ipsum dolor sit amet", 15));
+		write(1, "\n", 1);
+		write(1, dest, 15);
+	}
 	return (0);
 }
