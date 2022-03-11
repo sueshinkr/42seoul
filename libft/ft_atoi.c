@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 11:27:26 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/10 22:52:03 by sueshin          ###   ########.fr       */
+/*   Created: 2022/03/11 16:31:27 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/11 18:08:02 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *ptr, size_t size)
+int	ft_atoi(const char	*str)
 {
-	while (size-- > 0)
+	int	result;
+	int	flag;
+
+	result = 0;
+	flag = 0;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	if (flag == 0 && *str == '-')
+		flag = -1;
+	else if (flag == 0 && *str == '+')
+		flag = 1;
+	while (*str)
 	{
-		*(unsigned char *)ptr = 0;
-		ptr++;
+		if (*str >= '0' && *str <= '9')
+			result = result * 10 + *str - '0';
+		else
+			break ;
+		str++;
 	}
-	return ;
+	if (flag == -1)
+		return (-result);
+	else
+		return (result);
 }

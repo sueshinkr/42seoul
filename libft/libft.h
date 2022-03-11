@@ -1,9 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/11 16:29:41 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/11 20:49:53 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <string.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <ctype.h>
+# include <stdlib.h>
+# include <malloc.h>
 
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
@@ -25,5 +39,8 @@ char	*ft_strrchr(const char *str, int c);
 void	*ft_memchr(const void *str, int value, size_t size);
 int		ft_memcmp(const void *dst, const void *src, size_t size);
 char	*ft_strnstr(const char *desert, const char *needle, size_t size);
+int		ft_atoi(const char	*str);
+void	*ft_calloc(size_t nmemb, size_t size);
+char	*ft_strdup(const char *src);
 
 #endif

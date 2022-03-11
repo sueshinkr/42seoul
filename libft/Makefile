@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/03/10 19:13:26 by sueshin          ###   ########.fr        #
+#    Updated: 2022/03/11 22:00:48 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS = ./main.c ./ft_isalnum.c ./ft_isalpha.c ./ft_isascii.c\
 ./ft_bzero.c ./ft_memcpy.c ./ft_memmove.c ./ft_strlcpy.c\
 ./ft_strlcat.c ./ft_strncmp.c ./ft_toupper.c ./ft_tolower.c\
 ./ft_strchr.c ./ft_strrchr.c ./ft_memchr.c ./ft_memcmp.c\
-./ft_strnstr.c
+./ft_strnstr.c ./ft_atoi.c ./ft_calloc.c ./ft_strdup.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -38,8 +38,8 @@ clean:
 	rm -f $(OBJS)
  
 fclean: clean
-	rm -f $(NAME) libft.a
- 
+	rm -f $(NAME) $(LIBNAME)
+	 
 re: fclean all
 
 .PHONY : all clean fclean re

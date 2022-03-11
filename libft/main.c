@@ -6,89 +6,78 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/10 19:19:34 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/12 00:58:50 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	main(void)
+void	ft_print_result2(char c)
 {
-	unsigned char	c;
-	const char		*s;
-	char			str[30] = "abckldefghijklmnop";
-	char			src[] = "12345";
-	char			src2[] = "klm";
-	int 			a[10] = {1, 2, 3, 4, 5, 6, 7};
-	int				b[10];
-	int 			i = -1;
-	char			*s1;
-	char			*s2;
+	write(1, &c, 1);
+}
 
-	s1 = &str[0];
-	s2 = &str[0] + 4;
-	printf("***************************\n");
+void	ft_print_result(int n)
+{
+	if (n >= 0)
+	{
+		if (n >= 10)
+			ft_print_result(n / 10);
+		ft_print_result2(n % 10 + '0');
+	}
+	else
+	{
+		ft_print_result2('-');
+		if (n <= -10)
+			ft_print_result(n / -10);
+		ft_print_result2(n % -10 * -1 + '0');
+	}
+}
 
-	printf("strnstr:::%s\n", strnstr(str, src2, sizeof(str)));
-	printf("ft_strnstr:::%s\n", ft_strnstr(str, src2, sizeof(str)));
-	printf("***************************\n");
-	
-	printf("memcmp:::%d\n", memcmp(str, src, sizeof(src)));
-	printf("memcmp:::%d\n", memcmp(str, str, sizeof(src)));
-	printf("memcmp:::%d\n", memcmp(src, str, sizeof(src)));
-	printf("ft_memcmp:::%d\n", ft_memcmp(str, src, sizeof(src)));
-	printf("ft_memcmp:::%d\n", ft_memcmp(str, str, sizeof(src)));
-	printf("ft_memcmp:::%d\n", ft_memcmp(src, str, sizeof(src)));
-	printf("***************************\n");
-	
-	printf("memchr:::%d\n", *(int *)memchr(a, 3, sizeof(str)));
-	printf("ft_memchr:::%d\n", *(int *)ft_memchr(a, 3, sizeof(str)));
-	printf("***************************\n");
+int main(int argc, const char *argv[])
+{
+	int		arg;
 
-	printf("strrchr:::%s\n", strrchr(s2, 'k'));
-	printf("ft_strrchr:::%s\n", ft_strrchr(s2, 'k'));
-	printf("***************************\n");
-
-	printf("strchr:::%s\n", strchr(str, 'k'));
-	printf("ft_strchr:::%s\n", ft_strchr(str, 'k'));
-	printf("***************************\n");
-
-	printf("toupper:::%c\n", ft_toupper('^'));
-	printf("tolower:::%c\n", ft_tolower('H'));
-	printf("***************************\n");
-
-	printf("strlcat:::%lu\n", ft_strlcat(str, src, 30));
-	printf("%s\n", str);
-	printf("***************************\n");
-
-	printf("strlcpy:::%lu\n", strlcpy(str, src, 2));
-	printf("%s\n", str);
-	printf("***************************\n");
-	
-	printf("before memmove s1 : %s\n", s1);
-	printf("before memmove s2 : %s\n", s2);
-
-	ft_memmove(s1, s2, strlen(s2));
-	printf("s1 : %s\n", s1);
-	printf("s2 : %s\n", s2);
-
-
-	printf("%lu\n", sizeof(a));
-	memcpy(b, a, sizeof(a));
-	while (++i < 100 && b[i] != 0)
-		printf("%d, ", b[i]);
-
-	memcpy(str, src, sizeof(src) - 1);
-	printf("%s\n", str);
-
-
-	memset(str, 'a', 5 * sizeof(char));
-	printf("%s\n", str);
-	ft_memset(str, '!', 6 * sizeof(char));
-	printf("%s\n", str);
-	s = "asdfjasdjfpqoef";
-	c = 123;
-	printf("%zu %ld\n", ft_strlen(s), strlen(s));
-	printf("%d %d\n", ft_isascii(c), isascii(c));
-	printf("%d %d\n", ft_isprint(c), isprint(c));
+	alarm(5);
+	if (argc == 1)
+		return (0);
+	else if ((arg = atoi(argv[1])) == 1)
+		ft_print_result(ft_atoi("0"));
+	else if (arg == 2)
+		ft_print_result(ft_atoi("546:5"));
+	else if (arg == 3)
+		ft_print_result(ft_atoi("-4886"));
+	else if (arg == 4)
+		ft_print_result(ft_atoi("+548"));
+	else if (arg == 5)
+		ft_print_result(ft_atoi("054854"));
+	else if (arg == 6)
+		ft_print_result(ft_atoi("000074"));
+	else if (arg == 7)
+		ft_print_result(ft_atoi("+-54"));
+	else if (arg == 8)
+		ft_print_result(ft_atoi("-+48"));
+	else if (arg == 9)
+		ft_print_result(ft_atoi("--47"));
+	else if (arg == 10)
+		ft_print_result(ft_atoi("++47"));
+	else if (arg == 11)
+		ft_print_result(ft_atoi("+47+5"));
+	else if (arg == 12)
+		ft_print_result(ft_atoi("-47-5"));
+	else if (arg == 13)
+		ft_print_result(ft_atoi("\e475"));
+	else if (arg == 14)
+		ft_print_result(ft_atoi("\t\n\r\v\f  469 \n"));
+	else if (arg == 15)
+		ft_print_result(ft_atoi("-2147483648"));
+	else if (arg == 16)
+		ft_print_result(ft_atoi("2147483647"));
+	else if (arg == 17)
+		ft_print_result(ft_atoi("\t\n\r\v\fd469 \n"));
+	else if (arg == 18)
+		ft_print_result(ft_atoi("\n\n\n  -46\b9 \n5d6"));
+	else if (arg == 19)
+		ft_print_result(ft_atoi(""));
+	return (0);
 }
