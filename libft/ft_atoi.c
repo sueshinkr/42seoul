@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:31:27 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 01:06:46 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/12 03:01:56 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_atoi(const char	*str)
 	int	flag;
 
 	result = 0;
-	flag = 0;
+	flag = 1;
 	while ((*str >= 9 && *str <= 13) || *str == ' ')
 		str++;
 	if (*str == '-' || *str == '+')
@@ -35,8 +35,5 @@ int	ft_atoi(const char	*str)
 			break ;
 		str++;
 	}
-	if (flag == -1)
-		return (-result);
-	else
-		return (result);
+	return (flag * result);
 }
