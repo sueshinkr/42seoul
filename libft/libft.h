@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:29:41 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/11 20:49:53 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/12 17:34:52 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,16 @@ char	*ft_strnstr(const char *desert, const char *needle, size_t size);
 int		ft_atoi(const char	*str);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strdup(const char *src);
+char	*ft_substr(char const *str, unsigned int start, size_t len);
+char	*ft_strjoin(char const *str1, char const *str2);
+char	*ft_strtrim(char const *str, char const *set);
+char	**ft_split(char const *str, char c);
+char	*ft_itoa(int n);
+char	*ft_strmapi(char const *str, char (*func)(unsigned int, char));
+void	ft_striteri(char *str, void (*func)(unsigned int, char*));
+void	ft_putchar_fd(char chr, int fd);
+void	ft_putstr_fd(char *str, int fd);
+void	ft_putendl_fd(char *str, int fd);
+void	ft_putnbr_fd(int n, int fd);
 
 #endif

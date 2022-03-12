@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 13:29:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 14:40:21 by sueshin          ###   ########.fr       */
+/*   Created: 2022/03/12 16:57:10 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/12 17:06:42 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *restrict dest, char *restrict src, size_t size)
+void	ft_putchar_fd(char chr, int fd)
 {
-	int	src_len;
-
-	src_len = ft_strlen(src);
-	if (size == 0)
-		return (src_len);
-	while (size-- > 1 && *src != 0)
-		*dest++ = *src++;
-	*dest = 0;
-	return (src_len);
+	write(fd, &chr, 1);
 }

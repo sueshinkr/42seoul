@@ -6,17 +6,56 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 03:12:20 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/12 16:36:54 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	main(void)
+void	ft_print_result(char const *s)
 {
-	 char n[40] = "21474836481123";
-    int i1 = atoi(n);
-    int i2 = ft_atoi(n);
+	int		len;
 
-    printf("%d %d\n", i1, i2);
+	len = 0;
+	while (s[len])
+		len++;
+	write(1, s, len);
+}
+
+char	mapi(unsigned int i, char c)
+{
+	static int indexArray[11] = {0};
+
+	if (i > 10 || indexArray[i] == 1)
+		write(1, "wrong index\n", 12);
+	else
+		indexArray[i] = 1;
+	if (c >= 'a' && c <= 'z')
+		return (c - 32);
+	else if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	else
+		return (c);
+}
+
+int		main(int argc, const char *argv[])
+{
+	char	*str;
+	char	*strmapi;
+
+	alarm(5);
+	str = (char *)malloc(sizeof(*str) * 12);
+	if (argc == 1 || !str)
+		return (0);
+	else if (atoi(argv[1]) == 1)
+	{
+		strcpy(str, "LoReM iPsUm");
+		strmapi = ft_strmapi(str, &mapi);
+		ft_print_result(strmapi);
+		if (strmapi == str)
+			ft_print_result("\nA new string was not returned");
+		if (strmapi[11] != '\0')
+			ft_print_result("\nString is not null terminated");
+	}
+	return (0);
 }

@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 13:29:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 14:40:21 by sueshin          ###   ########.fr       */
+/*   Created: 2022/03/12 17:10:04 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/12 17:23:38 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *restrict dest, char *restrict src, size_t size)
-{
-	int	src_len;
+void	ft_putnbr_fd(int n, int fd)
+{	
+	char	*nbr;
 
-	src_len = ft_strlen(src);
-	if (size == 0)
-		return (src_len);
-	while (size-- > 1 && *src != 0)
-		*dest++ = *src++;
-	*dest = 0;
-	return (src_len);
+	nbr = ft_itoa(n);
+	write(fd, nbr, ft_strlen(nbr));
 }

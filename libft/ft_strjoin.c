@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 13:29:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 14:40:21 by sueshin          ###   ########.fr       */
+/*   Created: 2022/03/12 12:41:07 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/12 14:08:59 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *restrict dest, char *restrict src, size_t size)
+char	*ft_strjoin(char const *str1, char const *str2)
 {
-	int	src_len;
+	char	*joinstr;
+	int		joinstr_len;
+	int		i;
 
-	src_len = ft_strlen(src);
-	if (size == 0)
-		return (src_len);
-	while (size-- > 1 && *src != 0)
-		*dest++ = *src++;
-	*dest = 0;
-	return (src_len);
+	i = 0;
+	joinstr_len = ft_strlen(str1) + ft_strlen(str2);
+	joinstr = (char *)malloc(joinstr_len * sizeof(char) + 1);
+	if (!joinstr)
+		return (NULL);
+	while (i < joinstr_len)
+	{
+		if (*str1)
+			joinstr[i] = *str1++;
+		else if (*str2)
+			joinstr[i] = *str2++;
+		i++;
+	}
+	joinstr[i] = 0;
+	return (joinstr);
 }
