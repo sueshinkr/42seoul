@@ -6,56 +6,68 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 16:36:54 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/13 04:03:18 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_print_result(char const *s)
+void	ft_print_result(t_list *elem)
 {
 	int		len;
 
 	len = 0;
-	while (s[len])
+	while (((char *)elem->content)[len])
 		len++;
-	write(1, s, len);
+	write(1, elem->content, len);
+	write(1, "\n", 1);
+}
+t_list	*ft_lstnewone(void *content)
+{
+	t_list	*elem;
+	elem = (t_list *)malloc(sizeof(t_list));
+	if (!elem)
+		return (NULL);
+	if (!content)
+		elem->content = NULL;
+	else
+		elem->content = content;
+	elem->next = NULL;
+	return (elem);
 }
 
-char	mapi(unsigned int i, char c)
+int main(int argc, const char *argv[])
 {
-	static int indexArray[11] = {0};
+	t_list		*begin;
+	t_list		*elem;
+	t_list		*elem2;
+	t_list		*elem3;
+	t_list		*elem4;
 
-	if (i > 10 || indexArray[i] == 1)
-		write(1, "wrong index\n", 12);
-	else
-		indexArray[i] = 1;
-	if (c >= 'a' && c <= 'z')
-		return (c - 32);
-	else if (c >= 'A' && c <= 'Z')
-		return (c + 32);
-	else
-		return (c);
-}
+	char		*str = strdup("lorem");
+	char		*str2 = strdup("ipsum");
+	char		*str3 = strdup("dolor");
+	char		*str4 = strdup("sit");
 
-int		main(int argc, const char *argv[])
-{
-	char	*str;
-	char	*strmapi;
-
+	elem = ft_lstnewone(str);
+	elem2 = ft_lstnewone(str2);
+	elem3 = ft_lstnewone(str3);
+	elem4 = ft_lstnewone(str4);
 	alarm(5);
-	str = (char *)malloc(sizeof(*str) * 12);
-	if (argc == 1 || !str)
+	if (argc == 1 || !elem || !elem2 || !elem3 || !elem4)
 		return (0);
 	else if (atoi(argv[1]) == 1)
 	{
-		strcpy(str, "LoReM iPsUm");
-		strmapi = ft_strmapi(str, &mapi);
-		ft_print_result(strmapi);
-		if (strmapi == str)
-			ft_print_result("\nA new string was not returned");
-		if (strmapi[11] != '\0')
-			ft_print_result("\nString is not null terminated");
+		begin = NULL;
+		ft_lstadd_back(&begin, elem);
+		ft_lstadd_back(&begin, elem2);
+		ft_lstadd_back(&begin, elem3);
+		ft_lstadd_back(&begin, elem4);
+		while (begin)
+		{
+			ft_print_result(begin);
+			begin = begin->next;
+		}
 	}
 	return (0);
 }
