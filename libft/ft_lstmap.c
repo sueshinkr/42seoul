@@ -1,24 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/14 00:10:21 by sueshin          ###   ########.fr       */
+/*   Created: 2022/03/14 00:12:35 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/14 00:42:42 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-
-int main(void)
+t_list	*ft_lstmap(t_list *lst, void *(*func)(void *), void (*del)(void *))
 {
+	t_list	*new;
+	t_list	*cur;
 
-	char	*str = "01234";
-	size_t	size = 10;
-	char	*ret = ft_substr(str, 10, size);
-	//char	*ret2 = substr(str, 10, size);
-	printf("%s \n", ret);
+	new = ft_lstnew(func(lst->content));
+	cur = new;
+	lst = lst->next;
+	while (lst)
+	{
+		func(lst->content);
+		cur->next = ft_lstnew(func(lst->content));
+		cur = cur->next;
+		if (cur == NULL)
+		{
+			del(cur->content);
+			free(cur);
+			return (NULL);
+		}
+		lst = lst->next;
+	}
+	return (new);
 }

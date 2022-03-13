@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/14 00:10:21 by sueshin          ###   ########.fr       */
+/*   Created: 2022/03/13 23:31:05 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/14 00:42:16 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-
-int main(void)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
+	t_list	*cur;
 
-	char	*str = "01234";
-	size_t	size = 10;
-	char	*ret = ft_substr(str, 10, size);
-	//char	*ret2 = substr(str, 10, size);
-	printf("%s \n", ret);
+	while (*lst)
+	{
+		cur = *lst;
+		*lst = (*lst)->next;
+		del(cur->content);
+		free(cur);
+	}
 }
