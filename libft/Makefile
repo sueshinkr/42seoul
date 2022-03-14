@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/03/14 00:13:08 by sueshin          ###   ########.fr        #
+#    Updated: 2022/03/14 19:09:24 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,9 +47,6 @@ bonus: $(OBJS) $(BONUS_OBJS)
 	$(AR) -rcs $(LIBNAME) $^
 	$(CC) $(CFLAGS) -o $(NAME) $(LIBNAME)
 
-so:
-	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRCS)
-	gcc -nostartfiles -shared -o libft.so $(OBJS) $(BONUS_OBJS)
 
 $(NAME): $(OBJS)
 	$(AR) -rcs $(LIBNAME) $^

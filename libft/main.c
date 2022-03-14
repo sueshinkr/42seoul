@@ -6,19 +6,22 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/14 00:10:21 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/14 17:27:30 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-
 int main(void)
 {
+	char *s1 = "\t   \n\n\n  \n\n\t    Hello \t  Please\n Trim me !\t\t\t\n  \t\t\t\t  ";
+    char *s2 = "Hello \t  Please\n Trim me !";
+	char *s3;
 
-	char	*str = "01234";
-	size_t	size = 10;
-	char	*ret = ft_substr(str, 10, size);
-	//char	*ret2 = substr(str, 10, size);
-	printf("%s \n", ret);
+	s3 = ft_strtrim(s1, " \n\t");
+	printf("%s\n", s3);
+	printf("%zu, %zu \n", ft_strlen(s3), ft_strlen(s2));
+
+
+	//trimstr = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
 }

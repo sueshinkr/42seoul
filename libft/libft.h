@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:29:41 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/14 00:15:48 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/14 18:31:59 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdio.h>
 # include <ctype.h>
 # include <stdlib.h>
-# include <malloc.h>
 
 typedef struct s_list
 {
