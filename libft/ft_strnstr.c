@@ -6,33 +6,33 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 18:48:29 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 03:07:30 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/17 14:10:02 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *desert, const char *needle, size_t size)
+char	*ft_strnstr(const char *big, const char *little, size_t size)
 {
 	size_t	count;
-	size_t	needle_len;
+	size_t	little_len;
 
 	count = 0;
-	needle_len = ft_strlen(needle);
-	if (!needle_len || !needle)
-		return ((char *)desert);
-	while (*desert && size-- > 0)
+	little_len = ft_strlen(little);
+	if (!little_len || !little)
+		return ((char *)big);
+	while (*big && size-- > 0)
 	{
-		if (*desert == needle[count])
+		if (*big == little[count])
 			count++;
 		else
 		{
-			desert -= count;
+			big -= count;
 			count = 0;
 		}
-		if (count == needle_len)
-			return ((char *)desert - count + 1);
-		desert++;
+		if (count == little_len)
+			return ((char *)big - count + 1);
+		big++;
 	}
 	return (NULL);
 }

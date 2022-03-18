@@ -6,27 +6,25 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:14:27 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 00:58:20 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/16 22:24:43 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *dst, const char *src, size_t size)
+int	ft_strncmp(const char *str1, const char *str2, size_t size)
 {
 	size_t			i;
-	unsigned char	*dst_ui;
-	unsigned char	*src_ui;
+	unsigned char	*str1_u;
+	unsigned char	*str2_u;
 
-	dst_ui = (unsigned char *)dst;
-	src_ui = (unsigned char *)src;
+	str1_u = (unsigned char *)str1;
+	str2_u = (unsigned char *)str2;
 	i = 0;
-	while ((dst_ui[i] || src_ui[i]) && i < size)
+	while ((str1_u[i] || str2_u[i]) && i < size)
 	{
-		if (dst_ui[i] > src_ui[i])
-			return (1);
-		else if (dst_ui[i] < src_ui[i])
-			return (-1);
+		if (str1_u[i] != str2_u[i])
+			return (str1_u[i] - str2_u[i]);
 		i++;
 	}
 	return (0);

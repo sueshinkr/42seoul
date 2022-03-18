@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/14 17:27:30 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/18 15:23:13 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 int main(void)
 {
+	
+	char	str1[] = "abcaafgdefgff";
+	char	set[] = "abfg";
+	printf("%s\n", ft_strtrim(str1, set));
+	
+	/*
 	char *s1 = "\t   \n\n\n  \n\n\t    Hello \t  Please\n Trim me !\t\t\t\n  \t\t\t\t  ";
     char *s2 = "Hello \t  Please\n Trim me !";
 	char *s3;
@@ -24,4 +30,5 @@ int main(void)
 
 
 	//trimstr = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
+	*/
 }

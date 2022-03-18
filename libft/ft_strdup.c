@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 20:34:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/11 20:53:30 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/18 15:15:12 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strdup(const char *src)
 	char	*str;
 	char	*start;
 
-	str = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1));
+	str = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	start = str;

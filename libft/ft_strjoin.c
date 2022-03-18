@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:41:07 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 14:08:59 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/18 15:13:55 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const *str1, char const *str2)
 
 	i = 0;
 	joinstr_len = ft_strlen(str1) + ft_strlen(str2);
-	joinstr = (char *)malloc(joinstr_len * sizeof(char) + 1);
+	joinstr = (char *)malloc((joinstr_len + 1) * sizeof(char));
 	if (!joinstr)
 		return (NULL);
 	while (i < joinstr_len)
