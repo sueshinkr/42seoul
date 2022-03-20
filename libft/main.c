@@ -6,18 +6,24 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/18 15:23:13 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/20 21:30:26 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int main(void)
+void	func(unsigned int i, char *c)
 {
-	
-	char	str1[] = "abcaafgdefgff";
-	char	set[] = "abfg";
-	printf("%s\n", ft_strtrim(str1, set));
+	*c += i;
+}
+
+int	main(void)
+{
+	char	str[] = "aaaaaa";
+
+	ft_striteri(str, *func);
+	printf("%s\n", str);
+
 	
 	/*
 	char *s1 = "\t   \n\n\n  \n\n\t    Hello \t  Please\n Trim me !\t\t\t\n  \t\t\t\t  ";

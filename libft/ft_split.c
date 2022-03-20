@@ -6,11 +6,21 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 14:03:55 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 20:59:47 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/19 22:55:41 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static void	free_str(char **splitstr)
+{
+	int	i;
+
+	i = 0;
+	while (!splitstr[i])
+		free(splitstr[i++]);
+	free(splitstr);
+}
 
 static int	word_count(char const *str, char c)
 {
@@ -31,12 +41,10 @@ static int	word_count(char const *str, char c)
 	return (count);
 }
 
-static void	plus_word(char const *str, char c, char **splitstr)
+static int	plus_word(char const *str, char c, char **splitstr, int i)
 {
 	int	len;
-	int	i;
 
-	i = 0;
 	while (*str)
 	{
 		if (*str == c)
@@ -46,24 +54,30 @@ static void	plus_word(char const *str, char c, char **splitstr)
 			len = 0;
 			while (*str != c && *str)
 			{
-				len++;
 				str++;
+				len++;
 			}
 			splitstr[i] = (char *)malloc((len + 1) * sizeof(char));
-			ft_strlcpy((char *restrict)splitstr[i], (char *)str - len, len + 1);
-			i++;
+			if (!splitstr[i])
+			{
+				free_str(splitstr);
+				return (-1);
+			}
+			ft_strlcpy((char *)splitstr[i++], (char *)str - len, len + 1);
 		}
 	}
 	splitstr[i] = 0;
+	return (1);
 }
 
 char	**ft_split(char const *str, char c)
 {
 	char	**splitstr;
+	int		i;
 
+	i = 0;
 	splitstr = (char **)malloc((word_count(str, c) + 1) * sizeof(char *));
-	if (!splitstr)
+	if ((plus_word(str, c, splitstr, i)) == -1)
 		return (NULL);
-	plus_word(str, c, splitstr);
 	return (splitstr);
 }

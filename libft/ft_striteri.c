@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 16:39:13 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/12 16:56:46 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/20 21:57:58 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_striteri(char *str, void (*func)(unsigned int, char*))
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (str[i])
