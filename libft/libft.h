@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:29:41 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/19 22:10:36 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/22 14:35:32 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_strtrim(char const *str, char const *set);
 char	**ft_split(char const *str, char c);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *str, char (*func)(unsigned int, char));
-void	ft_striteri(char *str, void (*func)(unsigned int, char*));
+void	ft_striteri(char *str, void (*func)(unsigned int, char *));
 void	ft_putchar_fd(char chr, int fd);
 void	ft_putstr_fd(char *str, int fd);
 void	ft_putendl_fd(char *str, int fd);
