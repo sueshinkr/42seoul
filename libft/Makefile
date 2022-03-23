@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/03/15 18:33:37 by sueshin          ###   ########.fr        #
+#    Updated: 2022/03/23 22:29:19 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,11 @@ re: fclean all
 bonus: $(OBJS) $(BONUS_OBJS)
 	$(AR) -rcs $(NAME) $^
 
-
 $(NAME): $(OBJS)
 	$(AR) -rcs $(NAME) $^
+
+%.o : %.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 
 .PHONY : all clean fclean re bonus so 
 
