@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:27:26 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/10 22:52:03 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/24 23:09:06 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,5 @@
 void	ft_bzero(void *ptr, size_t size)
 {
 	while (size-- > 0)
-	{
-		*(unsigned char *)ptr = 0;
-		ptr++;
-	}
-	return ;
+		*(unsigned char *)ptr++ = 0;
 }

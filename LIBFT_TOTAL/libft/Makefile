@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/03/24 15:30:02 by sueshin          ###   ########.fr        #
+#    Updated: 2022/03/24 22:55:58 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 AR = ar
-HEADER = libft.h
+HEADER = ./
 
 SRCS = ./ft_isalnum.c ./ft_isalpha.c ./ft_isascii.c\
 ./ft_isdigit.c ./ft_isprint.c ./ft_strlen.c ./ft_memset.c\
@@ -49,7 +49,7 @@ $(NAME): $(OBJS)
 	$(AR) -rcs $(NAME) $^
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $^ -o $@ -I $(HEADER)
+	$(CC) $(CFLAGS) -c $^ -o $@ -I$(HEADER)
 
 .PHONY : all clean fclean re bonus
 

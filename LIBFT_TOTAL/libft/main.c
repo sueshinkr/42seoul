@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/24 14:30:02 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/24 23:57:59 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 int	main(void)
 {
-	char	*s = "      split       this for   me  !       ";
-
-	char	**result = ft_split(s, ' ');
-	while (*result)
-		printf("::::%s\n", *result++);
+	char str[] = "abcdefg";
+	if (!strstr(str, NULL))
+		printf(":::\n");
 }
