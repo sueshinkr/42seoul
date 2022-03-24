@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/03/24 15:14:11 by sueshin          ###   ########.fr        #
+#    Updated: 2022/03/24 15:30:02 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ fclean: clean
 re: fclean all
 
 bonus:
-	@make OBJS='$(SRCS:.c=.o) $(BONUS_OBJS)'
+	@make OBJS = '$(SRCS:.c=.o) $(BONUS_OBJS)'
 
 $(NAME): $(OBJS)
 	$(AR) -rcs $(NAME) $^
