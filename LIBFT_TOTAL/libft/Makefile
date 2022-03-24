@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/03/24 14:08:07 by sueshin          ###   ########.fr        #
+#    Updated: 2022/03/24 15:14:11 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 AR = ar
-HEADER = ./
+HEADER = libft.h
 
 SRCS = ./ft_isalnum.c ./ft_isalpha.c ./ft_isascii.c\
 ./ft_isdigit.c ./ft_isprint.c ./ft_strlen.c ./ft_memset.c\
@@ -38,16 +38,12 @@ clean:
 	rm -f $(OBJS) $(BONUS_OBJS)
  
 fclean: clean
-	rm -f $(NAME) $(LIBNAME)
+	rm -f $(NAME)
 	 
 re: fclean all
 
-bonus: $(OBJS) $(BONUS_OBJS)
-	$(AR) -rcs $(NAME) $^
-
-so:
-	$(CC) -fPIC $(CFLAGS) $(SRCS) $(BONUS_SRCS)
-	gcc -shared -o libft.so $(OBJS) $(BONUS_OBJS)
+bonus:
+	@make OBJS='$(SRCS:.c=.o) $(BONUS_OBJS)'
 
 $(NAME): $(OBJS)
 	$(AR) -rcs $(NAME) $^
@@ -55,5 +51,5 @@ $(NAME): $(OBJS)
 %.o : %.c
 	$(CC) $(CFLAGS) -c $^ -o $@ -I $(HEADER)
 
-.PHONY : all clean fclean re bonus so 
+.PHONY : all clean fclean re bonus
 

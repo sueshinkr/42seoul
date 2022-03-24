@@ -6,16 +6,14 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:29:41 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/24 01:43:08 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/24 15:14:25 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# include <string.h>
+
 # include <unistd.h>
-# include <stdio.h>
-# include <ctype.h>
 # include <stdlib.h>
 
 typedef struct s_list
