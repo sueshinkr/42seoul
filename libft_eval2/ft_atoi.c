@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 11:49:50 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/16 01:42:18 by sueshin          ###   ########.fr       */
+/*   Created: 2022/03/11 16:31:27 by sueshin           #+#    #+#             */
+/*   Updated: 2022/03/24 14:42:13 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	*ft_memcpy(void *dst, const void *src, size_t size)
+int	ft_atoi(const char	*str)
 {
-	void	*start;
+	int	result;
+	int	flag;
 
-	start = dst;
-	while (size-- > 0)
-		*(unsigned char *)dst++ = *(unsigned char *)src++;
-	return (start);
+	result = 0;
+	flag = 1;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			flag = -1;
+		str++;
+	}
+	while (*str)
+	{
+		if (*str >= '0' && *str <= '9')
+			result = result * 10 + *str - '0';
+		else
+			break ;
+		str++;
+	}
+	return (flag * result);
 }
