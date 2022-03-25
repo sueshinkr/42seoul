@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/25 16:45:27 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/25 18:39:24 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	func(unsigned int i, char *c)
 
 int	main()
 {
-	char str[] = "12132464561241412449494";
-	printf("%d\n", atoi(str));
-	printf("%d\n", ft_atoi(str));
+	char * s = ft_substr("tripouille", 0, 42000);
 
+	printf("%s\n", s);
 }

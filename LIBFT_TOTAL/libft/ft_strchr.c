@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:49:10 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/17 02:16:26 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/25 18:24:41 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_strchr(const char *str, int c)
 {
 	while (1)
 	{
-		if (*str == c)
+		if (*str == (unsigned char)c)
 			return ((char *)str);
 		else if (!*str)
 			return (NULL);

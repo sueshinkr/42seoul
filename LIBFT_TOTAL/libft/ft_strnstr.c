@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 18:48:29 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/25 17:44:39 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/25 18:36:22 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t size)
 		else
 		{
 			big -= count;
+			size += count;
 			count = 0;
 		}
 		if (count == little_len)
