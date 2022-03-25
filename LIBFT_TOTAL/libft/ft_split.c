@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 14:03:55 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/19 22:55:41 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/25 12:20:54 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ static int	plus_word(char const *str, char c, char **splitstr, int i)
 char	**ft_split(char const *str, char c)
 {
 	char	**splitstr;
-	int		i;
 
-	i = 0;
 	splitstr = (char **)malloc((word_count(str, c) + 1) * sizeof(char *));
-	if ((plus_word(str, c, splitstr, i)) == -1)
+	if (!splitstr)
+		return (NULL);
+	if ((plus_word(str, c, splitstr, 0)) == -1)
 		return (NULL);
 	return (splitstr);
 }

@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:10:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/21 22:04:41 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/25 12:54:29 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_putnbr_fd(int n, int fd)
 	if (n < 0)
 	{
 		write(fd, "-", 1);
-		n = -n;
+		n *= -1;
 	}
 	while (n >= 10)
 	{
@@ -33,7 +33,7 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	if (n < 10)
 	{
-		temp = n + '0';
+		temp = n | '0';
 		write(fd, &temp, 1);
 	}
 }
