@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/25 12:38:36 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/25 16:45:27 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	func(unsigned int i, char *c)
 
 int	main()
 {
-	char	str[] = "aaaaaa";
+	char str[] = "12132464561241412449494";
+	printf("%d\n", atoi(str));
+	printf("%d\n", ft_atoi(str));
 
-	ft_striteri(str, &func);
-	printf("%s\n", str);
 }

@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:03:02 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/11 16:30:07 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/25 17:44:12 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *str)
 	size_t	len;
 
 	len = 0;
-	while (*str++ != 0)
+	while (*str++)
 		len++;
 	return (len);
 }

@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/03/24 22:55:58 by sueshin          ###   ########.fr        #
+#    Updated: 2022/03/25 16:22:01 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,19 +32,19 @@ BONUS_SRCS = ./ft_lstnew.c ./ft_lstadd_front.c ./ft_lstsize.c ./ft_lstlast.c\
 OBJS = $(SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
-all: $(NAME)
+all : $(NAME)
 
-clean:
+clean :
 	rm -f $(OBJS) $(BONUS_OBJS)
- 
-fclean: clean
+
+fclean : clean
 	rm -f $(NAME)
-	 
-re: fclean all
 
-bonus:
-	@make OBJS = '$(SRCS:.c=.o) $(BONUS_OBJS)'
+re : fclean all
 
+bonus :
+	@make OBJS='$(SRCS:.c=.o) $(BONUS_OBJS)'
+	
 $(NAME): $(OBJS)
 	$(AR) -rcs $(NAME) $^
 
