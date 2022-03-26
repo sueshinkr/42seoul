@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:26:57 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/16 01:42:17 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/26 16:00:44 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t size)
 {
-	void	*start;
+	void	*result;
 
-	start = dst;
+	result = dst;
+	if (dst == src)
+		return (result);
 	if (dst < src)
 	{
 		while (size-- > 0)
@@ -27,5 +29,5 @@ void	*ft_memmove(void *dst, const void *src, size_t size)
 		while (size-- > 0)
 			*(unsigned char *)(dst + size) = *(unsigned char *)(src + size);
 	}	
-	return (start);
+	return (result);
 }

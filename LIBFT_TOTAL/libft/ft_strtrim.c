@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 13:22:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/18 15:35:52 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/26 15:20:27 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	set_end(char const *str, char const *set)
 char	*ft_strtrim(char const *str, char const *set)
 {
 	char	*trimstr;
-	int		i;
+	char	*result;
 	int		start_i;
 	int		end_i;
 
@@ -66,12 +66,9 @@ char	*ft_strtrim(char const *str, char const *set)
 	trimstr = (char *)malloc((end_i - start_i + 2) * sizeof(char));
 	if (!trimstr)
 		return (NULL);
-	i = 0;
-	while (i < end_i - start_i + 1)
-	{
-		trimstr[i] = str[start_i + i];
-		i++;
-	}
-	trimstr[i] = 0;
-	return (trimstr);
+	result = trimstr;
+	while (end_i - start_i + 1 > 0)
+		*trimstr++ = *(str + start_i++);
+	*trimstr = 0;
+	return (result);
 }

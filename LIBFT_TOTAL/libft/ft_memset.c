@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:22:59 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/16 01:42:16 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/26 15:08:14 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	*ft_memset(void *ptr, int value, size_t size)
 {
-	void	*start;
+	void	*result;
 
-	start = ptr;
+	result = ptr;
 	while (size-- > 0)
 		*(unsigned char *)ptr++ = value;
-	return (start);
+	return (result);
 }
