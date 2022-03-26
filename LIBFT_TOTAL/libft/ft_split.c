@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 14:03:55 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/26 14:57:17 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/26 22:56:08 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static void	free_str(char **splitstr)
 {
-	int	i;
-
-	i = 0;
 	while (!*splitstr)
 		free(*splitstr++);
 	free(splitstr);

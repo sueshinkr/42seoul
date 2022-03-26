@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 16:06:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/25 17:44:22 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/27 02:32:59 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,8 @@ char	*ft_strmapi(char const *str, char (*func)(unsigned int, char))
 	func_str = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
 	if (!func_str)
 		return (NULL);
-	while (str[i])
-	{
-		func_str[i] = func(i, str[i]);
-		i++;
-	}
-	func_str[i] = 0;
+	while (*str)
+		*(func_str + i) = func(i++, *str++);
+	*(func_str + i) = 0;
 	return (func_str);
 }

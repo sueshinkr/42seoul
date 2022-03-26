@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/26 15:59:51 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/26 23:01:19 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,9 @@ void	func(unsigned int i, char *c)
 
 int	main()
 {
-	void	*temp;
-	char	*temp2;
+	char	str[] = "abcdefg";
 
-	temp = (void *)0;
-	memmove(temp, ((void *)0), 3);
-	temp2 = ft_memcpy(((void *)0), ((void *)0), 3);
-	printf("%s\n", temp);
-	printf("%s\n", temp2);
+	printf("%c\n", 'e' + 128);
+	printf("%s\n", strchr(str, 'e' - 256));
+	printf("%s\n", ft_strchr(str, 'e' + 256));
 }

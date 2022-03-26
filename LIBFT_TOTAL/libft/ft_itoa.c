@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 15:18:41 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/20 22:11:08 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/27 02:32:07 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	recur_cal(char *str, unsigned int n, int count)
 	count--;
 	if (n >= 10)
 		recur_cal(str, n / 10, count);
-	str[count] = n % 10 | '0';
+	*(str + count) = n % 10 | '0';
 }
 
 char	*ft_itoa(int n)
@@ -54,11 +54,11 @@ char	*ft_itoa(int n)
 		return (NULL);
 	if (n < 0)
 	{
+		*str = '-';
 		recur_cal(str, (unsigned int)(n * -1), count);
-		str[0] = '-';
 	}
 	else
 		recur_cal(str, n, count);
-	str[count] = 0;
+	*(str + count) = 0;
 	return (str);
 }
