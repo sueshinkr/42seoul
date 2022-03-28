@@ -6,9 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:58:45 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/07 23:00:49 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/28 17:00:12 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_isprint(int c)
 {

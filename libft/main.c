@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/27 13:19:58 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/28 17:37:18 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,8 @@ void	func(unsigned int i, char *c)
 
 int	main()
 {
-t_list	*start;
-t_list	*list1;
-t_list	*list2;
-t_list	*list3;
-
-list1 = ft_lstnew("abcde");
-list2 = ft_lstnew("12345");
-list3 = ft_lstnew("!@#$");
-//start = NULL;
-printf("main : %p\n", start);
-
-ft_lstadd_back(&start, list1);
-printf("%s\n", (char *)ft_lstlast(start)->content);
-ft_lstadd_back(&start, list2);
-printf("%s\n", (char *)ft_lstlast(start)->content);
-ft_lstadd_back(&start, list3);
-printf("%s\n", (char *)ft_lstlast(start)->content);
+	printf("%d\n", ft_atoi("429496951"));
+	printf("%d\n", ft_atoi("92233720368547758012371123"));
+	printf("%d\n", atoi("429496951"));
+	printf("%d\n", atoi("9223372036854775128071123"));
 }

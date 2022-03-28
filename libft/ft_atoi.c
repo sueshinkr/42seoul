@@ -6,16 +6,17 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:31:27 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/25 00:12:12 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/28 17:37:32 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "limits.h"
 
 int	ft_atoi(const char	*str)
 {
-	int	result;
-	int	flag;
+	unsigned long long	result;
+	int					flag;
 
 	result = 0;
 	flag = 1;
@@ -35,5 +36,7 @@ int	ft_atoi(const char	*str)
 			break ;
 		str++;
 	}
-	return (flag * result);
+	if (result > LONG_MAX)
+		return (-1 + (flag < 0));
+	return (flag * (int)result);
 }
