@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:35:40 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/31 19:10:42 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/01 03:51:21 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 char	*get_next_line(int fd);
 char	*make_next_line(char *buff, int len);
-char	*check_next_line(char **remain_str, char *next_line, int fd);
+char	*check_next_line(char **remain_str, char *next_line);
 size_t	ft_strlen(const char *str);
 size_t	ft_strlcpy(char *dst, char *src, size_t size);
 char	*ft_strdup(const char *src);
