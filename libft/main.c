@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:51:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/28 17:37:18 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/03 02:21:00 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,5 @@ void	func(unsigned int i, char *c)
 
 int	main()
 {
-	printf("%d\n", ft_atoi("429496951"));
-	printf("%d\n", ft_atoi("92233720368547758012371123"));
-	printf("%d\n", atoi("429496951"));
-	printf("%d\n", atoi("9223372036854775128071123"));
+	printf("%d\n", ft_atoi("2147483647"));
 }

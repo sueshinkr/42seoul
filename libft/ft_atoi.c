@@ -6,12 +6,12 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:31:27 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/28 17:37:32 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/03 02:22:48 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "limits.h"
+#include <limits.h>
 
 int	ft_atoi(const char	*str)
 {
