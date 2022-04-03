@@ -6,13 +6,13 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/03 16:21:17 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/03 17:17:19 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*check_remain(int fd, char *remain)
+static char	*check_remain(int fd, char *remain)
 {
 	char	*buff;
 	char	*temp;
@@ -38,7 +38,7 @@ char	*check_remain(int fd, char *remain)
 	return (remain);
 }
 
-char	*make_next_line(char *remain)
+static char	*make_next_line(char *remain)
 {
 	char	*next_line;
 	int		len;
@@ -62,7 +62,7 @@ char	*make_next_line(char *remain)
 	return (next_line - len);
 }
 
-char	*save_remain(char *remain)
+static char	*update_remain(char *remain)
 {
 	char	*temp;
 	char	*fix_remain;
@@ -74,7 +74,12 @@ char	*save_remain(char *remain)
 		return (NULL);
 	}
 	temp = (char *)malloc(ft_strlen(fix_remain) * sizeof(char));
-	ft_strlcpy(temp, fix_remain + 1, ft_strlen(fix_remain));
+	if (!ft_strlcpy(temp, fix_remain + 1, ft_strlen(fix_remain)))
+	{
+		free(temp);
+		free(remain);
+		return (NULL);
+	}
 	free(remain);
 	return (temp);
 }
@@ -90,7 +95,7 @@ char	*get_next_line(int fd)
 	if (!remain)
 		return (NULL);
 	next_line = make_next_line(remain);
-	remain = save_remain(remain);
+	remain = update_remain(remain);
 	return (next_line);
 }
 
