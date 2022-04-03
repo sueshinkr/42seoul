@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:55:33 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/01 13:48:23 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/03 14:21:52 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,17 @@ int	main()
 	fd = open("test.txt", O_RDONLY);
 	i = 0;
 	
-	temp =  get_next_line(fd);
-	while (temp)
+	
+	
+	while (temp =  get_next_line(fd))
 	{	
-		printf("%d : %s:::\n", i++, temp);
+		printf("%d : %s\n", i++, temp);
+		printf("----------------end----------\n");
 		free(temp);
-		temp =  get_next_line(fd);
 	}
-	free(temp);
+	
+	//printf("%d : %s:::\n", i++, temp);
+	//free(temp);
+	close(fd);
 	return (0);
 }

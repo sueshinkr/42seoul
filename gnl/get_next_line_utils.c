@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:50 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/01 14:14:01 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/03 12:18:44 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@ size_t	ft_strlen(const char *str)
 	while (*str++)
 		len++;
 	return (len);
+}
+
+char	*ft_strchr(const char *str, int c)
+{
+	while (1)
+	{
+		if (*str == (char)c)
+			return ((char *)str);
+		else if (!*str)
+			return (NULL);
+		str++;
+	}
 }
 
 size_t	ft_strlcpy(char *dst, char *src, size_t size)

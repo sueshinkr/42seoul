@@ -5,82 +5,104 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/31 13:32:01 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/01 14:14:02 by sueshin          ###   ########.fr       */
+/*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
+/*   Updated: 2022/04/03 16:21:17 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*check_next_line(char **remain_str, char *next_line)
-{	
-	int		len;
+char	*check_remain(int fd, char *remain)
+{
+	char	*buff;
 	char	*temp;
-
-	len = 0;
-	while (**remain_str)
+	int		read_idx;
+	
+	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	while (!remain || !ft_strchr(remain, '\n'))
 	{
-		len++;
-		(*remain_str)++;
-		if (**remain_str == '\n')
-		{
-			next_line = make_next_line(*remain_str - len + 1, len);
-			temp = ft_strdup(*remain_str);
-			free(*remain_str - len);
-			*remain_str = temp;
-			return (next_line);
+		read_idx = read(fd, buff, BUFFER_SIZE);
+		if(read_idx <= 0)
+			break;
+		buff[read_idx] = '\0';
+		if (!remain)
+			remain = ft_strdup(buff);
+		else if (!ft_strchr(remain, '\n'))
+		{	
+			temp = ft_strjoin(remain, buff);
+			free(remain);
+			remain = temp;
 		}
 	}
-	(*remain_str) -= len;
-	return (NULL);
+	free(buff);
+	return (remain);
 }
 
-char	*make_next_line(char *buff, int len)
+char	*make_next_line(char *remain)
 {
 	char	*next_line;
-	
+	int		len;
+
+	len = 0;
+	while (*remain)
+	{
+		len++;
+		if (*remain++ == '\n')
+			break;
+	}
+	remain -= len;
 	next_line = (char *)malloc((len + 1) * sizeof(char));
-	if (!next_line)
-		return (NULL);
-	while (*buff != '\n' && *buff)
-		*next_line++  = *buff++;
-	*next_line++ = *buff++;
+	while (*remain)
+	{
+		*next_line++ = *remain;
+		if (*remain++ == '\n')
+			break;
+	}
 	*next_line = '\0';
 	return (next_line - len);
 }
 
+char	*save_remain(char *remain)
+{
+	char	*temp;
+	char	*fix_remain;
+
+	fix_remain = ft_strchr(remain, '\n');
+	if (!fix_remain)
+	{
+		free(remain);
+		return (NULL);
+	}
+	temp = (char *)malloc(ft_strlen(fix_remain) * sizeof(char));
+	ft_strlcpy(temp, fix_remain + 1, ft_strlen(fix_remain));
+	free(remain);
+	return (temp);
+}
+
 char	*get_next_line(int fd)
 {
-	char		buff[BUFFER_SIZE + 1];
-	static char	*remain_str[FOPEN_MAX];
+	static char	*remain = NULL;
 	char		*next_line;
-	int			read_idx;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!remain_str[fd])
-	{
-		read_idx = read(fd, buff, BUFFER_SIZE);
-		buff[read_idx] = '\0';
-		remain_str[fd] = ft_strdup(buff);
-		if (!remain_str[fd])
-			return (NULL);
-	}
-	while (1)
-	{
-		next_line = check_next_line(&remain_str[fd], next_line);
-		if (next_line)
-			break;
-		else
-		{
-			read_idx = read(fd, buff, BUFFER_SIZE);
-			buff[read_idx] = '\0';
-			if (!ft_strlen(buff))
-				return (NULL);
-			next_line = ft_strjoin(remain_str[fd], buff);
-			free(remain_str[fd]);
-			remain_str[fd] = next_line;
-		}
-	}
+	remain = check_remain(fd, remain);
+	if (!remain)
+		return (NULL);
+	next_line = make_next_line(remain);
+	remain = save_remain(remain);
 	return (next_line);
 }
+
+/*
+1) remain이 있는지 확인
+2) 있는 경우
+	2-1) \n이 포함되어있음
+		바로 4)로 이동
+	2-2) \n이 없음
+		> read 더함
+3) 없는 경우 새로 read함
+4) new next line 생성
+5) 남은부분 remain에 저장
+6) 종료
+*/
