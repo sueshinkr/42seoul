@@ -6,12 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:50 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/03 12:18:44 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/03 17:30:18 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 
 size_t	ft_strlen(const char *str)
 {

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_old.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:32:01 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/03 00:53:19 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/03 17:24:28 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*get_next_line(int fd)
 	if (!remain_str[fd])
 	{
 		read_idx = read(fd, buff, BUFFER_SIZE);
-		if(!buff)
+		if (!buff)
 			return (NULL);
 		buff[read_idx] = '\0';
 		remain_str[fd] = ft_strdup(buff);

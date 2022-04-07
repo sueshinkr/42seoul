@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/03 17:17:19 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/06 01:23:53 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static char	*check_remain(int fd, char *remain)
 	char	*buff;
 	char	*temp;
 	int		read_idx;
-	
+
 	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	while (!remain || !ft_strchr(remain, '\n'))
 	{
 		read_idx = read(fd, buff, BUFFER_SIZE);
-		if(read_idx <= 0)
-			break;
+		if (read_idx <= 0)
+			break ;
 		buff[read_idx] = '\0';
 		if (!remain)
 			remain = ft_strdup(buff);
@@ -48,7 +48,7 @@ static char	*make_next_line(char *remain)
 	{
 		len++;
 		if (*remain++ == '\n')
-			break;
+			break ;
 	}
 	remain -= len;
 	next_line = (char *)malloc((len + 1) * sizeof(char));
@@ -56,7 +56,7 @@ static char	*make_next_line(char *remain)
 	{
 		*next_line++ = *remain;
 		if (*remain++ == '\n')
-			break;
+			break ;
 	}
 	*next_line = '\0';
 	return (next_line - len);
