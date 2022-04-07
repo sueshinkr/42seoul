@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/07 17:25:29 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/07 17:41:02 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*check_remain(int fd, char *remain)
 {
@@ -84,16 +84,16 @@ static char	*update_remain(char *remain)
 
 char	*get_next_line(int fd)
 {
-	static char	*remain = NULL;
+	static char	*remain[OPEN_MAX];
 	char		*next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	remain = check_remain(fd, remain);
-	if (!remain)
+	remain[fd] = check_remain(fd, remain[fd]);
+	if (!remain[fd])
 		return (NULL);
-	next_line = make_next_line(remain);
-	remain = update_remain(remain);
+	next_line = make_next_line(remain[fd]);
+	remain[fd] = update_remain(remain[fd]);
 	return (next_line);
 }
 
