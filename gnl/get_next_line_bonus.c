@@ -6,11 +6,12 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/11 23:30:48 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/12 01:16:23 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+#include <stdio.h>
 
 static t_list	*add_fd_remain(int fd)
 {
@@ -105,7 +106,6 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!head)
 	{
-		printf("start\n");
 		head = (t_list *)malloc(sizeof(t_list));
 		head->next = NULL;
 	}
@@ -128,7 +128,15 @@ char	*get_next_line(int fd)
 	}
 	remain->str = check_remain(fd, remain->str);
 	if (!remain->str)
+	{
+		//free(remain);
+		if (head->next == NULL)
+		{
+			printf("freeeeeeeeeeeeeeeeee\n");
+			free(head);
+		}
 		return (NULL);
+	}
 	next_line = make_next_line(remain->str);
 	remain->str = update_remain(remain->str);
 	return (next_line);

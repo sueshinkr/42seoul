@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:55:33 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/11 23:25:12 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/12 00:55:23 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,51 @@ int	main()
 
 	temp = get_next_line(fd[0]);
 	printf(":::::%s", temp);
+	free(temp);
 	temp = get_next_line(fd[1]);
 	printf(":::::%s", temp);
+	free(temp);
 	temp = get_next_line(fd[2]);
 	printf(":::::%s", temp);
+	free(temp);
+
+
+
+
 	temp = get_next_line(fd[0]);
 	printf(":::::%s", temp);
+	free(temp);
 	temp = get_next_line(fd[1]);
 	printf(":::::%s", temp);
+	free(temp);
 	temp = get_next_line(fd[2]);
 	printf(":::::%s", temp);
+	free(temp);
+
+
 	temp = get_next_line(fd[0]);
 	printf(":::::%s", temp);
-	temp = get_next_line(fd[1]);
-	printf(":::::%s", temp);
+	free(temp);
 	temp = get_next_line(fd[2]);
 	printf(":::::%s", temp);
+	free(temp);
 	temp = get_next_line(fd[0]);
 	printf(":::::%s", temp);
+	free(temp);
 	temp = get_next_line(fd[1]);
 	printf(":::::%s", temp);
+	free(temp);
+	
+
+	temp = get_next_line(fd[1]);
+	printf(":::::%s", temp);
+	free(temp);
+	temp = get_next_line(fd[0]);
+	printf(":::::%s", temp);
+	free(temp);
 	temp = get_next_line(fd[2]);
 	printf(":::::%s", temp);
+	free(temp);
 	/*
 	num = -1;
 	while (num++ < 3)
@@ -61,6 +84,8 @@ int	main()
 		close(fd[num]);
 	}
 	*/
-	free(temp);
+	close(fd[0]);
+	close(fd[1]);
+	close(fd[2]);
 	return (0);
 }
