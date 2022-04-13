@@ -6,11 +6,39 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:50 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/08 19:27:18 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/13 00:46:51 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+t_list	*add_fd_remain(t_list *remain, int fd)
+{
+	t_list	*new;
+
+	new = (t_list *)malloc(sizeof(t_list));
+	new->str = NULL;
+	new->fd = fd;
+	new->next = NULL;
+	new->flag = 1;
+	if (!remain)
+		return (new);
+	while (remain)
+	{
+		if (remain->fd == fd)
+		{
+			free(new);
+			break ;
+		}
+		if (!remain->next)
+		{
+			remain->next = new;
+			return (new);
+		}
+		remain = remain->next;
+	}
+	return (remain);
+}
 
 size_t	ft_strlen(const char *str)
 {
@@ -32,19 +60,6 @@ char	*ft_strchr(const char *str, int c)
 			return (NULL);
 		str++;
 	}
-}
-
-size_t	ft_strlcpy(char *dst, char *src, size_t size)
-{
-	int	src_len;
-
-	src_len = ft_strlen(src);
-	if (size == 0)
-		return (src_len);
-	while (size-- > 1 && *src)
-		*dst++ = *src++;
-	*dst = 0;
-	return (src_len);
 }
 
 char	*ft_strdup(const char *src)

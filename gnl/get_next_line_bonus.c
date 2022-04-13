@@ -6,50 +6,68 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/12 01:16:23 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/13 00:46:47 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
-static t_list	*add_fd_remain(int fd)
+static char	*check_free(t_list *head)
 {
-	t_list	*new;
+	t_list	*temp;
+	t_list	*remain;
 
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!new)
-		return (NULL);
-	new->str = NULL;
-	new->fd = fd;
-	new->next = NULL;
-	return (new);
+	remain = head;
+	while (remain)
+	{
+		if (!remain->next)
+			break ;
+		if (!(remain->next)->str && !(remain->next)->next
+			&& (remain->next)->flag == -1)
+		{
+			free(remain->next);
+			remain->next = NULL;
+			break ;
+		}
+		else if (!(remain->next)->str && (remain->next)->next
+			&& (remain->next)->flag == -1)
+		{
+			temp = remain->next;
+			remain->next = (remain->next)->next;
+			free(temp);
+		}
+		remain = remain->next;
+	}
+	return (NULL);
 }
 
-static char	*check_remain(int fd, char *remain)
+static char	*check_remain(int fd, t_list *remain)
 {
 	char	*buff;
 	char	*temp;
 	int		read_idx;
 
 	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	while (!remain || !ft_strchr(remain, '\n'))
+	while (!remain->str || !ft_strchr(remain->str, '\n'))
 	{
 		read_idx = read(fd, buff, BUFFER_SIZE);
 		if (read_idx <= 0)
+		{
+			remain->flag = -1;
 			break ;
+		}
 		buff[read_idx] = '\0';
-		if (!remain)
-			remain = ft_strdup(buff);
-		else if (!ft_strchr(remain, '\n'))
+		if (!remain->str)
+			remain->str = ft_strdup(buff);
+		else if (!ft_strchr(remain->str, '\n'))
 		{	
-			temp = ft_strjoin(remain, buff);
-			free(remain);
-			remain = temp;
+			temp = ft_strjoin(remain->str, buff);
+			free(remain->str);
+			remain->str = temp;
 		}
 	}
 	free(buff);
-	return (remain);
+	return (remain->str);
 }
 
 static char	*make_next_line(char *remain)
@@ -78,7 +96,10 @@ static char	*update_remain(char *remain)
 {
 	char	*temp;
 	char	*fix_remain;
+	int		len;
+	int		idx;
 
+	idx = -1;
 	fix_remain = ft_strchr(remain, '\n');
 	if (!fix_remain)
 	{
@@ -86,13 +107,16 @@ static char	*update_remain(char *remain)
 		return (NULL);
 	}
 	temp = (char *)malloc(ft_strlen(fix_remain) * sizeof(char));
-	if (!ft_strlcpy(temp, fix_remain + 1, ft_strlen(fix_remain)))
+	len = ft_strlen(fix_remain++);
+	while (len > ++idx + 1 && *(fix_remain + idx))
+		*(temp + idx) = *(fix_remain + idx);
+	*(temp + idx) = 0;
+	free(remain);
+	if (!(len - 1))
 	{
 		free(temp);
-		free(remain);
 		return (NULL);
 	}
-	free(remain);
 	return (temp);
 }
 
@@ -105,78 +129,22 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!head)
-	{
+	{	
 		head = (t_list *)malloc(sizeof(t_list));
 		head->next = NULL;
+		head->fd = -1;
 	}
-	if (head->next == NULL)
-	{
-		remain = add_fd_remain(fd);
-		head->next = remain;
-	}
+	if (!head->next)
+		remain = add_fd_remain(head, fd);
 	else
 	{
 		remain = head->next;
-		while (remain)
-		{
-			if (remain->fd == fd)
-				break;
-			if (!remain->next)
-				remain->next = add_fd_remain(fd);
-			remain = remain->next;
-		}
+		remain = add_fd_remain(remain, fd);
 	}
-	remain->str = check_remain(fd, remain->str);
+	remain->str = check_remain(fd, remain);
 	if (!remain->str)
-	{
-		//free(remain);
-		if (head->next == NULL)
-		{
-			printf("freeeeeeeeeeeeeeeeee\n");
-			free(head);
-		}
-		return (NULL);
-	}
+		return (check_free(head));
 	next_line = make_next_line(remain->str);
 	remain->str = update_remain(remain->str);
 	return (next_line);
 }
-
-
-/*
-char	*get_next_line(int fd)
-{
-	static t_list	*remain;
-	t_list			*head;
-	char			*next_line;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	if (remain)
-	{
-		while (remain->next != head)
-		{
-			if (remain->fd == fd)
-				break;
-			if (remain->next == NULL)
-				remain->next = add_fd_remain(fd);
-			remain = remain->next;
-		}
-	}
-	else
-	{
-		remain = add_fd_remain(fd);
-		head->next = remain;
-	}
-	remain->str = check_remain(fd, remain->str);
-	if (!remain->str)
-		return (NULL);
-	next_line = make_next_line(remain->str);
-	remain->str = update_remain(remain->str);
-	return (next_line);
-}
-*/
-
-/*
-원형 연결 리스트로 구현하기.
-*/
