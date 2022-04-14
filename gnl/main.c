@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:55:33 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/14 17:56:36 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/14 19:22:46 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main()
 	int		fd;
 	char	*temp;
 
+
 	fd = open("./test1.txt", O_RDWR);
 	temp = get_next_line(fd);
 	while (temp)
@@ -27,9 +28,9 @@ int	main()
 		free(temp);
 		temp = get_next_line(fd);
 	}
+	free(temp);
 
-
-	/*
+	
 	//invalid fd
 	printf("invalid fd\n");
 	printf("NULL / NULL / NULL\n");
@@ -56,6 +57,7 @@ int	main()
 	printf("2:::::%s\n", temp);
 	free(temp);
 	printf("******************************************\n");
+
 
 	//files/nl
 	printf("files/nl\n");
@@ -308,7 +310,6 @@ int	main()
 	printf("2:::::%s\n", temp);
 	free(temp);
 	printf("******************************************\n");
-	*/
 
 
 

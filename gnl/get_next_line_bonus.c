@@ -6,37 +6,37 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/14 18:10:49 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/14 19:24:27 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static char	*check_free(t_list *head)
+static char	*check_free(t_list *rm, t_list **head)
 {
 	t_list	*temp;
-	t_list	*remain;
 
-	remain = head;
-	while (remain)
+	while (rm)
 	{
-		if (!remain->next)
+		if (!rm->next)
 			break ;
-		if (!(remain->next)->str && !(remain->next)->next
-			&& (remain->next)->flag == -1)
+		if (!(rm->next)->str && !(rm->next)->next && (rm->next)->flag == -1)
 		{
-			free(remain->next);
-			remain->next = NULL;
-			break ;
+			free(rm->next);
+			rm->next = NULL;
 		}
-		else if (!(remain->next)->str && (remain->next)->next
-			&& (remain->next)->flag == -1)
+		else if (!(rm->next)->str && (rm->next)->next && (rm->next)->flag == -1)
 		{
-			temp = remain->next;
-			remain->next = (remain->next)->next;
+			temp = rm->next;
+			rm->next = (rm->next)->next;
 			free(temp);
 		}
-		remain = remain->next;
+		rm = rm->next;
+	}
+	if (!(*head)->next)
+	{
+		free(*head);
+		*head = NULL;
 	}
 	return (NULL);
 }
@@ -143,7 +143,7 @@ char	*get_next_line(int fd)
 	}
 	remain->str = check_remain(fd, remain);
 	if (!remain->str)
-		return (check_free(head));
+		return (check_free(head, &head));
 	next_line = make_next_line(remain->str);
 	remain->str = update_remain(remain->str);
 	return (next_line);
