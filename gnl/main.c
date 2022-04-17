@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:55:33 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/17 11:15:42 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/17 12:45:18 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main()
 	int		fd, fdd[3];
 	char	*temp;
 
-/*
+	/*
 	fd = open("./test1.txt", O_RDWR);
 	temp = get_next_line(fd);
 	while (temp)
@@ -29,7 +29,7 @@ int	main()
 		temp = get_next_line(fd);
 	}
 	free(temp);
-
+	*/
 	
 	//invalid fd
 	printf("invalid fd\n");
@@ -309,7 +309,7 @@ int	main()
 	printf("2:::::%s\n", temp);
 	free(temp);
 	printf("******************************************\n");
-*/
+
 
 
 	//multiple fd
@@ -410,6 +410,6 @@ int	main()
 	close(fdd[0]);
 	close(fdd[1]);
 	close(fdd[2]);
-	//system("leaks a.out");
+	///system("leaks a.out");
 	return (0);
 }

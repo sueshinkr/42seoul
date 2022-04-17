@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/17 12:25:35 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/17 12:54:50 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,15 +111,15 @@ static char	*update_remain(char *remain)
 		return (NULL);
 	}
 	temp = (char *)malloc(ft_strlen(fix_remain++) * sizeof(char));
-	while (ft_strlen(fix_remain) > ++idx && *(fix_remain + idx))
-		*(temp + idx) = *(fix_remain + idx);
-	*(temp + idx) = 0;
-	free(remain);
 	if (!(ft_strlen(fix_remain)))
 	{
 		free(temp);
 		return (NULL);
 	}
+	while (ft_strlen(fix_remain) > ++idx && *(fix_remain + idx))
+		*(temp + idx) = *(fix_remain + idx);
+	*(temp + idx) = 0;
+	free(remain);
 	return (temp);
 }
 
@@ -149,49 +149,3 @@ char	*get_next_line(int fd)
 		check_free(head, &head);
 	return (make_next_line(next_line));
 }
-
-
-
-/*
-	
-	temp = head;
-	printf("::::::::::::::\n");
-	while (temp)
-	{	
-		printf("fd : %d\n", temp->fd);
-		temp = temp->next;
-	}
-	printf("::::::::::::::\n");
-
-
-char	*get_next_line(int fd)
-{
-	static t_list	*head;
-	t_list			*remain;
-	char			*next_line;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	if (!head)
-	{	
-		head = (t_list *)malloc(sizeof(t_list));
-		head->next = NULL;
-		head->fd = -1;
-	}
-	if (!head->next)
-		remain = add_fd_remain(head, fd);
-	else
-	{
-		remain = head->next;
-		remain = add_fd_remain(remain, fd);
-	}
-	remain->str = check_remain(fd, remain);
-	if (!remain->str)
-		return (check_free(head, &head));
-	next_line = make_next_line(remain->str);
-	remain->str = update_remain(remain->str);
-	if (!remain->str)
-		return (check_free(head, &head));
-	return (next_line);
-}
-*/
