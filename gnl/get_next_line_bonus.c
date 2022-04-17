@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/14 19:24:27 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/17 12:25:35 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ static char	*make_next_line(char *remain)
 	char	*next_line;
 	int		len;
 
+	if (!remain)
+		return (NULL);
 	len = 0;
 	while (*(remain + len))
 	{
@@ -89,6 +91,7 @@ static char	*make_next_line(char *remain)
 			break ;
 	}
 	*next_line = '\0';
+	free(remain - len);
 	return (next_line - len);
 }
 
@@ -96,29 +99,70 @@ static char	*update_remain(char *remain)
 {
 	char	*temp;
 	char	*fix_remain;
-	int		len;
-	int		idx;
+	size_t	idx;
 
 	idx = -1;
+	if (!remain)
+		return (NULL);
 	fix_remain = ft_strchr(remain, '\n');
 	if (!fix_remain)
 	{
 		free(remain);
 		return (NULL);
 	}
-	temp = (char *)malloc(ft_strlen(fix_remain) * sizeof(char));
-	len = ft_strlen(fix_remain++);
-	while (len > ++idx + 1 && *(fix_remain + idx))
+	temp = (char *)malloc(ft_strlen(fix_remain++) * sizeof(char));
+	while (ft_strlen(fix_remain) > ++idx && *(fix_remain + idx))
 		*(temp + idx) = *(fix_remain + idx);
 	*(temp + idx) = 0;
 	free(remain);
-	if (!(len - 1))
+	if (!(ft_strlen(fix_remain)))
 	{
 		free(temp);
 		return (NULL);
 	}
 	return (temp);
 }
+
+char	*get_next_line(int fd)
+{
+	static t_list	*head;
+	t_list			*remain;
+	char			*next_line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	if (!head)
+	{	
+		head = (t_list *)malloc(sizeof(t_list));
+		head->next = NULL;
+		head->fd = -1;
+	}
+	if (!head->next)
+		remain = add_fd_remain(head, fd);
+	else
+		remain = add_fd_remain(head->next, fd);
+	next_line = check_remain(fd, remain);
+	if (next_line)
+		next_line = ft_strdup(next_line);
+	remain->str = update_remain(remain->str);
+	if (!remain->str)
+		check_free(head, &head);
+	return (make_next_line(next_line));
+}
+
+
+
+/*
+	
+	temp = head;
+	printf("::::::::::::::\n");
+	while (temp)
+	{	
+		printf("fd : %d\n", temp->fd);
+		temp = temp->next;
+	}
+	printf("::::::::::::::\n");
+
 
 char	*get_next_line(int fd)
 {
@@ -146,5 +190,8 @@ char	*get_next_line(int fd)
 		return (check_free(head, &head));
 	next_line = make_next_line(remain->str);
 	remain->str = update_remain(remain->str);
+	if (!remain->str)
+		return (check_free(head, &head));
 	return (next_line);
 }
+*/
