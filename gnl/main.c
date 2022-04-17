@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:55:33 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/17 12:45:18 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/17 13:05:26 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -410,6 +410,6 @@ int	main()
 	close(fdd[0]);
 	close(fdd[1]);
 	close(fdd[2]);
-	///system("leaks a.out");
+	system("leaks a.out");
 	return (0);
 }
