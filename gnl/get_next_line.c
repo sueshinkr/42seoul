@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 19:26:14 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/11 12:10:45 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/20 01:32:28 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*check_remain(int fd, char *remain)
 		buff[read_idx] = '\0';
 		if (!remain)
 			remain = ft_strdup(buff);
-		else if (!ft_strchr(remain, '\n'))
+		else //if (!ft_strchr(remain, '\n'))
 		{	
 			temp = ft_strjoin(remain, buff);
 			free(remain);
@@ -50,14 +50,8 @@ static char	*make_next_line(char *remain)
 			break ;
 	}
 	next_line = (char *)malloc((len + 1) * sizeof(char));
-	while (*remain)
-	{
-		*next_line++ = *remain;
-		if (*remain++ == '\n')
-			break ;
-	}
-	*next_line = '\0';
-	return (next_line - len);
+	ft_strlcpy(next_line, remain, len + 1);
+	return (next_line);
 }
 
 static char	*update_remain(char *remain)
