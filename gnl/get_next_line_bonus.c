@@ -6,9 +6,10 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/18 21:57:57 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/18 22:58:19 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "get_next_line_bonus.h"
 
@@ -75,6 +76,8 @@ static char	*make_next_line(char *remain)
 	char	*next_line;
 	int		len;
 
+	if (!remain)
+		return (NULL);
 	len = 0;
 	while (*(remain + len))
 	{
@@ -89,6 +92,7 @@ static char	*make_next_line(char *remain)
 			break ;
 	}
 	*next_line = '\0';
+	free(remain - len);
 	return (next_line - len);
 }
 
@@ -96,27 +100,22 @@ static char	*update_remain(char *remain)
 {
 	char	*temp;
 	char	*fix_remain;
-	int		len;
-	int		idx;
+	size_t	idx;
 
 	idx = -1;
+	if (!remain)
+		return (NULL);
 	fix_remain = ft_strchr(remain, '\n');
-	if (!fix_remain)
+	if (!fix_remain || !(ft_strlen(fix_remain) - 1))
 	{
 		free(remain);
 		return (NULL);
 	}
-	temp = (char *)malloc(ft_strlen(fix_remain) * sizeof(char));
-	len = ft_strlen(fix_remain++);
-	while (len > ++idx + 1 && *(fix_remain + idx))
+	temp = (char *)malloc(ft_strlen(fix_remain++) * sizeof(char));
+	while (ft_strlen(fix_remain) > ++idx && *(fix_remain + idx))
 		*(temp + idx) = *(fix_remain + idx);
 	*(temp + idx) = 0;
 	free(remain);
-	if (!(len - 1))
-	{
-		free(temp);
-		return (NULL);
-	}
 	return (temp);
 }
 
@@ -137,14 +136,12 @@ char	*get_next_line(int fd)
 	if (!head->next)
 		remain = add_fd_remain(head, fd);
 	else
-	{
-		remain = head->next;
-		remain = add_fd_remain(remain, fd);
-	}
-	remain->str = check_remain(fd, remain);
-	if (!remain->str)
-		return (check_free(head, &head));
-	next_line = make_next_line(remain->str);
+		remain = add_fd_remain(head->next, fd);
+	next_line = check_remain(fd, remain);
+	if (next_line)
+		next_line = ft_strdup(next_line);
 	remain->str = update_remain(remain->str);
-	return (next_line);
+	if (!remain->str)
+		check_free(head, &head);
+	return (make_next_line(next_line));
 }
