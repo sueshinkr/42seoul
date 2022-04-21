@@ -6,11 +6,65 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/17 13:12:15 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/21 11:19:50 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+static char	*check_remain(t_list *remain, int fd)
+{
+	char	*buff;
+	char	*temp;
+	int		read_idx;
+
+	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	while (!remain->str || !ft_strchr(remain->str, '\n'))
+	{
+		read_idx = read(fd, buff, BUFFER_SIZE);
+		if (read_idx <= 0)
+		{
+			remain->flag = -1;
+			break ;
+		}
+		buff[read_idx] = '\0';
+		if (!remain->str)
+			remain->str = ft_strdup(buff);
+		else
+		{	
+			temp = ft_strjoin(remain->str, buff);
+			free(remain->str);
+			remain->str = temp;
+		}
+	}
+	free(buff);
+	return (remain->str);
+}
+
+static char	*update_remain(char *remain_str)
+{
+	char	*new;
+	char	*fix_remain_str;
+	int		idx;
+	int		len;
+
+	idx = -1;
+	if (!remain_str)
+		return (NULL);
+	fix_remain_str = ft_strchr(remain_str, '\n');
+	if (!fix_remain_str || !(ft_strlen(fix_remain_str) - 1))
+	{
+		free(remain_str);
+		return (NULL);
+	}
+	len = ft_strlen(++fix_remain_str);
+	new = (char *)malloc((len + 1) * sizeof(char));
+	while (len > ++idx && *(fix_remain_str + idx))
+		*(new + idx) = *(fix_remain_str + idx);
+	*(new + idx) = 0;
+	free(remain_str);
+	return (new);
+}
 
 static char	*check_free(t_list *rm, t_list **head)
 {
@@ -41,81 +95,25 @@ static char	*check_free(t_list *rm, t_list **head)
 	return (NULL);
 }
 
-static char	*check_remain(int fd, t_list *remain)
-{
-	char	*buff;
-	char	*temp;
-	int		read_idx;
-
-	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	while (!remain->str || !ft_strchr(remain->str, '\n'))
-	{
-		read_idx = read(fd, buff, BUFFER_SIZE);
-		if (read_idx <= 0)
-		{
-			remain->flag = -1;
-			break ;
-		}
-		buff[read_idx] = '\0';
-		if (!remain->str)
-			remain->str = ft_strdup(buff);
-		else if (!ft_strchr(remain->str, '\n'))
-		{	
-			temp = ft_strjoin(remain->str, buff);
-			free(remain->str);
-			remain->str = temp;
-		}
-	}
-	free(buff);
-	return (remain->str);
-}
-
-static char	*make_next_line(char *remain)
+static char	*make_next_line(char *str)
 {
 	char	*next_line;
 	int		len;
 
-	if (!remain)
+	if (!str)
 		return (NULL);
 	len = 0;
-	while (*(remain + len))
+	while (*(str + len))
 	{
-		if (*(remain + len++) == '\n')
+		if (*(str + len++) == '\n')
 			break ;
 	}
 	next_line = (char *)malloc((len + 1) * sizeof(char));
-	while (*remain)
-	{
-		*next_line++ = *remain;
-		if (*remain++ == '\n')
-			break ;
-	}
-	*next_line = '\0';
-	free(remain - len);
-	return (next_line - len);
-}
-
-static char	*update_remain(char *remain)
-{
-	char	*temp;
-	char	*fix_remain;
-	size_t	idx;
-
-	idx = -1;
-	if (!remain)
-		return (NULL);
-	fix_remain = ft_strchr(remain, '\n');
-	if (!fix_remain || !(ft_strlen(fix_remain) - 1))
-	{
-		free(remain);
-		return (NULL);
-	}
-	temp = (char *)malloc(ft_strlen(fix_remain++) * sizeof(char));
-	while (ft_strlen(fix_remain) > ++idx && *(fix_remain + idx))
-		*(temp + idx) = *(fix_remain + idx);
-	*(temp + idx) = 0;
-	free(remain);
-	return (temp);
+	*(next_line + len) = '\0';
+	while (--len >= 0)
+		*(next_line + len) = *(str + len);
+	free(str);
+	return (next_line);
 }
 
 char	*get_next_line(int fd)
@@ -132,11 +130,8 @@ char	*get_next_line(int fd)
 		head->next = NULL;
 		head->fd = -1;
 	}
-	if (!head->next)
-		remain = add_fd_remain(head, fd);
-	else
-		remain = add_fd_remain(head->next, fd);
-	next_line = check_remain(fd, remain);
+	remain = add_fd_remain(head, fd);
+	next_line = check_remain(remain, fd);
 	if (next_line)
 		next_line = ft_strdup(next_line);
 	remain->str = update_remain(remain->str);

@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:35:40 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/03 17:30:17 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/19 21:49:25 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <limits.h>
+//# include <limits.h>
 
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *str);
