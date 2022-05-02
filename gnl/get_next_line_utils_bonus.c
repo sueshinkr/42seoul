@@ -6,10 +6,9 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:50 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/21 00:20:17 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/23 19:15:32 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "get_next_line_bonus.h"
 
@@ -22,8 +21,6 @@ t_list	*add_fd_remain(t_list *remain, int fd)
 	new->fd = fd;
 	new->next = NULL;
 	new->flag = 1;
-	if (!remain)
-		return (new);
 	while (remain)
 	{
 		if (remain->fd == fd)
