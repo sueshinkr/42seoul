@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/21 02:22:07 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/05/02 13:16:21 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,17 @@ char	*get_next_line(int fd)
 		head->fd = -1;
 	}
 	remain = add_fd_remain(head, fd);
+	if (!check_remain(remain, fd))
+		return (NULL);
+	else
+		next_line = ft_strdup(remain->str);
+/*
 	next_line = check_remain(remain, fd);
 	if (!remain->str)
 		return (NULL);
 	if (next_line)
 		next_line = ft_strdup(next_line);
+*/
 	remain->str = update_remain(remain->str);
 	if (!remain->str)
 		check_free(head, &head);
