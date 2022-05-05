@@ -1,84 +1,90 @@
 #include "ft_printf.h"
 #include "libft.h"
 
-static void	addresstohex(long long num)
+static void	addresstohex(long long num, int *count)
 {
 	long long	temp;
-	int			count;
+	int			idx;
 	char		*hex;
 
-	count = 0;
+	idx = 0;
 	temp = num;
 	while (temp > 0)
 	{
 		temp /= 16;
-		count++;
+		idx++;
 	}
-	temp = count;
-	hex = (char *)malloc(count-- * sizeof(char));
+	temp = idx;
+	hex = (char *)malloc(idx-- * sizeof(char));
 	while (num > 0)
 	{
-			hex[count--] = "0123456789abcdef"[num % 16];
+			hex[idx--] = "0123456789abcdef"[num % 16];
 		num /= 16;
 	}
 	write(1, "0x", 2);
 	write(1, hex, temp);
+	*count += (2 + temp);
 	free(hex);
 }
 
-static void	numtohex(long long num, int bigorsmall)
+static void	numtohex(long long num, int bigorsmall, int *count)
 {
 	long long	temp;
-	int			count;
+	int			idx;
 	char		*hex;
 
-	count = 0;
+	idx = 0;
 	temp = num;
 	while (temp > 0)
 	{
 		temp /= 16;
-		count++;
+		idx++;
 	}
-	temp = count;
-	hex = (char *)malloc(count-- * sizeof(char));
+	temp = idx;
+	hex = (char *)malloc(idx-- * sizeof(char));
 	while (num > 0)
 	{
 		if (bigorsmall == 2)
-			hex[count--] = "0123456789abcdef"[num % 16];
+			hex[idx--] = "0123456789abcdef"[num % 16];
 		else
-			hex[count--] = "0123456789ABCDEF"[num % 16];
+			hex[idx--] = "0123456789ABCDEF"[num % 16];
 		num /= 16;
 	}
 	write(1, hex, temp);
+	*count += temp;
 	free(hex);
 }
 
-static void	print_char(va_list *ap)
+static void	print_char(va_list *ap, int *count)
 {
 	char	chr;
 
 	chr = va_arg(*ap, int);
 	write(1, &chr, 1);
+	(*count)++;
 }
 
-static void	print_str(va_list *ap)
+static void	print_str(va_list *ap, int *count)
 {
 	char	*str;
 
 	str = va_arg(*ap, char *);
 	while (*str)
+	{
 		write(1, str++, 1);
+		(*count)++;
+	}
 }
 
-static void	print_pointer(va_list *ap)
+static void	print_pointer(va_list *ap, int *count)
 {
 	long long	address;
 
 	address = va_arg(*ap, long long);
-	addresstohex(address);
+	addresstohex(address, count);
 }
 
-static void	print_decimal(va_list *ap)
+static void	print_decimal(va_list *ap, int *count)
 {
 	int		decimal;
 	int		idx;
@@ -88,10 +94,13 @@ static void	print_decimal(va_list *ap)
 	decimal = va_arg(*ap, int);
 	decimal_char = ft_itoa(decimal);
 	while (*(decimal_char + idx))
+	{
 		write(1, decimal_char + idx++, 1);
+		(*count)++;
+	}
 }
 
-static void	print_integer(va_list *ap)
+static void	print_integer(va_list *ap, int *count)
 {
 	int		integer;
 	int		idx;
@@ -101,10 +110,13 @@ static void	print_integer(va_list *ap)
 	integer = va_arg(*ap, int);
 	integer_char = ft_itoa(integer);
 	while (*(integer_char + idx))
+	{
 		write(1, integer_char + idx++, 1);
+		(*count)++;
+	}
 }
 
-static void	print_unsigned_decimal(va_list *ap)
+static void	print_unsigned_decimal(va_list *ap, int *count)
 {
 	unsigned int	unsigned_decimal;
 	int				idx;
@@ -114,53 +126,61 @@ static void	print_unsigned_decimal(va_list *ap)
 	unsigned_decimal = va_arg(*ap, int);
 	unsigned_decimal_char = ft_itoa(unsigned_decimal);
 	while (*(unsigned_decimal_char + idx))
+	{
 		write(1, unsigned_decimal_char + idx++, 1);
+		(*count)++;
+	}
 }
 
-static void	print_hex_small(va_list *ap)
+static void	print_hex_small(va_list *ap, int *count)
 {
 	unsigned int	num;
  
 	num = va_arg(*ap, unsigned int);
-	numtohex(num, 2);
+	numtohex(num, 2, count);
 }
 
-static void	print_hex_big(va_list *ap)
+static void	print_hex_big(va_list *ap, int *count)
 {
 	unsigned int	num;
  
 	num = va_arg(*ap, unsigned int);
-	numtohex(num, 1);
+	numtohex(num, 1, count);
 }
 
-static void select_format(const char *str, va_list *ap)
+static void select_format(const char *str, va_list *ap, int *count)
 {
 	// cspdiuxX%
 	if (*str == 'c')
-		print_char(ap);
+		print_char(ap, count);
 	else if (*str == 's')
-		print_str(ap);
+		print_str(ap, count);
 	else if (*str == 'p')
-		print_pointer(ap);
+		print_pointer(ap, count);
 	else if (*str == 'd')
-		print_decimal(ap);
+		print_decimal(ap, count);
 	else if (*str == 'i')
-		print_integer(ap);
+		print_integer(ap, count);
 	else if (*str == 'u')
-		print_unsigned_decimal(ap);
+		print_unsigned_decimal(ap, count);
 	else if (*str == 'x')
-		print_hex_small(ap);
+		print_hex_small(ap, count);
 	else if (*str == 'X')
-		print_hex_big(ap);
+		print_hex_big(ap, count);
 	else if (*str == '%')
+	{
 		write(1, "%", 1);
+		(*count)++;
+	}
 	return ;
 }
 
 int ft_printf(const char *str, ...)
 {
 	va_list ap;
+	int		count;
 
+	count = 0;
 	va_start(ap, str);
 	// str은 ""으로 묶여있는 문자열. str에서 한글자씩 읽으면서 출력, %나 \만나면 따로 처리?
 	while(*str)
@@ -169,14 +189,17 @@ int ft_printf(const char *str, ...)
 			str++;
 		else if (*str == '%')
 		{
-			select_format(++str, &ap);
+			select_format(++str, &ap, &count);
 			str++;
 		}
 		else
+		{
 			write(1, str++, 1);
+			count++;
+		}
 	}
 	va_end(ap);
-	return (0);
+	return (count);
 }
 
 
