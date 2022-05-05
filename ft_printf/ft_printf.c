@@ -1,13 +1,11 @@
-#include <unistd.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "ft_printf.h"
+#include "libft.h"
 
-static void	itohex(int num)
+static void	addresstohex(long long num)
 {
-	int	temp;
-	int	count;
-	char	*hex;
+	long long	temp;
+	int			count;
+	char		*hex;
 
 	count = 0;
 	temp = num;
@@ -20,7 +18,35 @@ static void	itohex(int num)
 	hex = (char *)malloc(count-- * sizeof(char));
 	while (num > 0)
 	{
-		hex[count--] = "0123456789abcdef"[num % 16];
+			hex[count--] = "0123456789abcdef"[num % 16];
+		num /= 16;
+	}
+	write(1, "0x", 2);
+	write(1, hex, temp);
+	free(hex);
+}
+
+static void	numtohex(long long num, int bigorsmall)
+{
+	long long	temp;
+	int			count;
+	char		*hex;
+
+	count = 0;
+	temp = num;
+	while (temp > 0)
+	{
+		temp /= 16;
+		count++;
+	}
+	temp = count;
+	hex = (char *)malloc(count-- * sizeof(char));
+	while (num > 0)
+	{
+		if (bigorsmall == 2)
+			hex[count--] = "0123456789abcdef"[num % 16];
+		else
+			hex[count--] = "0123456789ABCDEF"[num % 16];
 		num /= 16;
 	}
 	write(1, hex, temp);
@@ -46,10 +72,65 @@ static void	print_str(va_list *ap)
 
 static void	print_pointer(va_list *ap)
 {
-	int address;
+	long long	address;
 
-	address = va_arg(*ap, int);
-	itohex(address);
+	address = va_arg(*ap, long long);
+	addresstohex(address);
+}
+
+static void	print_decimal(va_list *ap)
+{
+	int		decimal;
+	int		idx;
+	char	*decimal_char;
+	
+	idx = 0;
+	decimal = va_arg(*ap, int);
+	decimal_char = ft_itoa(decimal);
+	while (*(decimal_char + idx))
+		write(1, decimal_char + idx++, 1);
+}
+
+static void	print_integer(va_list *ap)
+{
+	int		integer;
+	int		idx;
+	char	*integer_char;
+	
+	idx = 0;
+	integer = va_arg(*ap, int);
+	integer_char = ft_itoa(integer);
+	while (*(integer_char + idx))
+		write(1, integer_char + idx++, 1);
+}
+
+static void	print_unsigned_decimal(va_list *ap)
+{
+	unsigned int	unsigned_decimal;
+	int				idx;
+	char			*unsigned_decimal_char;
+	
+	idx = 0;
+	unsigned_decimal = va_arg(*ap, int);
+	unsigned_decimal_char = ft_itoa(unsigned_decimal);
+	while (*(unsigned_decimal_char + idx))
+		write(1, unsigned_decimal_char + idx++, 1);
+}
+
+static void	print_hex_small(va_list *ap)
+{
+	unsigned int	num;
+ 
+	num = va_arg(*ap, unsigned int);
+	numtohex(num, 2);
+}
+
+static void	print_hex_big(va_list *ap)
+{
+	unsigned int	num;
+ 
+	num = va_arg(*ap, unsigned int);
+	numtohex(num, 1);
 }
 
 static void select_format(const char *str, va_list *ap)
@@ -61,11 +142,10 @@ static void select_format(const char *str, va_list *ap)
 		print_str(ap);
 	else if (*str == 'p')
 		print_pointer(ap);
-/*
 	else if (*str == 'd')
 		print_decimal(ap);
 	else if (*str == 'i')
-		print_int(ap);
+		print_integer(ap);
 	else if (*str == 'u')
 		print_unsigned_decimal(ap);
 	else if (*str == 'x')
@@ -73,9 +153,8 @@ static void select_format(const char *str, va_list *ap)
 	else if (*str == 'X')
 		print_hex_big(ap);
 	else if (*str == '%')
-		print_(ap);
-	*/
-return ;
+		write(1, "%", 1);
+	return ;
 }
 
 int ft_printf(const char *str, ...)
@@ -100,15 +179,6 @@ int ft_printf(const char *str, ...)
 	return (0);
 }
 
-int main()
-{
-	char chr = '!';
-	char str[1000] = "12345";
-
-	ft_printf("abcdefg %s %c %p", str, chr, str);
-	//ft_printf("abcdefg%c%s", chr, str);
-	return (0);
-}
 
 /*
 가변인자
