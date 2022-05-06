@@ -46,10 +46,17 @@ static void	print_str(va_list *ap)
 
 static void	print_pointer(va_list *ap)
 {
-	int address;
+	int	address;
 
 	address = va_arg(*ap, int);
 	itohex(address);
+}
+
+static void print_decimal(va_list *ap)
+{
+	int	decimal;
+	decimal = va_arg(*ap, int);
+	itoa(decimal);
 }
 
 static void select_format(const char *str, va_list *ap)
@@ -64,7 +71,7 @@ static void select_format(const char *str, va_list *ap)
 /*
 	else if (*str == 'd')
 		print_decimal(ap);
-	else if (*str == 'i')
+	else if (*str == 'i') // scanf시에는 8, 10, 16진법을 입력받음. 출력시에는 %d와 차이 없음
 		print_int(ap);
 	else if (*str == 'u')
 		print_unsigned_decimal(ap);
