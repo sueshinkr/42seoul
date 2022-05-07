@@ -1,14 +1,16 @@
 #include "ft_printf.h"
 #include "libft.h"
 
-static void	addresstohex(long long num, int *count)
+static void	addresstohex(unsigned long long num, int *count)
 {
-	long long	temp;
+	unsigned long long	temp;
 	int			idx;
 	char		*hex;
 
 	idx = 0;
 	temp = num;
+	//printf("num : %lld\n", temp);
+	//fflush(stdout);
 	while (temp > 0)
 	{
 		temp /= 16;
@@ -69,20 +71,36 @@ static void	print_str(va_list *ap, int *count)
 	char	*str;
 
 	str = va_arg(*ap, char *);
-	while (*str)
+	if (!str)
 	{
-		write(1, str++, 1);
-		(*count)++;
+		write(1, "(null)", 6);
+		*count += 6;
+	}
+	else
+	{
+		while (*str)
+		{
+			write(1, str++, 1);
+			(*count)++;
+		}
 	}
 }
 
 static void	print_pointer(va_list *ap, int *count)
 {
-	long long	address;
+	unsigned long long	address;
 
-	address = va_arg(*ap, long long);
-	addresstohex(address, count);
+	address = va_arg(*ap, unsigned long long);
+	if (!address)
+	{
+		write(1, "(nil)", 5);
+		*count += 5;
+	}
+	else
+	//printf("add : %llu\n", address);
+		addresstohex(address, count);
 }
+// unsigned long long ????
 
 static void	print_decimal(va_list *ap, int *count)
 {
@@ -150,7 +168,7 @@ static void	print_hex_big(va_list *ap, int *count)
 
 static void select_format(const char *str, va_list *ap, int *count)
 {
-	// cspdiuxX%
+	// c(ok) s(ok) p(ok) d i u x X %(ok)
 	if (*str == 'c')
 		print_char(ap, count);
 	else if (*str == 's')

@@ -1,4 +1,5 @@
 #include "ft_printf.h"
+#include <limits.h>
 
 int main()
 {
@@ -20,10 +21,20 @@ int main()
 	int n = printf("Hello %.2147483647d", 42);
 	//ft_printf("abcdefg%c%s", chr, str);
 	*/
+
+	//printf(" %p %p ", LONG_MIN, LONG_MAX);
+	//(" %p ", -1);
+	printf(" %p %p ", 0, 0);
+	fflush(stdout);
+	printf("\n");
+	//ft_printf(" %p %p ", LONG_MIN, LONG_MAX);
+	ft_printf(" %p %p ", 0, 0);
+	//ft_printf(" %p ", -1);
+	/*
 	printf("1.%d::\n", printf("!%c", '0'));
 	fflush(stdout);
 	printf("2.%d::\n", ft_printf("!%c", '0'));
-
+	*/
 /*
 	printf(" %c %c %c \n", '0', 0, '1');
 	ft_printf(" %c %c %c \n", '0', 0, '1');
