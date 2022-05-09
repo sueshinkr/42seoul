@@ -116,6 +116,7 @@ static void	print_decimal(va_list *ap, int *count)
 		write(1, decimal_char + idx++, 1);
 		(*count)++;
 	}
+	free(decimal_char);
 }
 
 static void	print_integer(va_list *ap, int *count)
@@ -132,6 +133,7 @@ static void	print_integer(va_list *ap, int *count)
 		write(1, integer_char + idx++, 1);
 		(*count)++;
 	}
+	free(integer_char);
 }
 
 static void	print_unsigned_decimal(va_list *ap, int *count)
@@ -148,6 +150,7 @@ static void	print_unsigned_decimal(va_list *ap, int *count)
 		write(1, unsigned_decimal_char + idx++, 1);
 		(*count)++;
 	}
+	free(unsigned_decimal_char);
 }
 
 static void	print_hex_small(va_list *ap, int *count)

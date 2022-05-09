@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:16:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/26 15:22:41 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/05/09 20:58:32 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_substr(char const *str, unsigned int start, size_t len)
 	str_len = ft_strlen(str);
 	if (start >= ft_strlen(str))
 		return (ft_strdup(""));
-	else if (len - start > str_len)
+	else if (len + start > str_len)
 		substr = (char *)malloc((str_len - start + 1) * sizeof(char));
 	else
 		substr = (char *)malloc((len + 1) * sizeof(char));
