@@ -6,11 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/02 13:16:21 by sueshin          ###   ########.fr       */
-=======
-/*   Updated: 2022/04/21 11:22:50 by sueshin          ###   ########.fr       */
->>>>>>> 5bf18f6900f17c09b64cb2c879b887793023f835
+/*   Updated: 2022/05/05 12:21:34 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,14 +134,9 @@ char	*get_next_line(int fd)
 	if (!check_remain(remain, fd))
 		return (NULL);
 	else
-		next_line = ft_strdup(remain->str);
-/*
-	next_line = check_remain(remain, fd);
-	if (next_line)
-		next_line = ft_strdup(next_line);
-*/
+		next_line = make_next_line(ft_strdup(remain->str));
 	remain->str = update_remain(remain->str);
 	if (!remain->str)
 		check_free(head, &head);
-	return (make_next_line(next_line));
+	return (next_line);
 }
