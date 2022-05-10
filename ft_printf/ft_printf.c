@@ -1,6 +1,43 @@
 #include "ft_printf.h"
 #include "libft.h"
 
+static int	cal_count(long long n)
+{
+	int				count;
+
+	count = 0;
+	if (n == 0)
+		count++;
+	while (n > 0)
+	{
+		n /= 10;
+		count++;
+	}
+	return (count);
+}
+
+char	*ft_uitoa(unsigned int n)
+{
+	char		*str;
+	int			count;
+	long long	nb;
+	
+	nb = n;
+	count = cal_count(nb);
+	str = (char *)malloc((count + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	if (n == 0)
+		*str = '0';
+	*(str + count) = 0;
+	while (nb > 0)
+	{
+		*(str + --count) = nb % 10 | '0';
+		nb /= 10;
+	}
+	return (str);
+}
+
 static void	addresstohex(unsigned long long num, int *count)
 {
 	unsigned long long	temp;
@@ -144,7 +181,7 @@ static void	print_unsigned_decimal(va_list *ap, int *count)
 	
 	idx = 0;
 	unsigned_decimal = va_arg(*ap, int);
-	unsigned_decimal_char = ft_itoa(unsigned_decimal);
+	unsigned_decimal_char = ft_uitoa(unsigned_decimal);
 	while (*(unsigned_decimal_char + idx))
 	{
 		write(1, unsigned_decimal_char + idx++, 1);
@@ -158,6 +195,12 @@ static void	print_hex_small(va_list *ap, int *count)
 	unsigned int	num;
  
 	num = va_arg(*ap, unsigned int);
+	if (num == 0)
+	{
+		write(1, "0", 1);
+		(*count)++;
+		return ;
+	}
 	numtohex(num, 2, count);
 }
 
@@ -166,12 +209,17 @@ static void	print_hex_big(va_list *ap, int *count)
 	unsigned int	num;
  
 	num = va_arg(*ap, unsigned int);
+	if (num == 0)
+	{
+		write(1, "0", 1);
+		(*count)++;
+		return ;
+	}
 	numtohex(num, 1, count);
 }
 
 static void select_format(const char *str, va_list *ap, int *count)
 {
-	// c(ok) s(ok) p(ok) d i u x X %(ok)
 	if (*str == 'c')
 		print_char(ap, count);
 	else if (*str == 's')

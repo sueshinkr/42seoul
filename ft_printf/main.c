@@ -42,7 +42,22 @@ int main()
 	ft_printf(" %c %c %c \n", '0', 0, '1');
 	ft_printf(" %c %c %c \n", ' ', ' ', ' ');
 */
+
+/*
 	printf("\n%d\n", printf("123%d123%d", 10, -10));
 	ft_printf("\n%d\n", ft_printf("123%d123%d", 10, -10));
+
+*/
+
+/*
+	printf(" %u ", -1);
+	fflush(stdout);
+	ft_printf(" %u ", -1);
+*/
+
+	printf(" %x ", 0);
+	fflush(stdout);
+	ft_printf(" %x ", 0);
+
 	return (0);
 }
