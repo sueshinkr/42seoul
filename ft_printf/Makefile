@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/05/05 14:42:58 by sueshin          ###   ########.fr        #
+#    Updated: 2022/05/11 23:39:54 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIB_DIR = ./libft
 LIB_NAME = ft
 HEADER = ./
 
-SRCS = ./ft_printf.c
+SRCS = ./ft_printf_base.c ./ft_printf_csp.c ./ft_printf_diu.c ./ft_printf_xX.c
 
 BONUS_SRCS = 
 

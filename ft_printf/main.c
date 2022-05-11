@@ -55,9 +55,16 @@ int main()
 	ft_printf(" %u ", -1);
 */
 
+/*
 	printf(" %x ", 0);
 	fflush(stdout);
 	ft_printf(" %x ", 0);
+*/
+
+	printf("-0.\n");
+	fflush(stdout);
+	ft_printf("-0.");
+
 
 	return (0);
 }
