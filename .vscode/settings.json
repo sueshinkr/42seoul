@@ -4,6 +4,14 @@
 		"libft.h": "c",
 		"string.h": "c",
 		"unistd.h": "c",
+<<<<<<< HEAD
 		"get_next_line_bonus.h": "c"
+=======
+		"get_next_line.h": "c",
+		"fcntl.h": "c",
+		"stdio.h": "c",
+		"stdlib.h": "c",
+		"random": "c"
+>>>>>>> 42969fa78f6c65623e50bc77be9eee66c8b871a0
 	}
 }
