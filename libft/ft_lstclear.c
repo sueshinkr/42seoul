@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 23:31:05 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/28 17:06:01 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/29 15:07:15 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 		*lst = (*lst)->next;
 		ft_lstdelone(cur, del);
 	}
-	*lst = NULL;
+	lst = NULL;
 }
