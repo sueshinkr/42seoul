@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 19:26:14 by sueshin           #+#    #+#             */
-/*   Updated: 2022/04/21 00:51:49 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/04/21 11:34:54 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*check_remain(int fd, char *remain)
 		buff[read_idx] = '\0';
 		if (!remain)
 			remain = ft_strdup(buff);
-		else //if (!ft_strchr(remain, '\n'))
+		else
 		{	
 			temp = ft_strjoin(remain, buff);
 			free(remain);
