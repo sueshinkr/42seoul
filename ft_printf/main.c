@@ -67,7 +67,7 @@ int main()
 	ft_printf("-0.");
 */
 
-	printf("%010%:\n");
+	printf("%+05%:\n");
 	printf("%10s:\n", "123456");
 	printf("%+12.10d:\n", 123456);
 	printf("%+4.10d:\n", 123456);
@@ -75,3 +75,4 @@ int main()
 	printf("xpt : %#-4x,%#-5.*x|\n", 0, 2, 1);
 	return (0);
 }
+

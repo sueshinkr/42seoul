@@ -1,38 +1,80 @@
 #include "ft_printf.h"
 
-/*
-static void select_flag(const char *str, va_list *ap, int *count)
+int	dop(const char *str)
 {
+	int	dop;
+
+	dop = 0;
+	while (*str >= '0' && *str <= '9')
+	{
+		dop = dop * 10 + *str - '0';
+		str++;
+	}
+	str--;
+	return (dop);
+}
+
+int	width(const char *str)
+{
+	int	width;
+
+	width = 0;
+	while (*str >= '0' && *str <= '9')
+	{
+		width = width * 10 + *str - '0';
+		str++;
+	}
+	str--;
+	return (width);
+}
+
+
+void	select_flag(const char *str, va_list *ap, int *count)
+{
+	int	flag[7];
+
+	while (!ft_strchr("cspdiuxX%%", *str))
+	{
+		if (*str == '-')
+			flag[0] = 1;
+		else if (*str == '0')
+			flag[1] = 1;
+		else if (*str == '#')
+			flag[2] = 1;
+		else if (*str == ' ')
+			flag[3] = 1;
+		else if (*str == '+')
+			flag[4] = 1;
+		else if (*str == '.')
+			flag[5] = dop(str);
+		else
+			flag[6] = width(str);
+		str++;
+	}
+	select_format(str, ap, count, flag);
 //%[플래그][폭][.정밀도][길이]서식지정자
 }
-*/
 
-
-void select_format(const char *str, va_list *ap, int *count)
+void	select_format(const char *str, va_list *ap, int *count, int *flag)
 {
-	//if (ft_strchr("-0.# +", *str))
-	//	select_flag(str, ap, count);
 	if (*str == 'c')
-		print_char(ap, count);
+		print_char(ap, count, flag);
 	else if (*str == 's')
-		print_str(ap, count);
+		print_str(ap, count, flag);
 	else if (*str == 'p')
-		print_pointer(ap, count);
+		print_pointer(ap, count, flag);
 	else if (*str == 'd')
-		print_decimal(ap, count);
+		print_decimal(ap, count, flag);
 	else if (*str == 'i')
-		print_integer(ap, count);
+		print_integer(ap, count, flag);
 	else if (*str == 'u')
-		print_unsigned_decimal(ap, count);
+		print_unsigned_decimal(ap, count, flag);
 	else if (*str == 'x')
-		print_hex_small(ap, count);
+		print_hex_small(ap, count, flag);
 	else if (*str == 'X')
-		print_hex_big(ap, count);
+		print_hex_big(ap, count, flag);
 	else if (*str == '%')
-	{
-		write(1, "%", 1);
-		(*count)++;
-	}
+		print_percent(ap, count, flag);
 	return ;
 }
 
@@ -50,7 +92,8 @@ int ft_printf(const char *str, ...)
 			str++;
 		else if (*str == '%')
 		{
-			select_format(++str, &ap, &count);
+			select_flag(++str, &ap, &count);
+			//select_format(++str, &ap, &count);
 			str++;
 		}
 		else
@@ -73,12 +116,12 @@ va_end: 가변 인자 처리가 끝났을 때 포인터를 NULL로 초기화합�
 "" : 문자열 상수
 printf("hello %s, %d\n", str, num);
 
-
 */
 
-
-
 /*
+
+"-0# +."
+
 1. 문자열 읽으면서 %찾기
 2. %찾으면 플래그찾기로 이동
 3. 각각의 플래그 존재여부 및 폭, 정밀도 저장
