@@ -1,79 +1,89 @@
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
+#include "libft.h"
 
-int	dop(const char *str)
+int	dop(char **str)
 {
 	int	dop;
 
 	dop = 0;
-	while (*str >= '0' && *str <= '9')
+	(*str)++;
+	if (*(*str) >= '0' && *(*str) <= '9')
 	{
-		dop = dop * 10 + *str - '0';
-		str++;
+		while (*(*str) >= '0' && *(*str) <= '9')
+		{
+			dop = dop * 10 + *(*str) - '0';
+			(*str)++;
+		}
+		(*str)--;
+		return (dop);
 	}
-	str--;
-	return (dop);
+	(*str)--;
+	return (1);
 }
 
-int	width(const char *str)
+int	width(char **str)
 {
 	int	width;
 
 	width = 0;
-	while (*str >= '0' && *str <= '9')
 	{
-		width = width * 10 + *str - '0';
-		str++;
+		while (*(*str) >= '0' && *(*str) <= '9')
+		{
+			width = width * 10 + *(*str) - '0';
+			(*str)++;
+		}
+		(*str)--;
 	}
-	str--;
 	return (width);
 }
 
 
-void	select_flag(const char *str, va_list *ap, int *count)
+void	select_flag(char **str, va_list *ap, int *count)
 {
 	int	flag[7];
 
-	while (!ft_strchr("cspdiuxX%%", *str))
+	ft_memset(flag, 0, sizeof(flag));
+	while (!ft_strchr("cspdiuxX%%", *(*str)))
 	{
-		if (*str == '-')
+		if (*(*str) == '-')
 			flag[0] = 1;
-		else if (*str == '0')
+		else if (*(*str) == '0')
 			flag[1] = 1;
-		else if (*str == '#')
+		else if (*(*str) == '#')
 			flag[2] = 1;
-		else if (*str == ' ')
+		else if (*(*str) == ' ')
 			flag[3] = 1;
-		else if (*str == '+')
+		else if (*(*str) == '+')
 			flag[4] = 1;
-		else if (*str == '.')
+		else if (*(*str) == '.')
 			flag[5] = dop(str);
 		else
 			flag[6] = width(str);
-		str++;
+		(*str)++;
 	}
 	select_format(str, ap, count, flag);
 //%[플래그][폭][.정밀도][길이]서식지정자
 }
 
-void	select_format(const char *str, va_list *ap, int *count, int *flag)
+void	select_format(char **str, va_list *ap, int *count, int *flag)
 {
-	if (*str == 'c')
+	if (*(*str) == 'c')
 		print_char(ap, count, flag);
-	else if (*str == 's')
+	else if (*(*str) == 's')
 		print_str(ap, count, flag);
-	else if (*str == 'p')
+	else if (*(*str) == 'p')
 		print_pointer(ap, count, flag);
-	else if (*str == 'd')
+	else if (*(*str) == 'd')
 		print_decimal(ap, count, flag);
-	else if (*str == 'i')
+	else if (*(*str) == 'i')
 		print_integer(ap, count, flag);
-	else if (*str == 'u')
+	else if (*(*str) == 'u')
 		print_unsigned_decimal(ap, count, flag);
-	else if (*str == 'x')
+	else if (*(*str) == 'x')
 		print_hex_small(ap, count, flag);
-	else if (*str == 'X')
+	else if (*(*str) == 'X')
 		print_hex_big(ap, count, flag);
-	else if (*str == '%')
+	else if (*(*str) == '%')
 		print_percent(ap, count, flag);
 	return ;
 }
@@ -92,7 +102,8 @@ int ft_printf(const char *str, ...)
 			str++;
 		else if (*str == '%')
 		{
-			select_flag(++str, &ap, &count);
+			str++;
+			select_flag(&(str), &ap, &count);
 			//select_format(++str, &ap, &count);
 			str++;
 		}

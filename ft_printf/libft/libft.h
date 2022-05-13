@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:29:41 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/28 17:27:10 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/05/13 11:43:17 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		ft_atoi(const char	*str);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strdup(const char *src);
 char	*ft_substr(char const *str, unsigned int start, size_t len);
-char	*ft_strjoin(char const *str1, char const *str2);
+char	*ft_strjoin(char *str1, char *str2);
 char	*ft_strtrim(char const *str, char const *set);
 char	**ft_split(char const *str, char c);
 char	*ft_itoa(int n);

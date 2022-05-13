@@ -1,6 +1,6 @@
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
-void	print_char(va_list *ap, int *count)
+void	print_char(va_list *ap, int *count, int *flag)
 {
 	char	chr;
 
@@ -9,7 +9,7 @@ void	print_char(va_list *ap, int *count)
 	(*count)++;
 }
 
-void	print_str(va_list *ap, int *count)
+void	print_str(va_list *ap, int *count, int *flag)
 {
 	char	*str;
 
@@ -29,7 +29,7 @@ void	print_str(va_list *ap, int *count)
 	}
 }
 
-void	print_pointer(va_list *ap, int *count)
+void	print_pointer(va_list *ap, int *count, int *flag)
 {
 	unsigned long long	address;
 

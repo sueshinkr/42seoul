@@ -1,22 +1,29 @@
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 #include "libft.h"
 
-void	numtohex(long long num, int bigorsmall, int *count)
+int	cal_count_16(unsigned int n)
 {
-	long long	temp;
-	int			idx;
-	char		*hex;
+	int				count;
 
-	idx = 0;
-	temp = num;
-	while (temp > 0)
+	count = -1;
+	if (n == 0)
+		count++;
+	while (n > 0)
 	{
-		temp /= 16;
-		idx++;
+		n /= 16;
+		count++;
 	}
-	temp = idx;
-	hex = (char *)malloc(idx-- * sizeof(char));
-	while (num > 0)
+	return (count);
+}
+
+char	*numtohex(unsigned int num, int bigorsmall)
+{
+	char		*hex;
+	int			idx;
+
+	idx = cal_count_16(num);
+	hex = (char *)malloc((idx + 1) * sizeof(char));
+	while (idx >= 0)
 	{
 		if (bigorsmall == 2)
 			hex[idx--] = "0123456789abcdef"[num % 16];
@@ -24,37 +31,139 @@ void	numtohex(long long num, int bigorsmall, int *count)
 			hex[idx--] = "0123456789ABCDEF"[num % 16];
 		num /= 16;
 	}
-	write(1, hex, temp);
-	*count += temp;
-	free(hex);
+	return (hex);
 }
 
-void	print_hex_small(va_list *ap, int *count)
+void	print_hex_small(va_list *ap, int *count, int *flag)
 {
 	unsigned int	num;
+	char			*buf;
+	char			*temp;
  
 	num = va_arg(*ap, unsigned int);
-	if (num == 0)
+	buf = numtohex(num, 2);
+	if (flag[5] > ft_strlen(buf)) // dop
 	{
-		write(1, "0", 1);
-		(*count)++;
-		return ;
+		temp = (char *)calloc(flag[5] - ft_strlen(buf) + 1, sizeof(char));
+		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
+		buf = ft_strjoin(temp, buf);
 	}
-	numtohex(num, 2, count);
+	if (flag[6] > ft_strlen(buf)) // width
+	{
+		if (flag[0] == 1) // '-'
+		{
+			if (flag[2] == 1 && ft_atoi(buf)) // '#'
+				buf = ft_strjoin(ft_strdup("0x"), buf);
+			if (flag[6] > ft_strlen(buf))
+			{
+				temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
+				ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
+				buf = ft_strjoin(buf, temp);
+			}
+		}
+		else if (flag[1] == 1) // '0'
+		{
+			if (flag[5] > 0) // dop
+			{
+				if (flag[2] == 1) // '#'
+					buf = ft_strjoin(ft_strdup("0x"), buf);
+				temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
+				ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
+				buf = ft_strjoin(temp, buf);
+			}
+			else
+			{
+				if (flag[2] == 1) // #
+				{
+					temp = (char *)calloc(flag[6] - ft_strlen(buf) - 1, sizeof(char)); 
+					ft_memset(temp, '0', flag[6] - ft_strlen(buf) - 2);
+					buf = ft_strjoin(temp, buf);
+					buf = ft_strjoin(ft_strdup("0x"), buf);
+				}
+				else
+				{
+					temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
+					ft_memset(temp, '0', flag[6] - ft_strlen(buf));
+					buf = ft_strjoin(temp, buf);
+				}
+			}
+		}
+	}
+	else
+	{
+		if (flag[2] == 1 && ft_atoi(buf))
+			buf = ft_strjoin(ft_strdup("0x"), buf);
+	}
+	write(1, buf, ft_strlen(buf));
+	*count += ft_strlen(buf);
+	free(buf);
 }
 
-void	print_hex_big(va_list *ap, int *count)
+void	print_hex_big(va_list *ap, int *count, int *flag)
 {
 	unsigned int	num;
-
+	char			*buf;
+	char			*temp;
+ 
 	num = va_arg(*ap, unsigned int);
-	if (num == 0)
+	buf = numtohex(num, 1);
+	if (flag[5] > ft_strlen(buf)) // dop
 	{
-		write(1, "0", 1);
-		(*count)++;
-		return ;
+		temp = (char *)calloc(flag[5] - ft_strlen(buf) + 1, sizeof(char));
+		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
+		buf = ft_strjoin(temp, buf);
 	}
-	numtohex(num, 1, count);
+	if (flag[6] > ft_strlen(buf)) // width
+	{
+		if (flag[0] == 1) // '-'
+		{
+			if (flag[2] == 1 && ft_atoi(buf)) // '#'
+			// atoi 16진수버전 만들기
+			// libft 귀찮은데 버리기?
+				buf = ft_strjoin(ft_strdup("0x"), buf);
+			if (flag[6] > ft_strlen(buf))
+			{
+				temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
+				ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
+				buf = ft_strjoin(buf, temp);
+			}
+		}
+		else if (flag[1] == 1) // '0'
+		{
+			if (flag[5] > 0) // dop
+			{
+				if (flag[2] == 1) // '#'
+					buf = ft_strjoin(ft_strdup("0x"), buf);
+				temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
+				ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
+				buf = ft_strjoin(temp, buf);
+			}
+			else
+			{
+				if (flag[2] == 1) // #
+				{
+					temp = (char *)calloc(flag[6] - ft_strlen(buf) - 1, sizeof(char)); 
+					ft_memset(temp, '0', flag[6] - ft_strlen(buf) - 2);
+					buf = ft_strjoin(temp, buf);
+					buf = ft_strjoin(ft_strdup("0x"), buf);
+				}
+				else
+				{
+					temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
+					ft_memset(temp, '0', flag[6] - ft_strlen(buf));
+					buf = ft_strjoin(temp, buf);
+				}
+			}
+		}
+	}
+	else
+	{
+		if (flag[2] == 1 && ft_atoi(buf))
+			buf = ft_strjoin(ft_strdup("0x"), buf);
+	}
+		write(1, buf, ft_strlen(buf));
+		*count += ft_strlen(buf);
+		free(buf);
 }
 
 void	print_percent(va_list *ap, int *count, int *flag)
@@ -74,8 +183,13 @@ void	print_percent(va_list *ap, int *count, int *flag)
 			ft_memset(buf, '0', sizeof(buf));
 			buf[flag[6] - 1] = '%';
 		}
+		write(1, buf, flag[6]);
+		free(buf);
+		*count += flag[6];
 	}
-	write(1, buf, flag[6]);
-	free(buf);
-	*count += flag[6];
+	else
+	{
+		write(1, "%%", 1);
+		(*count)++;
+	}
 }

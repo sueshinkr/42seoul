@@ -1,4 +1,4 @@
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 #include "libft.h"
 
 int	cal_count(long long n)
@@ -38,7 +38,7 @@ char	*ft_uitoa(unsigned int n)
 	return (str);
 }
 
-void	print_decimal(va_list *ap, int *count)
+void	print_decimal(va_list *ap, int *count, int *flag)
 {
 	int		decimal;
 	int		idx;
@@ -55,7 +55,7 @@ void	print_decimal(va_list *ap, int *count)
 	free(decimal_char);
 }
 
-void	print_integer(va_list *ap, int *count)
+void	print_integer(va_list *ap, int *count, int *flag)
 {
 	int		integer;
 	int		idx;
@@ -72,7 +72,7 @@ void	print_integer(va_list *ap, int *count)
 	free(integer_char);
 }
 
-void	print_unsigned_decimal(va_list *ap, int *count)
+void	print_unsigned_decimal(va_list *ap, int *count, int *flag)
 {
 	unsigned int	unsigned_decimal;
 	int				idx;

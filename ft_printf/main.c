@@ -67,12 +67,23 @@ int main()
 	ft_printf("-0.");
 */
 
-	printf("%+05%:\n");
+/*
+	printf("%1%:\n");
 	printf("%10s:\n", "123456");
 	printf("%+12.10d:\n", 123456);
 	printf("%+4.10d:\n", 123456);
-	printf("%0#10x:\n", 123456);
-	printf("xpt : %#-4x,%#-5.*x|\n", 0, 2, 1);
+	printf("%0#15.x:\n", 123456);
+	ft_printf("%0#15.x:\n", 123456);
+	printf("xpt : %#-4x|\n", 1);
+	ft_printf("xpt : %#-4x|\n", 1);
+	printf("%#-11.10x|\n", 1);
+	ft_printf("%#-11.10x|\n", 1);
+*/
+
+	printf(" %#x :\n", 0);
+	ft_printf(" %#x :\n", 0);
+	printf(" %#x :\n", -1);
+	ft_printf(" %#x :\n", -1);
 	return (0);
 }
 
