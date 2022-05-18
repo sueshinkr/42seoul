@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:33:34 by sueshin           #+#    #+#             */
-/*   Updated: 2022/05/13 13:20:46 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/05/18 20:37:49 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ void	print_hex_small(va_list *ap, int *count, int *flag);
 void	print_hex_big(va_list *ap, int *count, int *flag);
 int		cal_count_16(unsigned int n);
 char	*numtohex(unsigned int num, int bigorsmall);
+char	*hex_case_minus(int *flag, char *buf, int bigorsmall);
+char	*hex_case_zero1(int *flag, char *buf, int bigorsmall);
+char	*hex_case_zero2(int *flag, char *buf, int bigorsmall);
+char	*hex_case_nowidth(int *flag, char *buf, int bigorsmall);
 void	print_percent(va_list *ap, int *count, int *flag);
 
 #endif
