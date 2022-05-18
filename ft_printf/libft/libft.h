@@ -6,14 +6,13 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:29:41 by sueshin           #+#    #+#             */
-/*   Updated: 2022/05/13 11:43:17 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/05/18 19:15:07 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 

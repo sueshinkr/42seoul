@@ -5,9 +5,9 @@ int	cal_count_16(unsigned int n)
 {
 	int				count;
 
-	count = -1;
+	count = 0;
 	if (n == 0)
-		count++;
+		count = 1;
 	while (n > 0)
 	{
 		n /= 16;
@@ -23,6 +23,7 @@ char	*numtohex(unsigned int num, int bigorsmall)
 
 	idx = cal_count_16(num);
 	hex = (char *)malloc((idx + 1) * sizeof(char));
+	hex[idx--] = 0;
 	while (idx >= 0)
 	{
 		if (bigorsmall == 2)
@@ -52,7 +53,7 @@ void	print_hex_small(va_list *ap, int *count, int *flag)
 	{
 		if (flag[0] == 1) // '-'
 		{
-			if (flag[2] == 1 && ft_atoi(buf)) // '#'
+			if (flag[2] == 1 && ft_strncmp(buf, "0", sizeof(buf))) // '#'
 				buf = ft_strjoin(ft_strdup("0x"), buf);
 			if (flag[6] > ft_strlen(buf))
 			{
@@ -91,7 +92,7 @@ void	print_hex_small(va_list *ap, int *count, int *flag)
 	}
 	else
 	{
-		if (flag[2] == 1 && ft_atoi(buf))
+		if (flag[2] == 1 && ft_strncmp(buf, "0", sizeof(buf)))
 			buf = ft_strjoin(ft_strdup("0x"), buf);
 	}
 	write(1, buf, ft_strlen(buf));
@@ -117,9 +118,7 @@ void	print_hex_big(va_list *ap, int *count, int *flag)
 	{
 		if (flag[0] == 1) // '-'
 		{
-			if (flag[2] == 1 && ft_atoi(buf)) // '#'
-			// atoi 16진수버전 만들기
-			// libft 귀찮은데 버리기?
+			if (flag[2] == 1 && ft_strncmp(buf, "0", sizeof(buf))) // '#'
 				buf = ft_strjoin(ft_strdup("0x"), buf);
 			if (flag[6] > ft_strlen(buf))
 			{
@@ -133,7 +132,7 @@ void	print_hex_big(va_list *ap, int *count, int *flag)
 			if (flag[5] > 0) // dop
 			{
 				if (flag[2] == 1) // '#'
-					buf = ft_strjoin(ft_strdup("0x"), buf);
+					buf = ft_strjoin(ft_strdup("0X"), buf);
 				temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
 				ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
 				buf = ft_strjoin(temp, buf);
@@ -145,7 +144,7 @@ void	print_hex_big(va_list *ap, int *count, int *flag)
 					temp = (char *)calloc(flag[6] - ft_strlen(buf) - 1, sizeof(char)); 
 					ft_memset(temp, '0', flag[6] - ft_strlen(buf) - 2);
 					buf = ft_strjoin(temp, buf);
-					buf = ft_strjoin(ft_strdup("0x"), buf);
+					buf = ft_strjoin(ft_strdup("0X"), buf);
 				}
 				else
 				{
@@ -158,12 +157,12 @@ void	print_hex_big(va_list *ap, int *count, int *flag)
 	}
 	else
 	{
-		if (flag[2] == 1 && ft_atoi(buf))
-			buf = ft_strjoin(ft_strdup("0x"), buf);
+		if (flag[2] == 1 && ft_strncmp(buf, "0", sizeof(buf)))
+			buf = ft_strjoin(ft_strdup("0X"), buf);
 	}
-		write(1, buf, ft_strlen(buf));
-		*count += ft_strlen(buf);
-		free(buf);
+	write(1, buf, ft_strlen(buf));
+	*count += ft_strlen(buf);
+	free(buf);
 }
 
 void	print_percent(va_list *ap, int *count, int *flag)

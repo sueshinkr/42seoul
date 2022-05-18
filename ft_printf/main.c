@@ -80,10 +80,12 @@ int main()
 	ft_printf("%#-11.10x|\n", 1);
 */
 
-	printf(" %#x :\n", 0);
-	ft_printf(" %#x :\n", 0);
-	printf(" %#x :\n", -1);
-	ft_printf(" %#x :\n", -1);
+	//printf(" %#x :\n", 0);
+	//ft_printf(" %#x :\n", 0);
+	printf(" %#X :\n", -1);
+	ft_printf(" %#X :\n", -1);
+	printf(" %#X :\n", 1);
+	ft_printf(" %#X :\n", 1);
 	return (0);
 }
 
