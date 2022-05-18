@@ -6,12 +6,13 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 13:22:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/27 01:47:33 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/03/29 16:24:49 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
 static int	set_start(char const *str, char const *set)
 {
 	int	i;
@@ -69,6 +70,28 @@ char	*ft_strtrim(char const *str, char const *set)
 	result = trimstr;
 	while (end_i - start_i + 1 > 0)
 		*trimstr++ = *(str + start_i++);
+	*trimstr = 0;
+	return (result);
+}
+*/
+
+char	*ft_strtrim(char const *str, char const *set)
+{
+	char	*trimstr;
+	char	*result;
+	char	*start;
+	char	*end;
+
+	start = ft_strchr(str, (int)set);
+	end = ft_strrchr(str, (int)set);
+	if (start > end)
+		return (ft_strdup(""));
+	trimstr = (char *)malloc((end - start + 2) * sizeof(char));
+	if (!trimstr)
+		return (NULL);
+	result = trimstr;
+	while (end - start + 1 > 0)
+		*trimstr++ = *start++;
 	*trimstr = 0;
 	return (result);
 }

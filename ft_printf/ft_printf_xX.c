@@ -45,7 +45,7 @@ void	print_hex_small(va_list *ap, int *count)
 void	print_hex_big(va_list *ap, int *count)
 {
 	unsigned int	num;
- 
+
 	num = va_arg(*ap, unsigned int);
 	if (num == 0)
 	{
