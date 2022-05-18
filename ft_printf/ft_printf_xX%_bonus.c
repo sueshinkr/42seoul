@@ -1,5 +1,4 @@
 #include "ft_printf_bonus.h"
-#include "libft.h"
 
 int	cal_count_16(unsigned int n)
 {
@@ -35,71 +34,6 @@ char	*numtohex(unsigned int num, int bigorsmall)
 	return (hex);
 }
 
-void	print_hex_small(va_list *ap, int *count, int *flag)
-{
-	unsigned int	num;
-	char			*buf;
-	char			*temp;
- 
-	num = va_arg(*ap, unsigned int);
-	buf = numtohex(num, 2);
-	if (flag[5] > ft_strlen(buf)) // dop
-	{
-		temp = (char *)calloc(flag[5] - ft_strlen(buf) + 1, sizeof(char));
-		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
-		buf = ft_strjoin(temp, buf);
-	}
-	if (flag[6] > ft_strlen(buf)) // width
-	{
-		if (flag[0] == 1) // '-'
-		{
-			if (flag[2] == 1 && ft_strncmp(buf, "0", sizeof(buf))) // '#'
-				buf = ft_strjoin(ft_strdup("0x"), buf);
-			if (flag[6] > ft_strlen(buf))
-			{
-				temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
-				ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
-				buf = ft_strjoin(buf, temp);
-			}
-		}
-		else if (flag[1] == 1) // '0'
-		{
-			if (flag[5] > 0) // dop
-			{
-				if (flag[2] == 1) // '#'
-					buf = ft_strjoin(ft_strdup("0x"), buf);
-				temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
-				ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
-				buf = ft_strjoin(temp, buf);
-			}
-			else
-			{
-				if (flag[2] == 1) // #
-				{
-					temp = (char *)calloc(flag[6] - ft_strlen(buf) - 1, sizeof(char)); 
-					ft_memset(temp, '0', flag[6] - ft_strlen(buf) - 2);
-					buf = ft_strjoin(temp, buf);
-					buf = ft_strjoin(ft_strdup("0x"), buf);
-				}
-				else
-				{
-					temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
-					ft_memset(temp, '0', flag[6] - ft_strlen(buf));
-					buf = ft_strjoin(temp, buf);
-				}
-			}
-		}
-	}
-	else
-	{
-		if (flag[2] == 1 && ft_strncmp(buf, "0", sizeof(buf)))
-			buf = ft_strjoin(ft_strdup("0x"), buf);
-	}
-	write(1, buf, ft_strlen(buf));
-	*count += ft_strlen(buf);
-	free(buf);
-}
-
 void	print_hex_big(va_list *ap, int *count, int *flag)
 {
 	unsigned int	num;
@@ -117,49 +51,40 @@ void	print_hex_big(va_list *ap, int *count, int *flag)
 	if (flag[6] > ft_strlen(buf)) // width
 	{
 		if (flag[0] == 1) // '-'
-		{
-			if (flag[2] == 1 && ft_strncmp(buf, "0", sizeof(buf))) // '#'
-				buf = ft_strjoin(ft_strdup("0x"), buf);
-			if (flag[6] > ft_strlen(buf))
-			{
-				temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
-				ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
-				buf = ft_strjoin(buf, temp);
-			}
-		}
+			buf = hex_case_minus(flag, buf, 1);
 		else if (flag[1] == 1) // '0'
-		{
-			if (flag[5] > 0) // dop
-			{
-				if (flag[2] == 1) // '#'
-					buf = ft_strjoin(ft_strdup("0X"), buf);
-				temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
-				ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
-				buf = ft_strjoin(temp, buf);
-			}
-			else
-			{
-				if (flag[2] == 1) // #
-				{
-					temp = (char *)calloc(flag[6] - ft_strlen(buf) - 1, sizeof(char)); 
-					ft_memset(temp, '0', flag[6] - ft_strlen(buf) - 2);
-					buf = ft_strjoin(temp, buf);
-					buf = ft_strjoin(ft_strdup("0X"), buf);
-				}
-				else
-				{
-					temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char)); 
-					ft_memset(temp, '0', flag[6] - ft_strlen(buf));
-					buf = ft_strjoin(temp, buf);
-				}
-			}
-		}
+			buf = hex_case_zero1(flag, buf, 1);
 	}
 	else
+		buf = hex_case_nowidth(flag, buf, 1);
+	write(1, buf, ft_strlen(buf));
+	*count += ft_strlen(buf);
+	free(buf);
+}
+
+void	print_hex_small(va_list *ap, int *count, int *flag)
+{
+	unsigned int	num;
+	char			*buf;
+	char			*temp;
+ 
+	num = va_arg(*ap, unsigned int);
+	buf = numtohex(num, 2);
+	if (flag[5] > ft_strlen(buf)) // dop
 	{
-		if (flag[2] == 1 && ft_strncmp(buf, "0", sizeof(buf)))
-			buf = ft_strjoin(ft_strdup("0X"), buf);
+		temp = (char *)calloc(flag[5] - ft_strlen(buf) + 1, sizeof(char));
+		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
+		buf = ft_strjoin(temp, buf);
 	}
+	if (flag[6] > ft_strlen(buf)) // width
+	{
+		if (flag[0] == 1) // '-'
+			buf = hex_case_minus(flag, buf, 2);
+		else if (flag[1] == 1) // '0'
+			buf = hex_case_zero1(flag, buf, 2);
+	}
+	else
+		buf = hex_case_nowidth(flag, buf, 2);
 	write(1, buf, ft_strlen(buf));
 	*count += ft_strlen(buf);
 	free(buf);
