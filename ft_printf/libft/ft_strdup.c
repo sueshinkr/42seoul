@@ -6,11 +6,12 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 20:34:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/03/26 15:14:01 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/05/23 22:04:22 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 char	*ft_strdup(const char *src)
 {

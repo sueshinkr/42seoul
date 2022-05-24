@@ -1,5 +1,4 @@
 #include "ft_printf_bonus.h"
-#include "libft.h"
 
 int	dop(char **str)
 {
@@ -40,7 +39,7 @@ int	width(char **str)
 
 void	select_flag(char **str, va_list *ap, int *count)
 {
-	int	flag[7];
+	size_t	flag[7];
 
 	ft_memset(flag, 0, sizeof(flag));
 	while (!ft_strchr("cspdiuxX%%", *(*str)))
@@ -65,7 +64,7 @@ void	select_flag(char **str, va_list *ap, int *count)
 //%[플래그][폭][.정밀도][길이]서식지정자
 }
 
-void	select_format(char **str, va_list *ap, int *count, int *flag)
+void	select_format(char **str, va_list *ap, int *count, size_t *flag)
 {
 	if (*(*str) == 'c')
 		print_char(ap, count, flag);

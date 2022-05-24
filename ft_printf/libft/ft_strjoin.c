@@ -6,11 +6,12 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:41:07 by sueshin           #+#    #+#             */
-/*   Updated: 2022/05/18 19:10:22 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/05/23 22:04:28 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 char	*ft_strjoin(char *str1, char *str2)
 {

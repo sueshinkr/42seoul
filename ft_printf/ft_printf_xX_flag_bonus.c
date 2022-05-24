@@ -1,6 +1,6 @@
 #include "ft_printf_bonus.h"
 
-char	*hex_case_minus(int *flag, char *buf, int bigorsmall)
+char	*hex_case_minus(size_t *flag, char *buf, int bigorsmall)
 {
 	char	*temp;
 
@@ -20,7 +20,7 @@ char	*hex_case_minus(int *flag, char *buf, int bigorsmall)
 	return (buf);
 }
 
-char	*hex_case_zero1(int *flag, char *buf, int bigorsmall)
+char	*hex_case_zero1(size_t *flag, char *buf, int bigorsmall)
 {
 	char	*temp;
 
@@ -42,7 +42,7 @@ char	*hex_case_zero1(int *flag, char *buf, int bigorsmall)
 	return (buf);
 }
 
-char	*hex_case_zero2(int *flag, char *buf, int bigorsmall)
+char	*hex_case_zero2(size_t *flag, char *buf, int bigorsmall)
 {
 	char	*temp;
 
@@ -65,14 +65,14 @@ char	*hex_case_zero2(int *flag, char *buf, int bigorsmall)
 	return (buf);
 }
 
-char	*hex_case_nowidth(int *flag, char *buf, int bigorsmall)
+char	*hex_case_nowidth(size_t *flag, char *buf, int bigorsmall)
 {
 	if (flag[2] == 1 && ft_strncmp(buf, "0", sizeof(buf)))
 	{
 		if (bigorsmall == 1)
-				buf = ft_strjoin(ft_strdup("0X"), buf);
+			buf = ft_strjoin(ft_strdup("0X"), buf);
 		else
-				buf = ft_strjoin(ft_strdup("0x"), buf);
+			buf = ft_strjoin(ft_strdup("0x"), buf);
 	}
 	return (buf);
 }

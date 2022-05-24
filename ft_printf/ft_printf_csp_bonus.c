@@ -1,15 +1,35 @@
 #include "ft_printf_bonus.h"
 
-void	print_char(va_list *ap, int *count, int *flag)
+void	print_char(va_list *ap, int *count, size_t *flag)
 {
-	char	chr;
 
-	chr = va_arg(*ap, int);
-	write(1, &chr, 1);
+	char	buf;
+	char	*temp;
+
+	buf = va_arg(*ap, int);
+	if (flag[6] > 1) // width
+	{
+		temp = (char *)calloc(flag[6], sizeof(char));
+		ft_memset(temp, ' ', flag[6] - 1);
+		if (flag[0] == 1) // '-'
+		{
+			write(1, &buf, 1);
+			write(1, temp, ft_strlen(temp));
+		}
+		else
+		{
+			write(1, temp, ft_strlen(temp));
+			write(1, &buf, 1);
+		}
+		*count += ft_strlen(temp);
+		free(temp);
+	}
+	else
+		write(1, &buf, 1);
 	(*count)++;
 }
 
-void	print_str(va_list *ap, int *count, int *flag)
+void	print_str(va_list *ap, int *count, size_t *flag)
 {
 	char	*str;
 
@@ -29,7 +49,7 @@ void	print_str(va_list *ap, int *count, int *flag)
 	}
 }
 
-void	print_pointer(va_list *ap, int *count, int *flag)
+void	print_pointer(va_list *ap, int *count, size_t *flag)
 {
 	unsigned long long	address;
 

@@ -34,12 +34,12 @@ char	*numtohex(unsigned int num, int bigorsmall)
 	return (hex);
 }
 
-void	print_hex_big(va_list *ap, int *count, int *flag)
+void	print_hex_big(va_list *ap, int *count, size_t *flag)
 {
 	unsigned int	num;
 	char			*buf;
 	char			*temp;
- 
+
 	num = va_arg(*ap, unsigned int);
 	buf = numtohex(num, 1);
 	if (flag[5] > ft_strlen(buf)) // dop
@@ -62,7 +62,7 @@ void	print_hex_big(va_list *ap, int *count, int *flag)
 	free(buf);
 }
 
-void	print_hex_small(va_list *ap, int *count, int *flag)
+void	print_hex_small(va_list *ap, int *count, size_t *flag)
 {
 	unsigned int	num;
 	char			*buf;
@@ -90,7 +90,7 @@ void	print_hex_small(va_list *ap, int *count, int *flag)
 	free(buf);
 }
 
-void	print_percent(va_list *ap, int *count, int *flag)
+void	print_percent(va_list *ap, int *count, size_t *flag)
 {
 	char	*buf;
 
