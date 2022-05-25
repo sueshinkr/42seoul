@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:33:34 by sueshin           #+#    #+#             */
-/*   Updated: 2022/05/24 20:03:36 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/05/25 19:55:01 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 
+char	*ft_substr(char *str, unsigned int start, size_t len);
 char	*ft_strjoin(char *str1, char *str2);
 int		ft_strncmp(const char *str1, const char *str2, size_t size);
 char	*ft_strdup(const char *src);
@@ -46,8 +47,8 @@ char	*numtohex(unsigned int num, int bigorsmall);
 void	print_hex_small(va_list *ap, int *count, size_t *flag);
 void	print_hex_big(va_list *ap, int *count, size_t *flag);
 char	*hex_case_minus(size_t *flag, char *buf, int bigorsmall);
-char	*hex_case_zero1(size_t *flag, char *buf, int bigorsmall);
-char	*hex_case_zero2(size_t *flag, char *buf, int bigorsmall);
+char	*hex_case_zero(size_t *flag, char *buf, int bigorsmall);
+char	*hex_case_onlywidth(size_t *flag, char *buf, int bigorsmall);
 char	*hex_case_nowidth(size_t *flag, char *buf, int bigorsmall);
 
 

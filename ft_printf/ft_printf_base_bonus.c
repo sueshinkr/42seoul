@@ -14,7 +14,7 @@ int	dop(char **str)
 			(*str)++;
 		}
 		(*str)--;
-		return (dop);
+		return (dop + 1);
 	}
 	(*str)--;
 	return (1);

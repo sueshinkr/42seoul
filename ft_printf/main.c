@@ -66,18 +66,14 @@ int main()
 	ft_printf("-0.");
 */
 
-/*
-	printf("%1%:\n");
-	printf("%10s:\n", "123456");
-	printf("%+12.10d:\n", 123456);
-	printf("%+4.10d:\n", 123456);
-	printf("%0#15.x:\n", 123456);
-	ft_printf("%0#15.x:\n", 123456);
-	printf("xpt : %#-4x|\n", 1);
-	ft_printf("xpt : %#-4x|\n", 1);
-	printf("%#-11.10x|\n", 1);
-	ft_printf("%#-11.10x|\n", 1);
-*/
+
+	printf("%#15x:\n", 123456);
+	ft_printf("%#15.x:\n", 123456);
+	//printf("xpt : %#-4x|\n", 1);
+	//ft_printf("xpt : %#-4x|\n", 1);
+	//printf("%#-11.10x|\n", 1);
+	//ft_printf("%#-11.10x|\n", 1);
+
 
 /*
 	printf(" %#x :\n", 0);
@@ -95,19 +91,14 @@ int main()
 	ft_printf(" %5d \n", -1);
 */
 
-
-	//printf("pt:%-1c:\n", 0);
-	//ft_printf("ft:%-1c:\n", 0);
+/*
+	printf("pt:%-1c:\n", 0);
+	ft_printf("ft:%-1c:\n", 0);
 	printf(" pt:%5c:\n", '0');
 	ft_printf(" ft:%5c:\n", '0');
-
-	
-
-/*
 	printf("%d\n", printf(" %-1c:%-2c:%-3c:\n", '0', 0, '1'));
 	fflush(stdout);
 	printf("%d\n", ft_printf(" ft%-1c:%-2c:%-3c:\n", '0', 0, '1'));
-
 	printf(" %-1c:%-2c:%-3c:\n", '2', '1', 0);
 	fflush(stdout);
 	ft_printf(" ft:%-1c:%-2c:%-3c:\n", '2', '1', 0);
@@ -115,5 +106,11 @@ int main()
 	fflush(stdout);
 	ft_printf(" ft:%-1c:%-2c:%-3c:\n", 0, '1', '2');
 */
+
+	//printf("%-10.s:\n", "abcde");
+	//ft_printf("%-10.s:\n", "abcde");
+	printf(" %.s :\n", "-");
+	ft_printf(" %.s :\n", "-");
+
 	return (0);
 }

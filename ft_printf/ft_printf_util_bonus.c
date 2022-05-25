@@ -6,11 +6,34 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:41:07 by sueshin           #+#    #+#             */
-/*   Updated: 2022/05/24 20:20:49 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/05/25 19:36:08 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
+
+char	*ft_substr(char *str, unsigned int start, size_t len)
+{
+	char	*substr;
+	char	*result;
+	size_t	str_len;
+
+	str_len = ft_strlen(str);
+	if (start >= ft_strlen(str))
+		return (ft_strdup(""));
+	else if (len + start > str_len)
+		substr = (char *)malloc((str_len - start + 1) * sizeof(char));
+	else
+		substr = (char *)malloc((len + 1) * sizeof(char));
+	if (!substr)
+		return (NULL);
+	result = substr;
+	while (*(str + start) && len-- > 0)
+		*substr++ = *(str + start++);
+	*substr = 0;
+	free(str);
+	return (result);
+}
 
 char	*ft_strjoin(char *str1, char *str2)
 {
