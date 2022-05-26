@@ -84,8 +84,8 @@ int main()
 	//ft_printf(" %#x :\n", 0);
 	printf(" %#X :\n", -1);
 	ft_printf(" %#X :\n", -1);
-	printf(" %#X :\n", 1);
-	ft_printf(" %#X :\n", 1);
+	//printf(" %#X :\n", 1);
+	//ft_printf(" %#X :\n", 1);
 	return (0);
 }
 
