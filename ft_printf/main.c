@@ -66,14 +66,14 @@ int main()
 	ft_printf("-0.");
 */
 
-
+/*
 	printf("%#15x:\n", 123456);
 	ft_printf("%#15.x:\n", 123456);
-	//printf("xpt : %#-4x|\n", 1);
-	//ft_printf("xpt : %#-4x|\n", 1);
-	//printf("%#-11.10x|\n", 1);
-	//ft_printf("%#-11.10x|\n", 1);
-
+	printf("xpt : %#-4x|\n", 1);
+	ft_printf("xpt : %#-4x|\n", 1);
+	printf("%#-11.10x|\n", 1);
+	ft_printf("%#-11.10x|\n", 1);
+*/
 
 /*
 	printf(" %#x :\n", 0);
@@ -107,10 +107,16 @@ int main()
 	ft_printf(" ft:%-1c:%-2c:%-3c:\n", 0, '1', '2');
 */
 
-	//printf("%-10.s:\n", "abcde");
-	//ft_printf("%-10.s:\n", "abcde");
+/*
+	printf("%-10.s:\n", "abcde");
+	ft_printf("%-10.s:\n", "abcde");
 	printf(" %.s :\n", "-");
 	ft_printf(" %.s :\n", "-");
+*/
 
+	printf(" %-9p : %-10p :\n", LONG_MIN, LONG_MAX);
+	ft_printf(" %-9p : %-10p :\n", LONG_MIN, LONG_MAX);
+	printf(" %-1p : %-2p :\n", 0, 0);
+	ft_printf(" %-1p : %-2p :\n", 0, 0);
 	return (0);
 }

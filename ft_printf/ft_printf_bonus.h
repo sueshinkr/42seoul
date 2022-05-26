@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:33:34 by sueshin           #+#    #+#             */
-/*   Updated: 2022/05/25 19:55:01 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/05/26 14:16:02 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	select_flag(char **str, va_list *ap, int *count);
 void	select_format(char **str, va_list *ap, int *count, size_t *flag);
 
 void	print_char(va_list *ap, int *count, size_t *flag);
-
 void	print_str(va_list *ap, int *count, size_t *flag);
 void	print_pointer(va_list *ap, int *count, size_t *flag);
-void	addresstohex(unsigned long long num, int *count);
+char	*addresstohex(unsigned long long num);
+
 void	print_decimal(va_list *ap, int *count, size_t *flag);
 void	print_integer(va_list *ap, int *count, size_t *flag);
 void	print_unsigned_decimal(va_list *ap, int *count, size_t *flag);
