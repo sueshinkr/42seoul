@@ -1,35 +1,63 @@
 #include "ft_printf_bonus.h"
 
-void	print_char(va_list *ap, int *count, int *flag)
+void	print_char(va_list *ap, int *count, size_t *flag)
 {
-	char	chr;
+	char	buf;
+	char	*temp;
 
-	chr = va_arg(*ap, int);
-	write(1, &chr, 1);
+	buf = va_arg(*ap, int);
+	if (flag[6] > 1) // width
+	{
+		temp = (char *)calloc(flag[6], sizeof(char));
+		ft_memset(temp, ' ', flag[6] - 1);
+		if (flag[0] == 1) // '-'
+		{
+			write(1, &buf, 1);
+			write(1, temp, ft_strlen(temp));
+		}
+		else
+		{
+			write(1, temp, ft_strlen(temp));
+			write(1, &buf, 1);
+		}
+		*count += ft_strlen(temp);
+		free(temp);
+	}
+	else
+		write(1, &buf, 1);
 	(*count)++;
 }
 
-void	print_str(va_list *ap, int *count, int *flag)
+void	print_str(va_list *ap, int *count, size_t *flag)
 {
-	char	*str;
+	char	*buf;
+	char	*temp;
 
-	str = va_arg(*ap, char *);
-	if (!str)
+	buf = ft_strdup(va_arg(*ap, char *));
+	if (!buf)
 	{
 		write(1, "(null)", 6);
 		*count += 6;
+		free(buf);
+		return ;
 	}
-	else
+	if (flag[5] > 0 && flag[5] - 1 < ft_strlen(buf)) // dop
+		buf = ft_substr(buf, 0, flag[5] - 1);
+	if (flag[6] > ft_strlen(buf)) // width
 	{
-		while (*str)
-		{
-			write(1, str++, 1);
-			(*count)++;
-		}
+		temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char));
+		ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
+		if (flag[0] == 1) // '-'
+			buf = ft_strjoin(buf, temp);
+		else
+			buf = ft_strjoin(temp, buf);
 	}
+	write(1, buf, ft_strlen(buf));
+	*count += ft_strlen(buf);
+	free(buf);
 }
 
-void	print_pointer(va_list *ap, int *count, int *flag)
+void	print_pointer(va_list *ap, int *count, size_t *flag)
 {
 	unsigned long long	address;
 
