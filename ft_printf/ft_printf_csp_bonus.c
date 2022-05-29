@@ -52,9 +52,7 @@ void	print_str(va_list *ap, int *count, size_t *flag)
 		else
 			buf = ft_strjoin(temp, buf);
 	}
-	write(1, buf, ft_strlen(buf));
-	*count += ft_strlen(buf);
-	free(buf);
+	final_print(buf, count);
 }
 
 void	print_pointer(va_list *ap, int *count, size_t *flag)
@@ -80,9 +78,7 @@ void	print_pointer(va_list *ap, int *count, size_t *flag)
 		else
 			buf = ft_strjoin(temp, buf);
 	}
-	write(1, buf, ft_strlen(buf));
-	*count += ft_strlen(buf);
-	free(buf);
+	final_print(buf, count);
 	//printf("add : %llu\n", address);
 }
 // unsigned long long ????

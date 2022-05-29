@@ -114,9 +114,18 @@ int main()
 	ft_printf(" %.s :\n", "-");
 */
 
+/*
 	printf(" %-9p : %-10p :\n", LONG_MIN, LONG_MAX);
 	ft_printf(" %-9p : %-10p :\n", LONG_MIN, LONG_MAX);
 	printf(" %-1p : %-2p :\n", 0, 0);
 	ft_printf(" %-1p : %-2p :\n", 0, 0);
+*/
+
+	//printf("%-2d\n", -1);
+	//ft_printf("%-2d\n", -1);
+	//printf("p %-4d\n", -14);
+	//ft_printf("f %-4d\n", -14);
+	printf("p: %04d\n", 9);
+	ft_printf("f: %04d\n", 9);
 	return (0);
 }
