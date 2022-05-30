@@ -3,6 +3,7 @@
 
 int main()
 {
+
 /*
 	char chr = '!';
 	char str[1000] = "12345";
@@ -23,14 +24,12 @@ int main()
 */
 
 /*
-	printf(" %p %p ", LONG_MIN, LONG_MAX);
-	printf(" %p ", -1);
-	printf(" %p %p ", 0, 0);
-	fflush(stdout);
-	printf("\n");
-	ft_printf(" %p %p ", LONG_MIN, LONG_MAX);
-	ft_printf(" %p ", -1);
-	ft_printf(" %p %p ", 0, 0);
+	printf(" %p %p \n", LONG_MIN, LONG_MAX);
+	ft_printf(" %p %p \n", LONG_MIN, LONG_MAX);
+	printf(" %p \n", -1);
+	ft_printf(" %p \n", -1);
+	printf(" %p %p \n", 0, 0);
+	ft_printf(" %p %p \n", 0, 0);
 */
 
 /*
@@ -68,24 +67,20 @@ int main()
 */
 
 /*
-	printf("%1%:\n");
-	printf("%10s:\n", "123456");
-	printf("%+12.10d:\n", 123456);
-	printf("%+4.10d:\n", 123456);
-	printf("%0#15.x:\n", 123456);
-	ft_printf("%0#15.x:\n", 123456);
+	printf("%#15x:\n", 123456);
+	ft_printf("%#15.x:\n", 123456);
 	printf("xpt : %#-4x|\n", 1);
 	ft_printf("xpt : %#-4x|\n", 1);
 	printf("%#-11.10x|\n", 1);
 	ft_printf("%#-11.10x|\n", 1);
 */
 
-	//printf(" %#x :\n", 0);
-	//ft_printf(" %#x :\n", 0);
+/*
+	printf(" %#x :\n", 0);
+	ft_printf(" %#x :\n", 0);
 	printf(" %#X :\n", -1);
 	ft_printf(" %#X :\n", -1);
 	//printf(" %#X :\n", 1);
 	//ft_printf(" %#X :\n", 1);
 	return (0);
 }
-

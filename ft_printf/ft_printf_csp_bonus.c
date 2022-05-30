@@ -1,54 +1,93 @@
 #include "ft_printf_bonus.h"
 
-void	print_char(va_list *ap, int *count, int *flag)
+void	print_char(va_list *ap, int *count, size_t *flag)
 {
-	char	chr;
+	char	buf;
+	char	*temp;
 
-	chr = va_arg(*ap, int);
-	write(1, &chr, 1);
+	buf = va_arg(*ap, int);
+	if (flag[6] > 1) // width
+	{
+		temp = (char *)calloc(flag[6], sizeof(char));
+		ft_memset(temp, ' ', flag[6] - 1);
+		if (flag[0] == 1) // '-'
+		{
+			write(1, &buf, 1);
+			write(1, temp, ft_strlen(temp));
+		}
+		else
+		{
+			write(1, temp, ft_strlen(temp));
+			write(1, &buf, 1);
+		}
+		*count += ft_strlen(temp);
+		free(temp);
+	}
+	else
+		write(1, &buf, 1);
 	(*count)++;
 }
 
-void	print_str(va_list *ap, int *count, int *flag)
+void	print_str(va_list *ap, int *count, size_t *flag)
 {
-	char	*str;
+	char	*buf;
+	char	*temp;
 
-	str = va_arg(*ap, char *);
-	if (!str)
+	buf = ft_strdup(va_arg(*ap, char *));
+	if (!buf)
 	{
 		write(1, "(null)", 6);
 		*count += 6;
+		free(buf);
+		return ;
 	}
-	else
+	if (flag[5] > 0 && flag[5] - 1 < ft_strlen(buf)) // dop
+		buf = ft_substr(buf, 0, flag[5] - 1);
+	if (flag[6] > ft_strlen(buf)) // width
 	{
-		while (*str)
-		{
-			write(1, str++, 1);
-			(*count)++;
-		}
+		temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char));
+		ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
+		if (flag[0] == 1) // '-'
+			buf = ft_strjoin(buf, temp);
+		else
+			buf = ft_strjoin(temp, buf);
 	}
+	write(1, buf, ft_strlen(buf));
+	*count += ft_strlen(buf);
+	free(buf);
 }
 
-void	print_pointer(va_list *ap, int *count, int *flag)
+void	print_pointer(va_list *ap, int *count, size_t *flag)
 {
 	unsigned long long	address;
+	char	*buf;
+	char	*temp;
 
 	address = va_arg(*ap, unsigned long long);
-	write(1, "0x", 2);
-	*count += 2;
 	if (!address)
 	{
-		write(1, "0", 1);
-		(*count)++;
+		write(1, "0x0", 3);
+		*count += 3;
+		return ;
 	}
-	else
-		addresstohex(address, count);
+	buf = ft_strjoin(ft_strdup("0x"), addresstohex(address));
+	if (flag[6] > ft_strlen(buf)) // width
+	{
+		temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char));
+		ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
+		if (flag[0] == 1) // '-'
+			buf = ft_strjoin(buf, temp);
+		else
+			buf = ft_strjoin(temp, buf);
+	}
+	write(1, buf, ft_strlen(buf));
+	*count += ft_strlen(buf);
+	free(buf);
 	//printf("add : %llu\n", address);
-
 }
 // unsigned long long ????
 
-void	addresstohex(unsigned long long num, int *count)
+char	*addresstohex(unsigned long long num)
 {
 	unsigned long long	temp;
 	int					idx;
@@ -56,21 +95,19 @@ void	addresstohex(unsigned long long num, int *count)
 
 	idx = 0;
 	temp = num;
-	//printf("num : %lld\n", temp);
+	//printf("num : %llu\n", temp);
 	//fflush(stdout);
 	while (temp > 0)
 	{
 		temp /= 16;
 		idx++;
 	}
-	temp = idx;
-	hex = (char *)malloc(idx-- * sizeof(char));
+	hex = (char *)malloc((idx + 1) * sizeof(char));
+	hex[idx--] = 0;
 	while (num > 0)
 	{
 			hex[idx--] = "0123456789abcdef"[num % 16];
 		num /= 16;
 	}
-	write(1, hex, temp);
-	*count += temp;
-	free(hex);
+	return (hex);
 }

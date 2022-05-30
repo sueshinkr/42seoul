@@ -34,17 +34,15 @@ char	*numtohex(unsigned int num, int bigorsmall)
 	return (hex);
 }
 
-void	print_hex_big(va_list *ap, int *count, int *flag)
+void	print_hex_big(va_list *ap, int *count, size_t *flag)
 {
-	unsigned int	num;
 	char			*buf;
 	char			*temp;
- 
-	num = va_arg(*ap, unsigned int);
-	buf = numtohex(num, 1);
-	if (flag[5] > ft_strlen(buf)) // dop
+
+	buf = numtohex(va_arg(*ap, unsigned int), 1);
+	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf)) // dop
 	{
-		temp = (char *)calloc(flag[5] - ft_strlen(buf) + 1, sizeof(char));
+		temp = (char *)calloc(--flag[5] - ft_strlen(buf) + 1, sizeof(char));
 		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
 		buf = ft_strjoin(temp, buf);
 	}
@@ -53,7 +51,9 @@ void	print_hex_big(va_list *ap, int *count, int *flag)
 		if (flag[0] == 1) // '-'
 			buf = hex_case_minus(flag, buf, 1);
 		else if (flag[1] == 1) // '0'
-			buf = hex_case_zero1(flag, buf, 1);
+			buf = hex_case_zero(flag, buf, 1);
+		else
+			buf = hex_case_onlywidth(flag, buf, 1);
 	}
 	else
 		buf = hex_case_nowidth(flag, buf, 1);
@@ -62,17 +62,15 @@ void	print_hex_big(va_list *ap, int *count, int *flag)
 	free(buf);
 }
 
-void	print_hex_small(va_list *ap, int *count, int *flag)
+void	print_hex_small(va_list *ap, int *count, size_t *flag)
 {
-	unsigned int	num;
 	char			*buf;
 	char			*temp;
  
-	num = va_arg(*ap, unsigned int);
-	buf = numtohex(num, 2);
-	if (flag[5] > ft_strlen(buf)) // dop
+	buf = numtohex(va_arg(*ap, unsigned int), 2);
+	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf)) // dop
 	{
-		temp = (char *)calloc(flag[5] - ft_strlen(buf) + 1, sizeof(char));
+		temp = (char *)calloc(--flag[5] - ft_strlen(buf) + 1, sizeof(char));
 		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
 		buf = ft_strjoin(temp, buf);
 	}
@@ -81,7 +79,9 @@ void	print_hex_small(va_list *ap, int *count, int *flag)
 		if (flag[0] == 1) // '-'
 			buf = hex_case_minus(flag, buf, 2);
 		else if (flag[1] == 1) // '0'
-			buf = hex_case_zero1(flag, buf, 2);
+			buf = hex_case_zero(flag, buf, 2);
+		else
+			buf = hex_case_onlywidth(flag, buf, 2);
 	}
 	else
 		buf = hex_case_nowidth(flag, buf, 2);
@@ -90,7 +90,7 @@ void	print_hex_small(va_list *ap, int *count, int *flag)
 	free(buf);
 }
 
-void	print_percent(va_list *ap, int *count, int *flag)
+void	print_percent(va_list *ap, int *count, size_t *flag)
 {
 	char	*buf;
 
