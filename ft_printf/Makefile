@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/05/24 18:01:42 by sueshin          ###   ########.fr        #
+#    Updated: 2022/05/29 14:33:37 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ AR = ar
 HEADER = ./
 
 SRCS = ./ft_printf_base_bonus.c ./ft_printf_csp_bonus.c ./ft_printf_diu_bonus.c ./ft_printf_xX%_bonus.c\
-./ft_printf_xX_flag_bonus.c ./ft_printf_util_bonus.c
+./ft_printf_xX_flag_bonus.c ./ft_printf_util_bonus.c ./ft_printf_diu_flag_bonus.c
 
 OBJS = $(SRCS:.c=.o)
 

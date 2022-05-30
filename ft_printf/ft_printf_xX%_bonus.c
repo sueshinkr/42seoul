@@ -57,9 +57,7 @@ void	print_hex_big(va_list *ap, int *count, size_t *flag)
 	}
 	else
 		buf = hex_case_nowidth(flag, buf, 1);
-	write(1, buf, ft_strlen(buf));
-	*count += ft_strlen(buf);
-	free(buf);
+	final_print(buf, count);
 }
 
 void	print_hex_small(va_list *ap, int *count, size_t *flag)
@@ -85,9 +83,7 @@ void	print_hex_small(va_list *ap, int *count, size_t *flag)
 	}
 	else
 		buf = hex_case_nowidth(flag, buf, 2);
-	write(1, buf, ft_strlen(buf));
-	*count += ft_strlen(buf);
-	free(buf);
+	final_print(buf, count);
 }
 
 void	print_percent(va_list *ap, int *count, size_t *flag)
