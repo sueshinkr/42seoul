@@ -1,76 +1,90 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_csp.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/02 12:28:30 by sueshin           #+#    #+#             */
+/*   Updated: 2022/06/02 14:09:02 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-void	print_char(va_list *ap, int *count)
+void	print_char(va_list *ap, int *count, size_t *flag)
 {
-	char	chr;
+	char	buf;
+	char	*temp;
 
-	chr = va_arg(*ap, int);
-	write(1, &chr, 1);
+	buf = va_arg(*ap, int);
+	if (flag[6] > 1)
+	{
+		temp = (char *)calloc(flag[6], sizeof(char));
+		ft_memset(temp, ' ', flag[6] - 1);
+		if (flag[0] == 1)
+		{
+			write(1, &buf, 1);
+			write(1, temp, ft_strlen(temp));
+		}
+		else
+		{
+			write(1, temp, ft_strlen(temp));
+			write(1, &buf, 1);
+		}
+		*count += ft_strlen(temp);
+		free(temp);
+	}
+	else
+		write(1, &buf, 1);
 	(*count)++;
 }
 
-void	print_str(va_list *ap, int *count)
+void	print_str(va_list *ap, int *count, size_t *flag)
 {
-	char	*str;
+	char	*buf;
+	char	*temp;
 
-	str = va_arg(*ap, char *);
-	if (!str)
+	buf = ft_strdup(va_arg(*ap, char *));
+	if (!buf)
 	{
 		write(1, "(null)", 6);
 		*count += 6;
+		free(buf);
+		return ;
 	}
-	else
+	if (flag[5] > 0 && flag[5] - 1 < ft_strlen(buf))
+		buf = ft_substr(buf, 0, flag[5] - 1);
+	if (flag[6] > ft_strlen(buf))
 	{
-		while (*str)
-		{
-			write(1, str++, 1);
-			(*count)++;
-		}
+		temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char));
+		ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
+		if (flag[0] == 1)
+			buf = ft_strjoin(buf, temp);
+		else
+			buf = ft_strjoin(temp, buf);
 	}
+	final_print(buf, count);
 }
 
-void	print_pointer(va_list *ap, int *count)
+void	print_pointer(va_list *ap, int *count, size_t *flag)
 {
 	unsigned long long	address;
+	char				*buf;
+	char				*temp;
 
 	address = va_arg(*ap, unsigned long long);
-	write(1, "0x", 2);
-	*count += 2;
-	if (!address)
+	buf = ft_strjoin(ft_strdup("0x"), numtohex(address, 2));
+	if (flag[6] > ft_strlen(buf))
 	{
-		write(1, "0", 1);
-		(*count)++;
+		temp = (char *)calloc(flag[6] - ft_strlen(buf) + 1, sizeof(char));
+		ft_memset(temp, ' ', flag[6] - ft_strlen(buf));
+		if (flag[0] == 1)
+			buf = ft_strjoin(buf, temp);
+		else
+			buf = ft_strjoin(temp, buf);
 	}
-	else
-		addresstohex(address, count);
+	final_print(buf, count);
 	//printf("add : %llu\n", address);
-
 }
 // unsigned long long ????
-
-void	addresstohex(unsigned long long num, int *count)
-{
-	unsigned long long	temp;
-	int					idx;
-	char				*hex;
-
-	idx = 0;
-	temp = num;
-	//printf("num : %lld\n", temp);
-	//fflush(stdout);
-	while (temp > 0)
-	{
-		temp /= 16;
-		idx++;
-	}
-	temp = idx;
-	hex = (char *)malloc(idx-- * sizeof(char));
-	while (num > 0)
-	{
-			hex[idx--] = "0123456789abcdef"[num % 16];
-		num /= 16;
-	}
-	write(1, hex, temp);
-	*count += temp;
-	free(hex);
-}
