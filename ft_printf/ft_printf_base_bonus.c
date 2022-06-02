@@ -1,6 +1,6 @@
 #include "ft_printf_bonus.h"
 
-int	dop(char **str)
+static int	dop(char **str)
 {
 	int	dop;
 
@@ -20,7 +20,7 @@ int	dop(char **str)
 	return (1);
 }
 
-int	width(char **str)
+static int	width(char **str)
 {
 	int	width;
 

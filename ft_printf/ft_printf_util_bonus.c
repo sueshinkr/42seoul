@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:41:07 by sueshin           #+#    #+#             */
-/*   Updated: 2022/05/25 19:36:08 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/05/29 15:23:39 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char	*ft_strchr(const char *str, int c)
 	}
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int n, int *minus)
 {
 	char		*str;
 	int			count;
@@ -141,7 +141,7 @@ char	*ft_itoa(int n)
 		return (NULL);
 	if (n < 0)
 	{
-		*str = '-';
+		*minus = 1;
 		nb = nb * -1;
 	}
 	if (n == 0)
@@ -153,6 +153,13 @@ char	*ft_itoa(int n)
 		nb /= 10;
 	}
 	return (str);
+}
+
+void	final_print(char *buf, int *count)
+{
+	write(1, buf, ft_strlen(buf));
+	*count += ft_strlen(buf);
+	free(buf);
 }
 
 

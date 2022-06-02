@@ -5,11 +5,10 @@ int	cal_count(long long n)
 	int				count;
 
 	count = 0;
-	if (n <= 0)
-	{
-		n = n * -1;
+	if (n == 0)
 		count++;
-	}
+	else if (n < 0)
+		n = n * -1;
 	while (n > 0)
 	{
 		n /= 10;
@@ -40,53 +39,88 @@ char	*ft_uitoa(unsigned int n)
 	return (str);
 }
 
+
+
 void	print_decimal(va_list *ap, int *count, size_t *flag)
 {
-	int		decimal;
-	int		idx;
-	char	*decimal_char;
+	int		minus;
+	char	*temp;
+	char	*buf;
 
-	idx = 0;
-	decimal = va_arg(*ap, int);
-	decimal_char = ft_itoa(decimal);
-	while (*(decimal_char + idx))
+	minus = 0;
+	buf = ft_itoa(va_arg(*ap, int), &minus);
+	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf)) // dop
 	{
-		write(1, decimal_char + idx++, 1);
-		(*count)++;
+		temp = (char *)calloc(--flag[5] - ft_strlen(buf) + 1, sizeof(char));
+		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
+		buf = ft_strjoin(temp, buf);
 	}
-	free(decimal_char);
+	if ((minus == 0 && flag[6] > ft_strlen(buf)) ||
+		(minus == 1 && flag[6] > ft_strlen(buf) + 1)) // width
+	{
+		if (flag[0] == 1) // '-'
+			buf = number_case_minus(flag, buf, minus);
+		else if (flag[1] == 1 && flag[5] == 0) // '0'
+			buf = number_case_zero(flag, buf, minus);
+		else
+			buf = number_case_onlywidth(flag, buf, minus);
+	}
+	else
+		buf = number_case_nowidth(flag, buf, minus);
+	final_print(buf, count);
 }
 
 void	print_integer(va_list *ap, int *count, size_t *flag)
 {
-	int		integer;
-	int		idx;
-	char	*integer_char;
-
-	idx = 0;
-	integer = va_arg(*ap, int);
-	integer_char = ft_itoa(integer);
-	while (*(integer_char + idx))
+	int		minus;
+	char	*temp;
+	char	*buf;
+	
+	minus = 0;
+	buf = ft_itoa(va_arg(*ap, int), &minus);
+	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf)) // dop
 	{
-		write(1, integer_char + idx++, 1);
-		(*count)++;
+		temp = (char *)calloc(--flag[5] - ft_strlen(buf) + 1, sizeof(char));
+		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
+		buf = ft_strjoin(temp, buf);
 	}
-	free(integer_char);
+	if ((minus == 0 && flag[6] > ft_strlen(buf)) ||
+		(minus == 1 && flag[6] > ft_strlen(buf) + 1)) // width
+	{
+		if (flag[0] == 1) // '-'
+			buf = number_case_minus(flag, buf, minus);
+		else if (flag[1] == 1 && flag[5] == 0) // '0'
+			buf = number_case_zero(flag, buf, minus);
+		else
+			buf = number_case_onlywidth(flag, buf, minus);
+	}
+	else
+		buf = number_case_nowidth(flag, buf, minus);
+	final_print(buf, count);
 }
 
 void	print_unsigned_decimal(va_list *ap, int *count, size_t *flag)
 {
-	unsigned int	unsigned_decimal;
-	int				idx;
-	char			*unsigned_decimal_char;
-
-	idx = 0;
-	unsigned_decimal = va_arg(*ap, int);
-	unsigned_decimal_char = ft_uitoa(unsigned_decimal);
-	while (*(unsigned_decimal_char + idx))
+	char	*temp;
+	char	*buf;
+	
+	buf = ft_uitoa(va_arg(*ap, unsigned int));
+	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf)) // dop
 	{
-		write(1, unsigned_decimal_char + idx++, 1);
-		(*count)++;
+		temp = (char *)calloc(--flag[5] - ft_strlen(buf) + 1, sizeof(char));
+		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
+		buf = ft_strjoin(temp, buf);
 	}
-	free(unsigned_decimal_char);
+	if (flag[6] > ft_strlen(buf)) // width
+	{
+		if (flag[0] == 1) // '-'
+			buf = number_case_minus(flag, buf, 0);
+		else if (flag[1] == 1 && flag[5] == 0) // '0'
+			buf = number_case_zero(flag, buf, 0);
+		else
+			buf = number_case_onlywidth(flag, buf, 0);
+	}
+	else
+		buf = number_case_nowidth(flag, buf, 0);
+	final_print(buf, count);
 }

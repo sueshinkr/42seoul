@@ -121,6 +121,15 @@ int main()
 	ft_printf(" %-1p : %-2p :\n", 0, 0);
 */
 
+<<<<<<< HEAD
 	printf("%-10.9d::\n", 124244);
+=======
+	//printf("%-2d\n", -1);
+	//ft_printf("%-2d\n", -1);
+	//printf("p %-4d\n", -14);
+	//ft_printf("f %-4d\n", -14);
+	printf("p: %04d\n", 9);
+	ft_printf("f: %04d\n", 9);
+>>>>>>> d22d2e9cd633e21664d19a6ebeaae623b5d518a9
 	return (0);
 }
