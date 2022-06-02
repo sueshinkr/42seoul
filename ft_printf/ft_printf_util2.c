@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:34:25 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/02 13:36:18 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:06:58 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,17 @@ char	*ft_strchr(const char *str, int c)
 	}
 }
 
-void	final_print(char *buf, int *count)
+char	*check_spetialzero(char *buf, size_t *flag)
+{
+	if (flag[5] > 0 && ft_strncmp(buf, "0", 1) == 0)
+	{
+		free(buf);
+		buf = ft_strdup("");
+	}
+	return (buf);
+}
+
+void	buf_print(char *buf, int *count)
 {
 	write(1, buf, ft_strlen(buf));
 	*count += ft_strlen(buf);

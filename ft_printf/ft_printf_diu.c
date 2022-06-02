@@ -6,20 +6,20 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:41:19 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/02 12:44:39 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/02 15:15:51 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	print_decimal(va_list *ap, int *count, size_t *flag)
+char	*print_decimal(va_list *ap, char *buf, size_t *flag)
 {
 	int		minus;
 	char	*temp;
-	char	*buf;
 
 	minus = 0;
 	buf = ft_itoa(va_arg(*ap, int), &minus);
+	buf = check_spetialzero(buf, flag);
 	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf))
 	{
 		temp = (char *)calloc(--flag[5] - ft_strlen(buf) + 1, sizeof(char));
@@ -38,17 +38,17 @@ void	print_decimal(va_list *ap, int *count, size_t *flag)
 	}
 	else
 		buf = number_case_nowidth(flag, buf, minus);
-	final_print(buf, count);
+	return (buf);
 }
 
-void	print_integer(va_list *ap, int *count, size_t *flag)
+char	*print_integer(va_list *ap, char *buf, size_t *flag)
 {
 	int		minus;
 	char	*temp;
-	char	*buf;
 
 	minus = 0;
 	buf = ft_itoa(va_arg(*ap, int), &minus);
+	buf = check_spetialzero(buf, flag);
 	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf))
 	{
 		temp = (char *)calloc(--flag[5] - ft_strlen(buf) + 1, sizeof(char));
@@ -67,15 +67,15 @@ void	print_integer(va_list *ap, int *count, size_t *flag)
 	}
 	else
 		buf = number_case_nowidth(flag, buf, minus);
-	final_print(buf, count);
+	return (buf);
 }
 
-void	print_unsigned_decimal(va_list *ap, int *count, size_t *flag)
+char	*print_unsigned_decimal(va_list *ap, char *buf, size_t *flag)
 {
 	char	*temp;
-	char	*buf;
 
 	buf = ft_uitoa(va_arg(*ap, unsigned int));
+	buf = check_spetialzero(buf, flag);
 	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf))
 	{
 		temp = (char *)calloc(--flag[5] - ft_strlen(buf) + 1, sizeof(char));
@@ -93,5 +93,5 @@ void	print_unsigned_decimal(va_list *ap, int *count, size_t *flag)
 	}
 	else
 		buf = number_case_nowidth(flag, buf, 0);
-	final_print(buf, count);
+	return (buf);
 }

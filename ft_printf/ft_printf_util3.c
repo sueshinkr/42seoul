@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:33:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/02 13:37:22 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:09:13 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ char	*numtohex(unsigned long long num, int bigorsmall)
 	temp = num;
 	if (temp == 0)
 		idx = 1;
-	//printf("num : %llu\n", temp);
 	while (temp > 0)
 	{
 		temp /= 16;

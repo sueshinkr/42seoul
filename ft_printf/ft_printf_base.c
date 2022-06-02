@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:56:58 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/02 13:37:30 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:22:57 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,25 +76,31 @@ void	select_flag(const char **str, va_list *ap, int *count)
 
 void	select_format(const char **str, va_list *ap, int *count, size_t *flag)
 {
+	char	*buf;
+
+	buf = NULL;
 	if (*(*str) == 'c')
+	{
 		print_char(ap, count, flag);
+		return ;
+	}
 	else if (*(*str) == 's')
-		print_str(ap, count, flag);
+		buf = print_str(ap, buf, flag);
 	else if (*(*str) == 'p')
-		print_pointer(ap, count, flag);
+		buf = print_pointer(ap, buf, flag);
 	else if (*(*str) == 'd')
-		print_decimal(ap, count, flag);
+		buf = print_decimal(ap, buf, flag);
 	else if (*(*str) == 'i')
-		print_integer(ap, count, flag);
+		buf = print_integer(ap, buf, flag);
 	else if (*(*str) == 'u')
-		print_unsigned_decimal(ap, count, flag);
+		buf = print_unsigned_decimal(ap, buf, flag);
 	else if (*(*str) == 'x')
-		print_hex_small(ap, count, flag);
+		buf = print_hex_small(ap, buf, flag);
 	else if (*(*str) == 'X')
-		print_hex_big(ap, count, flag);
+		buf = print_hex_big(ap, buf, flag);
 	else if (*(*str) == '%')
-		print_percent(count, flag);
-	return ;
+		buf = print_percent(buf, flag);
+	buf_print(buf, count);
 }
 
 int	ft_printf(const char *str, ...)
@@ -136,9 +142,6 @@ printf("hello %s, %d\n", str, num);
 */
 
 /*
-
-"-0# +."
-
 1. 문자열 읽으면서 %찾기
 2. %찾으면 플래그찾기로 이동
 3. 각각의 플래그 존재여부 및 폭, 정밀도 저장
