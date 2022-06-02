@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_util_bonus.c                             :+:      :+:    :+:   */
+/*   ft_printf_util1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:41:07 by sueshin           #+#    #+#             */
-/*   Updated: 2022/05/29 15:23:39 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/02 12:38:44 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_bonus.h"
+#include "ft_printf.h"
 
 char	*ft_substr(char *str, unsigned int start, size_t len)
 {
@@ -40,7 +40,7 @@ char	*ft_strjoin(char *str1, char *str2)
 	char	*result;
 	char	*joinstr;
 	int		joinstr_len;
-	int 	idx1;
+	int		idx1;
 	int		idx2;
 
 	idx1 = 0;
@@ -86,9 +86,9 @@ char	*ft_strdup(const char *src)
 	char	*str;
 	char	*result;
 
-	str = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
-	if (!str)
+	if (!src)
 		return (NULL);
+	str = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
 	result = str;
 	while (*src)
 		*str++ = *src++;
@@ -105,61 +105,3 @@ size_t	ft_strlen(const char *str)
 		len++;
 	return (len);
 }
-
-void	*ft_memset(void *ptr, int value, size_t size)
-{
-	void	*result;
-
-	result = ptr;
-	while (size-- > 0)
-		*(unsigned char *)ptr++ = value;
-	return (result);
-}
-
-char	*ft_strchr(const char *str, int c)
-{
-	while (1)
-	{
-		if (*str == (char)c)
-			return ((char *)str);
-		else if (!*str)
-			return (NULL);
-		str++;
-	}
-}
-
-char	*ft_itoa(int n, int *minus)
-{
-	char		*str;
-	int			count;
-	long long	nb;
-	
-	nb = n;
-	count = cal_count(nb);
-	str = (char *)malloc((count + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	if (n < 0)
-	{
-		*minus = 1;
-		nb = nb * -1;
-	}
-	if (n == 0)
-		*str = '0';
-	*(str + count) = 0;
-	while (nb > 0)
-	{
-		*(str + --count) = nb % 10 | '0';
-		nb /= 10;
-	}
-	return (str);
-}
-
-void	final_print(char *buf, int *count)
-{
-	write(1, buf, ft_strlen(buf));
-	*count += ft_strlen(buf);
-	free(buf);
-}
-
-
