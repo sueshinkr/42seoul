@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:28:30 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/02 14:09:02 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:09:31 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,13 @@ void	print_char(va_list *ap, int *count, size_t *flag)
 	(*count)++;
 }
 
-void	print_str(va_list *ap, int *count, size_t *flag)
+char	*print_str(va_list *ap, char *buf, size_t *flag)
 {
-	char	*buf;
 	char	*temp;
 
 	buf = ft_strdup(va_arg(*ap, char *));
 	if (!buf)
-	{
-		write(1, "(null)", 6);
-		*count += 6;
-		free(buf);
-		return ;
-	}
+		buf = ft_strdup("(null)");
 	if (flag[5] > 0 && flag[5] - 1 < ft_strlen(buf))
 		buf = ft_substr(buf, 0, flag[5] - 1);
 	if (flag[6] > ft_strlen(buf))
@@ -64,13 +58,12 @@ void	print_str(va_list *ap, int *count, size_t *flag)
 		else
 			buf = ft_strjoin(temp, buf);
 	}
-	final_print(buf, count);
+	return (buf);
 }
 
-void	print_pointer(va_list *ap, int *count, size_t *flag)
+char	*print_pointer(va_list *ap, char *buf, size_t *flag)
 {
 	unsigned long long	address;
-	char				*buf;
 	char				*temp;
 
 	address = va_arg(*ap, unsigned long long);
@@ -84,7 +77,5 @@ void	print_pointer(va_list *ap, int *count, size_t *flag)
 		else
 			buf = ft_strjoin(temp, buf);
 	}
-	final_print(buf, count);
-	//printf("add : %llu\n", address);
+	return (buf);
 }
-// unsigned long long ????
