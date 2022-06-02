@@ -114,9 +114,13 @@ int main()
 	ft_printf(" %.s :\n", "-");
 */
 
+/*
 	printf(" %-9p : %-10p :\n", LONG_MIN, LONG_MAX);
 	ft_printf(" %-9p : %-10p :\n", LONG_MIN, LONG_MAX);
 	printf(" %-1p : %-2p :\n", 0, 0);
 	ft_printf(" %-1p : %-2p :\n", 0, 0);
+*/
+
+	printf("%-10.9d::\n", 124244);
 	return (0);
 }
