@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:41:19 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/02 19:10:31 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/03 18:04:31 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ char	*print_decimal(va_list *ap, char *buf, size_t *flag)
 
 	minus = 0;
 	buf = ft_itoa(va_arg(*ap, int), &minus);
-	buf = check_spetialzero(buf, flag);
+	buf = check_specialzero(buf, flag);
 	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf))
 	{
-		temp = (char *)calloc(--flag[5] - ft_strlen(buf) + 1, sizeof(char));
-		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
+		temp = ft_calloc(flag[5] - ft_strlen(buf), sizeof(char));
+		ft_memset(temp, '0', flag[5] - ft_strlen(buf) - 1);
 		buf = ft_strjoin(temp, buf);
 	}
 	if ((minus == 0 && flag[6] > ft_strlen(buf))
@@ -48,11 +48,11 @@ char	*print_integer(va_list *ap, char *buf, size_t *flag)
 
 	minus = 0;
 	buf = ft_itoa(va_arg(*ap, int), &minus);
-	buf = check_spetialzero(buf, flag);
+	buf = check_specialzero(buf, flag);
 	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf))
 	{
-		temp = (char *)calloc(--flag[5] - ft_strlen(buf) + 1, sizeof(char));
-		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
+		temp = ft_calloc(flag[5] - ft_strlen(buf), sizeof(char));
+		ft_memset(temp, '0', flag[5] - ft_strlen(buf) - 1);
 		buf = ft_strjoin(temp, buf);
 	}
 	if ((minus == 0 && flag[6] > ft_strlen(buf))
@@ -73,16 +73,19 @@ char	*print_integer(va_list *ap, char *buf, size_t *flag)
 char	*print_unsigned_decimal(va_list *ap, char *buf, size_t *flag)
 {
 	char	*temp;
+	size_t	len;
 
 	buf = ft_uitoa(va_arg(*ap, unsigned int));
-	buf = check_spetialzero(buf, flag);
-	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf))
+	buf = check_specialzero(buf, flag);
+	len = ft_strlen(buf);
+	if (flag[5] > 0 && flag[5] - 1 > len)
 	{
-		temp = (char *)calloc(--flag[5] - ft_strlen(buf) + 1, sizeof(char));
-		ft_memset(temp, '0', flag[5] - ft_strlen(buf));
+		temp = ft_calloc(flag[5] - len - 1, sizeof(char));
+		ft_memset(temp, '0', flag[5] - len - 1);
 		buf = ft_strjoin(temp, buf);
+		len = ft_strlen(buf);
 	}
-	if (flag[6] > ft_strlen(buf))
+	if (flag[6] > len)
 	{
 		if (flag[0] == 1)
 			buf = number_case_minus(flag, buf, 0);

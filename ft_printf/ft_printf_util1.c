@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:41:07 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/02 12:38:44 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/03 17:13:43 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_substr(char *str, unsigned int start, size_t len)
 {
 	char	*substr;
-	char	*result;
+	size_t	idx;
 	size_t	str_len;
 
 	str_len = ft_strlen(str);
@@ -27,41 +27,41 @@ char	*ft_substr(char *str, unsigned int start, size_t len)
 		substr = (char *)malloc((len + 1) * sizeof(char));
 	if (!substr)
 		return (NULL);
-	result = substr;
+	idx = 0;
 	while (*(str + start) && len-- > 0)
-		*substr++ = *(str + start++);
-	*substr = 0;
+		*(substr + idx++) = *(str + start++);
+	*(substr + idx)= 0;
 	free(str);
-	return (result);
+	return (substr);
 }
 
 char	*ft_strjoin(char *str1, char *str2)
 {
-	char	*result;
 	char	*joinstr;
-	int		joinstr_len;
-	int		idx1;
-	int		idx2;
+	size_t	joinstr_len;
+	size_t	idx1;
+	size_t	idx2;
 
 	idx1 = 0;
 	idx2 = 0;
-	joinstr_len = ft_strlen(str1) + ft_strlen(str2);
-	joinstr = (char *)malloc((joinstr_len + 1) * sizeof(char));
-	result = joinstr;
+	joinstr_len = ft_strlen(str1) + ft_strlen(str2) + 1;
+	joinstr = (char *)malloc(joinstr_len * sizeof(char));
 	if (!joinstr)
 		return (NULL);
-	while (joinstr_len-- > 0)
+	while (*(str1 + idx1))
 	{
-		if (*(str1 + idx1))
-			*joinstr = *(str1 + idx1++);
-		else if (*(str2 + idx2))
-			*joinstr = *(str2 + idx2++);
-		joinstr++;
+		*(joinstr + idx1) = *(str1 + idx1);
+		idx1++;
 	}
-	*joinstr = 0;
+	while (*(str2 + idx2))
+	{
+		*(joinstr + idx1 + idx2) = *(str2 + idx2);
+		idx2++;
+	}
+	*(joinstr + idx1 + idx2) = 0;
 	free(str1);
 	free(str2);
-	return (result);
+	return (joinstr);
 }
 
 int	ft_strncmp(const char *str1, const char *str2, size_t size)
@@ -84,16 +84,21 @@ int	ft_strncmp(const char *str1, const char *str2, size_t size)
 char	*ft_strdup(const char *src)
 {
 	char	*str;
-	char	*result;
+	size_t	idx;
 
 	if (!src)
 		return (NULL);
 	str = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
-	result = str;
-	while (*src)
-		*str++ = *src++;
-	*str = 0;
-	return (result);
+	if (!str)
+		return (NULL);
+	idx = 0;
+	while (*(src + idx))
+	{
+		*(str + idx) = *(src + idx);
+		idx++;
+	}
+	*(str + idx) = 0;
+	return (str);
 }
 
 size_t	ft_strlen(const char *str)
@@ -101,7 +106,7 @@ size_t	ft_strlen(const char *str)
 	size_t	len;
 
 	len = 0;
-	while (*str++)
+	while (*(str + len))
 		len++;
 	return (len);
 }

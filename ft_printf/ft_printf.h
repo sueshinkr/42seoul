@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:33:34 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/03 09:01:52 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/03 17:23:28 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ int		ft_strncmp(const char *str1, const char *str2, size_t size);
 char	*ft_strdup(const char *src);
 size_t	ft_strlen(const char *str);
 void	*ft_memset(void *ptr, int value, size_t size);
+void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strchr(const char *str, int c);
-char	*check_spetialzero(char *buf, size_t *flag);
+char	*check_specialzero(char *buf, size_t *flag);
 void	buf_print(char *buf, int *count);
 char	*ft_itoa(int n, int *minus);
 char	*ft_uitoa(unsigned int n);

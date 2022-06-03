@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:34:25 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/02 16:06:58 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/03 19:29:20 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,25 @@
 
 void	*ft_memset(void *ptr, int value, size_t size)
 {
-	void	*result;
+	size_t	idx;
 
-	result = ptr;
+	idx = 0;
 	while (size-- > 0)
-		*(unsigned char *)ptr++ = value;
-	return (result);
+		*(unsigned char *)(ptr + idx++) = value;
+	return (ptr);
 }
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*temp;
+
+	temp = malloc(nmemb * size);
+	if (!temp)
+		return (NULL);
+	ft_memset(temp, 0, nmemb * size);
+	return (temp);
+}
+
 
 char	*ft_strchr(const char *str, int c)
 {
@@ -34,7 +46,7 @@ char	*ft_strchr(const char *str, int c)
 	}
 }
 
-char	*check_spetialzero(char *buf, size_t *flag)
+char	*check_specialzero(char *buf, size_t *flag)
 {
 	if (flag[5] > 0 && ft_strncmp(buf, "0", 1) == 0)
 	{
