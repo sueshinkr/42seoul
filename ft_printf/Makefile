@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/06/02 16:13:19 by sueshin          ###   ########.fr        #
+#    Updated: 2022/06/03 09:32:05 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ fclean : clean
 re : 
 	make fclean
 	make all
+
+bonus : $(NAME)
 
 .PHONY : all clean fclean re bonus
 

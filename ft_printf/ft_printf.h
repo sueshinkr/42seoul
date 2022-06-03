@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:33:34 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/02 16:09:31 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/03 09:01:52 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ char	*number_case_nowidth(size_t *flag, char *buf, int minus);
 
 char	*print_hex_small(va_list *ap, char *buf, size_t *flag);
 char	*print_hex_big(va_list *ap, char *buf, size_t *flag);
+char	*print_percent(char *buf, size_t *flag);
 char	*hex_case_minus(size_t *flag, char *buf, int bigorsmall);
 char	*hex_case_zero(size_t *flag, char *buf, int bigorsmall);
 char	*hex_case_onlywidth(size_t *flag, char *buf, int bigorsmall);
 char	*hex_case_nowidth(size_t *flag, char *buf, int bigorsmall);
-char	*print_percent(char *buf, size_t *flag);
 
 #endif
