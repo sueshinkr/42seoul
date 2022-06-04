@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 12:41:07 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/03 17:13:43 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/04 15:41:50 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_substr(char *str, unsigned int start, size_t len)
 	idx = 0;
 	while (*(str + start) && len-- > 0)
 		*(substr + idx++) = *(str + start++);
-	*(substr + idx)= 0;
+	*(substr + idx) = 0;
 	free(str);
 	return (substr);
 }

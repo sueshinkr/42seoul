@@ -6,71 +6,71 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:41:19 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/03 18:04:31 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/04 16:02:04 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*print_decimal(va_list *ap, char *buf, size_t *flag)
+char	*print_decimal(va_list *ap, char *buf, t_flag flag)
 {
-	int		minus;
+	int		sign;
 	char	*temp;
 
-	minus = 0;
-	buf = ft_itoa(va_arg(*ap, int), &minus);
+	sign = 1;
+	buf = ft_itoa(va_arg(*ap, int), &sign);
 	buf = check_specialzero(buf, flag);
-	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf))
+	if (flag.pcs > 0 && flag.pcs - 1 > ft_strlen(buf))
 	{
-		temp = ft_calloc(flag[5] - ft_strlen(buf), sizeof(char));
-		ft_memset(temp, '0', flag[5] - ft_strlen(buf) - 1);
+		temp = ft_calloc(flag.pcs - ft_strlen(buf), sizeof(char));
+		ft_memset(temp, '0', flag.pcs - ft_strlen(buf) - 1);
 		buf = ft_strjoin(temp, buf);
 	}
-	if ((minus == 0 && flag[6] > ft_strlen(buf))
-		|| (minus == 1 && flag[6] > ft_strlen(buf) + 1))
+	if ((sign == 1 && flag.width > ft_strlen(buf))
+		|| (sign == -1 && flag.width > ft_strlen(buf) + 1))
 	{
-		if (flag[0] == 1)
-			buf = number_case_minus(flag, buf, minus);
-		else if (flag[1] == 1 && flag[5] == 0)
-			buf = number_case_zero(flag, buf, minus);
+		if (flag.minus == 1)
+			buf = number_case_minus(flag, buf, sign);
+		else if (flag.zero == 1 && flag.pcs == 0)
+			buf = number_case_zero(flag, buf, sign);
 		else
-			buf = number_case_onlywidth(flag, buf, minus);
+			buf = number_case_onlywidth(flag, buf, sign);
 	}
 	else
-		buf = number_case_nowidth(flag, buf, minus);
+		buf = number_case_nowidth(flag, buf, sign);
 	return (buf);
 }
 
-char	*print_integer(va_list *ap, char *buf, size_t *flag)
+char	*print_integer(va_list *ap, char *buf, t_flag flag)
 {
-	int		minus;
+	int		sign;
 	char	*temp;
 
-	minus = 0;
-	buf = ft_itoa(va_arg(*ap, int), &minus);
+	sign = 1;
+	buf = ft_itoa(va_arg(*ap, int), &sign);
 	buf = check_specialzero(buf, flag);
-	if (flag[5] > 0 && flag[5] - 1 > ft_strlen(buf))
+	if (flag.pcs > 0 && flag.pcs - 1 > ft_strlen(buf))
 	{
-		temp = ft_calloc(flag[5] - ft_strlen(buf), sizeof(char));
-		ft_memset(temp, '0', flag[5] - ft_strlen(buf) - 1);
+		temp = ft_calloc(flag.pcs - ft_strlen(buf), sizeof(char));
+		ft_memset(temp, '0', flag.pcs - ft_strlen(buf) - 1);
 		buf = ft_strjoin(temp, buf);
 	}
-	if ((minus == 0 && flag[6] > ft_strlen(buf))
-		|| (minus == 1 && flag[6] > ft_strlen(buf) + 1))
+	if ((sign == 1 && flag.width > ft_strlen(buf))
+		|| (sign == -1 && flag.width > ft_strlen(buf) + 1))
 	{
-		if (flag[0] == 1)
-			buf = number_case_minus(flag, buf, minus);
-		else if (flag[1] == 1 && flag[5] == 0)
-			buf = number_case_zero(flag, buf, minus);
+		if (flag.minus == 1)
+			buf = number_case_minus(flag, buf, sign);
+		else if (flag.zero == 1 && flag.pcs == 0)
+			buf = number_case_zero(flag, buf, sign);
 		else
-			buf = number_case_onlywidth(flag, buf, minus);
+			buf = number_case_onlywidth(flag, buf, sign);
 	}
 	else
-		buf = number_case_nowidth(flag, buf, minus);
+		buf = number_case_nowidth(flag, buf, sign);
 	return (buf);
 }
 
-char	*print_unsigned_decimal(va_list *ap, char *buf, size_t *flag)
+char	*print_unsigned_decimal(va_list *ap, char *buf, t_flag flag)
 {
 	char	*temp;
 	size_t	len;
@@ -78,18 +78,18 @@ char	*print_unsigned_decimal(va_list *ap, char *buf, size_t *flag)
 	buf = ft_uitoa(va_arg(*ap, unsigned int));
 	buf = check_specialzero(buf, flag);
 	len = ft_strlen(buf);
-	if (flag[5] > 0 && flag[5] - 1 > len)
+	if (flag.pcs > 0 && flag.pcs - 1 > len)
 	{
-		temp = ft_calloc(flag[5] - len - 1, sizeof(char));
-		ft_memset(temp, '0', flag[5] - len - 1);
+		temp = ft_calloc(flag.pcs - len, sizeof(char));
+		ft_memset(temp, '0', flag.pcs - len - 1);
 		buf = ft_strjoin(temp, buf);
 		len = ft_strlen(buf);
 	}
-	if (flag[6] > len)
+	if (flag.width > len)
 	{
-		if (flag[0] == 1)
+		if (flag.minus == 1)
 			buf = number_case_minus(flag, buf, 0);
-		else if (flag[1] == 1 && flag[5] == 0)
+		else if (flag.zero == 1 && flag.pcs == 0)
 			buf = number_case_zero(flag, buf, 0);
 		else
 			buf = number_case_onlywidth(flag, buf, 0);

@@ -6,23 +6,23 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:28:30 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/03 17:45:00 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/04 16:14:11 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	print_char(va_list *ap, int *count, size_t *flag)
+void	print_char(va_list *ap, int *count, t_flag flag)
 {
 	char	buf;
 	char	*temp;
 
 	buf = va_arg(*ap, int);
-	if (flag[6] > 1)
+	if (flag.width > 1)
 	{
-		temp = ft_calloc(flag[6], sizeof(char));
-		ft_memset(temp, ' ', flag[6] - 1);
-		if (flag[0] == 1)
+		temp = ft_calloc(flag.width, sizeof(char));
+		ft_memset(temp, ' ', flag.width - 1);
+		if (flag.minus == 1)
 		{
 			write(1, &buf, 1);
 			write(1, temp, ft_strlen(temp));
@@ -40,7 +40,7 @@ void	print_char(va_list *ap, int *count, size_t *flag)
 	(*count)++;
 }
 
-char	*print_str(va_list *ap, char *buf, size_t *flag)
+char	*print_str(va_list *ap, char *buf, t_flag flag)
 {
 	char	*temp;
 	size_t	len;
@@ -48,14 +48,14 @@ char	*print_str(va_list *ap, char *buf, size_t *flag)
 	buf = ft_strdup(va_arg(*ap, char *));
 	if (!buf)
 		buf = ft_strdup("(null)");
-	if (flag[5] > 0 && flag[5] - 1 < ft_strlen(buf))
-		buf = ft_substr(buf, 0, flag[5] - 1);
+	if (flag.pcs > 0 && flag.pcs - 1 < ft_strlen(buf))
+		buf = ft_substr(buf, 0, flag.pcs - 1);
 	len = ft_strlen(buf);
-	if (flag[6] > len)
+	if (flag.width > len)
 	{
-		temp = ft_calloc(flag[6] - len + 1, sizeof(char));
-		ft_memset(temp, ' ', flag[6] - len);
-		if (flag[0] == 1)
+		temp = ft_calloc(flag.width - len + 1, sizeof(char));
+		ft_memset(temp, ' ', flag.width - len);
+		if (flag.minus == 1)
 			buf = ft_strjoin(buf, temp);
 		else
 			buf = ft_strjoin(temp, buf);
@@ -63,20 +63,20 @@ char	*print_str(va_list *ap, char *buf, size_t *flag)
 	return (buf);
 }
 
-char	*print_pointer(va_list *ap, char *buf, size_t *flag)
+char	*print_pointer(va_list *ap, char *buf, t_flag flag)
 {
 	unsigned long long	address;
 	char				*temp;
 	size_t				len;
 
 	address = va_arg(*ap, unsigned long long);
-	buf = ft_strjoin(ft_strdup("0x"), numtohex(address, 2));
+	buf = ft_strjoin(ft_strdup("0x"), numtohex(address, 0, 2));
 	len = ft_strlen(buf);
-	if (flag[6] > len)
+	if (flag.width > len)
 	{
-		temp = ft_calloc(flag[6] - len + 1, sizeof(char));
-		ft_memset(temp, ' ', flag[6] - len);
-		if (flag[0] == 1)
+		temp = ft_calloc(flag.width - len + 1, sizeof(char));
+		ft_memset(temp, ' ', flag.width - len);
+		if (flag.minus == 1)
 			buf = ft_strjoin(buf, temp);
 		else
 			buf = ft_strjoin(temp, buf);
