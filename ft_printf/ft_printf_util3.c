@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:33:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/02 16:09:13 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/04 16:13:59 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_itoa(int n, int *minus)
 		return (NULL);
 	if (n < 0)
 	{
-		*minus = 1;
+		*minus = -1;
 		nb = nb * -1;
 	}
 	if (n == 0)
@@ -78,13 +78,11 @@ char	*ft_uitoa(unsigned int n)
 	return (str);
 }
 
-char	*numtohex(unsigned long long num, int bigorsmall)
+char	*numtohex(unsigned long long num, int idx, int bigorsmall)
 {
 	unsigned long long	temp;
-	int					idx;
 	char				*hex;
 
-	idx = 0;
 	temp = num;
 	if (temp == 0)
 		idx = 1;
@@ -94,6 +92,8 @@ char	*numtohex(unsigned long long num, int bigorsmall)
 		idx++;
 	}
 	hex = (char *)malloc((idx + 1) * sizeof(char));
+	if (!hex)
+		return (NULL);
 	hex[idx--] = 0;
 	while (idx >= 0)
 	{

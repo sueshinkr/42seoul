@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:34:25 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/03 19:29:20 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/06/04 14:57:09 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (temp);
 }
 
-
 char	*ft_strchr(const char *str, int c)
 {
 	while (1)
@@ -46,9 +45,9 @@ char	*ft_strchr(const char *str, int c)
 	}
 }
 
-char	*check_specialzero(char *buf, size_t *flag)
+char	*check_specialzero(char *buf, t_flag flag)
 {
-	if (flag[5] > 0 && ft_strncmp(buf, "0", 1) == 0)
+	if (flag.pcs > 0 && ft_strncmp(buf, "0", 1) == 0)
 	{
 		free(buf);
 		buf = ft_strdup("");
