@@ -1,58 +1,100 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/10 00:33:23 by sueshin           #+#    #+#             */
+/*   Updated: 2022/07/10 02:05:38 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-void	open_map(char	*map_file, t_data *data)
+static void	render_map(t_data *d, int idx, int x, int y)
+{
+	int	temp;
+
+	temp = 0;
+	while (d->map[++idx])
+	{
+		y = (idx % d->col) * 24;
+		x = (idx / d->col) * 24;
+		mlx_put_image_to_window(d->mlx, d->win, d->bi->grass_img, y, x);
+		if (d->map[idx] == '1')
+			mlx_put_image_to_window(d->mlx, d->win, d->bi->wall_img, y, x);
+		else if (d->map[idx] == 'C')
+			mlx_put_image_to_window(d->mlx, d->win, d->bi->col_img, y, x);
+		else if (d->map[idx] == 'P')
+		{
+			d->p_loc = idx;
+			mlx_put_image_to_window(d->mlx, d->win, d->pi->front_img, y, x);
+		}
+		else if (d->map[idx] == 'O')
+		{
+			d->ei->enemy_loc[temp++] = idx;
+			mlx_put_image_to_window(d->mlx, d->win, d->ei->enemy_img, y, x);
+		}
+		else if (d->map[idx] == 'E')
+			mlx_put_image_to_window(d->mlx, d->win, d->bi->exit_img, y, x);
+	}
+}
+
+static void	check_map(t_data *d, int idx)
+{
+	while (d->map[++idx])
+	{
+		if (!ft_strchr("01CPOE", d->map[idx]))
+			exit_game_with_map(1, d);
+		if ((idx < d->col || (idx >= d->col * (d->row - 1))
+				|| idx % d->col == 0 || (idx % d->col == d->col - 1))
+			&& (d->map[idx] != '1'))
+			exit_game_with_map(2, d);
+		if (d->map[idx] == 'C')
+			d->c_flag++;
+		if (d->map[idx] == 'E')
+			d->e_flag++;
+		if (d->map[idx] == 'P')
+			d->p_flag++;
+		if (d->map[idx] == 'O')
+			d->ei->enemy_num++;
+	}
+	if (idx != d->col * d->row)
+		exit_game_with_map(3, d);
+	if (d->c_flag < 1 || d->e_flag < 1 || d->p_flag != 1)
+		exit_game_with_map(4, d);
+	d->ei->enemy_loc = malloc(d->ei->enemy_num * sizeof(int));
+	d->win = mlx_new_window(d->mlx, 24 * d->col, 24 * (d->row + 1), "SoLong");
+	render_map(d, -1, 0, 0);
+}
+
+void	open_map(char	*map_file, t_data *d)
 {
 	int		fd;
 	char	*line;
-	fd = open(map_file, O_RDONLY);
 
+	fd = open(map_file, O_RDONLY);
 	line = get_next_line(fd);
 	if (!line)
-		exit_game_with_map(0, data);
+		exit_game_with_map(0, d);
 	else
 	{
-		data->column = ft_strlen(line);
-		data->map = ft_strdup(line);
-		while(line)
+		d->col = ft_strlen(line);
+		d->map = ft_strdup(line);
+		while (line)
 		{
 			line = get_next_line(fd);
 			if (line)
 			{
-				data->map = ft_strjoin(data->map, line);
-				data->row++;
+				d->map = ft_strjoin(d->map, line);
+				d->row++;
 			}
 		}
 	}
 	close(fd);
-}
-
-void	check_map(t_data *data)
-{
-	int	idx;
-	idx = -1;
-
-	while (data->map[++idx])
-	{
-		if (!ft_strchr("01CPOE", data->map[idx]))
-			exit_game_with_map(1, data);
-		if (idx < data->column || (idx >= data->column * (data->row - 1)) ||
-			idx % data->column == 0 || idx % data->column == data->column - 1)
-		{
-			if (data->map[idx] != '1')
-				exit_game_with_map(2, data);
-		}
-		if (data->map[idx] == 'C')
-			data->C_flag++;
-		if (data->map[idx] == 'E')
-			data->E_flag++;
-		if (data->map[idx] == 'P')
-			data->P_flag++;
-	}
-	if (idx != data->column * data->row)
-		exit_game_with_map(3, data);
-	if (data->C_flag < 1 || data->E_flag < 1 || data->P_flag != 1)
-		exit_game_with_map(4, data);
-	data->base->win = mlx_new_window(data->base->mlx, 24 * data->column, 24 * (data->row + 1), "So_Long");
+	check_map(d, -1);
+	print_count(d);
 }
 	//맵이 직사각형모양인가 ok
 	//벽이 둘러싸고있는가 ok
@@ -60,116 +102,45 @@ void	check_map(t_data *data)
 	//플레이어가 하나 존재하는가 ok
 	//이상한게 꺄있지는 않은가 ok
 
-void	render_map(t_data *data)
+void	render_map_after_move(t_data *d, int cur, int new, int dir)
 {
-	int	idx;
-
-	idx = -1;
-	while(data->map[++idx])
-	{
-		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->grass_img, (idx % data->column) * 24, (idx / data->column) * 24);
-		if (data->map[idx] == '1')
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->wall_img, (idx % data->column) * 24, (idx / data->column) * 24);
-		else if (data->map[idx] == 'C')
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->collectible_img, (idx % data->column) * 24, (idx / data->column) * 24);
-		else if (data->map[idx] == 'P')
-		{
-			data->P_location = idx;
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->front_img, (idx % data->column) * 24, (idx / data->column) * 24);
-		}
-		else if (data->map[idx] == 'O')
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->ei->enemy_img, (idx % data->column) * 24, (idx / data->column) * 24);
-		else if (data->map[idx] == 'E')
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->exit_img, (idx % data->column) * 24, (idx / data->column) * 24);
-	}
-	print_count(data);
-}
-
-void	render_map_after_move(t_data *data, int cur, int new, int dir)
-{
-	mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->grass_img, (cur % data->column) * 24, (cur / data->column) * 24);
-	mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->grass_img, (new % data->column) * 24, (new / data->column) * 24);
+	mlx_put_image_to_window(d->mlx, d->win, d->bi->grass_img, \
+	(cur % d->col) * 24, (cur / d->col) * 24);
+	mlx_put_image_to_window(d->mlx, d->win, d->bi->grass_img, \
+	(new % d->col) * 24, (new / d->col) * 24);
 	if (dir == 1)
-		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->back_img, (new % data->column) * 24, (new / data->column) * 24);
+		mlx_put_image_to_window(d->mlx, d->win, d->pi->back_img, \
+		(new % d->col) * 24, (new / d->col) * 24);
 	else if (dir == 2)
-		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->left_img, (new % data->column) * 24, (new / data->column) * 24);
+		mlx_put_image_to_window(d->mlx, d->win, d->pi->left_img, \
+		(new % d->col) * 24, (new / d->col) * 24);
 	else if (dir == 3)
-		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->front_img, (new % data->column) * 24, (new / data->column) * 24);
+		mlx_put_image_to_window(d->mlx, d->win, d->pi->front_img, \
+		(new % d->col) * 24, (new / d->col) * 24);
 	else if (dir == 4)
-		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->right_img, (new % data->column) * 24, (new / data->column) * 24);
-	data->move_count++;
-	data->P_location = new;
+		mlx_put_image_to_window(d->mlx, d->win, d->pi->right_img, \
+		(new % d->col) * 24, (new / d->col) * 24);
+	d->move_count++;
+	d->p_loc = new;
 }
 
-void	render_map_fail_exit(t_data *data, int cur, int new)
+void	render_map_fail_exit(t_data *d, int cur, int new)
 {
-	if (data->map[new] == 'E')
+	if (d->map[new] == 'E')
 	{
-		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->grass_img, (cur % data->column) * 24, (cur / data->column) * 24);
-		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->front_img, (new % data->column) * 24, (new / data->column) * 24);
+		mlx_put_image_to_window(d->mlx, d->win, d->bi->grass_img, \
+		(cur % d->col) * 24, (cur / d->col) * 24);
+		mlx_put_image_to_window(d->mlx, d->win, d->pi->front_img, \
+		(new % d->col) * 24, (new / d->col) * 24);
 	}
-	else if (data->map[cur] == 'E')
+	else if (d->map[cur] == 'E')
 	{
-		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->grass_img, (cur % data->column) * 24, (cur / data->column) * 24);
-		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->exit_img, (cur % data->column) * 24, (cur / data->column) * 24);
-		reset_animation_flag(data, 1);
+		mlx_put_image_to_window(d->mlx, d->win, d->bi->grass_img, \
+		(cur % d->col) * 24, (cur / d->col) * 24);
+		mlx_put_image_to_window(d->mlx, d->win, d->bi->exit_img, \
+		(cur % d->col) * 24, (cur / d->col) * 24);
+		reset_animation_flag(d, 1);
 	}
-	data->P_location = new;
+	d->move_count++;
+	d->p_loc = new;
 }
-
-void	render_player_stop_motion1(t_data *data, int dir)
-{
-	mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->grass_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-	if (dir == 1) //front
-	{
-		if (data->base->pi->front_flag == 1)
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->back2_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-		else
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->back_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-	}
-	if (dir == 2) //left
-	{
-		if (data->base->pi->left_flag == 1)
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->left2_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-		else
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->left_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-	}
-	if (dir == 0) //exit
-	{
-		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->grass_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->exit_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-		if (data->base->pi->front_flag == 1)
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->back2_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-		else
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->back_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-			
-	}
-}
-
-void	render_player_stop_motion2(t_data *data, int dir)
-{
-	mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->grass_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-	if (dir == 3) //back
-	{
-		if (data->base->pi->back_flag == 1)
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->front2_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-		else
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->front_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-	}
-	if (dir == 4) //right
-	{
-		if (data->base->pi->right_flag == 1)
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->right2_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-		else
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->right_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-	}
-}
-
-void	render_enemy_stop_motion(t_data *data)
-{
-	if (data->base->pi->right_flag == 1)
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->right2_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-		else
-			mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->pi->right_img, (data->P_location % data->column) * 24, (data->P_location / data->column) * 24);
-}
-

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/10 00:54:38 by sueshin           #+#    #+#             */
+/*   Updated: 2022/07/10 02:01:17 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-void	exit_game_with_map(int flag, t_data *data)
+void	exit_game_with_map(int flag, t_data *d)
 {
 	if (flag == 0)
 		printf("Empty input map : Error\n");
@@ -21,45 +33,8 @@ void	exit_game_with_map(int flag, t_data *data)
 	exit(0);
 }
 
-int	exit_game_with_red()
+int	exit_game_with_red(void)
 {
 	printf("Exit Game...\n");
 	exit(0);
-} 
-
-int	cal_count(int n)
-{
-	int				count;
-
-	count = 0;
-	if (n == 0)
-		count++;
-	while (n > 0)
-	{
-		n /= 10;
-		count++;
-	}
-	return (count);
-}
-
-char	*ft_itoa(int n)
-{
-	char		*str;
-	int			count;
-	long long	nb;
-
-	nb = n;
-	count = cal_count(nb);
-	str = (char *)malloc((count + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	if (n == 0)
-		*str = '0';
-	*(str + count) = 0;
-	while (nb > 0)
-	{
-		*(str + --count) = nb % 10 | '0';
-		nb /= 10;
-	}
-	return (str);
 }

@@ -1,122 +1,95 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/10 01:03:09 by sueshin           #+#    #+#             */
+/*   Updated: 2022/07/10 01:58:55 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-void	init_data(t_data *data)
+static void	init_enemy(t_data *d, int w, int h)
 {
-	int	img_width;
-	int	img_height;
+	d->ei = malloc(sizeof(t_enemy));
+	d->ei->enemy_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/enemy.xpm", &w, &h);
+	d->ei->enemy2_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/enemy2.xpm", &w, &h);
+	d->ei->enemy_flag = 1;
+	d->ei->enemy_num = 0;
+}
 
-	data->move_count = 0;
-	data->column = 0;
-	data->row = 1;
-	data->C_flag = 0;
-	data->E_flag = 0;
-	data->P_flag = 0;
-	data->base = malloc(sizeof(t_mlx));
-	data->base->mlx = mlx_init();
-	data->base->win = NULL;
-	data->base->grass_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/grass.xpm", &img_width, &img_height);
-	data->base->wall_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/wall.xpm", &img_width, &img_height);
-	data->base->collectible_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/collectible.xpm", &img_width, &img_height);
-	data->base->exit_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/exit.xpm", &img_width, &img_height);
+static void	init_player(t_data *d, int w, int h)
+{
+	d->pi = malloc(sizeof(t_player));
+	d->pi->front_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/front.xpm", &w, &h);
+	d->pi->left_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/left.xpm", &w, &h);
+	d->pi->back_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/back.xpm", &w, &h);
+	d->pi->right_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/right.xpm", &w, &h);
+	d->pi->front2_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/front2.xpm", &w, &h);
+	d->pi->left2_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/left2.xpm", &w, &h);
+	d->pi->back2_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/back2.xpm", &w, &h);
+	d->pi->right2_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/right2.xpm", &w, &h);
+	d->pi->front_flag = 0;
+	d->pi->left_flag = 0;
+	d->pi->back_flag = 1;
+	d->pi->right_flag = 0;
+}
 
-	data->base->pi = malloc(sizeof(t_player));
-	data->base->pi->front_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/front.xpm", &img_width, &img_height);
-	data->base->pi->left_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/left.xpm", &img_width, &img_height);
-	data->base->pi->back_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/back.xpm", &img_width, &img_height);
-	data->base->pi->right_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/right.xpm", &img_width, &img_height);
-	data->base->pi->front2_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/front2.xpm", &img_width, &img_height);
-	data->base->pi->left2_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/left2.xpm", &img_width, &img_height);
-	data->base->pi->back2_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/back2.xpm", &img_width, &img_height);
-	data->base->pi->right2_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/right2.xpm", &img_width, &img_height);
-	data->base->pi->front_flag = 0;
-	data->base->pi->left_flag = 0;
-	data->base->pi->back_flag = 1;
-	data->base->pi->right_flag = 0;
+static void	init_base(t_data *d, int w, int h)
+{
+	d->bi = malloc(sizeof(t_base));
+	d->bi->grass_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/grass.xpm", &w, &h);
+	d->bi->wall_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/wall.xpm", &w, &h);
+	d->bi->col_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/collectible.xpm", &w, &h);
+	d->bi->exit_img = mlx_xpm_file_to_image (d->mlx, \
+		"./imageset/exit.xpm", &w, &h);
+}
 
-	data->base->ei = malloc(sizeof(t_enemy));
-	data->base->ei->enemy_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/enemy.xpm", &img_width, &img_height);
-	data->base->ei->enemy2_img = mlx_xpm_file_to_image (data->base->mlx, "./imageset/enemy2.xpm", &img_width, &img_height);
-	data->base->ei->enemy_flag = 1;
+static void	init_data(t_data *d)
+{
+	int	w;
+	int	h;
+
+	d->mlx = mlx_init();
+	d->win = NULL;
+	d->move_count = 0;
+	d->col = 0;
+	d->row = 1;
+	d->c_flag = 0;
+	d->e_flag = 0;
+	d->p_flag = 0;
+	init_base(d, w, h);
+	init_player(d, w, h);
+	init_enemy(d, w, h);
 }
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;
-
-	if(argc != 2)
-		write(1, "error\n", 6);
-
-	data = malloc(sizeof(t_data));
-	init_data(data);
-
-	open_map(argv[1], data);
-	check_map(data);
-	render_map(data);
-
-	mlx_hook(data->base->win, 2, 0, &keypress, data);
-	mlx_hook(data->base->win, 17, 0, &exit_game_with_red, data);
-	mlx_loop_hook(data->base->mlx, &sel_animation, data);
-	mlx_loop(data->base->mlx);
-}
-
-
-
-/*
-int	main(int argc, char **argv)
-{
-	void	*mlx;
-	void	*mlx_win;
-	char	*test_image = "./imageset/front.xpm";
-	int		*test_image_width;
-	int		*test_image_height;
-	int		width = 12;
-	int		height = 4;
-	t_data	img;
+	t_data	*d;
 
 	if (argc != 2)
-		printf("error\n");
-	else
-		open_map(argv[1]);
-
-	test_image_width = &width;
-	test_image_height = &height;
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1200, 600, "Hello world!");
-	img.img = mlx_xpm_file_to_image (mlx, test_image, test_image_width, test_image_height);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+		write(1, "error\n", 6);
+	d = malloc(sizeof(t_data));
+	init_data(d);
+	open_map(argv[1], d);
+	mlx_hook(d->win, 2, 0, &keypress, d);
+	mlx_hook(d->win, 17, 0, &exit_game_with_red, d);
+	mlx_loop_hook(d->mlx, &sel_animation, d);
+	mlx_loop(d->mlx);
 }
-*/
-
-//gcc -L./ -lmlx -framework OpenGL -framework Appkit main.c
-
-/* mlx_new_window
-void *mlx_new_window ( void *mlx_ptr, int size_x, int size_y, char* title );
-int	mlx_clear_window ( void *mlx_ptr, void *win_ptr );
-int	mlx_destroy_window ( void *mlx_ptr, void *win_ptr );
-*/
-
-/* mlx_pixel_put
-int	mlx_pixel_put ( void *mlx_ptr, void *win_ptr, int x, int y, int color );
-int	mlx_string_put ( void *mlx_ptr, void *win_ptr, int x, int y, int color, char *string );
-*/
-
-/* mlx_new_image
-void	*mlx_new_image ( void *mlx_ptr, int width, int height );
-char	*mlx_get_data_addr ( void *img_ptr, int *bits_per_pixel, int *size_line, int *endian );
-int		mlx_put_image_to_window ( void *mlx_ptr, void *win_ptr, void *img_ptr, int x, int y );
-unsigned int	mlx_get_color_value ( void *mlx_ptr, int color );
-void	*mlx_xpm_to_image ( void *mlx_ptr, char **xpm_data, int *width, int *height );
-void	*mlx_xpm_file_to_image ( void *mlx_ptr, char *filename, int *width, int *height );
-void	*mlx_png_file_to_image ( void *mlx_ptr, char *filename, int *width, int *height );
-int		mlx_destroy_image ( void *mlx_ptr, void *img_ptr );
-*/
-
-/* mlx_loop
-int	mlx_loop ( void *mlx_ptr );
-int	mlx_key_hook ( void *win_ptr, int (*funct_ptr)(), void *param );
-int	mlx_mouse_hook ( void *win_ptr, int (*funct_ptr)(), void *param );
-int	mlx_expose_hook ( void *win_ptr, int (*funct_ptr)(), void *param );
-int	mlx_loop_hook ( void *mlx_ptr, int (*funct_ptr)(), void *param );
-int mlx_hook(void win_ptr, int x_event, int x_mask, int (funct)(), void *param);
-*/
