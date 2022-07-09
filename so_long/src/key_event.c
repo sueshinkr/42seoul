@@ -9,6 +9,8 @@ void	move_up(t_data *data)
 	{
 		if (data->map[new_location] == '1')
 			return ;
+		if (data->map[new_location] == 'O')
+			exit_game_with_map(7, data);
 		if (data->map[new_location] == 'E' || data->map[data->P_location] == 'E')
 		{
 			if (data->C_flag == 0)
@@ -23,7 +25,7 @@ void	move_up(t_data *data)
 			data->C_flag--;
 		data->map[data->P_location] = '0';
 		data->map[new_location] = 'P';
-		render_map_after_move(data, data->P_location, new_location);
+		render_map_after_move(data, data->P_location, new_location, 1);
 	}
 }
 
@@ -36,6 +38,8 @@ void	move_down(t_data *data)
 	{
 		if (data->map[new_location] == '1')
 			return ;
+		if (data->map[new_location] == 'O')
+			exit_game_with_map(7, data);
 		if (data->map[new_location] == 'E' || data->map[data->P_location] == 'E')
 		{
 			if (data->C_flag == 0)
@@ -50,7 +54,7 @@ void	move_down(t_data *data)
 			data->C_flag--;
 		data->map[data->P_location] = '0';
 		data->map[new_location] = 'P';
-		render_map_after_move(data, data->P_location, new_location);
+		render_map_after_move(data, data->P_location, new_location, 3);
 	}
 }
 
@@ -63,6 +67,8 @@ void	move_left(t_data *data)
 	{
 		if (data->map[new_location] == '1')
 			return ;
+		if (data->map[new_location] == 'O')
+			exit_game_with_map(7, data);
 		if (data->map[new_location] == 'E' || data->map[data->P_location] == 'E')
 		{
 			if (data->C_flag == 0)
@@ -77,7 +83,8 @@ void	move_left(t_data *data)
 			data->C_flag--;
 		data->map[data->P_location] = '0';
 		data->map[new_location] = 'P';
-		render_map_after_move(data, data->P_location, new_location);
+		render_map_after_move(data, data->P_location, new_location, 2);
+
 	}
 }
 
@@ -90,6 +97,8 @@ void	move_right(t_data *data)
 	{
 		if (data->map[new_location] == '1')
 			return ;
+		if (data->map[new_location] == 'O')
+			exit_game_with_map(7, data);
 		if (data->map[new_location] == 'E' || data->map[data->P_location] == 'E')
 		{
 			if (data->C_flag == 0)
@@ -104,26 +113,36 @@ void	move_right(t_data *data)
 			data->C_flag--;
 		data->map[data->P_location] = '0';
 		data->map[new_location] = 'P';
-		render_map_after_move(data, data->P_location, new_location);
+		render_map_after_move(data, data->P_location, new_location, 4);
 	}
 }
 
 int	keypress(int keycode, t_data *data)
 {
-	data->key_count++;
 	if (keycode == 53)
 		exit_game_with_map(5, data);
 	else if (keycode == 13)
+	{
 		move_up(data);
-	else if (keycode == 1)
-		move_down(data);
+		reset_animation_flag(data, 1);
+	}
 	else if (keycode == 0)
+	{
 		move_left(data);
+		reset_animation_flag(data, 2);
+	}
+	else if (keycode == 1)
+	{
+		move_down(data);
+		reset_animation_flag(data, 3);
+	}
 	else if (keycode == 2)
+	{
 		move_right(data);
-
+		reset_animation_flag(data, 4);
+	}
 	print_count(data);
-	printf("keycode : %d, count : %d\n", keycode, data->key_count);
+	printf("keycode : %d, count : %d\n", keycode, data->move_count);
 	
 	return (0);
 }
@@ -133,14 +152,10 @@ void	print_count(t_data *data)
 	char	*str;
 	int		idx;
 
-	printf("column : %d\n", data->column);
 	idx = -1;
 	while (++idx < data->column)
-	{
-		printf("idx : %d\n", idx);
 		mlx_put_image_to_window(data->base->mlx, data->base->win, data->base->grass_img, idx * 24, 24 * data->row);
-	}
-	str = ft_itoa(data->key_count);
+	str = ft_itoa(data->move_count);
 	mlx_string_put(data->base->mlx, data->base->win, 6, 24 * data->row + 12, 0xffffff, "count : ");
 	mlx_string_put(data->base->mlx, data->base->win, 60, 24 * data->row + 12, 0xffffff, str);
 	free(str);

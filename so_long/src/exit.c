@@ -16,6 +16,8 @@ void	exit_game_with_map(int flag, t_data *data)
 		printf("Exit Game...\n");
 	else if (flag == 6)
 		printf("Game Clear!\n");
+	else if (flag == 7)
+		printf("Don't touch the cow!\n");
 	exit(0);
 }
 

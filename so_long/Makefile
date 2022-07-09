@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/07/07 23:59:11 by sueshin          ###   ########.fr        #
+#    Updated: 2022/07/09 12:34:16 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ INCS_DIR = ./include/
 SRCS_DIR = ./src/
 MLX_DIR = ./mlx/
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))
-SRC = main.c map.c get_next_line.c get_next_line_utils.c exit.c key_event.c
+SRC = main.c map.c get_next_line.c get_next_line_utils.c exit.c key_event.c \
+	animation.c player_animation.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
