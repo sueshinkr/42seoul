@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/07/10 21:47:25 by sueshin          ###   ########.fr        #
+#    Updated: 2022/07/10 22:22:00 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ $(NAME): $(OBJS)
 
 %.o : %.c
 #	$(CC) $(CFLAGS) -I$(INCS_DIR) -c -o $@ $<
-	$(CC) -g -I$(INCS_DIR) -c -o $@ $<
+	$(CC) -I$(INCS_DIR) -c -o $@ $<
 
 clean :
 	make -C $(MLX_DIR) clean 
