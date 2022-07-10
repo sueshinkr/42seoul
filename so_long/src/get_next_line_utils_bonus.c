@@ -1,16 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:50 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/10 01:52:53 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/10 22:18:05 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
+
+t_list	*add_fd_remain(t_list *remain, int fd)
+{
+	t_list	*new;
+
+	new = (t_list *)malloc(sizeof(t_list));
+	new->str = NULL;
+	new->fd = fd;
+	new->next = NULL;
+	new->flag = 1;
+	while (remain)
+	{
+		if (remain->fd == fd)
+		{
+			free(new);
+			break ;
+		}
+		if (!remain->next)
+		{
+			remain->next = new;
+			return (new);
+		}
+		remain = remain->next;
+	}
+	return (remain);
+}
 
 size_t	ft_strlen(const char *str)
 {
@@ -34,19 +60,6 @@ char	*ft_strchr(const char *str, int c)
 	}
 }
 
-size_t	ft_strlcpy(char *dst, char *src, size_t size)
-{
-	int	src_len;
-
-	src_len = ft_strlen(src);
-	if (size == 0)
-		return (src_len);
-	while (size-- > 1 && *src)
-		*dst++ = *src++;
-	*dst = 0;
-	return (src_len);
-}
-
 char	*ft_strdup(const char *src)
 {
 	char	*str;
@@ -62,6 +75,7 @@ char	*ft_strdup(const char *src)
 	return (result);
 }
 
+/*
 char	*ft_strjoin(char const *str1, char const *str2)
 {
 	char	*result;
@@ -83,4 +97,33 @@ char	*ft_strjoin(char const *str1, char const *str2)
 	}
 	*joinstr = 0;
 	return (result);
+}
+*/
+
+char	*ft_strjoin(char *str1, char *str2)
+{
+	char	*joinstr;
+	size_t	joinstr_len;
+	size_t	idx1;
+	size_t	idx2;
+
+	idx1 = 0;
+	idx2 = 0;
+	joinstr_len = ft_strlen(str1) + ft_strlen(str2) + 1;
+	joinstr = (char *)malloc(joinstr_len * sizeof(char));
+	if (!joinstr)
+		return (NULL);
+	while (*(str1 + idx1))
+	{
+		*(joinstr + idx1) = *(str1 + idx1);
+		idx1++;
+	}
+	while (*(str2 + idx2))
+	{
+		*(joinstr + idx1 + idx2) = *(str2 + idx2);
+		idx2++;
+	}
+	*(joinstr + idx1 + idx2) = 0;
+	free(str1);
+	return (joinstr);
 }

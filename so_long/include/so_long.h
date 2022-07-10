@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/10 02:06:36 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/10 22:18:49 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdio.h>
 
 # include "../mlx/mlx.h"
-# include "./get_next_line.h"
+# include "./get_next_line_bonus.h"
 
 typedef struct s_enemy
 {

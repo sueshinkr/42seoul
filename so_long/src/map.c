@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 00:33:23 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/10 02:05:38 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/10 22:15:22 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	open_map(char	*map_file, t_data *d)
 		d->map = ft_strdup(line);
 		while (line)
 		{
+			free(line);
 			line = get_next_line(fd);
 			if (line)
 			{
