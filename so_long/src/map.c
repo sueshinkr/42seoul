@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 00:33:23 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/10 22:15:22 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/10 22:35:48 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,16 @@ static void	render_map(t_data *d, int idx, int x, int y)
 
 static void	check_map(t_data *d, int idx)
 {
+	if (ft_strlen(d->map) != d->col * d->row)
+		exit_game_with_map(1, d);
 	while (d->map[++idx])
 	{
 		if (!ft_strchr("01CPOE", d->map[idx]))
-			exit_game_with_map(1, d);
+			exit_game_with_map(2, d);
 		if ((idx < d->col || (idx >= d->col * (d->row - 1))
 				|| idx % d->col == 0 || (idx % d->col == d->col - 1))
 			&& (d->map[idx] != '1'))
-			exit_game_with_map(2, d);
+			exit_game_with_map(3, d);
 		if (d->map[idx] == 'C')
 			d->c_flag++;
 		if (d->map[idx] == 'E')
@@ -60,14 +62,18 @@ static void	check_map(t_data *d, int idx)
 		if (d->map[idx] == 'O')
 			d->ei->enemy_num++;
 	}
-	if (idx != d->col * d->row)
-		exit_game_with_map(3, d);
 	if (d->c_flag < 1 || d->e_flag < 1 || d->p_flag != 1)
 		exit_game_with_map(4, d);
 	d->ei->enemy_loc = malloc(d->ei->enemy_num * sizeof(int));
 	d->win = mlx_new_window(d->mlx, 24 * d->col, 24 * (d->row + 1), "SoLong");
 	render_map(d, -1, 0, 0);
 }
+
+	//맵이 직사각형모양인가 ok
+	//벽이 둘러싸고있는가 ok
+	//exit와 collectible이 하나 이상 존재하는가 ok
+	//플레이어가 하나 존재하는가 ok
+	//이상한게 꺄있지는 않은가 ok
 
 void	open_map(char	*map_file, t_data *d)
 {
@@ -97,11 +103,6 @@ void	open_map(char	*map_file, t_data *d)
 	check_map(d, -1);
 	print_count(d);
 }
-	//맵이 직사각형모양인가 ok
-	//벽이 둘러싸고있는가 ok
-	//exit와 collectible이 하나 이상 존재하는가 ok
-	//플레이어가 하나 존재하는가 ok
-	//이상한게 꺄있지는 않은가 ok
 
 void	render_map_after_move(t_data *d, int cur, int new, int dir)
 {
