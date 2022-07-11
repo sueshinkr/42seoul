@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:03:09 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/11 13:56:32 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/11 16:06:18 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ int	main(int argc, char **argv)
 	t_data	*d;
 
 	if (argc != 2)
-		write(1, "error\n", 6);
+	{
+		ft_putstr_fd("Wrong input file : Error\n", 1);
+		return (0);
+	}
 	d = malloc(sizeof(t_data));
 	init_data(d);
 	open_map(argv[1], d);
@@ -92,4 +95,5 @@ int	main(int argc, char **argv)
 	mlx_hook(d->win, 17, 0, &exit_game_with_red, d);
 	mlx_loop_hook(d->mlx, &sel_animation, d);
 	mlx_loop(d->mlx);
+	return (0);
 }

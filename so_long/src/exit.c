@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 00:54:38 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/11 14:40:40 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/11 16:09:08 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exit_game_with_map(int flag)
 	else if (flag == 3)
 		ft_putstr_fd("Wrong wall : Error\n", 1);
 	else if (flag == 4)
-		ft_putstr_fd("Nonvalidated character : Error\n", 1);
+		ft_putstr_fd("Nonvalidated map : Error\n", 1);
 	else if (flag == 5)
 		ft_putstr_fd("Exit Game...\n", 1);
 	else if (flag == 6)
