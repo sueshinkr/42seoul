@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 00:54:27 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/10 02:02:34 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/11 14:38:09 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ static void	move_up(t_data *d)
 		if (d->map[new_loc] == '1')
 			return ;
 		if (d->map[new_loc] == 'O')
-			exit_game_with_map(7, d);
+			exit_game_with_map(7);
 		if (d->map[new_loc] == 'E' || d->map[d->p_loc] == 'E')
 		{
 			if (d->c_flag == 0)
-				exit_game_with_map(6, d);
+				exit_game_with_map(6);
 			else
 			{
 				render_map_fail_exit(d, d->p_loc, new_loc);
@@ -51,11 +51,11 @@ static void	move_down(t_data *d)
 		if (d->map[new_loc] == '1')
 			return ;
 		if (d->map[new_loc] == 'O')
-			exit_game_with_map(7, d);
+			exit_game_with_map(7);
 		if (d->map[new_loc] == 'E' || d->map[d->p_loc] == 'E')
 		{
 			if (d->c_flag == 0)
-				exit_game_with_map(6, d);
+				exit_game_with_map(6);
 			else
 			{
 				render_map_fail_exit(d, d->p_loc, new_loc);
@@ -80,11 +80,11 @@ static void	move_left(t_data *d)
 		if (d->map[new_loc] == '1')
 			return ;
 		if (d->map[new_loc] == 'O')
-			exit_game_with_map(7, d);
+			exit_game_with_map(7);
 		if (d->map[new_loc] == 'E' || d->map[d->p_loc] == 'E')
 		{
 			if (d->c_flag == 0)
-				exit_game_with_map(6, d);
+				exit_game_with_map(6);
 			else
 			{
 				render_map_fail_exit(d, d->p_loc, new_loc);
@@ -109,11 +109,11 @@ static void	move_right(t_data *d)
 		if (d->map[new_loc] == '1')
 			return ;
 		if (d->map[new_loc] == 'O')
-			exit_game_with_map(7, d);
+			exit_game_with_map(7);
 		if (d->map[new_loc] == 'E' || d->map[d->p_loc] == 'E')
 		{
 			if (d->c_flag == 0)
-				exit_game_with_map(6, d);
+				exit_game_with_map(6);
 			else
 			{
 				render_map_fail_exit(d, d->p_loc, new_loc);
@@ -131,7 +131,7 @@ static void	move_right(t_data *d)
 int	keypress(int keycode, t_data *d)
 {
 	if (keycode == 53)
-		exit_game_with_map(5, d);
+		exit_game_with_map(5);
 	else if (keycode == 13)
 	{
 		move_up(d);
@@ -152,8 +152,8 @@ int	keypress(int keycode, t_data *d)
 		move_right(d);
 		reset_animation_flag(d, 4);
 	}
-	print_count(d);
-	printf("keycode : %d, count : %d\n", keycode, d->move_count);
+	print_count_console(d);
+	print_count_window(d);
 	return (0);
 }
 

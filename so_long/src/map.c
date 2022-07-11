@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 00:33:23 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/10 22:35:48 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/11 14:36:58 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,16 @@ static void	render_map(t_data *d, int idx, int x, int y)
 
 static void	check_map(t_data *d, int idx)
 {
-	if (ft_strlen(d->map) != d->col * d->row)
-		exit_game_with_map(1, d);
+	if (ft_strlen(d->map) != (size_t)(d->col * d->row))
+		exit_game_with_map(1);
 	while (d->map[++idx])
 	{
 		if (!ft_strchr("01CPOE", d->map[idx]))
-			exit_game_with_map(2, d);
+			exit_game_with_map(2);
 		if ((idx < d->col || (idx >= d->col * (d->row - 1))
 				|| idx % d->col == 0 || (idx % d->col == d->col - 1))
 			&& (d->map[idx] != '1'))
-			exit_game_with_map(3, d);
+			exit_game_with_map(3);
 		if (d->map[idx] == 'C')
 			d->c_flag++;
 		if (d->map[idx] == 'E')
@@ -63,7 +63,7 @@ static void	check_map(t_data *d, int idx)
 			d->ei->enemy_num++;
 	}
 	if (d->c_flag < 1 || d->e_flag < 1 || d->p_flag != 1)
-		exit_game_with_map(4, d);
+		exit_game_with_map(4);
 	d->ei->enemy_loc = malloc(d->ei->enemy_num * sizeof(int));
 	d->win = mlx_new_window(d->mlx, 24 * d->col, 24 * (d->row + 1), "SoLong");
 	render_map(d, -1, 0, 0);
@@ -83,7 +83,7 @@ void	open_map(char	*map_file, t_data *d)
 	fd = open(map_file, O_RDONLY);
 	line = get_next_line(fd);
 	if (!line)
-		exit_game_with_map(0, d);
+		exit_game_with_map(0);
 	else
 	{
 		d->col = ft_strlen(line);
@@ -101,7 +101,7 @@ void	open_map(char	*map_file, t_data *d)
 	}
 	close(fd);
 	check_map(d, -1);
-	print_count(d);
+	print_count_window(d);
 }
 
 void	render_map_after_move(t_data *d, int cur, int new, int dir)

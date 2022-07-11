@@ -6,59 +6,59 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:03:09 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/10 22:25:48 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/11 13:56:32 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	init_enemy(t_data *d, int w, int h)
+static void	init_enemy(t_data *d, int *w, int *h)
 {
 	d->ei = malloc(sizeof(t_enemy));
 	d->ei->enemy_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/enemy.xpm", &w, &h);
+		"./imageset/enemy.xpm", w, h);
 	d->ei->enemy2_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/enemy2.xpm", &w, &h);
+		"./imageset/enemy2.xpm", w, h);
 	d->ei->enemy_flag = 1;
 	d->ei->enemy_num = 0;
 }
 
-static void	init_player(t_data *d, int w, int h)
+static void	init_player(t_data *d, int *w, int *h)
 {
 	d->pi = malloc(sizeof(t_player));
 	d->pi->front_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/front.xpm", &w, &h);
+		"./imageset/front.xpm", w, h);
 	d->pi->left_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/left.xpm", &w, &h);
+		"./imageset/left.xpm", w, h);
 	d->pi->back_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/back.xpm", &w, &h);
+		"./imageset/back.xpm", w, h);
 	d->pi->right_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/right.xpm", &w, &h);
+		"./imageset/right.xpm", w, h);
 	d->pi->front2_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/front2.xpm", &w, &h);
+		"./imageset/front2.xpm", w, h);
 	d->pi->left2_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/left2.xpm", &w, &h);
+		"./imageset/left2.xpm", w, h);
 	d->pi->back2_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/back2.xpm", &w, &h);
+		"./imageset/back2.xpm", w, h);
 	d->pi->right2_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/right2.xpm", &w, &h);
+		"./imageset/right2.xpm", w, h);
 	d->pi->front_flag = 0;
 	d->pi->left_flag = 0;
 	d->pi->back_flag = 1;
 	d->pi->right_flag = 0;
 }
 
-static void	init_base(t_data *d, int w, int h)
+static void	init_base(t_data *d, int *w, int *h)
 {
 	d->bi = malloc(sizeof(t_base));
 	d->bi->grass_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/grass.xpm", &w, &h);
+		"./imageset/grass.xpm", w, h);
 	d->bi->wall_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/wall.xpm", &w, &h);
+		"./imageset/wall.xpm", w, h);
 	d->bi->col_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/collectible.xpm", &w, &h);
+		"./imageset/collectible.xpm", w, h);
 	d->bi->exit_img = mlx_xpm_file_to_image (d->mlx, \
-		"./imageset/exit.xpm", &w, &h);
+		"./imageset/exit.xpm", w, h);
 }
 
 static void	init_data(t_data *d)
@@ -74,9 +74,9 @@ static void	init_data(t_data *d)
 	d->c_flag = 0;
 	d->e_flag = 0;
 	d->p_flag = 0;
-	init_base(d, w, h);
-	init_player(d, w, h);
-	init_enemy(d, w, h);
+	init_base(d, &w, &h);
+	init_player(d, &w, &h);
+	init_enemy(d, &w, &h);
 }
 
 int	main(int argc, char **argv)

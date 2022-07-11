@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/10 22:20:01 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/11 14:36:42 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	render_enemy_stop_motion(t_data *d, int idx);
 
 int		keypress(int keycode, t_data *d);
 
-void	exit_game_with_map(int flag, t_data *d);
+void	exit_game_with_map(int flag);
 int		exit_game_with_red(void);
 
 int		sel_animation(t_data *d);
@@ -94,7 +94,9 @@ void	player_left_animation(t_data *d);
 void	player_back_animation(t_data *d);
 void	player_right_animation(t_data *d);
 
+void	ft_putstr_fd(char *str, int fd);
 char	*ft_itoa(int n);
-void	print_count(t_data *d);
+void	print_count_console(t_data *d);
+void	print_count_window(t_data *d);
 
 #endif
