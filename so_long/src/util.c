@@ -6,16 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:00:08 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/11 14:38:02 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/12 13:00:07 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	ft_putstr_fd(char *str, int fd)
-{
-	write(fd, str, ft_strlen(str));
-}
 
 static int	cal_count(int n)
 {
@@ -59,9 +54,7 @@ void	print_count_console(t_data *d)
 	char	*str;
 
 	str = ft_itoa(d->move_count);
-	ft_putstr_fd("movement count : ", 1);
-	ft_putstr_fd(str, 1);
-	ft_putstr_fd("\n", 1);
+	printf("movement count : %s\n", str);
 	free(str);
 }
 
