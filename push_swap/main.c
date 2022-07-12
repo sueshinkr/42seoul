@@ -113,6 +113,18 @@ void	func_rra(t_list *list)
 	}
 }
 
+void	node_print(t_list *list)
+{
+	int idx = -1;
+	t_node	*temp;
+
+	temp = list->head;
+	while (++idx < list->count)
+	{
+		temp = temp->next;
+		printf("idx %d : %d\n", idx, temp->num);
+	}
+}
 
 int	main(int argc, char **argv)
 {
@@ -129,29 +141,21 @@ int	main(int argc, char **argv)
 	while (argv[++idx])
 		push_stack(a, ft_atoi(argv[idx]));
 
-	printf("%d\n", a->head->next->num);
-	printf("%d\n", a->head->next->next->num);
-	printf("%d\n", a->tail->next->num);
-	printf("%d\n", a->tail->next->next->num);
+	node_print(a);
 
 	printf("::::sa\n");
 	func_sa(a);
-	printf("%d\n", a->head->next->num);
-	printf("%d\n", a->head->next->next->num);
-	printf("%d\n", a->tail->next->num);
-	printf("%d\n", a->tail->next->next->num);
+	node_print(a);
+	
+
 
 	printf(":::::ra\n");
 	func_ra(a);
-	printf("%d\n", a->head->next->num);
-	printf("%d\n", a->head->next->next->num);
-	printf("%d\n", a->tail->next->num);
-	printf("%d\n", a->tail->next->next->num);
+	node_print(a);
+
 
 	printf(":::::rra\n");
 	func_rra(a);
-	printf("%d\n", a->head->next->num);
-	printf("%d\n", a->head->next->next->num);
-	printf("%d\n", a->tail->next->num);
-	printf("%d\n", a->tail->next->next->num);
+	node_print(a);
+
 }
