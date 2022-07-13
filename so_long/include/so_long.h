@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/11 14:36:42 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/11 17:55:28 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 # define SO_LONG_H
 
 # include <stdlib.h>
-# include <string.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h>
 
 # include "../mlx/mlx.h"
 # include "./get_next_line_bonus.h"
