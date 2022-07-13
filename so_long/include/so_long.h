@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/13 10:48:44 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/13 10:50:08 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 # include <fcntl.h>
 
 # include "../mlx/mlx.h"
