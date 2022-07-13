@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 00:54:38 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/11 16:09:08 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/12 12:53:28 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 void	exit_game_with_map(int flag)
 {
 	if (flag == 0)
-		ft_putstr_fd("Empty input map : Error\n", 1);
+		printf("Empty input map : Error\n");
 	else if (flag == 1)
-		ft_putstr_fd("Not rectangular map : Error\n", 1);
+		printf("Not rectangular map : Error\n");
 	else if (flag == 2)
-		ft_putstr_fd("Wrong character input : Error\n", 1);
+		printf("Wrong character input : Error\n");
 	else if (flag == 3)
-		ft_putstr_fd("Wrong wall : Error\n", 1);
+		printf("Wrong wall : Error\n");
 	else if (flag == 4)
-		ft_putstr_fd("Nonvalidated map : Error\n", 1);
+		printf("Nonvalidated map : Error\n");
 	else if (flag == 5)
-		ft_putstr_fd("Exit Game...\n", 1);
+		printf("Exit Game...\n");
 	else if (flag == 6)
-		ft_putstr_fd("Game Clear!\n", 1);
+		printf("Game Clear!\n");
 	else if (flag == 7)
-		ft_putstr_fd("Don't touch the cow!\n", 1);
+		printf("Don't touch the cow!\n");
 	exit(0);
 }
 
 int	exit_game_with_red(void)
 {
-	ft_putstr_fd("Exit Game...\n", 1);
+	printf("Exit Game...\n");
 	exit(0);
 }

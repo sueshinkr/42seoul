@@ -6,7 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:03:09 by sueshin           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/07/11 18:05:46 by sueshin          ###   ########.fr       */
+=======
+/*   Updated: 2022/07/12 13:55:34 by sueshin          ###   ########.fr       */
+>>>>>>> bc82821c4b24651d209372b65a3d670c0252ef67
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +74,7 @@ static void	init_data(t_data *d)
 	d->win = NULL;
 	d->move_count = 0;
 	d->col = 0;
-	d->row = 1;
+	d->row = 0;
 	d->c_flag = 0;
 	d->e_flag = 0;
 	d->p_flag = 0;
@@ -85,7 +89,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_putstr_fd("Wrong input file : Error\n", 1);
+		printf("Wrong input file : Error\n");
 		return (0);
 	}
 	d = malloc(sizeof(t_data));
