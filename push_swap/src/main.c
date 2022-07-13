@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:13:12 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/13 17:09:43 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/13 17:17:14 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ int	main(int argc, char **argv)
 	node_print(a);
 */
 	printf(":::::sort\n");
-	//sort_three(a);
-	sort_five(a, b, comm);
+	if (a->count == 3)
+		sort_three(a, comm);
+	else if (a->count == 5)
+		sort_five(a, b, comm);
 	print_command(comm);
 	printf("::::::::::::::::::::::::::::::::::::::\n");
 	node_print(a);
