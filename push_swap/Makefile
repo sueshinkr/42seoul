@@ -6,35 +6,33 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/07/13 11:17:50 by sueshin          ###   ########.fr        #
+#    Updated: 2022/07/13 15:39:38 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = solong
+NAME = pushswap
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-MLX_FLAGS	= -L./mlx -lmlx -framework OpenGL -framework Appkit -lz
 AR = ar rcs
 
 INCS_DIR = ./include/
 SRCS_DIR = ./src/
 MLX_DIR = ./mlx/
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))
-SRC = main.c map.c render.c util.c get_next_line_bonus.c get_next_line_utils_bonus.c \
-	exit.c key_event.c animation.c player_animation.c 
+SRC = main.c util.c move.c sort.c \
+	ft_printf_base.c ft_printf_csp.c ft_printf_diu.c ft_printf_xX%.c\
+	ft_printf_xX_flag.c ft_printf_util1.c ft_printf_util2.c ft_printf_util3.c ft_printf_diu_flag.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	make -C $(MLX_DIR)
-	$(CC) -o $(NAME) $(OBJS) -L$(MLX_DIR) -lmlx -framework OpenGL -framework Appkit -lz
+	$(CC) -o $(NAME) $(OBJS)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -I$(INCS_DIR) -c -o $@ $<
 
 clean :
-	make -C $(MLX_DIR) clean 
 	rm -f $(OBJS)
 
 fclean : clean
@@ -43,6 +41,8 @@ fclean : clean
 re : 
 	make fclean
 	make all
+
+bonus : $(NAME)
 
 .PHONY : all clean fclean re bonus
 
