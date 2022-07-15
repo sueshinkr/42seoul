@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:11:17 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/14 16:11:33 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/15 18:52:36 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,50 @@ void	check_minmax(t_list *list, int *max, int *min)
 			*max = temp->num;
 		if (temp->num < *min)
 			*min = temp->num;
+		temp = temp->next;
+	}
+}
+
+void	check_min(t_list *list, int *min1, int *min2)
+{
+	t_node	*temp;
+	int	idx;
+
+	temp = list->head->next;
+	idx = 4;
+	*min1 = INT_MAX;
+	*min2 = INT_MAX - 1;
+	while(idx-- > 0)
+	{
+		if (temp->num < *min1)
+		{
+			*min2 = *min1;
+			*min1 = temp->num;
+		}
+		else if (temp->num < *min2)
+			*min2 = temp->num;
+		temp = temp->next;
+	}
+}
+
+void	check_max(t_list *list, int *max1, int *max2)
+{
+	t_node	*temp;
+	int	idx;
+
+	temp = list->head->next;
+	idx = 4;
+	*max1 = INT_MIN;
+	*max2 = INT_MIN + 1;
+	while(idx-- > 0)
+	{
+		if (temp->num > *max1)
+		{
+			*max2 = *max1;
+			*max1 = temp->num;
+		}
+		else if (temp->num > *max2)
+			*max2 = temp->num;
 		temp = temp->next;
 	}
 }
@@ -155,7 +199,7 @@ static int	compare(const void *a, const void *b)
 	return (num1 - num2);
 }
 
-int	find_pivot(t_list *list, int count)
+int	find_pivot_top(t_list *list, int count)
 {
 	t_node	*temp;
 	int		*arr;
@@ -169,6 +213,31 @@ int	find_pivot(t_list *list, int count)
 	{
 		arr[idx] = temp->num;
 		temp = temp->next;
+	}
+	qsort(arr, count, sizeof(int), compare);
+	if (count % 2 == 0)
+		pivot = arr[count / 2 - 1];
+	else
+		pivot = arr[count / 2];
+	free(arr);
+	return (pivot);
+}
+
+
+int	find_pivot_bottom(t_list *list, int count)
+{
+	t_node	*temp;
+	int		*arr;
+	int		idx;
+	int		pivot;
+
+	temp = list->tail->next;
+	arr = (int *)malloc(count * sizeof(int));
+	idx = -1;
+	while (++idx < count)
+	{
+		arr[idx] = temp->num;
+		temp = temp->prev;
 	}
 	qsort(arr, count, sizeof(int), compare);
 	if (count % 2 == 0)
@@ -212,6 +281,23 @@ int	find_maxidx(t_list *a, int pivot, int count)
 		if (temp->num <= pivot)
 			max = idx;
 		temp = temp->next;
+	}
+	return (max + 1);
+}
+
+int	find_maxidx_bottom(t_list *a, int pivot, int count)
+{
+	t_node	*temp;
+	int	idx;
+	int	max;
+
+	temp = a->tail->next;
+	idx = -1;
+	while (++idx < count)
+	{
+		if (temp->num <= pivot)
+			max = idx;
+		temp = temp->prev;
 	}
 	return (max + 1);
 }
