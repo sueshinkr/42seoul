@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:11:17 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/13 17:03:24 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/14 16:11:33 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,98 @@ void	node_print(t_list *list)
 
 	idx = -1;
 	temp = list->head;
+	printf("**********\n");
 	while (++idx < list->count)
 	{
 		temp = temp->next;
 		printf("idx %d : %d\n", idx, temp->num);
 	}
+	printf("**********\n");
+}
+
+static int	compare(const void *a, const void *b)
+{
+	int	num1;
+	int	num2;
+
+	num1 = *(int *)a;
+	num2 = *(int *)b;
+	return (num1 - num2);
+}
+
+int	find_pivot(t_list *list, int count)
+{
+	t_node	*temp;
+	int		*arr;
+	int		idx;
+	int		pivot;
+
+	temp = list->head->next;
+	arr = (int *)malloc(count * sizeof(int));
+	idx = -1;
+	while (++idx < count)
+	{
+		arr[idx] = temp->num;
+		temp = temp->next;
+	}
+	qsort(arr, count, sizeof(int), compare);
+	if (count % 2 == 0)
+		pivot = arr[count / 2 - 1];
+	else
+		pivot = arr[count / 2];
+	free(arr);
+	return (pivot);
+}
+
+void	read_arg(t_list *a, int argc, char **argv)
+{
+	int		idx;
+	char	**arr;
+
+	if (argc == 2)
+	{
+		idx = -1;
+		arr = ft_split(argv[1], ' ');
+		while (arr[++idx])
+			init_stack(a, ft_atoi(arr[idx]));
+	}
+	else
+	{
+		idx = 0;
+		while (argv[++idx])
+			init_stack(a, ft_atoi(argv[idx]));
+	}
+}
+
+int	find_maxidx(t_list *a, int pivot, int count)
+{
+	t_node	*temp;
+	int	idx;
+	int	max;
+
+	temp = a->head->next;
+	idx = -1;
+	while (++idx < count)
+	{
+		if (temp->num <= pivot)
+			max = idx;
+		temp = temp->next;
+	}
+	return (max + 1);
+}
+
+int	check_arr(t_list *a, int count)
+{
+	t_node	*temp;
+	int	idx;
+
+	temp = a->head;
+	idx = -1;
+	while (++idx < count - 1)
+	{
+		temp = temp->next;
+		if (temp->num > temp->next->num)
+			return (0);
+	}
+	return (1);
 }

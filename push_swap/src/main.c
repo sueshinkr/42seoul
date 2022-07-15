@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:13:12 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/13 17:17:14 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/14 18:04:17 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	main(int argc, char **argv)
 	t_list	*a;
 	t_list	*b;
 	t_cmlist	*comm;
-	int		idx;
 
 	a = malloc(sizeof(t_list));
 	b = malloc(sizeof(t_list));
@@ -30,12 +29,10 @@ int	main(int argc, char **argv)
 	comm->tail = malloc(sizeof(t_command));
 	a->count = 0;
 	b->count = 0;
-	idx = 0;
 	if (argc < 2)
 		return (0);
-	while (argv[++idx])
-		init_stack(a, ft_atoi(argv[idx]));
-	node_print(a);
+	read_arg(a, argc, argv);
+	//node_print(a);
 
 /*
 	printf("::::sa\n");
@@ -54,12 +51,21 @@ int	main(int argc, char **argv)
 	func_p(b, a);
 	node_print(a);
 */
-	printf(":::::sort\n");
 	if (a->count == 3)
-		sort_three(a, comm);
+		sort_three_only(a, comm);
 	else if (a->count == 5)
-		sort_five(a, b, comm);
+		sort_five_only(a, b, comm);
+	else
+		sort_recur_atob(a, b, comm, a->count);
+
 	print_command(comm);
-	printf("::::::::::::::::::::::::::::::::::::::\n");
-	node_print(a);
+	//node_print(a);
 }
+
+//ARG="4 67 3 87 23"; ./push_swap $ARG | ./checker_Mac $ARG
+/*
+clang++ -std=c++11 random_numbers.cpp -o random_numbers
+export ARG=$(./push_swap_tester-main/random_numbers 100 1)
+./push_swap $ARG | ./checker_Mac $ARG
+./push_swap $ARG | wc -l
+ */
