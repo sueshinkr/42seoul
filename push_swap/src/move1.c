@@ -1,38 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move.c                                             :+:      :+:    :+:   */
+/*   move1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:11:25 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/14 12:53:51 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/16 15:28:59 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	init_stack(t_list *list, int n)
-{
-	t_node	*new;
-
-	new = malloc(sizeof(t_node));
-	new->num = n;
-	if (!list->head->next)
-	{
-		list->head->next = new;
-		list->tail->next = new;
-	}
-	else
-	{
-		new->next = list->head->next;
-		new->prev = list->tail->next;
-		list->head->next->prev = new;
-		list->tail->next->next = new;
-		list->tail->next = new;
-	}
-	list->count++;
-}
 
 void	push_stack(t_list *list, int n)
 {
@@ -85,7 +63,6 @@ void	func_sa(t_list *a, t_cmlist *comm)
 		return ;
 	up = a->head->next->num;
 	down = a->head->next->next->num;
-
 	pop_stack(a);
 	pop_stack(a);
 	push_stack(a, up);
@@ -102,7 +79,6 @@ void	func_sb(t_list *b, t_cmlist *comm)
 		return ;
 	up = b->head->next->num;
 	down = b->head->next->next->num;
-
 	pop_stack(b);
 	pop_stack(b);
 	push_stack(b, up);
@@ -118,52 +94,4 @@ void	func_ra(t_list *a, t_cmlist *comm)
 		a->head->next = a->head->next->next;
 	}
 	save_command(comm, "ra\n");
-}
-
-void	func_rb(t_list *b, t_cmlist *comm)
-{
-	if (b->count > 1)
-	{
-		b->tail->next = b->head->next;
-		b->head->next = b->head->next->next;
-	}
-	save_command(comm, "rb\n");
-}
-
-void	func_rra(t_list *a, t_cmlist *comm)
-{
-	if (a->count > 1)
-	{
-		a->head->next = a->tail->next;
-		a->tail->next = a->tail->next->prev;
-	}
-	save_command(comm, "rra\n");
-}
-
-void	func_rrb(t_list *b, t_cmlist *comm)
-{
-	if (b->count > 1)
-	{
-		b->head->next = b->tail->next;
-		b->tail->next = b->tail->next->prev;
-	}
-	save_command(comm, "rrb\n");
-}
-
-void	func_pa(t_list *a, t_list *b, t_cmlist *comm)
-{
-	if (b->count < 1)
-		return ;
-	push_stack(a, b->head->next->num);
-	pop_stack(b);
-	save_command(comm, "pa\n");
-}
-
-void	func_pb(t_list *b, t_list *a, t_cmlist *comm)
-{
-	if (a->count < 1)
-		return ;
-	push_stack(b, a->head->next->num);
-	pop_stack(a);
-	save_command(comm, "pb\n");
 }
