@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:10:40 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 16:18:30 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/17 02:13:39 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,11 @@ void	sort_two(t_list *list, t_cmlist *comm);
 void	sort_three(t_list *list, t_cmlist *comm);
 void	sort_three_reverse(t_list *a, t_list *b, t_cmlist *comm);
 void	sort_three_only(t_list *a, t_cmlist *comm);
-void	sort_three_reverse_only(t_list *b, t_cmlist *comm);
+void	sort_three_reverse_only(t_list *a, t_list *b, t_cmlist *comm);
 void	sort_four(t_list *a, t_list *b, t_cmlist *comm);
 void	sort_four_reverse(t_list *a, t_list *b, t_cmlist *comm);
 void	sort_four_only(t_list *a, t_list *b, t_cmlist *comm);
+void	sort_four_reverse_only(t_list *a, t_list *b, t_cmlist *comm);
 void	sort_five(t_list *a, t_list *b, t_cmlist *comm);
 void	sort_five_only(t_list *a, t_list *b, t_cmlist *comm);
 

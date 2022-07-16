@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 13:32:58 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 14:36:38 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/17 02:13:54 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,9 @@ void	sort_recur_btoa_last(t_list *a, t_list *b, t_cmlist *comm, int count)
 		func_pa(a, b, comm);
 	}
 	else if (count == 3)
-	{
-		sort_three_reverse_only(b, comm);
-		func_pa(a, b, comm);
-		func_pa(a, b, comm);
-		func_pa(a, b, comm);
-	}
+		sort_three_reverse_only(a, b, comm);
+	else if (count == 4)
+		sort_four_reverse_only(a, b, comm);
 	else
 	{
 		rb = devide_rbpa(a, b, comm, count);

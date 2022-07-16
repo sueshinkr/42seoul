@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 13:28:27 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 14:16:40 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/17 02:28:47 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	sort_four(t_list *a, t_list *b, t_cmlist *comm)
 	{
 		if (a->head->next->num == min1 || a->head->next->num == min2)
 		{
+			func_pb(b, a, comm);
+			flag++;
+		}
+		else if (a->head->next->next->num == min1 || a->head->next->next->num == min2)
+		{
+			func_sa(a, comm);
 			func_pb(b, a, comm);
 			flag++;
 		}
@@ -61,6 +67,12 @@ void	sort_four_reverse(t_list *a, t_list *b, t_cmlist *comm)
 	{
 		if (b->head->next->num == max1 || b->head->next->num == max2)
 		{
+			func_pa(a, b, comm);
+			flag++;
+		}
+		else if (b->head->next->next->num == max1 || b->head->next->next->num == max2)
+		{
+			func_sb(b, comm);
 			func_pa(a, b, comm);
 			flag++;
 		}
