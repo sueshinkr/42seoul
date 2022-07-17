@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:59:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 16:25:11 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/17 19:40:28 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <limits.h>
 # include "ft_printf.h"
+# include "get_next_line_bonus.h"
 
 typedef struct s_command
 {
@@ -43,5 +44,22 @@ typedef struct s_list
 	t_node	*tail;
 	int		count;
 }	t_list;
+
+void	init_list(t_list *a, t_list *b);
+void	init_stack(t_list *list, int n);
+void	read_arg(t_list *a, int argc, char **argv);
+char	**ft_split(char const *str, char c);
+int		check_dup(t_list *list);
+
+void	push_stack(t_list *list, int n);
+void	pop_stack(t_list *list);
+void	func_sa(t_list *a);
+void	func_ra(t_list *a);
+void	func_rra(t_list *a);
+void	func_pa(t_list *a, t_list *b);
+void	func_sb(t_list *b);
+void	func_rb(t_list *b);
+void	func_rrb(t_list *b);
+void	func_pb(t_list *b, t_list *a);
 
 #endif

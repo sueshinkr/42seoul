@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 10:36:03 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 16:17:06 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/17 20:05:24 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	save_command(t_cmlist *list, char *str)
 
 	new = malloc(sizeof(t_command));
 	new->comm = ft_strdup(str);
+	new->next = NULL;
 	if (!list->head->next)
 	{
 		list->head->next = new;
@@ -27,7 +28,6 @@ void	save_command(t_cmlist *list, char *str)
 	{
 		list->tail->next->next = new;
 		list->tail->next = new;
-		new->next = NULL;
 	}
 }
 

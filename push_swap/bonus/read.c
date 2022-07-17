@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 10:35:03 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 16:36:46 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/17 19:14:37 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	compare(const void *a, const void *b)
 	return (num1 - num2);
 }
 
-static void	check_dup(t_list *list)
+int	check_dup(t_list *list)
 {
 	t_node	*temp;
 	int		*arr;
@@ -79,8 +79,8 @@ static void	check_dup(t_list *list)
 			print_error();
 	}
 	if (flag == 1)
-		exit(0);
-	free(arr);
+		return (1);
+	return (0);
 }
 
 void	read_arg(t_list *a, int argc, char **argv)
@@ -101,5 +101,5 @@ void	read_arg(t_list *a, int argc, char **argv)
 		while (argv[++idx])
 			init_stack(a, ft_atoi(argv[idx]));
 	}
-	check_dup(a);
+	//check_dup(a);
 }

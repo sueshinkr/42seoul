@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/07/17 20:17:39 by sueshin          ###   ########.fr        #
+#    Updated: 2022/07/17 19:40:53 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,40 +16,36 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 AR = ar rcs
 
-LIB_DIR = ./lib/
-LIB = $(LIB_DIR)libft.a
 INCS_DIR = ./include/
-
 SRCS_DIR = ./src/
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))
-SRC = main.c init.c read.c command.c move1.c move2.c pivot.c check.c util.c free.c \
-	sort_firstlast.c sort_select.c sort_atob.c sort_btoa.c sort_only.c sort_three.c sort_four.c
+SRC = main.c init.c read.c command.c move1.c move2.c pivot.c check.c util.c free.c\
+	sort_firstlast.c sort_select.c sort_atob.c sort_btoa.c sort_only.c sort_three.c sort_four.c \
+	ft_printf_base.c ft_printf_csp.c ft_printf_diu.c ft_printf_xX%.c\
+	ft_printf_xX_flag.c ft_printf_util1.c ft_printf_util2.c ft_printf_util3.c ft_printf_diu_flag.c
 OBJS = $(SRCS:.c=.o)
-
 BONUS_SRCS_DIR = ./bonus/
 BONUS_SRCS = $(addprefix $(BONUS_SRCS_DIR), $(BONUS_SRC))
-BONUS_SRC = main.c init.c read.c util.c
+BONUS_SRC = main.c init.c read.c util.c get_next_line_bonus.c get_next_line_utils_bonus.c \
+			ft_printf_base.c ft_printf_csp.c ft_printf_diu.c ft_printf_xX%.c\
+			ft_printf_xX_flag.c ft_printf_util1.c ft_printf_util2.c ft_printf_util3.c ft_printf_diu_flag.c
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	@cd lib && make
-	$(CC) $(CFALGS) -o $(NAME) $(OBJS) $(LIB)
+	$(CC) -o $(NAME) $(OBJS)
 
 $(BONUS_NAME): $(BONUS_OBJS)
-	@cd lib && make bonus
-	$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS) $(LIB)
+	$(CC) -o $(BONUS_NAME) $(BONUS_OBJS)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -I$(INCS_DIR) -c -o $@ $<
 
 clean :
-	@cd lib && make clean
 	rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean : clean
-	@cd lib && make fclean
 	rm -f $(NAME) $(BONUS_NAME)
 
 re : 
