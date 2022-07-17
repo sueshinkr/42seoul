@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:59:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/17 20:18:31 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/18 01:15:05 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_list(t_list *a, t_list *b);
 void	init_stack(t_list *list, int n);
 void	read_arg(t_list *a, int argc, char **argv);
 char	**ft_split(char const *str, char c);
-int		check_dup(t_list *list);
+int		check_dup(t_list *list, int flag);
 
 void	push_stack(t_list *list, int n);
 void	pop_stack(t_list *list);
@@ -61,5 +61,8 @@ void	func_sb(t_list *b);
 void	func_rb(t_list *b);
 void	func_rrb(t_list *b);
 void	func_pb(t_list *b, t_list *a);
+
+void	select_move(char *str, t_list *a, t_list *b);
+void	free_list(t_list *list);
 
 #endif
