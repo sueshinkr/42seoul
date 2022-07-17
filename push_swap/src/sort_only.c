@@ -6,17 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 11:33:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/17 02:29:48 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/18 01:24:36 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	sort_two(t_list *list, t_cmlist *comm)
-{
-	if (list->head->next->num > list->head->next->next->num)
-		func_sa(list, comm);
-}
 
 void	sort_three_only(t_list *a, t_cmlist *comm)
 {

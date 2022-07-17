@@ -6,11 +6,17 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 14:28:53 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 14:36:21 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/18 01:24:34 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	sort_two(t_list *list, t_cmlist *comm)
+{
+	if (list->head->next->num > list->head->next->next->num)
+		func_sa(list, comm);
+}
 
 void	sort_select_atob(t_list *a, t_list *b, t_cmlist *comm, int count)
 {

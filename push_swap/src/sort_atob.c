@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 13:59:10 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 14:36:21 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/18 01:33:01 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	sort_recur_atob_top(t_list *a, t_list *b, t_cmlist *comm, int count)
 	else if (count == 3)
 		sort_three(a, comm);
 	else if (count == 4)
-		sort_four(a, b, comm);
+		sort_four(a, b, comm, 0);
 	else
 	{
 		ra = devide_rapb(a, b, comm, count);
