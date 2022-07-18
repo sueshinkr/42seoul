@@ -6,14 +6,13 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:59:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/18 01:15:05 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/18 23:25:43 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CHECKER_H
 # define CHECKER_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
 # include "ft_printf.h"

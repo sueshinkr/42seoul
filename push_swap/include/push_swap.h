@@ -6,14 +6,13 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:10:40 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/18 01:33:06 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/18 23:25:55 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
 # include "ft_printf.h"
