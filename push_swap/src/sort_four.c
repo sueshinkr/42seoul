@@ -6,17 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 13:28:27 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/18 01:35:12 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/18 18:11:50 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static void	func_papa(t_list *a, t_list *b, t_cmlist *comm)
-{
-	func_pa(a, b, comm);
-	func_pa(a, b, comm);
-}
 
 static void	sort_four_last(t_list *a, t_list *b, t_cmlist *comm, int idx)
 {
@@ -26,7 +20,8 @@ static void	sort_four_last(t_list *a, t_list *b, t_cmlist *comm, int idx)
 		func_sa(a, comm);
 	if (b->head->next->num < b->head->next->next->num)
 		func_sb(b, comm);
-	func_papa(a, b, comm);
+	func_pa(a, b, comm);
+	func_pa(a, b, comm);
 }
 
 void	sort_four(t_list *a, t_list *b, t_cmlist *comm, int flag)
@@ -65,7 +60,8 @@ static void	sort_four_rev_last(t_list *a, t_list *b, t_cmlist *comm, int idx)
 		func_sb(b, comm);
 	if (a->head->next->num > a->head->next->next->num)
 		func_sa(a, comm);
-	func_papa(a, b, comm);
+	func_pa(a, b, comm);
+	func_pa(a, b, comm);
 }
 
 void	sort_four_reverse(t_list *a, t_list *b, t_cmlist *comm, int flag)

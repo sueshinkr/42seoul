@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 10:35:03 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/18 01:23:18 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/18 10:53:11 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int	ft_atoi(const char	*str)
 
 	result = 0;
 	sign = 1;
+	if (!ft_strlen(str))
+		print_error();
 	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
