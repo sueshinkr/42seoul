@@ -6,18 +6,22 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 10:36:03 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/17 20:05:24 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:33:01 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	save_command(t_cmlist *list, char *str)
+void	save_command(t_cm *list, char *str)
 {
 	t_command	*new;
 
 	new = malloc(sizeof(t_command));
+	if (!new)
+		exit(1);
 	new->comm = ft_strdup(str);
+	if (!new->comm)
+		exit(1);
 	new->next = NULL;
 	if (!list->head->next)
 	{
@@ -73,7 +77,7 @@ static t_command	*check_rr(t_command *temp)
 	return (temp);
 }
 
-void	print_command(t_cmlist *list)
+void	print_command(t_cm *list)
 {
 	t_command	*temp;
 

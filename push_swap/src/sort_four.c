@@ -6,13 +6,13 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 13:28:27 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/18 18:11:50 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:33:20 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	sort_four_last(t_list *a, t_list *b, t_cmlist *comm, int idx)
+static void	sort_four_last(t_list *a, t_list *b, t_cm *comm, int idx)
 {
 	while (idx++ < 1)
 		func_rra(a, comm);
@@ -24,7 +24,7 @@ static void	sort_four_last(t_list *a, t_list *b, t_cmlist *comm, int idx)
 	func_pa(a, b, comm);
 }
 
-void	sort_four(t_list *a, t_list *b, t_cmlist *comm, int flag)
+void	sort_four(t_list *a, t_list *b, t_cm *comm, int flag)
 {
 	int	idx;
 	int	min1;
@@ -52,7 +52,7 @@ void	sort_four(t_list *a, t_list *b, t_cmlist *comm, int flag)
 	sort_four_last(a, b, comm, idx);
 }
 
-static void	sort_four_rev_last(t_list *a, t_list *b, t_cmlist *comm, int idx)
+static void	sort_four_rev_last(t_list *a, t_list *b, t_cm *comm, int idx)
 {
 	while (idx++ < 1)
 		func_rrb(b, comm);
@@ -64,7 +64,7 @@ static void	sort_four_rev_last(t_list *a, t_list *b, t_cmlist *comm, int idx)
 	func_pa(a, b, comm);
 }
 
-void	sort_four_reverse(t_list *a, t_list *b, t_cmlist *comm, int flag)
+void	sort_four_reverse(t_list *a, t_list *b, t_cm *comm, int flag)
 {
 	int	idx;
 	int	max1;

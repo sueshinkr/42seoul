@@ -6,20 +6,20 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 13:29:12 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 13:29:40 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:33:30 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	func_ra_sa_rra(t_list *a, t_cmlist *comm)
+static void	func_ra_sa_rra(t_list *a, t_cm *comm)
 {
 	func_ra(a, comm);
 	func_sa(a, comm);
 	func_rra(a, comm);
 }
 
-void	sort_three(t_list *a, t_cmlist *comm)
+void	sort_three(t_list *a, t_cm *comm)
 {
 	t_node	*top;
 
@@ -45,7 +45,7 @@ void	sort_three(t_list *a, t_cmlist *comm)
 	}
 }
 
-void	sort_three_reverse_case1(t_list *a, t_list *b, t_cmlist *comm)
+void	sort_three_reverse_case1(t_list *a, t_list *b, t_cm *comm)
 {
 	func_pa(a, b, comm);
 	if (b->head->next->num < b->head->next->next->num)
@@ -56,7 +56,7 @@ void	sort_three_reverse_case1(t_list *a, t_list *b, t_cmlist *comm)
 	func_sa(a, comm);
 }
 
-void	sort_three_reverse_case2(t_list *a, t_list *b, t_cmlist *comm)
+void	sort_three_reverse_case2(t_list *a, t_list *b, t_cm *comm)
 {
 	func_pa(a, b, comm);
 	if (b->head->next->num < b->head->next->next->num)
@@ -65,7 +65,7 @@ void	sort_three_reverse_case2(t_list *a, t_list *b, t_cmlist *comm)
 	func_pa(a, b, comm);
 }
 
-void	sort_three_reverse(t_list *a, t_list *b, t_cmlist *comm)
+void	sort_three_reverse(t_list *a, t_list *b, t_cm *comm)
 {
 	t_node	*top;
 

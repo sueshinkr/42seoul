@@ -6,13 +6,13 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 13:59:10 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/18 01:33:01 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:33:12 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	devide_rrapb(t_list *a, t_list *b, t_cmlist *comm, int count)
+static int	devide_rrapb(t_list *a, t_list *b, t_cm *comm, int count)
 {
 	int	pivot;
 	int	ra;
@@ -30,7 +30,7 @@ static int	devide_rrapb(t_list *a, t_list *b, t_cmlist *comm, int count)
 	return (ra);
 }
 
-void	sort_recur_atob_top(t_list *a, t_list *b, t_cmlist *comm, int count)
+void	sort_recur_atob_top(t_list *a, t_list *b, t_cm *comm, int count)
 {
 	int	ra;
 
@@ -50,7 +50,7 @@ void	sort_recur_atob_top(t_list *a, t_list *b, t_cmlist *comm, int count)
 	}
 }
 
-void	sort_recur_atob_bottom(t_list *a, t_list *b, t_cmlist *comm, int count)
+void	sort_recur_atob_bottom(t_list *a, t_list *b, t_cm *comm, int count)
 {
 	int	ra;
 

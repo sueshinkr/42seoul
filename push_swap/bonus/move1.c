@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:11:25 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/17 19:38:22 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:42:06 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	push_stack(t_list *list, int n)
 	t_node	*new;
 
 	new = malloc(sizeof(t_node));
+	if (!new)
+		exit(1);
 	new->num = n;
 	if (!list->head->next)
 	{

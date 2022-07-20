@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 10:35:03 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/20 11:34:53 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:46:25 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,16 @@ static int	ft_atoi(const char	*str)
 	return (sign * result);
 }
 
-static int	compare(const void *a, const void *b)
-{
-	int	num1;
-	int	num2;
-
-	num1 = *(int *)a;
-	num2 = *(int *)b;
-	return (num1 - num2);
-}
-
-static void	check_dup(t_list *list)
+static void	check_dup(t_list *list, int flag)
 {
 	t_node	*temp;
 	int		*arr;
 	int		idx;
-	int		flag;
 
 	temp = list->head->next;
-	flag = 1;
 	arr = (int *)malloc(list->count * sizeof(int));
+	if (!arr)
+		exit(1);
 	idx = -1;
 	while (++idx < list->count)
 	{
@@ -72,7 +62,7 @@ static void	check_dup(t_list *list)
 		arr[idx] = temp->num;
 		temp = temp->next;
 	}
-	qsort(arr, list->count, sizeof(int), compare);
+	ft_qsort(arr, 0, list->count - 1);
 	while (--idx > 0)
 	{
 		if (arr[idx] == arr[idx - 1])
@@ -92,8 +82,14 @@ void	read_arg(t_list *a, int argc, char **argv)
 	{
 		idx = -1;
 		arr = ft_split(argv[1], ' ');
+		if (!arr)
+			exit(1);
 		while (arr[++idx])
+		{
 			init_stack(a, ft_atoi(arr[idx]));
+			free(arr[idx]);
+		}
+		free(arr);
 	}
 	else
 	{
@@ -101,5 +97,5 @@ void	read_arg(t_list *a, int argc, char **argv)
 		while (argv[++idx])
 			init_stack(a, ft_atoi(argv[idx]));
 	}
-	check_dup(a);
+	check_dup(a, 1);
 }

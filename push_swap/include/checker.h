@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:59:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/20 11:23:28 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:47:05 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ typedef struct s_list
 	int		count;
 }	t_list;
 
-void	init_list(t_list *a, t_list *b);
+t_list	*init_stack_list(void);
 void	init_stack(t_list *list, int n);
 void	read_arg(t_list *a, int argc, char **argv);
 char	**ft_split(char const *str, char c);
-int		check_dup(t_list *list, int flag);
+void	ft_qsort(int *data, int start, int end);
 
-void	push_stack(t_list *list, int n);
+void	push_stack(t_list *lis1t, int n);
 void	pop_stack(t_list *list);
 void	func_sa(t_list *a);
 void	func_ra(t_list *a);

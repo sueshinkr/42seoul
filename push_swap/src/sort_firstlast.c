@@ -6,13 +6,13 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 13:32:58 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/18 01:32:58 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:33:18 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	sort_recur_atob_2nd(t_list *a, t_list *b, t_cmlist *comm, int count)
+static void	sort_recur_atob_2nd(t_list *a, t_list *b, t_cm *comm, int count)
 {
 	int	ra;
 
@@ -34,7 +34,7 @@ static void	sort_recur_atob_2nd(t_list *a, t_list *b, t_cmlist *comm, int count)
 	}
 }
 
-void	sort_recur_atob_first(t_list *a, t_list *b, t_cmlist *comm, int count)
+void	sort_recur_atob_first(t_list *a, t_list *b, t_cm *comm, int count)
 {
 	int	ra;
 
@@ -56,7 +56,7 @@ void	sort_recur_atob_first(t_list *a, t_list *b, t_cmlist *comm, int count)
 	}
 }
 
-void	sort_recur_btoa_last(t_list *a, t_list *b, t_cmlist *comm, int count)
+void	sort_recur_btoa_last(t_list *a, t_list *b, t_cm *comm, int count)
 {
 	int	rb;
 

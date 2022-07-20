@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:11:25 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 15:28:59 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:42:07 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	push_stack(t_list *list, int n)
 	t_node	*new;
 
 	new = malloc(sizeof(t_node));
+	if (!new)
+		exit(1);
 	new->num = n;
 	if (!list->head->next)
 	{
@@ -54,7 +56,7 @@ void	pop_stack(t_list *list)
 	list->count--;
 }
 
-void	func_sa(t_list *a, t_cmlist *comm)
+void	func_sa(t_list *a, t_cm *comm)
 {
 	int	up;
 	int	down;
@@ -70,7 +72,7 @@ void	func_sa(t_list *a, t_cmlist *comm)
 	save_command(comm, "sa\n");
 }
 
-void	func_sb(t_list *b, t_cmlist *comm)
+void	func_sb(t_list *b, t_cm *comm)
 {
 	int	up;
 	int	down;
@@ -86,7 +88,7 @@ void	func_sb(t_list *b, t_cmlist *comm)
 	save_command(comm, "sb\n");
 }
 
-void	func_ra(t_list *a, t_cmlist *comm)
+void	func_ra(t_list *a, t_cm *comm)
 {
 	if (a->count > 1)
 	{

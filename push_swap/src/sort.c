@@ -6,19 +6,19 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 11:22:43 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/20 11:23:13 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:33:32 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_two(t_list *list, t_cmlist *comm)
+void	sort_two(t_list *list, t_cm *comm)
 {
 	if (list->head->next > list->head->next->next)
 		func_sa(list, comm);
 }
 
-void	sort_three(t_list *a, t_cmlist *comm)
+void	sort_three(t_list *a, t_cm *comm)
 {
 	t_node	*top;
 
@@ -44,7 +44,7 @@ void	sort_three(t_list *a, t_cmlist *comm)
 		func_rra(a, comm);
 }
 
-void	sort_five(t_list *a, t_list *b, t_cmlist *comm)
+void	sort_five(t_list *a, t_list *b, t_cm *comm)
 {
 	t_node	*top;
 	t_node	*temp;

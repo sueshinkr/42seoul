@@ -6,19 +6,19 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 14:28:53 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/18 01:24:34 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:33:26 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_two(t_list *list, t_cmlist *comm)
+void	sort_two(t_list *list, t_cm *comm)
 {
 	if (list->head->next->num > list->head->next->next->num)
 		func_sa(list, comm);
 }
 
-void	sort_select_atob(t_list *a, t_list *b, t_cmlist *comm, int count)
+void	sort_select_atob(t_list *a, t_list *b, t_cm *comm, int count)
 {
 	if (count > 0)
 		sort_recur_atob_top(a, b, comm, count);
@@ -26,7 +26,7 @@ void	sort_select_atob(t_list *a, t_list *b, t_cmlist *comm, int count)
 		sort_recur_atob_bottom(a, b, comm, -count);
 }
 
-void	sort_select_btoa(t_list *a, t_list *b, t_cmlist *comm, int count)
+void	sort_select_btoa(t_list *a, t_list *b, t_cm *comm, int count)
 {
 	if (count > 0)
 		sort_recur_btoa_top(a, b, comm, count);
@@ -34,7 +34,7 @@ void	sort_select_btoa(t_list *a, t_list *b, t_cmlist *comm, int count)
 		sort_recur_btoa_bottom(a, b, comm, -count);
 }
 
-int	devide_rapb(t_list *a, t_list *b, t_cmlist *comm, int count)
+int	devide_rapb(t_list *a, t_list *b, t_cm *comm, int count)
 {
 	int	pivot;
 	int	ra;
@@ -54,7 +54,7 @@ int	devide_rapb(t_list *a, t_list *b, t_cmlist *comm, int count)
 	return (ra);
 }
 
-int	devide_rbpa(t_list *a, t_list *b, t_cmlist *comm, int count)
+int	devide_rbpa(t_list *a, t_list *b, t_cm *comm, int count)
 {
 	int	pivot;
 	int	rb;

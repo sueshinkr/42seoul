@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 16:05:15 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 16:27:36 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:32:57 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_list(t_list *list)
 	free(list);
 }
 
-static void	free_comm(t_cmlist *list)
+static void	free_comm(t_cm *list)
 {
 	t_command	*cur;
 	t_command	*del;
@@ -51,7 +51,7 @@ static void	free_comm(t_cmlist *list)
 	}
 }
 
-void	free_command(t_cmlist *list)
+void	free_command(t_cm *list)
 {
 	free_comm(list);
 	free(list->head);

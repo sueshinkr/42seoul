@@ -6,13 +6,13 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 11:33:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/18 01:24:36 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:33:23 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_three_only(t_list *a, t_cmlist *comm)
+void	sort_three_only(t_list *a, t_cm *comm)
 {
 	t_node	*top;
 
@@ -37,7 +37,7 @@ void	sort_three_only(t_list *a, t_cmlist *comm)
 		func_rra(a, comm);
 }
 
-void	sort_three_reverse_only(t_list *a, t_list *b, t_cmlist *comm)
+void	sort_three_reverse_only(t_list *a, t_list *b, t_cm *comm)
 {
 	t_node	*top;
 
@@ -66,7 +66,7 @@ void	sort_three_reverse_only(t_list *a, t_list *b, t_cmlist *comm)
 }
 
 /*
-void	sort_four_only(t_list *a, t_list *b, t_cmlist *comm)
+void	sort_four_only(t_list *a, t_list *b, t_cm *comm)
 {
 	int	idx;
 	int	min;
@@ -85,7 +85,7 @@ void	sort_four_only(t_list *a, t_list *b, t_cmlist *comm)
 }
 */
 
-void	sort_four_only(t_list *a, t_list *b, t_cmlist *comm)
+void	sort_four_only(t_list *a, t_list *b, t_cm *comm)
 {
 	int	idx;
 	int	min1;
@@ -113,7 +113,7 @@ void	sort_four_only(t_list *a, t_list *b, t_cmlist *comm)
 	func_pa(a, b, comm);
 }
 
-void	sort_four_reverse_only(t_list *a, t_list *b, t_cmlist *comm)
+void	sort_four_reverse_only(t_list *a, t_list *b, t_cm *comm)
 {
 	int	idx;
 	int	max1;
@@ -141,7 +141,7 @@ void	sort_four_reverse_only(t_list *a, t_list *b, t_cmlist *comm)
 	func_pa(a, b, comm);
 }
 
-void	sort_five_only(t_list *a, t_list *b, t_cmlist *comm)
+void	sort_five_only(t_list *a, t_list *b, t_cm *comm)
 {
 	int	idx;
 	int	max;

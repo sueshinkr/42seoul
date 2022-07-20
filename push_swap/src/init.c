@@ -6,28 +6,47 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 14:42:17 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 16:26:47 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:41:15 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	init_list(t_list *a, t_list *b, t_cmlist *comm)
+t_list	*init_stack_list(void)
 {
-	a->head = malloc(sizeof(t_node));
-	a->head->next = NULL;
-	a->tail = malloc(sizeof(t_node));
-	a->tail->prev = NULL;
-	b->head = malloc(sizeof(t_node));
-	b->head->next = NULL;
-	b->tail = malloc(sizeof(t_node));
-	b->tail->prev = NULL;
-	comm->head = malloc(sizeof(t_command));
-	comm->head->next = NULL;
-	comm->tail = malloc(sizeof(t_command));
-	comm->tail->next = NULL;
-	a->count = 0;
-	b->count = 0;
+	t_list	*list;
+
+	list = malloc(sizeof(t_list));
+	if (!list)
+		exit(1);
+	list->head = malloc(sizeof(t_node));
+	if (!list->head)
+		exit(1);
+	list->tail = malloc(sizeof(t_node));
+	if (!list->tail)
+		exit(1);
+	list->head->next = NULL;
+	list->tail->prev = NULL;
+	list->count = 0;
+	return (list);
+}
+
+t_cm	*init_command_list(void)
+{
+	t_cm	*list;
+
+	list = malloc(sizeof(t_cm));
+	if (!list)
+		exit(1);
+	list->head = malloc(sizeof(t_command));
+	if (!list->head)
+		exit(1);
+	list->tail = malloc(sizeof(t_command));
+	if (!list->tail)
+		exit(1);
+	list->head->next = NULL;
+	list->tail->next = NULL;
+	return (list);
 }
 
 void	init_stack(t_list *list, int n)
@@ -35,6 +54,8 @@ void	init_stack(t_list *list, int n)
 	t_node	*new;
 
 	new = malloc(sizeof(t_node));
+	if (!new)
+		exit(1);
 	new->num = n;
 	if (!list->head->next)
 	{
