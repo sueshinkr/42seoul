@@ -6,11 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:29:15 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/16 15:35:04 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/17 20:20:50 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker.h"
 
 static size_t	ft_strlcpy(char *dst, char *src, size_t size)
 {

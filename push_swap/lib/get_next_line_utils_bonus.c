@@ -6,17 +6,17 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:50 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/14 10:23:50 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/17 20:17:35 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-t_list	*add_fd_remain(t_list *remain, int fd)
+t_list_gnl	*add_fd_remain(t_list_gnl *remain, int fd)
 {
-	t_list	*new;
+	t_list_gnl	*new;
 
-	new = (t_list *)malloc(sizeof(t_list));
+	new = (t_list_gnl *)malloc(sizeof(t_list_gnl));
 	new->str = NULL;
 	new->fd = fd;
 	new->next = NULL;
@@ -38,7 +38,7 @@ t_list	*add_fd_remain(t_list *remain, int fd)
 	return (remain);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen_gnl(const char *str)
 {
 	size_t	len;
 
@@ -48,7 +48,7 @@ size_t	ft_strlen(const char *str)
 	return (len);
 }
 
-char	*ft_strchr(const char *str, int c)
+char	*ft_strchr_gnl(const char *str, int c)
 {
 	while (1)
 	{
@@ -60,12 +60,12 @@ char	*ft_strchr(const char *str, int c)
 	}
 }
 
-char	*ft_strdup(const char *src)
+char	*ft_strdup_gnl(const char *src)
 {
 	char	*str;
 	char	*result;
 
-	str = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
+	str = (char *)malloc((ft_strlen_gnl(src) + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	result = str;
@@ -75,32 +75,7 @@ char	*ft_strdup(const char *src)
 	return (result);
 }
 
-/*
-char	*ft_strjoin(char const *str1, char const *str2)
-{
-	char	*result;
-	char	*joinstr;
-	int		joinstr_len;
-
-	joinstr_len = ft_strlen(str1) + ft_strlen(str2);
-	joinstr = (char *)malloc((joinstr_len + 1) * sizeof(char));
-	result = joinstr;
-	if (!joinstr)
-		return (NULL);
-	while (joinstr_len-- > 0)
-	{
-		if (*str1)
-			*joinstr = *str1++;
-		else if (*str2)
-			*joinstr = *str2++;
-		joinstr++;
-	}
-	*joinstr = 0;
-	return (result);
-}
-*/
-
-char	*ft_strjoin(char *str1, char *str2)
+char	*ft_strjoin_gnl(char *str1, char *str2)
 {
 	char	*joinstr;
 	size_t	joinstr_len;
@@ -109,7 +84,7 @@ char	*ft_strjoin(char *str1, char *str2)
 
 	idx1 = 0;
 	idx2 = 0;
-	joinstr_len = ft_strlen(str1) + ft_strlen(str2) + 1;
+	joinstr_len = ft_strlen_gnl(str1) + ft_strlen_gnl(str2) + 1;
 	joinstr = (char *)malloc(joinstr_len * sizeof(char));
 	if (!joinstr)
 		return (NULL);

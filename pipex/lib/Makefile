@@ -6,57 +6,43 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/07/20 11:42:11 by sueshin          ###   ########.fr        #
+#    Updated: 2022/07/18 23:55:16 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap
-BONUS_NAME = checker
+NAME = libft.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-AR = ar rcs
+AR = ar
+HEADER = ../include/
 
-LIB_DIR = ./lib/
-LIB = $(LIB_DIR)libft.a
-INCS_DIR = ./include/
+SRCS = ./ft_printf_base.c ./ft_printf_csp.c ./ft_printf_diu.c ./ft_printf_xX%.c \
+	./ft_printf_xX_flag.c ./ft_printf_util1.c ./ft_printf_util2.c ./ft_printf_util3.c ./ft_printf_diu_flag.c \
+	./get_next_line_bonus.c ./get_next_line_utils_bonus.c
 
-SRCS_DIR = ./src/
-SRCS = $(addprefix $(SRCS_DIR), $(SRC))
-SRC = main.c init.c read.c command.c move1.c move2.c pivot.c check.c util.c free.c \
-	sort_firstlast.c sort_select.c sort_atob.c sort_btoa.c sort_only.c sort_three.c sort_four.c
+BONUS_SRCS = ./get_next_line_bonus.c ./get_next_line_utils_bonus.c
+
 OBJS = $(SRCS:.c=.o)
-
-BONUS_SRCS_DIR = ./bonus/
-BONUS_SRCS = $(addprefix $(BONUS_SRCS_DIR), $(BONUS_SRC))
-BONUS_SRC = main.c init.c read.c util.c check.c move1.c move2.c free.c
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 all : $(NAME)
 
-$(NAME): $(OBJS)
-	@cd lib && make
-	$(CC) $(CFALGS) -o $(NAME) $(OBJS) $(LIB)
-
-$(BONUS_NAME): $(BONUS_OBJS)
-	@cd lib && make bonus
-	$(CC) $(CFLAGS) -g -o $(BONUS_NAME) $(BONUS_OBJS) $(LIB)
+$(NAME) : $(OBJS)
+	$(AR) -rcs $(NAME) $^
 
 %.o : %.c
-	$(CC) $(CFLAGS) -I$(INCS_DIR) -g -c -o $@ $<
+	$(CC) $(CFLAGS) -c $^ -I$(HEADER)
 
 clean :
-	@cd lib && make clean
 	rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean : clean
-	@cd lib && make fclean
-	rm -f $(NAME) $(BONUS_NAME)
+	rm -f $(NAME)
 
-re : 
-	make fclean
-	make all
+re : fclean all
 
-bonus : $(BONUS_NAME)
+bonus :
+	@make OBJS='$(SRCS:.c=.o) $(BONUS_OBJS)'
 
 .PHONY : all clean fclean re bonus
 

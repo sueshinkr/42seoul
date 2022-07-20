@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/20 11:22:43 by sueshin           #+#    #+#             */
+/*   Updated: 2022/07/20 11:23:13 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	sort_two(t_list *list, t_cmlist *comm)
@@ -39,7 +51,7 @@ void	sort_five(t_list *a, t_list *b, t_cmlist *comm)
 	int		idx;
 	int		max;
 	int		min;
-	
+
 	top = a->head->next;
 	temp = top;
 	idx = 5;
