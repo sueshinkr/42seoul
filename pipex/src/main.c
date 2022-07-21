@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:59 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/19 00:50:12 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/21 15:32:49 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,3 +41,6 @@ int	main(void)
 	}
 	//ft_printf("x : %d ::::\n", x);
 }
+
+/*
+infile outfile

@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 16:33:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/20 16:44:33 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/21 14:53:12 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	check_last(t_list *a, t_list *b)
 {
-	if (!b->head->next)
+	if (check_arr(a, 1) && !b->head->next)
 		ft_printf("OK\n");
 	else
 		ft_printf("KO\n");

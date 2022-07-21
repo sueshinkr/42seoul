@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 11:33:04 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/20 16:33:23 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/21 17:07:51 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,6 @@ void	sort_three_reverse_only(t_list *a, t_list *b, t_cm *comm)
 	func_pa(a, b, comm);
 	func_pa(a, b, comm);
 }
-
-/*
-void	sort_four_only(t_list *a, t_list *b, t_cm *comm)
-{
-	int	idx;
-	int	min;
-
-	idx = 4;
-	check_min(a, &min);
-	while (idx-- > 0)
-	{
-		if (a->head->next->num == min)
-			func_pb(b, a, comm);
-		else
-			func_ra(a, comm);
-	}
-	sort_three_only(a, comm);
-	func_pa(a, b, comm);
-}
-*/
 
 void	sort_four_only(t_list *a, t_list *b, t_cm *comm)
 {
@@ -162,7 +142,7 @@ void	sort_five_only(t_list *a, t_list *b, t_cm *comm)
 			func_ra(a, comm);
 	}
 	sort_three_only(a, comm);
-	if (b->head->next->num > b->tail->next->num)
+	if (b->head->next->num > b->head->next->next->num)
 		func_sb(b, comm);
 	func_pa(a, b, comm);
 	func_pa(a, b, comm);

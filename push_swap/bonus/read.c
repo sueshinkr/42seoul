@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 10:35:03 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/20 16:46:24 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/21 14:51:48 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,32 @@ static int	ft_atoi(const char	*str)
 		print_error();
 	return (sign * result);
 }
+
+int	check_arr(t_list *list, int flag)
+{
+	t_node	*temp;
+	int		*arr;
+	int		idx;
+
+	temp = list->head->next;
+	arr = (int *)malloc(list->count * sizeof(int));
+	if (!arr)
+		exit(1);
+	idx = -1;
+	while (++idx < list->count)
+	{
+		if (idx < list->count - 1 && temp->num > temp->next->num)
+			flag = 0;
+		arr[idx] = temp->num;
+		temp = temp->next;
+	}
+	free(arr);
+	if (flag == 0)
+		return (0);
+	else
+		return (1);
+}
+
 
 static void	check_dup(t_list *list, int flag)
 {
