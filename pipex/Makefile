@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/07/19 00:50:13 by sueshin          ###   ########.fr        #
+#    Updated: 2022/07/21 23:43:19 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCS_DIR = ./include/
 
 SRCS_DIR = ./src/
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))
-SRC = main.c
+SRC = main.c util.c
 OBJS = $(SRCS:.c=.o)
 
 #BONUS_SRCS_DIR = ./bonus/
