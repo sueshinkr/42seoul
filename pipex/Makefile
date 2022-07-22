@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/07/21 23:43:19 by sueshin          ###   ########.fr        #
+#    Updated: 2022/07/22 12:32:50 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCS_DIR = ./include/
 
 SRCS_DIR = ./src/
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))
-SRC = main.c util.c
+SRC = main.c util.c util2.c path.c
 OBJS = $(SRCS:.c=.o)
 
 #BONUS_SRCS_DIR = ./bonus/
@@ -41,7 +41,7 @@ $(NAME): $(OBJS)
 #	$(CC) $(CFLAGS) -g -o $(BONUS_NAME) $(BONUS_OBJS) $(LIB)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -I$(INCS_DIR) -c -o $@ $<
+	$(CC) -w $(CFLAGS) -I$(INCS_DIR) -c -o $@ $<
 
 clean :
 	@cd lib && make clean

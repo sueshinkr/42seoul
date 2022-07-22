@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:29:15 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/22 12:06:48 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/22 12:06:04 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	word_count(char const *str, char c)
 	return (count);
 }
 
-static int	plus_word(char const *str, char c, char **splitstr)
+static char	**plus_word(char const *str, char c, char **splitstr)
 {
 	int	len;
 
@@ -71,23 +71,29 @@ static int	plus_word(char const *str, char c, char **splitstr)
 			if (!*splitstr)
 			{
 				free_str(splitstr);
-				return (-1);
+				return (NULL);
 			}
 			ft_strlcpy((char *)*splitstr++, (char *)str - len, len + 1);
 		}
 	}
 	*splitstr = 0;
-	return (1);
-}
-
-char	**ft_split(char const *str, char c)
-{
-	char	**splitstr;
-
-	splitstr = (char **)malloc((word_count(str, c) + 1) * sizeof(char *));
-	if (!splitstr)
-		return (NULL);
-	if ((plus_word(str, c, splitstr)) == -1)
-		return (NULL);
 	return (splitstr);
 }
+
+char	**ft_split(char const *str, char const *str2, char c)
+{
+	char	**splitstr;
+	char	**laststr;
+
+	splitstr = (char **)malloc((word_count(str, c) + 2) * sizeof(char *));
+	if (!splitstr)
+		return (NULL);
+	laststr = plus_word(str, c, splitstr);
+	if (!laststr)
+		return (NULL);
+	*laststr = (char *)malloc((ft_strlen(str2) + 1) * sizeof(char));
+	ft_strlcpy((char *)*laststr++, (char *)str2, ft_strlen(str2) + 1);
+	*laststr = 0;
+	return (splitstr);
+}
+
