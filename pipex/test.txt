@@ -1,2 +1,1 @@
-sdafad
-aaaaa
+child - fd[0] : 3, fd[1] : 4
