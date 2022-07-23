@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:31:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/23 16:23:18 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/23 23:47:40 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**find_enpath(char **envp)
 	while (envp[++idx])
 	{
 		if (!ft_strncmp(envp[idx], "PATH=", 5))
-			path = ft_split(envp[idx], ':');
+			path = ft_split(envp[idx] + 5, ':');
 	}
 	return (path);
 }

@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/23 15:49:18 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/23 23:33:32 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_arg
 	char	**path;
 	t_cmd	**cmd;
 	char	**envp;
+	int		cmd_num;
 }	t_arg;
 
 void	read_arg(int num, char **argv, char **envp, t_arg *arg);

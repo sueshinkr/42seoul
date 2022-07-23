@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 16:02:15 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/23 15:26:40 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/24 00:41:56 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	read_arg(int num, char **argv, char **envp, t_arg *arg)
 		arg->cmd[idx] = malloc(sizeof(t_cmd));
 		arg->cmd[idx]->cmd_str = ft_split(argv[idx + 2], ' ');
 		arg->cmd[idx]->cmd_path = check_path(arg->path, arg->cmd[idx]->cmd_str[0]);
-		if (!arg->cmd[idx]->cmd_path)
-			print_error(3, arg);
+		arg->cmd_num++;
+		//if (!arg->cmd[idx]->cmd_path)
+		//	print_error(3, arg);
 	}
 }
