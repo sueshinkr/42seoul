@@ -6,19 +6,19 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:31:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/22 15:21:53 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/23 16:23:18 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	check_file(char *argv)
+void	check_file(char *argv, t_arg *arg)
 {
 	int	mode;
 
-	mode = F_OK | X_OK;
+	mode = F_OK;
 	if (access(argv, mode) == -1)
-		print_error(2);
+		print_error(2, arg);
 }
 
 char	**find_enpath(char **envp)
