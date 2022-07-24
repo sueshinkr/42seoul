@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:31:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/23 23:47:40 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/24 11:16:40 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static char	*check_slash(char *path, char *cmd)
 char	*check_path(char **path, char *cmd)
 {
 	int		idx;
-	int		len;
 	char	*str;
 
 	idx = -1;
