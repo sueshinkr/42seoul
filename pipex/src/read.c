@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 16:02:15 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/24 00:41:56 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/24 21:55:34 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	open_infile(char *infile, t_arg *arg)
 	}
 }
 
+/*
 void	open_outfile(char *outfile, t_arg *arg)
 {
 	int	fd;
@@ -40,6 +41,20 @@ void	open_outfile(char *outfile, t_arg *arg)
 		dup2(fd, 1);
 		close(fd);
 	}
+}
+*/
+
+int	open_outfile(char *outfile, t_arg *arg)
+{
+	int	fd;
+	int	mode;
+
+	mode = O_CREAT | O_RDWR | O_TRUNC;
+	fd = open(outfile, mode, 0755);
+	if (fd < 0)
+		print_error(4, arg);
+	//else
+	return (fd);
 }
 
 void	read_arg(int num, char **argv, char **envp, t_arg *arg)
