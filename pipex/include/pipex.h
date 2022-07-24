@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/24 21:54:54 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/25 03:35:41 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct s_arg
 	t_cmd	**cmd;
 	char	**envp;
 	int		cmd_num;
+	int		is_here;
+	int		is_error;
 }	t_arg;
 
 void	read_arg(int num, char **argv, char **envp, t_arg *arg);
@@ -51,6 +53,7 @@ void	check_file(char *argv, t_arg *arg);
 char	**find_enpath(char **envp);
 char	*check_path(char **path, char *cmd);
 int		open_outfile(char *outfile, t_arg *arg);
+int		open_outfile_here(char *outfile, t_arg *arg);
 
 void	print_error(int num, t_arg *arg);
 

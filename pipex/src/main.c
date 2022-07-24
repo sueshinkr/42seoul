@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:59 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/24 21:58:43 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/25 04:58:42 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static t_arg	*init_arg(int argc, char **envp)
 	arg->cmd = malloc(sizeof(t_cmd *) * (argc - 3));
 	arg->cmd_num = 0;
 	arg->envp = envp;
+	arg->is_error = 0;
+	arg->is_here = 0;
 	return (arg);
 }
 
@@ -37,9 +39,11 @@ int	main(int argc, char **argv, char **envp)
 		print_error(1, arg);
 	read_arg(argc - 3, argv, envp, arg);
 	idx = -1;
-	while (++idx < argc - 4)
+	while (++idx < argc - 4 - arg->is_here)
 		pipe_in(arg, idx);
 	pipe_in_last(arg, argv, argc, idx);
+	if (arg->is_here != 0)
+		unlink("heredoc_temp");
 	free_cmd(arg);
 	free_path(arg);
 	free(arg);

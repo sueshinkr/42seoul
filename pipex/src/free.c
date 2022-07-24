@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 11:12:19 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/24 20:41:47 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/25 01:27:41 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 
 void	free_arg(t_arg *arg)
 {
-/*
-	while (arg->cmd[idx])
-	{
-		free(arg->cmd[idx]->cmd_str);
-		free(arg->cmd[idx]->cmd_path);
-		free(arg->cmd[idx]);
-	}
-*/
-	//free(arg->path);
 	free(arg->cmd);
 	free(arg);
 }
