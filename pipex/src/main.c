@@ -6,75 +6,60 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:59 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/24 11:07:11 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/24 12:09:13 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	print_error(int num)
+static t_arg	*init_arg(int argc, char **envp)
 {
-	if (num == 1)
-	{
-		ft_printf("ARG Error\n");
-		exit(1);
-	}
-	if (num == 2)
-	{
-		ft_printf("File Error\n");
-		exit(1);
-	}
-	if (num == 3)
-	{
-		ft_printf("Not valid cmdand Error\n");
-		exit(1);
-	}
-}
+	t_arg	*arg;
 
-static t_list	*init_list()
-{
-	t_list	*arg;
-
-	arg = malloc(sizeof(t_list));
+	arg = malloc(sizeof(t_arg));
 	if (!arg)
 		exit(1);
+	arg->cmd = malloc(sizeof(t_cmd *) * (argc - 3));
+	arg->cmd_num = 0;
+	arg->envp = envp;
 	return (arg);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_list	*arg;
-	int		fd[2]; 
-	pid_t	pid;
-	int		x;
+	t_arg	*arg; 
+	int		idx;
 	char	*str;
 
-	if (argc != 5)
-		print_error(1);
-	arg = init_list();
-	read_arg(argv, envp, arg);
-	if (pipe(fd) == -1)  // fd[0] : read, fd[1] : write
-		exit(1);
-	pid = fork();
-
-	if (pid == 0) // child
+	arg = init_arg(argc, envp);
+	if (argc < 5)
+		print_error(1, arg);
+	read_arg(argc - 3, argv, envp, arg);
+	idx = -1;
+	while (++idx < argc - 4)
+		pipe_in(arg, idx);
+	open_outfile(argv[argc - 1], arg);
+	pipe_in_last(arg, idx);
+	while (1)
 	{
-		close(fd[0]);
-		dup2(fd[1], 1);
-		ft_printf("child - fd[0] : %d, fd[1] : %d\n", fd[0], fd[1]);
-		execve(arg->path_cmd1, arg->cmd1, NULL);
+		str = get_next_line(0);
+		if (!str)
+			return (0);
+		else
+		{
+			ft_printf("%s", str);
+			free(str);
+		}
 	}
-	else // parent
-	{
-		close(fd[1]);
-		dup2(fd[0], 0);
-		ft_printf("parent - fd[0] : %d, fd[1] : %d\n", fd[0], fd[1]);
-		open_outfile(argv[4]);
-		execve(arg->path_cmd2, arg->cmd2, NULL);
-	}
-}
-
 /*
-Wait함수 적용, 파이프 여러개일때 어떻게 해야할지 생각하기
+	if (!arg->cmd[idx]->cmd_path)
+	{
+		free_cmd(arg);
+		free_path(arg);
+		free(arg);
+		exit(arg->exit_code);
+	}
+	if (execve(arg->cmd[idx]->cmd_path, arg->cmd[idx]->cmd_str, envp) == -1)
+		print_error(4, arg);
 */
-`
+}

@@ -6,19 +6,19 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:31:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/22 15:21:53 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/24 11:16:40 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	check_file(char *argv)
+void	check_file(char *argv, t_arg *arg)
 {
 	int	mode;
 
-	mode = F_OK | X_OK;
+	mode = F_OK;
 	if (access(argv, mode) == -1)
-		print_error(2);
+		print_error(2, arg);
 }
 
 char	**find_enpath(char **envp)
@@ -30,7 +30,7 @@ char	**find_enpath(char **envp)
 	while (envp[++idx])
 	{
 		if (!ft_strncmp(envp[idx], "PATH=", 5))
-			path = ft_split(envp[idx], ':');
+			path = ft_split(envp[idx] + 5, ':');
 	}
 	return (path);
 }
@@ -56,7 +56,6 @@ static char	*check_slash(char *path, char *cmd)
 char	*check_path(char **path, char *cmd)
 {
 	int		idx;
-	int		len;
 	char	*str;
 
 	idx = -1;
