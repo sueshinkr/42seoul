@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 16:02:15 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/25 05:05:41 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/25 17:51:00 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ int	open_outfile(char *outfile, t_arg *arg)
 	int	mode;
 
 	mode = O_CREAT | O_RDWR | O_TRUNC;
-	fd = open(outfile, mode, 0755);
+	fd = open(outfile, mode, 0644);
+	ft_printf("fd : %d\n", fd);
 	if (fd < 0)
-		print_error(4, arg);
+		print_error(2, arg);
+		//perror("outfile");
+		//
 	return (fd);
 }
 
@@ -46,12 +49,12 @@ int	open_outfile_here(char *outfile, t_arg *arg)
 	if (access(outfile, F_OK) == -1)
 	{
 		mode = O_CREAT | O_RDWR | O_TRUNC;
-		fd = open(outfile, mode, 0755);
+		fd = open(outfile, mode, 0644);
 	}
 	else
 	{
-		mode = O_CREAT | O_RDWR | O_APPEND;
-		fd = open(outfile, mode, 0755);
+		mode = O_RDWR | O_APPEND;
+		fd = open(outfile, mode, 0644);
 	}
 	if (fd < 0)
 		print_error(4, arg);
@@ -107,8 +110,8 @@ void	read_arg(int num, char **argv, char **envp, t_arg *arg)
 		read_arg_here(num - 1, argv, envp, arg);
 		return ;
 	}
-	check_file(argv[1], arg);
-	open_infile(argv[1], arg);
+	if (check_file(argv[1]))
+		open_infile(argv[1], arg);
 	arg->path = find_enpath(envp);
 	while (++idx < num)
 	{

@@ -6,13 +6,15 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/25 03:35:41 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/25 14:10:28 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
+# include <sys/signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -49,7 +51,7 @@ void	print_error(int num, t_arg *arg);
 char	**ft_split(char const *str, char c);
 char	*ft_strjoin_pipex(char *str1, char *str2);
 
-void	check_file(char *argv, t_arg *arg);
+int		check_file(char *argv);
 char	**find_enpath(char **envp);
 char	*check_path(char **path, char *cmd);
 int		open_outfile(char *outfile, t_arg *arg);

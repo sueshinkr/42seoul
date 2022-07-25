@@ -6,12 +6,13 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:31:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/24 11:16:40 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/25 14:14:14 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+/*
 void	check_file(char *argv, t_arg *arg)
 {
 	int	mode;
@@ -19,6 +20,17 @@ void	check_file(char *argv, t_arg *arg)
 	mode = F_OK;
 	if (access(argv, mode) == -1)
 		print_error(2, arg);
+}
+*/
+
+int	check_file(char *argv)
+{
+	int	mode;
+
+	mode = F_OK;
+	if (access(argv, mode) == -1)
+		return (0);
+	return (1);
 }
 
 char	**find_enpath(char **envp)

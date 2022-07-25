@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 11:12:19 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/25 01:27:41 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/25 14:00:51 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,30 @@ void	print_error(int num, t_arg *arg)
 {
 	if (num == 1)
 	{
-		ft_printf("ARG Error\n");
+		perror("ARG Error");
+		//ft_printf("ARG Error\n");
 		free(arg);
 		exit(1);
 	}
 	else if (num == 2)
 	{
-		ft_printf("File Error\n");
+		perror("FILE Error");
+		//ft_printf("File Error\n");
 		free_arg(arg);
 		exit(1);
 	}
 	else if (num == 3)
 	{
-		ft_printf("Not valid CMD Error\n");
+		perror("CMD Error");
+		//ft_printf("Not valid CMD Error\n");
 		free_cmd(arg);
 		free_path(arg);
 		free(arg);
-		exit(1);
+		exit(127);
 	}
 	else if (num == 4)
 	{
-		ft_printf("execve Error\n");
+		perror("Exec Error");
 		free_cmd(arg);
 		free_path(arg);
 		free(arg);
