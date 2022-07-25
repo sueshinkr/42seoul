@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/07/25 17:09:09 by sueshin          ###   ########.fr        #
+#    Updated: 2022/07/25 23:12:45 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ $(NAME): $(OBJS)
 #	$(CC) $(CFLAGS) -g -o $(BONUS_NAME) $(BONUS_OBJS) $(LIB)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -w -I$(INCS_DIR) -c -o $@ $<
+	$(CC) $(CFLAGS) -w -g -I$(INCS_DIR) -c -o $@ $<
 
 clean :
 	@cd lib && make clean
