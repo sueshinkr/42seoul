@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:31:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/25 18:29:54 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 02:13:51 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	check_file(char *argv)
 
 	mode = F_OK;
 	if (access(argv, mode) == -1)
-		return (0);
-	return (1);
+		return (-1);
+	return (0);
 }
 
 char	**find_enpath(char **envp)
@@ -53,6 +53,8 @@ static char	*check_slash(char *path, char *cmd)
 	char	*temp;
 	int		len;
 
+	if (cmd[0] == '/')
+		return (ft_strdup(cmd));
 	len = ft_strlen(path);
 	if (path[len - 1] == '/')
 		return_cmd = ft_strjoin_pipex(path, cmd);
@@ -76,7 +78,8 @@ char	*check_path(char **path, char *cmd)
 		str = check_slash(path[idx], cmd);
 		if (!access(str, F_OK))
 			return (str);
-		free(str);
+		else
+			free(str);
 	}
 	return (NULL);
 }

@@ -6,19 +6,13 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 11:12:19 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/25 14:00:51 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 02:05:37 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_arg(t_arg *arg)
-{
-	free(arg->cmd);
-	free(arg);
-}
-
-void	free_cmd(t_arg *arg)
+static void	free_cmd(t_arg *arg)
 {
 	int	idx1;
 	int	idx2;
@@ -37,7 +31,7 @@ void	free_cmd(t_arg *arg)
 	free(arg->cmd);
 }
 
-void	free_path(t_arg *arg)
+static void	free_path(t_arg *arg)
 {
 	int	idx;
 
@@ -47,37 +41,37 @@ void	free_path(t_arg *arg)
 	free(arg->path);
 }
 
+void	free_all(t_arg *arg)
+{
+	free_cmd(arg);
+	free_path(arg);
+	free(arg);
+}
+
 void	print_error(int num, t_arg *arg)
 {
 	if (num == 1)
 	{
-		perror("ARG Error");
-		//ft_printf("ARG Error\n");
+		write(2, "ARG Error\n", 10);
 		free(arg);
 		exit(1);
 	}
 	else if (num == 2)
 	{
-		perror("FILE Error");
-		//ft_printf("File Error\n");
-		free_arg(arg);
+		write(2, "FILE Error\n", 11);
+		free_all(arg);
 		exit(1);
 	}
 	else if (num == 3)
 	{
-		perror("CMD Error");
-		//ft_printf("Not valid CMD Error\n");
-		free_cmd(arg);
-		free_path(arg);
-		free(arg);
+		write(2, "CMD Error\n", 10);
+		free_all(arg);
 		exit(127);
 	}
 	else if (num == 4)
 	{
-		perror("Exec Error");
-		free_cmd(arg);
-		free_path(arg);
-		free(arg);
+		write(2, "EXEC Error\n", 11);
+		free_all(arg);
 		exit(1);
 	}
 }

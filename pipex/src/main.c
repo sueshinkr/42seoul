@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:59 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/25 18:19:37 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 01:57:40 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,23 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_arg	*arg; 
 	int		idx;
+	int		fdin;
+	int		fdout;
 
 	arg = init_arg(argc, envp);
 	if (argc < 5)
 		print_error(1, arg);
 	read_arg(argc - 3, argv, envp, arg);
+	fdin = open_infile(argv[1], arg);
+	if (arg->is_here == 0)
+		fdout = open_outfile(argv[argc - 1], arg);
+	else
+		fdout = open_outfile_here(argv[argc - 1], arg);
+	dup2(fdin, 0);
+	dup2(fdout, 1);
 	idx = -1;
 	while (++idx < argc - 4 - arg->is_here)
-		pipe_in(arg, idx);
-	pipe_in_last(arg, argv, argc, idx);
-	free_cmd(arg);
-	free_path(arg);
-	free(arg);
+		pipe_in(arg, idx, fdin);
+	pipe_in_last(arg, idx);
 	return (0);
 }

@@ -6,24 +6,26 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 16:02:15 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/25 18:29:30 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 02:03:51 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	open_infile(char *infile, t_arg *arg)
+int	open_infile(char *infile, t_arg *arg)
 {
 	int	fd;
+	int mode;
 
-	fd = open(infile, O_RDONLY);
-	if (fd < 0)
-		print_error(4, arg);
-	else
+	if (check_file(infile) == 0)
 	{
-		dup2(fd, 0);
-		close(fd);
+		fd = open(infile, O_RDONLY);
+		if (fd < 0)
+			print_error(2, arg);
 	}
+	else
+		fd = 0;
+	return (fd);
 }
 
 int	open_outfile(char *outfile, t_arg *arg)
@@ -35,8 +37,6 @@ int	open_outfile(char *outfile, t_arg *arg)
 	fd = open(outfile, mode, 0644);
 	if (fd < 0)
 		print_error(2, arg);
-		//perror("outfile");
-		//
 	return (fd);
 }
 
@@ -56,50 +56,29 @@ int	open_outfile_here(char *outfile, t_arg *arg)
 		fd = open(outfile, mode, 0644);
 	}
 	if (fd < 0)
-		print_error(4, arg);
+		print_error(2, arg);
 	return (fd);
 }
 
-/*
-static void	read_arg_here(int num, char **argv, char **envp, t_arg *arg)
+static void	read_arg_noinfile(void)
 {
-	int		idx;
-	char	*str;
-	idx = -1;
-	int		fd;
+	int		fd[2];
+	pid_t	pid;
+	int		status;
 
-	fd = open("heredoc_temp", O_CREAT | O_RDWR | O_TRUNC, 0755);
-	if (fd < 0)
+	pipe(fd);
+	pid = fork();
+
+	if (pid == 0)
 	{
-		unlink("heredoc_temp");
-		print_error(4, arg);
+		close(fd[0]);
+		dup2(fd[1], 1);
+		return ;
 	}
-	while (1)
-	{
-		str = get_next_line(0);
-		if (ft_strncmp(argv[2], str, ft_strlen(argv[2])) == 0)
-		{
-			free(str);
-			break;
-		}
-		else
-		{
-			write(fd, str, ft_strlen(str));
-			free(str);
-		}
-	}
-	close(fd);
-	open_infile("heredoc_temp", arg);
-	arg->path = find_enpath(envp);
-	while (++idx < num)
-	{
-		arg->cmd[idx] = malloc(sizeof(t_cmd));
-		arg->cmd[idx]->cmd_str = ft_split(argv[idx + 3], ' ');
-		arg->cmd[idx]->cmd_path = check_path(arg->path, arg->cmd[idx]->cmd_str[0]);
-		arg->cmd_num++;
-	}
+	close(fd[1]);
+	dup2(fd[0], 0);
+	waitpid(pid, &status, 0);
 }
-*/
 
 static void	read_arg_here(int num, char **argv, char **envp, t_arg *arg)
 {
@@ -156,8 +135,6 @@ void	read_arg(int num, char **argv, char **envp, t_arg *arg)
 		read_arg_here(num - 1, argv, envp, arg);
 		return ;
 	}
-	if (check_file(argv[1]))
-		open_infile(argv[1], arg);
 	arg->path = find_enpath(envp);
 	while (++idx < num)
 	{

@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/25 14:10:28 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 02:02:37 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ typedef struct s_arg
 }	t_arg;
 
 void	read_arg(int num, char **argv, char **envp, t_arg *arg);
+int		open_outfile(char *outfile, t_arg *arg);
+int		open_outfile_here(char *outfile, t_arg *arg);
 
-void	pipe_in(t_arg *arg, int idx);
-void	pipe_in_last(t_arg *arg, char **argv, int argc, int idx);
+void	pipe_in(t_arg *arg, int idx, int fdin);
+void	pipe_in_last(t_arg *arg, int idx);
 
-void	free_arg(t_arg *arg);
-void	free_cmd(t_arg *arg);
-void	free_path(t_arg *arg);
+void	free_all(t_arg *arg);
 void	print_error(int num, t_arg *arg);
 
 char	**ft_split(char const *str, char c);
@@ -56,7 +56,5 @@ char	**find_enpath(char **envp);
 char	*check_path(char **path, char *cmd);
 int		open_outfile(char *outfile, t_arg *arg);
 int		open_outfile_here(char *outfile, t_arg *arg);
-
-void	print_error(int num, t_arg *arg);
 
 #endif
