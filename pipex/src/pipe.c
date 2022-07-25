@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 11:55:33 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/25 17:51:20 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/25 18:41:17 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	pipe_in_last(t_arg *arg, char **argv, int argc, int idx)
 	int		fd[2];
 	int		status;
 	pid_t	pid;
+	int		temp = -1;
 
 	if (pipe(fd) == -1)
 	{
@@ -63,14 +64,15 @@ void	pipe_in_last(t_arg *arg, char **argv, int argc, int idx)
 			print_error(3, arg);
 		if (execve(arg->cmd[idx]->cmd_path, arg->cmd[idx]->cmd_str, arg->envp) == -1)
 			print_error(4, arg);
-		exit(0);
 	}
 	else
 	{
 		close(fd[1]);
 		close(fd[0]);
 		waitpid(pid, &status, 0);
-		if (WIFSIGNALED(status))
+		if (WEXITSTATUS(status))
+			exit(WIFEXITED(status));
+		else if (WIFSIGNALED(status))
 		{
 			perror("Error");
 			exit(WTERMSIG(status));

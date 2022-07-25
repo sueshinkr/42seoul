@@ -1,0 +1,8 @@
+total 120
+-rw-r--r--   1 sueshin  staff   1843  7 25 17:09 Makefile
+-rwxr-xr-x   1 sueshin  staff      0  7 25 17:55 heredoc_temp
+drwxr-xr-x   5 sueshin  staff    160  7 25 04:59 include
+drwxr-xr-x  26 sueshin  staff    832  7 25 17:52 lib
+-rwxr-xr-x   1 sueshin  staff  53826  7 25 17:55 pipex
+drwxr-xr-x  17 sueshin  staff    544  7 25 17:55 src
+-rw-r--r--   1 sueshin  staff      0  7 25 17:55 test.txt

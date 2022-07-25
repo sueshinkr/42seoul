@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 16:02:15 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/25 17:51:00 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/25 18:29:30 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	open_outfile(char *outfile, t_arg *arg)
 
 	mode = O_CREAT | O_RDWR | O_TRUNC;
 	fd = open(outfile, mode, 0644);
-	ft_printf("fd : %d\n", fd);
 	if (fd < 0)
 		print_error(2, arg);
 		//perror("outfile");
@@ -61,6 +60,7 @@ int	open_outfile_here(char *outfile, t_arg *arg)
 	return (fd);
 }
 
+/*
 static void	read_arg_here(int num, char **argv, char **envp, t_arg *arg)
 {
 	int		idx;
@@ -90,6 +90,52 @@ static void	read_arg_here(int num, char **argv, char **envp, t_arg *arg)
 	}
 	close(fd);
 	open_infile("heredoc_temp", arg);
+	arg->path = find_enpath(envp);
+	while (++idx < num)
+	{
+		arg->cmd[idx] = malloc(sizeof(t_cmd));
+		arg->cmd[idx]->cmd_str = ft_split(argv[idx + 3], ' ');
+		arg->cmd[idx]->cmd_path = check_path(arg->path, arg->cmd[idx]->cmd_str[0]);
+		arg->cmd_num++;
+	}
+}
+*/
+
+static void	read_arg_here(int num, char **argv, char **envp, t_arg *arg)
+{
+	int		idx;
+	char	*str;
+	int		fd[2];
+	pid_t	pid;
+	int		status;
+
+	pipe(fd);
+	pid = fork();
+
+	if (pid == 0)
+	{
+		close(fd[0]);
+		dup2(fd[1], 1);
+		while (1)
+		{
+			str = get_next_line(0);
+			if (ft_strncmp(argv[2], str, ft_strlen(argv[2])) == 0)
+			{
+				free(str);
+				break;
+			}
+			else
+			{
+				write(1, str, ft_strlen(str));
+				free(str);
+			}
+		}
+		return ;
+	}
+	close(fd[1]);
+	dup2(fd[0], 0);
+	waitpid(pid, &status, 0);
+	idx = -1;
 	arg->path = find_enpath(envp);
 	while (++idx < num)
 	{

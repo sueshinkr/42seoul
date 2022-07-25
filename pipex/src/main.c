@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:59 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/25 14:05:31 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/25 18:19:37 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int	main(int argc, char **argv, char **envp)
 	while (++idx < argc - 4 - arg->is_here)
 		pipe_in(arg, idx);
 	pipe_in_last(arg, argv, argc, idx);
-	if (arg->is_here != 0)
-		unlink("heredoc_temp");
 	free_cmd(arg);
 	free_path(arg);
 	free(arg);
