@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:59 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/26 16:22:32 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 17:59:51 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 	if (arg->is_here == 0)
 	{
 		fdin = open_infile(argv[1], arg);
-		dup2(fdin, 0);
+		dup_check(fdin, 0, arg);
 		fdout = open_outfile(argv[argc - 1], arg);
 	}
 	else
@@ -53,5 +53,6 @@ int	main(int argc, char **argv, char **envp)
 	while (++idx < argc - 5 - arg->is_here)
 		pipe_in(arg, idx, fdin);
 	pipe_last(arg, idx, fdin, fdout);
+	free_all(arg);
 	return (0);
 }

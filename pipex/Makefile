@@ -6,12 +6,11 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/07/26 16:21:52 by sueshin          ###   ########.fr        #
+#    Updated: 2022/07/26 17:03:11 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
-#BONUS_NAME = checker
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 AR = ar rcs
@@ -25,23 +24,14 @@ SRCS = $(addprefix $(SRCS_DIR), $(SRC))
 SRC = main.c read.c open.c check.c pipe.c free.c util.c util2.c
 OBJS = $(SRCS:.c=.o)
 
-#BONUS_SRCS_DIR = ./bonus/
-#BONUS_SRCS = $(addprefix $(BONUS_SRCS_DIR), $(BONUS_SRC))
-#BONUS_SRC = main.c init.c read.c util.c check.c move1.c move2.c free.c
-#BONUS_OBJS = $(BONUS_SRCS:.c=.o)
-
 all : $(NAME)
 
 $(NAME): $(OBJS)
 	@cd lib && make
 	$(CC) $(CFALGS) -o $(NAME) $(OBJS) $(LIB)
 
-#$(BONUS_NAME): $(BONUS_OBJS)
-#	@cd lib && make bonus
-#	$(CC) $(CFLAGS) -g -o $(BONUS_NAME) $(BONUS_OBJS) $(LIB)
-
 %.o : %.c
-	$(CC) $(CFLAGS) -w -g -I$(INCS_DIR) -c -o $@ $<
+	$(CC) $(CFLAGS) -I$(INCS_DIR) -c -o $@ $<
 
 clean :
 	@cd lib && make clean
@@ -55,7 +45,5 @@ re :
 	make fclean
 	make all
 
-#bonus : $(BONUS_NAME)
-
-.PHONY : all clean fclean re bonus
+.PHONY : all clean fclean re
 

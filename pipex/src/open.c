@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:05:00 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/26 16:05:29 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 17:03:10 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	open_infile(char *infile, t_arg *arg)
 {
 	int	fd;
-	int	mode;
 
 	if (check_file(infile) == 0)
 	{

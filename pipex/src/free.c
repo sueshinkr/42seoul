@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 11:12:19 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/26 16:27:17 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 17:03:12 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	print_error(int num, t_arg *arg)
 		perror("PIPE Error");
 	else if (num == 6)
 		perror("DUP Error");
+	else if (num == 7)
+		perror("FORK Error");
 	free_all(arg);
 	exit(1);
 }
