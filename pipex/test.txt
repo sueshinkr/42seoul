@@ -1,8 +1,5 @@
-a
-b
-c
-d
-e
-f
-g
-aaaaa
+n
+qui
+quit
+asdfafa
+aaaaaa

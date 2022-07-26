@@ -6,57 +6,82 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 16:02:15 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/24 00:41:56 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 16:20:47 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	open_infile(char *infile, t_arg *arg)
+static void	get_input(int fd[2], char **argv)
 {
-	int	fd;
+	char	*str;
 
-	fd = open(infile, O_RDONLY);
-	if (fd < 0)
-		print_error(4, arg);
-	else
+	close(fd[0]);
+	dup2(fd[1], 1);
+	while (1)
 	{
-		dup2(fd, 0);
-		close(fd);
+		str = get_next_line(0);
+		if (ft_strncmp(argv[2], str, ft_strlen(argv[2])) == 0)
+		{
+			free(str);
+			break ;
+		}
+		else
+		{
+			write(1, str, ft_strlen(str));
+			free(str);
+		}
 	}
+	return ;
 }
 
-void	open_outfile(char *outfile, t_arg *arg)
+static void	read_arg_here(int num, char **argv, char **envp, t_arg *arg)
 {
-	int	fd;
-	int	mode;
+	int		idx;
+	char	*str;
+	int		fd[2];
+	pid_t	pid;
 
-	mode = O_CREAT | O_RDWR | O_TRUNC;
-	fd = open(outfile, mode, 0755);
-	if (fd < 0)
-		print_error(4, arg);
-	else
+	if (pipe(fd) == -1)
+		print_error(5, arg);
+	pid = fork();
+	if (pid == 0)
 	{
-		dup2(fd, 1);
-		close(fd);
+		get_input(fd, argv);
+		return ;
+	}
+	close(fd[1]);
+	waitpid(pid, NULL, 0);
+	idx = -1;
+	arg->path = find_enpath(envp);
+	while (++idx < num)
+	{
+		arg->cmd[idx] = malloc(sizeof(t_cmd));
+		arg->cmd[idx]->cmd_str = ft_split(argv[idx + 3], ' ');
+		arg->cmd[idx]->cmd_path = \
+			check_path(arg->path, arg->cmd[idx]->cmd_str[0]);
+		arg->cmd_num++;
 	}
 }
 
 void	read_arg(int num, char **argv, char **envp, t_arg *arg)
 {
-	int	idx = -1;
+	int	idx;
 
-	check_file(argv[1], arg);
-	open_infile(argv[1], arg);
+	idx = -1;
+	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	{
+		arg->is_here = 1;
+		read_arg_here(num - 1, argv, envp, arg);
+		return ;
+	}
 	arg->path = find_enpath(envp);
-
 	while (++idx < num)
 	{
 		arg->cmd[idx] = malloc(sizeof(t_cmd));
 		arg->cmd[idx]->cmd_str = ft_split(argv[idx + 2], ' ');
-		arg->cmd[idx]->cmd_path = check_path(arg->path, arg->cmd[idx]->cmd_str[0]);
+		arg->cmd[idx]->cmd_path = \
+			check_path(arg->path, arg->cmd[idx]->cmd_str[0]);
 		arg->cmd_num++;
-		//if (!arg->cmd[idx]->cmd_path)
-		//	print_error(3, arg);
 	}
 }

@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:31:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/24 11:16:40 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 16:23:43 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	check_file(char *argv, t_arg *arg)
+void	dup_check(int to, int from, t_arg *arg)
+{
+	if (dup2(to, from) == -1)
+		print_error(6, arg);
+}
+
+int	check_file(char *argv)
 {
 	int	mode;
 
 	mode = F_OK;
 	if (access(argv, mode) == -1)
-		print_error(2, arg);
+		return (-1);
+	return (0);
 }
 
 char	**find_enpath(char **envp)
@@ -41,6 +48,8 @@ static char	*check_slash(char *path, char *cmd)
 	char	*temp;
 	int		len;
 
+	if (cmd[0] == '/')
+		return (ft_strdup(cmd));
 	len = ft_strlen(path);
 	if (path[len - 1] == '/')
 		return_cmd = ft_strjoin_pipex(path, cmd);
@@ -64,7 +73,8 @@ char	*check_path(char **path, char *cmd)
 		str = check_slash(path[idx], cmd);
 		if (!access(str, F_OK))
 			return (str);
-		free(str);
+		else
+			free(str);
 	}
 	return (NULL);
 }
