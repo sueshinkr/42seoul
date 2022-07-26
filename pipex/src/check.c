@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:31:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/26 02:13:51 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 17:34:30 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-/*
-void	check_file(char *argv, t_arg *arg)
+void	dup_check(int to, int from, t_arg *arg)
 {
-	int	mode;
-
-	mode = F_OK;
-	if (access(argv, mode) == -1)
-		print_error(2, arg);
+	if (dup2(to, from) == -1)
+		print_error(6, arg);
 }
-*/
 
 int	check_file(char *argv)
 {
