@@ -136,6 +136,7 @@ void	*philo_action(void *arg)
 		}
 		else
 		{
+			usleep(1000);
 			pthread_mutex_lock(&ph_data->ph_rule->fork[(ph_data->ph_num + 1) % ph_data->ph_rule->number_of_philosophers]);
 			pthread_mutex_lock(&ph_data->ph_rule->fork[(ph_data->ph_num) % ph_data->ph_rule->number_of_philosophers]);
 			
@@ -177,16 +178,18 @@ void	*death_check(void *arg)
 	{
 		pthread_mutex_lock(&ph_data->ph_rule->is_eating[ph_data->ph_num]);
 		cur_t = ft_time(ph_data->ph_rule);
-		if (cur_t - ph_data->last_eating_t >= ph_data->ph_rule->time_to_die)
+		if (cur_t - ph_data->last_eating_t > ph_data->ph_rule->time_to_die)
 		{
-			printf("%d %d is died\n", cur_t, ph_data->ph_num + 1);
+			pthread_mutex_lock(&ph_data->ph_rule->dead);
 			ph_data->ph_rule->isph_die = 1;
+			printf("%d %d is died\n", cur_t, ph_data->ph_num + 1);
+			pthread_mutex_unlock(&ph_data->ph_rule->dead);
+			return(NULL);
 		}
 		pthread_mutex_unlock(&ph_data->ph_rule->is_eating[ph_data->ph_num]);
 	}
 	return (NULL);
 }
-
 
 int	main(int argc, char **argv)
 {
@@ -210,7 +213,9 @@ int	main(int argc, char **argv)
 		pthread_create(&tid_m[idx], NULL, death_check, (void *)&ph_data[idx]);
 		pthread_detach(tid_m[idx]);
 	}
-	death_check(ph_data);
-	//printf("end\n");
 
+	while(!ph_data->ph_rule->isph_die)
+		;
+	usleep(100);
+	return (0);
 }

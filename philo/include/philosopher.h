@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/11 17:47:24 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/11 20:11:34 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_philo_rule
 	struct timeval	base_time;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t *is_eating;
+	pthread_mutex_t dead;
 
 }	t_ph_rule;
 
