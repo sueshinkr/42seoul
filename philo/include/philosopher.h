@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/16 18:08:17 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/16 22:06:07 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,36 +21,38 @@
 
 typedef struct s_philo_rule
 {
-	int	number_of_philosophers;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	number_of_times_each_philosopher_must_eat;
-	int	isph_die;
+	int				numofph;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				musteat;
+	int				isph_die;
 	struct timeval	base_time;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t print_lock;
+	pthread_mutex_t	print_lock;
 }	t_ph_rule;
 
-typedef struct	s_ph_data
+typedef struct s_ph_data
 {
-	t_ph_rule	*ph_rule;
+	t_ph_rule		*ph_rule;
 	struct timeval	base_time;
-	int			ph_dead;
-	int			ph_num;
-	int			eat_num;
-	int			last_eating_t;
+	int				ph_dead;
+	int				ph_num;
+	int				eat_num;
+	int				last_eating_t;
 
-} t_ph_data;
+}	t_ph_data;
 
 t_ph_rule	*init_ph_rule(int argc, char **argv);
 t_ph_data	*init_ph_data(t_ph_rule *ph_rule);
 
-void	taken_fork(t_ph_data *ph_data);
-void	eating(t_ph_data *ph_data);
-void	sleeping(t_ph_data *ph_data);
-void	thinking(t_ph_data *ph_data);
+void		taken_fork(t_ph_data *ph_data);
+void		eating(t_ph_data *ph_data);
+void		sleeping(t_ph_data *ph_data);
+void		thinking(t_ph_data *ph_data);
 
-int	ft_time(t_ph_data *ph_data);
+void		*death_check(void *arg);
+
+int			ft_time(t_ph_data *ph_data);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/08/16 17:05:50 by sueshin          ###   ########.fr        #
+#    Updated: 2022/08/16 23:12:51 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,16 +21,16 @@ INCS_DIR = ./include/
 
 SRCS_DIR = ./src/
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))
-SRC = main.c init.c action.c
+SRC = main.c init.c action.c check.c util.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFALGS) -o $(NAME) $(OBJS) -lpthread
+	$(CC) $(CFALGS) -o $(NAME) $(OBJS) -lpthread -fsanitize=address -static-libasan
 
 %.o : %.c
-	$(CC) $(CFLAGS) -I$(INCS_DIR) -c -o $@ $<
+	$(CC) $(CFLAGS) -fsanitize=address -g -I$(INCS_DIR) -c -o $@ $<
 
 clean :
 	rm -f $(OBJS) $(BONUS_OBJS)
