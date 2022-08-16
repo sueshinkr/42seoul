@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/11 20:11:34 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/16 18:08:17 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,28 @@ typedef struct s_philo_rule
 	int	isph_die;
 	struct timeval	base_time;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t *is_eating;
-	pthread_mutex_t dead;
-
+	pthread_mutex_t print_lock;
 }	t_ph_rule;
 
 typedef struct	s_ph_data
 {
 	t_ph_rule	*ph_rule;
+	struct timeval	base_time;
+	int			ph_dead;
 	int			ph_num;
+	int			eat_num;
 	int			last_eating_t;
+
 } t_ph_data;
 
+t_ph_rule	*init_ph_rule(int argc, char **argv);
+t_ph_data	*init_ph_data(t_ph_rule *ph_rule);
+
+void	taken_fork(t_ph_data *ph_data);
+void	eating(t_ph_data *ph_data);
+void	sleeping(t_ph_data *ph_data);
+void	thinking(t_ph_data *ph_data);
+
+int	ft_time(t_ph_data *ph_data);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/08/10 20:57:24 by sueshin          ###   ########.fr        #
+#    Updated: 2022/08/16 17:05:50 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ INCS_DIR = ./include/
 
 SRCS_DIR = ./src/
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))
-SRC = main.c
+SRC = main.c init.c action.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
