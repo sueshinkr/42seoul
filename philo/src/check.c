@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 19:38:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/16 23:12:49 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/17 22:39:13 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	*death_check(void *arg)
 		idx = -1;
 		while (++idx < ph_data->ph_rule->numofph)
 		{
-			if (ft_time(ph_data) - ph_data[idx].last_eating_t > \
+			if (ft_time(ph_data) - ph_data[idx].last_eating_t >= \
 			ph_data->ph_rule->time_to_die)
 			{
 				ph_data[idx].ph_rule->isph_die = 1;

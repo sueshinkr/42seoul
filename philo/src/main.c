@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:56:56 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/16 22:21:38 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/17 21:38:45 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	*philo_action(void *arg)
 	t_ph_data	*ph_data;
 
 	ph_data = (t_ph_data *)arg;
+	if (ph_data->ph_rule->numofph == 1)
+		return (NULL);
 	while (!ph_data->ph_rule->isph_die || (ph_data->ph_rule->musteat == -1 || \
 	ph_data->eat_num < ph_data->ph_rule->musteat))
 	{
@@ -77,7 +79,7 @@ void	make_ph(t_ph_data *ph_data)
 		pthread_create(&tid_ph[idx], NULL, philo_action, (void *)&ph_data[idx]);
 	pthread_create(&tid_m, NULL, death_check, (void *)ph_data);
 	pthread_join(tid_m, NULL);
-	while (idx-- > 0)
+	while (++idx < ph_data->ph_rule->numofph)
 		pthread_join(tid_ph[idx], NULL);
 	free_all(ph_data->ph_rule, ph_data, tid_ph);
 }
@@ -93,7 +95,14 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	ph_rule = init_ph_rule(argc, argv);
+	if (!ph_rule)
+		return (1);
 	ph_data = init_ph_data(ph_rule);
+	if (!ph_data)
+	{
+		printf("Init error\n");
+		return (1);
+	}
 	make_ph(ph_data);
 	return (0);
 }

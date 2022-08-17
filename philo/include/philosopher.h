@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/16 22:06:07 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/17 19:57:23 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void		thinking(t_ph_data *ph_data);
 
 void		*death_check(void *arg);
 
+void		print_error(int errno);
 int			ft_time(t_ph_data *ph_data);
 
 #endif

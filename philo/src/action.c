@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:45:42 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/16 22:06:09 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/17 22:09:11 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,18 @@ static void	set_lock(t_ph_data *ph_data)
 	{
 		pthread_mutex_lock(&ph_data->ph_rule->fork[(ph_data->ph_num) % \
 		ph_data->ph_rule->numofph]);
+		if (ph_data->ph_rule->isph_die)
+			return ;
 		pthread_mutex_lock(&ph_data->ph_rule->fork[(ph_data->ph_num + 1) % \
 		ph_data->ph_rule->numofph]);
 	}
 	else
 	{
-		usleep(200);
+		usleep(ph_data->ph_rule->time_to_eat * 10);
 		pthread_mutex_lock(&ph_data->ph_rule->fork[(ph_data->ph_num + 1) % \
 		ph_data->ph_rule->numofph]);
+		if (ph_data->ph_rule->isph_die)
+			return ;
 		pthread_mutex_lock(&ph_data->ph_rule->fork[(ph_data->ph_num) % \
 		ph_data->ph_rule->numofph]);
 	}
