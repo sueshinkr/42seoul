@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 22:18:26 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/19 13:59:57 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/19 20:09:58 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ int	ft_time(t_ph_data *ph_data)
 	int				cur_t;
 
 	gettimeofday(&time, NULL);
+	/*
 	cur_t = (time.tv_sec - ph_data->base_time.tv_sec) * 1000 + \
 	(time.tv_usec - ph_data->base_time.tv_usec) / 1000;
+	*/
+	cur_t = (time.tv_sec - ph_data->ph_rule->base_time.tv_sec) * 1000 + \
+	(time.tv_usec - ph_data->ph_rule->base_time.tv_usec) / 1000;
 	return (cur_t);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/19 13:58:47 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/19 20:07:11 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_philo_rule
 	int		musteat;
 	int		fullph;
 	int		isph_die;
+	struct timeval	base_time;
 	pid_t	*pid_fork;
 	sem_t	*fork;
 	sem_t	*print_lock;
@@ -41,7 +42,7 @@ typedef struct s_philo_rule
 typedef struct s_ph_data
 {
 	t_ph_rule		*ph_rule;
-	struct timeval	base_time;
+
 	int				ph_dead;
 	int				ph_num;
 	int				eat_num;
