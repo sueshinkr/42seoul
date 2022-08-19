@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:45:07 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/17 19:58:10 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/19 14:00:42 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ static int	set_mutex(t_ph_rule *ph_rule, int num)
 
 static int	set_arg(t_ph_rule *ph_rule, int argc, char **argv)
 {
-	ph_rule->numofph = atoi(argv[1]);
-	ph_rule->time_to_die = atoi(argv[2]);
-	ph_rule->time_to_eat = atoi(argv[3]);
-	ph_rule->time_to_sleep = atoi(argv[4]);
+	ph_rule->numofph = ft_atoi(argv[1]);
+	ph_rule->time_to_die = ft_atoi(argv[2]);
+	ph_rule->time_to_eat = ft_atoi(argv[3]);
+	ph_rule->time_to_sleep = ft_atoi(argv[4]);
 	if (ph_rule->numofph < 1 || ph_rule->time_to_die < 1 || \
 	ph_rule->time_to_eat < 1 || ph_rule->time_to_sleep < 1)
 		return (1);
 	if (argc == 6)
 	{
-		ph_rule->musteat = atoi(argv[5]);
+		ph_rule->musteat = ft_atoi(argv[5]);
 		if (ph_rule->musteat < 1)
 			return (1);
 	}

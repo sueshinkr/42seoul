@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/19 00:15:42 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/19 13:58:47 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ void		*eating_check(void *arg);
 
 void		print_error(int errno);
 int			ft_time(t_ph_data *ph_data);
+int			ft_atoi(const char	*str);
 
 #endif
