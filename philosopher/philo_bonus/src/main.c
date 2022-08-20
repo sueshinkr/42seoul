@@ -6,22 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:56:56 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/21 01:18:56 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/21 01:25:52 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
-/*
-static int	check_musteat(t_ph_data *ph_data)
-{
-	if (!(ph_data->ph_rule->musteat == -1) && \
-	ph_data->eat_num >= ph_data->ph_rule->musteat)
-		return (1);
-	else
-		return (0);
-}
-*/
 
 void	*philo_action(void *arg)
 {

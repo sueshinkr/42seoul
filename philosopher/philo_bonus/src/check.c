@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 19:38:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/21 01:18:16 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/21 01:37:23 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,16 @@ static void	print_death(t_ph_data *ph_data)
 void	*death_check(void *arg)
 {
 	t_ph_data	*ph_data;
+	int			flag;
 
+	flag = 0;
 	ph_data = (t_ph_data *)arg;
 	while (1)
 	{	
-		if (eat_count(ph_data))
+		if (eat_count(ph_data) && flag == 0)
 		{
 			sem_post(ph_data->ph_rule->isfull);
-			return (0);
+			flag = 1;
 		}
 		if (ft_time(ph_data) - ph_data->last_eating_t >= \
 		ph_data->ph_rule->time_to_die)

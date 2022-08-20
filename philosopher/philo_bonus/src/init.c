@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:45:07 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/19 20:07:32 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/21 01:37:31 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,4 @@ void	init_ph_data(t_ph_rule *ph_rule, t_ph_data *ph_data, int idx)
 	ph_data->ph_num = idx;
 	ph_data->eat_num = 0;
 	ph_data->last_eating_t = 0;
-	//gettimeofday(&ph_data->base_time, NULL);
 }

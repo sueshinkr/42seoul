@@ -6,11 +6,11 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/08/19 20:05:30 by sueshin          ###   ########.fr        #
+#    Updated: 2022/08/21 01:19:42 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
+NAME = philo_bonus
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 AR = ar rcs
