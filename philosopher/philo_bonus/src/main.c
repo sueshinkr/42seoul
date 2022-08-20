@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:56:56 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/19 20:05:47 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/21 01:18:56 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,6 @@ void	free_all(t_ph_rule *ph_rule)
 	sem_unlink("sem_end");
 	free(ph_rule);
 }
-
-/*
-void	kill_process(t_ph_rule *ph_rule)
-{
-	int	idx;
-
-	idx = -1;
-	while (++idx < ph_rule->numofph)
-		kill(ph_rule->pid_fork[idx], SIGKILL);
-	free(ph_rule->pid_fork);
-}
-*/
 
 void	kill_process(t_ph_rule *ph_rule, pid_t *pid_fork)
 {
