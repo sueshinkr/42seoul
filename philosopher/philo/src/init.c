@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:45:07 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/19 14:00:42 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/21 00:46:17 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ t_ph_data	*init_ph_data(t_ph_rule *ph_rule)
 	if (!ph_data)
 	{
 		print_error(2);
+		free(ph_rule);
 		return (NULL);
 	}
 	while (++idx < ph_rule->numofph)

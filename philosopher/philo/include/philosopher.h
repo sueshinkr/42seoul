@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/19 14:00:22 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/21 00:46:22 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void		eating(t_ph_data *ph_data);
 void		sleeping(t_ph_data *ph_data);
 void		thinking(t_ph_data *ph_data);
 
+int			check_musteat(t_ph_data *ph_data);
 void		*death_check(void *arg);
 
 void		print_error(int errno);
