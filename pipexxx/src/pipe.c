@@ -6,85 +6,75 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 11:55:33 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/21 12:59:14 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/26 14:44:30 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	last_child(t_arg *arg, int idx)
-{
-	if (!arg->cmd[idx]->cmd_path)
-		print_error(3, arg);
-	if (execve(arg->cmd[idx]->cmd_path, \
-				arg->cmd[idx]->cmd_str, arg->envp) == -1)
-		print_error(4, arg);
-}
-
-static void	last_parent(t_arg *arg, int idx)
-{
-	if (!arg->cmd[idx]->cmd_path)
-		arg->is_error = 3;
-	if (execve(arg->cmd[idx]->cmd_path, \
-				arg->cmd[idx]->cmd_str, arg->envp) == -1)
-	{
-		if (arg->is_error == 3)
-			print_error(3, arg);
-		print_error(4, arg);
-	}
-}
-
-void	pipe_last(t_arg *arg, int idx, int fdin, int fdout)
+void	pipe_in(t_arg *arg, int idx, int fdin)
 {
 	int		fd[2];
+	int		status;
 	pid_t	pid;
 
 	if (pipe(fd) == -1)
-		print_error(5, arg);
+	{
+		write(2, "PIPE Error\n", 11);
+		exit(1);
+	}
 	pid = fork();
-	if (pid == -1)
-		print_error(7, arg);
+
 	if (pid == 0)
 	{
 		close(fd[0]);
-		dup_check(fd[1], 1, arg);
+		dup2(fd[1], 1);
 		if (fdin == 0)
 			exit(1);
-		last_child(arg, idx);
+		if (!arg->cmd[idx]->cmd_path)
+			exit(1);
+		if (execve(arg->cmd[idx]->cmd_path, arg->cmd[idx]->cmd_str, arg->envp) == -1)
+			print_error(4, arg);
 	}
 	else
 	{
 		close(fd[1]);
-		dup_check(fd[0], 0, arg);
-		dup_check(fdout, 1, arg);
-		waitpid(pid, NULL, WNOHANG);
-		last_parent(arg, ++idx);
+		dup2(fd[0], 0);
+		waitpid(pid, &status, WNOHANG);
 	}
 }
 
-void	pipe_in(t_arg *arg, int idx, int fdin)
+void	pipe_in_last(t_arg *arg, int idx)
 {
 	int		fd[2];
+	int		status;
 	pid_t	pid;
+	int		temp = -1;
 
 	if (pipe(fd) == -1)
-		print_error(5, arg);
+	{
+		write(2, "PIPE Error\n", 11);
+		exit(1);
+	}
 	pid = fork();
-	if (pid == -1)
-		print_error(7, arg);
 	if (pid == 0)
 	{
 		close(fd[0]);
-		dup_check(fd[1], 1, arg);
-		if (fdin == 0)
-			exit(1);
 		if (!arg->cmd[idx]->cmd_path)
 			print_error(3, arg);
-		if (execve(arg->cmd[idx]->cmd_path, \
-					arg->cmd[idx]->cmd_str, arg->envp) == -1)
+		if (execve(arg->cmd[idx]->cmd_path, arg->cmd[idx]->cmd_str, arg->envp) == -1)
 			print_error(4, arg);
 	}
-	close(fd[1]);
-	dup_check(fd[0], 0, arg);
-	waitpid(pid, 0, WNOHANG);
+	else
+	{
+		close(fd[1]);
+		close(fd[0]);
+		waitpid(pid, &status, 0);
+		free_all(arg);
+		if (WIFSIGNALED(status))
+			exit(WTERMSIG(status));
+	}
 }
+
+//norm 정리
+//자식에서 print_error하는거 부모에서 하는걸로 바꿔주기
