@@ -6,11 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:45:42 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/19 00:15:11 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/21 12:43:22 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "philosopher_bonus.h"
 
 void	taken_fork(t_ph_data *ph_data)
 {
@@ -26,7 +26,6 @@ void	taken_fork(t_ph_data *ph_data)
 	}
 	cur_t = ft_time(ph_data);
 	printf("%d %d has taken a fork\n", cur_t, ph_data->ph_num + 1);
-	sem_post(ph_data->ph_rule->print_lock);
 }
 
 void	eating(t_ph_data *ph_data)
@@ -34,7 +33,6 @@ void	eating(t_ph_data *ph_data)
 	int	cur_t;
 	int	eating_t;
 
-	sem_wait(ph_data->ph_rule->print_lock);
 	if (eat_count(ph_data))
 	{
 		sem_post(ph_data->ph_rule->print_lock);

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher.h                                      :+:      :+:    :+:   */
+/*   philosopher_bonus.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 23:26:21 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/19 13:58:47 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/21 12:50:52 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHER_H
-# define PHILOSOPHER_H
+#ifndef PHILOSOPHER_BONUS_H
+# define PHILOSOPHER_BONUS_H
 
 # include <stdlib.h>
 # include <pthread.h>
@@ -19,29 +19,29 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <semaphore.h>
-# include <fcntl.h>
 # include <signal.h>
 
 typedef struct s_philo_rule
 {
-	int		numofph;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		musteat;
-	int		fullph;
-	int		isph_die;
-	pid_t	*pid_fork;
-	sem_t	*fork;
-	sem_t	*print_lock;
-	sem_t	*isfull;
-	sem_t	*end;
+	int				numofph;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				musteat;
+	int				fullph;
+	int				isph_die;
+	struct timeval	base_time;
+	pid_t			*pid_fork;
+	sem_t			*fork;
+	sem_t			*print_lock;
+	sem_t			*isfull;
+	sem_t			*end;
 }	t_ph_rule;
 
 typedef struct s_ph_data
 {
 	t_ph_rule		*ph_rule;
-	struct timeval	base_time;
+
 	int				ph_dead;
 	int				ph_num;
 	int				eat_num;

@@ -6,22 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:56:56 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/19 00:21:11 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/21 12:50:45 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
-
-/*
-static int	check_musteat(t_ph_data *ph_data)
-{
-	if (!(ph_data->ph_rule->musteat == -1) && \
-	ph_data->eat_num >= ph_data->ph_rule->musteat)
-		return (1);
-	else
-		return (0);
-}
-*/
+#include "philosopher_bonus.h"
 
 void	*philo_action(void *arg)
 {
@@ -52,25 +41,13 @@ void	free_all(t_ph_rule *ph_rule)
 	free(ph_rule);
 }
 
-/*
-void	kill_process(t_ph_rule *ph_rule)
-{
-	int	idx;
-
-	idx = -1;
-	while (++idx < ph_rule->numofph)
-		kill(ph_rule->pid_fork[idx], SIGKILL);
-	free(ph_rule->pid_fork);
-}
-*/
-
 void	kill_process(t_ph_rule *ph_rule, pid_t *pid_fork)
 {
 	int	idx;
 
 	idx = -1;
 	while (++idx < ph_rule->numofph)
-		kill(pid_fork[idx], SIGKILL);
+		kill(pid_fork[idx], SIGTERM);
 	free(pid_fork);
 }
 

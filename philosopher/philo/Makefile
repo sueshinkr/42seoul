@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/08/18 11:42:15 by sueshin          ###   ########.fr        #
+#    Updated: 2022/08/21 12:29:27 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,11 +28,9 @@ all : $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFALGS) -o $(NAME) $(OBJS) -lpthread
-#	$(CC) $(CFALGS) -o $(NAME) $(OBJS) -lpthread -fsanitize=address -static-libasan
 
 %.o : %.c
 	$(CC) $(CFLAGS) -I$(INCS_DIR) -c -o $@ $<
-#	$(CC) $(CFLAGS) -fsanitize=address -g -I$(INCS_DIR) -c -o $@ $<
 
 clean :
 	rm -f $(OBJS) $(BONUS_OBJS)

@@ -6,11 +6,11 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2022/08/18 16:02:23 by sueshin          ###   ########.fr        #
+#    Updated: 2022/08/21 12:30:21 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
+NAME = philo_bonus
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 AR = ar rcs
@@ -28,11 +28,9 @@ all : $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFALGS) -o $(NAME) $(OBJS) -lpthread
-#	$(CC) $(CFALGS) -o $(NAME) $(OBJS) -lpthread -fsanitize=address -static-libasan
 
 %.o : %.c
 	$(CC) $(CFLAGS) -I$(INCS_DIR) -c -o $@ $<
-#	$(CC) $(CFLAGS) -fsanitize=address -g -I$(INCS_DIR) -c -o $@ $<
 
 clean :
 	rm -f $(OBJS) $(BONUS_OBJS)

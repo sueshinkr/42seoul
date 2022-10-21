@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 11:55:33 by sueshin           #+#    #+#             */
-/*   Updated: 2022/07/26 17:03:09 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/21 12:59:14 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,8 @@ void	pipe_in(t_arg *arg, int idx, int fdin)
 		if (execve(arg->cmd[idx]->cmd_path, \
 					arg->cmd[idx]->cmd_str, arg->envp) == -1)
 			print_error(4, arg);
-		return ;
 	}
 	close(fd[1]);
 	dup_check(fd[0], 0, arg);
-	waitpid(pid, NULL, WNOHANG);
+	waitpid(pid, 0, WNOHANG);
 }

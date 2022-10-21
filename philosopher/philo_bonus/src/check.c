@@ -6,11 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 19:38:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/08/19 00:21:10 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/08/21 12:43:23 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "philosopher_bonus.h"
 
 int	eat_count(t_ph_data *ph_data)
 {
@@ -26,21 +26,21 @@ static void	print_death(t_ph_data *ph_data)
 	sem_wait(ph_data->ph_rule->print_lock);
 	printf("%d %d is died\n", ft_time(ph_data), ph_data->ph_num + 1);
 	sem_post(ph_data->ph_rule->end);
-	usleep(100);
-	sem_post(ph_data->ph_rule->print_lock);
 }
 
 void	*death_check(void *arg)
 {
 	t_ph_data	*ph_data;
+	int			flag;
 
+	flag = 0;
 	ph_data = (t_ph_data *)arg;
 	while (1)
 	{	
-		if (eat_count(ph_data))
+		if (eat_count(ph_data) && flag == 0)
 		{
 			sem_post(ph_data->ph_rule->isfull);
-			return (0);
+			flag = 1;
 		}
 		if (ft_time(ph_data) - ph_data->last_eating_t >= \
 		ph_data->ph_rule->time_to_die)
