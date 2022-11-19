@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include <termios.h>
 
+#include <stdlib.h>
+#include "minishell.h"
+
 void sig_handler(int signum)
 {
     if (signum != SIGINT)
@@ -43,12 +46,14 @@ int main(int argc, char **argv, char **envp)
         {
             add_history(line);
             // 여기서 파싱하고 저장하면 될듯
+
+            init_tree(line);
             free(line);
             line = NULL;
         }
         else
         {
-            printf("\033[1A");
+            ///printf("\033[1A");
             //printf("\033[11C");
             //printf("exit\n");
             exit(-1);
