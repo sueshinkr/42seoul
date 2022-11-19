@@ -1,5 +1,4 @@
 #include "ft_printf.h"
-#include "libft.h"
 
 int	cal_count(long long n)
 {
@@ -8,12 +7,44 @@ int	cal_count(long long n)
 	count = 0;
 	if (n == 0)
 		count++;
+	else if (n < 0)
+	{
+		count++;
+		n *= -1;
+	}
 	while (n > 0)
 	{
 		n /= 10;
 		count++;
 	}
 	return (count);
+}
+
+char	*ft_itoa(int n)
+{
+	char		*str;
+	int			count;
+	long long	nb;
+
+	nb = n;
+	count = cal_count(nb);
+	str = (char *)malloc((count + 1) * sizeof(char));
+	*(str + count) = 0;
+	if (!str)
+		return (NULL);
+	if (n < 0)
+	{
+		*str = '-';
+		nb = nb * -1;
+	}
+	if (n == 0)
+		*str = '0';
+	while (nb > 0)
+	{
+		*(str + --count) = nb % 10 | '0';
+		nb /= 10;
+	}
+	return (str);
 }
 
 char	*ft_uitoa(unsigned int n)
