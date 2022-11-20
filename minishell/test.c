@@ -63,3 +63,6 @@ int main(int argc, char **argv, char **envp)
 }
 
 //gcc -I/Users/sueshin/.brew/Cellar/readline/8.2.1/include -L/Users/sueshin/.brew/Cellar/readline/8.2.1/lib -lreadline test.c
+
+// <a < b cat >c | echo "abc"
+// ls -a -l >> a < b > c | grep "" | cat << x > y

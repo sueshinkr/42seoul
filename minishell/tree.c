@@ -250,7 +250,21 @@ void init_tree(char *line)
 	head->level = 0;
 
 	make_tree(line, head);
-	search_tree(head);
+	//search_tree(head);
 
-	//print_tree(head);
+	print_tree(head);
 }
+
+/*
+// 따옴표 벗겨내는 작업 필요
+char* set_text(char *str)
+{
+	int	idx;
+
+	idx = -1;
+	while (str[++idx])
+	{
+		if (str[idx])
+	}
+}
+*/
