@@ -1,151 +1,31 @@
-#include <string.h>
-#include <stdlib.h>
-#include <printf.h>
-#include <unistd.h>
-#include <fcntl.h>
-
-enum TYPE {WORD, PIPE, CMD, SCMD, RDIRS, RDIR};
+#include "minishell.h"
 
 char *arr[] = {"WORD", "PIPE", "CMD", "SCMD", "RDIRS", "RDIR"};
 
-typedef struct Node
-{
-	enum TYPE type;
-	struct Node *left;
-	struct Node *right;
-	char *node_str;
-
-	int level;
-} node;
-
-char*	str_cut_front(char *str, int idx)
-{
-	char *tmp;
-
-	tmp = malloc((idx + 1) * sizeof(char));
-	strlcpy(tmp, str, idx);
-	tmp[idx] = '\0';
-	return tmp;
-}
-
-char*	str_cut_back(char *str, int idx)
-{
-	char *tmp;
-	int	len = strlen(str);
-
-	tmp = malloc((len - idx) * sizeof(char));
-	strlcpy(tmp, str + idx + 1, len - idx);
-	return tmp;
-}
-
-void make_tree(char *str, node *n)
+void	make_tree(char *str, node *n)
 {
 	int idx = -1;
 	int check = 0;
 
-	n->node_str = str;
-	if (n->type == SCMD)
+	printf("::: str : %s\n", str);
+	if(!str)
+	{
+		printf("null\n");
 		return ;
+	}
+	n->node_str = str;
 
 	while(str[++idx])
 	{
-		if (str[idx] == '|')
-		{
-			n->type = PIPE;
-			n->left = malloc(sizeof(node));
-			n->left->type = CMD;
-			n->left->level = n->level + 1;
-			make_tree(str_cut_front(str, idx), n->left);
-
-			n->right = malloc(sizeof(node));
-			n->right->level = n->level + 1;
-			make_tree(str_cut_back(str, idx), n->right);
-
+		if (case_pipe(str, n, idx))
 			return ;
-		}
-
-		if (n->type == CMD && strchr("<>", str[idx]))
-		{
-			while (str[++idx])
-			{
-				if (check == 0 && !strchr("<> ", str[idx]))
-					check = 1;
-				else if (check == 1 && strchr("<>", str[idx]))
-					check = 0;
-				else if (check == 1 && !strchr("<> ", str[idx]))
-				{
-					n->left = malloc(sizeof(node));
-					n->left->type = RDIR;
-					n->left->level = n->level + 1;
-					make_tree(str_cut_front(str, idx), n->left);
-
-					n->right = malloc(sizeof(node));
-					n->right->type = CMD;
-					n->right->level = n->level + 1;
-					make_tree(str_cut_back(str, idx - 1), n->right);
-
-					return ;
-				}
-			}
-		}
-
-		if (n->type == CMD && !strchr("<> ", str[idx]))
-		{
-			while (str[++idx])
-			{
-				if (strchr("<>", str[idx]))
-				{
-					n->left = malloc(sizeof(node));
-					n->left->type = RDIR;
-					n->left->level = n->level + 1;
-					make_tree(str_cut_back(str, idx - 1), n->left);
-
-					n->right = malloc(sizeof(node));
-					n->right->type = SCMD;
-					n->right->level = n->level + 1;
-					make_tree(str_cut_front(str, idx), n->right);
-
-					return ;
-				}
-			}
-
-			n->right = malloc(sizeof(node));
-			n->right->type = SCMD;
-			n->right->level = n->level + 1;
-			make_tree(str, n->right);
-
+		if (case_cmd(str, n, idx))
 			return ;
-		}
-
-		if (n->type == RDIR && strchr("<>", str[idx]))
-		{
-			while(str[++idx])
-			{
-				if (strchr("<>", str[idx]) && str[idx] != str[idx - 1])
-				{
-					n->type = RDIRS;
-
-					n->left = malloc(sizeof(node));
-					n->left->type = RDIR;
-					n->left->level = n->level + 1;
-					make_tree(str_cut_front(str, idx), n->left);
-
-					n->right = malloc(sizeof(node));
-					n->right->type = RDIR;
-					n->right->level = n->level + 1;
-					make_tree(str_cut_back(str, idx - 1), n->right);
-
-					return ;
-				}
-			}
-
+		if (case_rdir(str, n, idx))
 			return ;
-		}
 	}
-
 	n->type = CMD;
 	make_tree(str, n);
-
 }
 
 // <a < b cat >c | echo "abc"
@@ -168,7 +48,6 @@ void	print_tree(node *n)
 // RDIR이면 dup하고, SCMD면 빌트인찾거나 exec하고
 // 맨밑단은 저거 두개밖에 없으니 저것만 만들면 되나?
 // PIPE는 작동을 어케하더라
-
 
 void set_RDIR(node *n)
 {
@@ -222,7 +101,6 @@ void set_RDIR(node *n)
 			; // 에러
 	}
 	*/
-
 }
 
 void	search_tree(node *n)
@@ -236,11 +114,17 @@ void	search_tree(node *n)
 		;
 	else if (n->type == RDIR)
 	{
+		decode_text(n->node_str);
 		printf("::%s\n", n->node_str);
 		set_RDIR(n);
 	}
 	else if (n->type == SCMD)
-		;
+	{
+		printf("SCMD::::\n");
+		printf("str::%s\n", n->node_str);
+		decode_text(n->node_str);
+		printf("::%s\n", n->node_str);
+	}
 	
 }
 
@@ -249,22 +133,17 @@ void init_tree(char *line)
 	node *head = malloc(sizeof(node));
 	head->level = 0;
 
-	make_tree(line, head);
-	//search_tree(head);
+	char *temp;
 
+	temp = set_text(line);
+	decode_text(temp);
+	printf("... %s\n", temp);
+
+	make_tree(temp, head);
+	printf("after make\n");
 	print_tree(head);
-}
+	printf("after print\n");
+	search_tree(head);
 
-/*
-// 따옴표 벗겨내는 작업 필요
-char* set_text(char *str)
-{
-	int	idx;
-
-	idx = -1;
-	while (str[++idx])
-	{
-		if (str[idx])
-	}
+	//
 }
-*/

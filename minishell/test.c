@@ -1,12 +1,3 @@
-#include <signal.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <termios.h>
-
-#include <stdlib.h>
 #include "minishell.h"
 
 void sig_handler(int signum)
@@ -24,6 +15,16 @@ void set_signal()
 {
     signal(SIGINT, sig_handler);
     //signal(SIGQUIT, SIG_IGN);
+}
+
+int check_empty(char *str)
+{
+    while (*str)
+    {
+        if (*str++ != ' ')
+            return (0);
+    }
+    return (1);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -45,8 +46,8 @@ int main(int argc, char **argv, char **envp)
         if (line)
         {
             add_history(line);
-            // 여기서 파싱하고 저장하면 될듯
-
+            if (check_empty(line))
+                continue;
             init_tree(line);
             free(line);
             line = NULL;
@@ -62,7 +63,7 @@ int main(int argc, char **argv, char **envp)
     return (0);
 }
 
-//gcc -I/Users/sueshin/.brew/Cellar/readline/8.2.1/include -L/Users/sueshin/.brew/Cellar/readline/8.2.1/lib -lreadline test.c
+//gcc -I/Users/sueshin/.brew/Cellar/readline/8.2.1/include -L/Users/sueshin/.brew/Cellar/readline/8.2.1/lib -lreadline test.c tree.c text.c util.c tree_case.c
 
 // <a < b cat >c | echo "abc"
 // ls -a -l >> a < b > c | grep "" | cat << x > y
