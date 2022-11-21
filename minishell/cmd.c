@@ -89,6 +89,27 @@ void do_exec(node *n, char *cmd_path, char **cmd_str, char **env)
 	waitpid(pid, NULL, 0);
 }
 
+void	pipe_in(node *n, char *cmd_path, char **cmd_str, char **env)
+{
+	int		fd[2];
+	pid_t	pid;
+
+	if (pipe(fd) == -1)
+		printf("pipe error\n");
+	pid = fork();
+	if (pid == -1)
+		printf("error\n");
+	if (pid == 0)
+	{
+		close(fd[0]);
+		dup2(fd[1], 1);
+		execve(cmd_path, cmd_str, env);
+	}
+	close(fd[1]);
+	dup2(fd[0], 0);
+	waitpid(pid, NULL, 0);
+}
+
 char	**make_env(t_data * data)
 {
 	int		len;
@@ -146,5 +167,7 @@ void	set_scmd(t_data *data, node *n)
 		env = make_env(data);
 		if (n->pipe < 1)
 			do_exec(n, cmd_path, cmd_str, env);
+		else
+			pipe_in(n, cmd_path, cmd_str, env);
 	}
 }

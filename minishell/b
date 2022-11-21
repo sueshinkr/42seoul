@@ -1,20 +1,15 @@
-.
-..
-a
-a.out
+aaaa
+bbbb
+cccca
 b
-cmd.c
-minishell.h
-rdir.c
-test.c
-text.c
-tree.c
-tree_case.c
-util.c
-util2.c
-[?2004hMINISHELL$ 
-[?2004l[?2004hMINISHELL$ 
-[?2004l[?2004hMINISHELL$ [?2004lMINISHELL$ 
-MINISHELL$ [?2004h[?2004lMINISHELL$ 
-MINISHELL$ [?2004h[?2004lMINISHELL$ 
-MINISHELL$ [?2004h[?2004l
+c
+a
+MINISHELL$ 
+MINISHELL$ aaaa
+bbbb
+cccca
+b
+c
+a
+MINISHELL$ 
+MINISHELL$ 

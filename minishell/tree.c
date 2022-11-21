@@ -117,5 +117,12 @@ void init_tree(char *line, char **envp)
 	make_tree(temp, head);
 	free(temp);
 	
+	int fdin;
+	int fdout;
+
+	fdin = dup(0);
+	fdout = dup(1);
 	search_tree(data, head);
+	dup2(fdin, 0);
+	dup2(fdout, 1);
 }

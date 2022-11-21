@@ -39,6 +39,24 @@ typedef struct s_data
 	t_list	*env;
 } t_data;
 
+# define BUFFER_SIZE 1
+
+typedef struct s_list_gnl
+{
+	char				*str;
+	int					fd;
+	int					flag;
+	struct s_list_gnl	*next;
+}	t_list_gnl;
+
+char		*get_next_line(int fd);
+t_list_gnl	*add_fd_remain(t_list_gnl *remain, int fd);
+size_t		ft_strlen_gnl(const char *str);
+char		*ft_strchr_gnl(const char *str, int c);
+char		*ft_strdup_gnl(const char *src);
+char		*ft_strjoin_gnl(char *str1, char *str2);
+
+
 
 node	*init_node(node *n);
 void	init_tree(char *line, char **envp);

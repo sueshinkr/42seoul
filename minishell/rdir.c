@@ -1,5 +1,48 @@
 #include "minishell.h"
 
+void	get_input(int fd[2], char *file)
+{
+	char	*str;
+
+	close(fd[0]);
+	dup2(fd[1], 1);
+	while (1)
+	{
+		str = get_next_line(0);
+		if (strncmp(file, str, strlen(file)) == 0)
+		{
+			free(str);
+			break;
+		}
+		else
+		{
+			write(1, str, strlen(str));
+			free(str);
+		}
+	}
+	return ;
+}
+
+void	read_arg(char *file)
+{
+	int		fd[2];
+	pid_t	pid;
+
+	if (pipe(fd) == -1)
+		printf("pipe error\n");
+	pid = fork();
+	if (pid == -1)
+		printf("error\n");
+	if (pid == 0)
+	{
+		get_input(fd, file);
+		exit(0);
+	}
+	close(fd[1]);
+	dup2(fd[0], 0);
+	waitpid(pid, NULL, 0);
+}
+
 void set_rdir(node *n)
 {
 	char	*rdir;
@@ -27,7 +70,7 @@ void set_rdir(node *n)
 	}
 	else if (!strcmp(rdir, "<<"))
 	{
-		;
+		read_arg(file);
 	}
 	else if (!strcmp(rdir, ">"))
 	{

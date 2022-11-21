@@ -27,7 +27,7 @@ int	case_cmd(char *str, node *n, int idx)
 	{
 		while (str[++idx])
 		{
-			if (strchr("<>", str[idx]))
+			if (strchr("<>", str[idx]) && str[idx - 1] != -1)
 			{
 				case_cmd_rdir(str, n, idx);
 				return (1);
