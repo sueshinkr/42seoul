@@ -50,21 +50,27 @@ static char	*check_slash(char *path, char *cmd)
 char	*check_path(t_list *env, char *cmd)
 {
 	char	*str;
-
+	char	**path;
 	while (env->str)
 	{
-		str = check_slash(env->str, cmd);
-		printf("str : %s\n", str);
+		if (!strncmp(env->str, "PATH=", 5))
+			path = ft_split(env->str + 5, ':');
+		env = env->next;
+	}
+
+	while (*path)
+	{
+		str = check_slash(*path, cmd);
 		if (!access(str, F_OK))
 			return (str);
 		else
 			free(str);
-		env = env->next;
+		path++;
 	}
 	return (NULL);
 }
 
-void pipe_in(node *n, char *cmd_path, char **cmd_str, char **env)
+void do_exec(node *n, char *cmd_path, char **cmd_str, char **env)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -77,12 +83,10 @@ void pipe_in(node *n, char *cmd_path, char **cmd_str, char **env)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		dup2(fd[1], 1);
 		execve(cmd_path, cmd_str, env);
 	}
 	close(fd[1]);
-	dup2(fd[0], 0);
-	waitpid(pid, NULL, WNOHANG);
+	waitpid(pid, NULL, 0);
 }
 
 char	**make_env(t_data * data)
@@ -135,11 +139,12 @@ void	set_scmd(t_data *data, node *n)
 	{
 		cmd_path = check_path(data->env, cmd_str[0]);
 		if (!cmd_path)
+		{
 			printf("cmd error\n");
-		printf("??\n");
+			return ;
+		}
 		env = make_env(data);
-		//if (n->pipe > 1)
-		printf("pipe!\n");
-		pipe_in(n, cmd_path, cmd_str, env);
+		if (n->pipe < 1)
+			do_exec(n, cmd_path, cmd_str, env);
 	}
 }

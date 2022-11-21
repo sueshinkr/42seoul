@@ -13,7 +13,7 @@ void set_rdir(node *n)
 	rdir = str_cut_front(n->node_str, idx + 1);
 	file = str_cut_back(n->node_str, idx - 1);
 
-	printf("rdir:%s, file :%s!\n", rdir, file);
+	//printf("rdir:%s, file :%s!\n", rdir, file);
 
 	if (!strcmp(rdir, "<"))
 	{

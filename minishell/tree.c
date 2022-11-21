@@ -73,16 +73,16 @@ void	search_tree(t_data *data, node *n)
 		;
 	else if (n->type == RDIR)
 	{
-		printf("::::RDIR::::\n");
-		decode_text(n->node_str);
-		printf("::%s\n", n->node_str);
-		//set_rdir(n);
+		//printf("::::RDIR::::\n");
+		//decode_text(n->node_str);
+		//printf("::%s\n", n->node_str);
+		set_rdir(n);
 	}
 	else if (n->type == SCMD)
 	{
 		// 빌트인인지 아닌지 구분
 		// 아니면 명령어 경로 찾아서 exec
-		printf("::::SCMD::::\n");
+		//printf("::::SCMD::::\n");
 		set_scmd(data, n);
 	}
 }
