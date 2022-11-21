@@ -65,7 +65,7 @@ char	*interpret_dollar(char *str, char *ret, int *idx)
 	{
 		while (str[++(*idx)] && !strchr(" \"\'", str[*idx]))
 			;
-		return ret;
+		return (ret);
 	}
 	ret = ft_strjoin(ret, temp, strlen(temp));
 	while (str[++(*idx)] && !strchr(" \"\'", str[*idx]))

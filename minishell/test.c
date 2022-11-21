@@ -48,7 +48,7 @@ int main(int argc, char **argv, char **envp)
             add_history(line);
             if (check_empty(line))
                 continue;
-            init_tree(line);
+            init_tree(line, envp);
             free(line);
             line = NULL;
         }
@@ -63,7 +63,8 @@ int main(int argc, char **argv, char **envp)
     return (0);
 }
 
-//gcc -I/Users/sueshin/.brew/Cellar/readline/8.2.1/include -L/Users/sueshin/.brew/Cellar/readline/8.2.1/lib -lreadline test.c tree.c text.c util.c tree_case.c
+//gcc -I/Users/sueshin/.brew/Cellar/readline/8.2.1/include -L/Users/sueshin/.brew/Cellar/readline/8.2.1/lib -lreadline test.c tree.c text.c util.c util2.c tree_case.c rdir.c cmd.c -fsanitize=address
 
 // <a < b cat >c | echo "abc"
 // ls -a -l >> a < b > c | grep "" | cat << x > y
+// cat cmd.c | abc  <a >> b | grep 'es" > c

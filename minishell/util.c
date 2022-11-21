@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char*	str_cut_front(char *str, int idx)
+char	*str_cut_front(char *str, int idx)
 {
 	char	*tmp;
 
@@ -12,20 +12,22 @@ char*	str_cut_front(char *str, int idx)
 	tmp = malloc((idx + 1) * sizeof(char));
 	strlcpy(tmp, str, idx);
 	tmp[idx] = '\0';
-	return tmp;
+	return (tmp);
 }
 
-char*	str_cut_back(char *str, int idx)
+char	*str_cut_back(char *str, int idx)
 {
 	char	*tmp;
 	int		len;
-	
+
 	while (*(str + idx + 1) == ' ')
 		idx++;
 	len = strlen(str);
+	while (*(str + len - 1) == ' ')
+		len--;
 	tmp = malloc((len - idx) * sizeof(char));
 	strlcpy(tmp, str + idx + 1, len - idx);
-	return tmp;
+	return (tmp);
 }
 
 char	*ft_strjoin(char *str1, char *str2, int len)

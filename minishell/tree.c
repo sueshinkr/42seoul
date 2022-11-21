@@ -2,20 +2,33 @@
 
 char *arr[] = {"WORD", "PIPE", "CMD", "SCMD", "RDIRS", "RDIR"};
 
+node	*init_node(node *n)
+{
+	node *new = (node *)malloc(sizeof(node));
+	new->type = WORD;
+	if (n)
+	{
+		new->pipe = n->pipe;
+		new->level = n->level + 1;
+	}
+	else
+	{
+		new->pipe = 0;
+		new->level = 0;
+	}
+	new->left = NULL;
+	new->right = NULL;
+	new->node_str = NULL;
+	return (new);
+}
+
 void	make_tree(char *str, node *n)
 {
-	int idx = -1;
-	int check = 0;
+	int	idx;
 
-	printf("::: str : %s\n", str);
-	if(!str)
-	{
-		printf("null\n");
-		return ;
-	}
+	idx = -1;
 	n->node_str = str;
-
-	while(str[++idx])
+	while (str[++idx])
 	{
 		if (case_pipe(str, n, idx))
 			return ;
@@ -24,12 +37,12 @@ void	make_tree(char *str, node *n)
 		if (case_rdir(str, n, idx))
 			return ;
 	}
-	n->type = CMD;
-	make_tree(str, n);
+	if (n->type == WORD)
+	{
+		n->type = CMD;
+		make_tree(str, n);
+	}
 }
-
-// <a < b cat >c | echo "abc"
-// ls -a -l >> a < b > c | grep "" | cat << x > y
 
 void	print_tree(node *n)
 {
@@ -39,8 +52,9 @@ void	print_tree(node *n)
 		print_tree(n->right);
 
 	printf("==============\n");
+	decode_text(n->node_str);
 	printf("%s\n", n->node_str);
-	printf("type : %s\n", arr[n->type]);
+	printf("type : %s\n", arr[n->type]); 
 	printf("level : %d\n", n->level);
 }
 
@@ -49,101 +63,59 @@ void	print_tree(node *n)
 // 맨밑단은 저거 두개밖에 없으니 저것만 만들면 되나?
 // PIPE는 작동을 어케하더라
 
-void set_RDIR(node *n)
-{
-	char	*rdir;
-	char	*file;
-	int		fd;
-	int		idx = -1;
-	// < 분리
-
-	while (strchr("<>", n->node_str[++idx]))
-		;
-	rdir = str_cut_front(n->node_str, idx + 1);
-	while (n->node_str[idx] == ' ')
-		idx++;
-	file = str_cut_back(n->node_str, idx - 1);
-
-
-	printf("rdir:%s, file :%s!\n", rdir, file);
-/*
-	if (strcmp(rdir, "<"))
-	{
-		if (access(file, F_OK) == -1)
-			; // 에러
-		fd = open(file, O_RDONLY);
-		if (fd < 0)
-			; // 에러
-		if (dup2(fd, 0) == -1)
-			; // 에러
-	}
-	else if (strcmp(rdir, "<<"))
-	{
-		;
-	}
-	else if (strcmp(rdir, ">"))
-	{
-		//fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (fd < 0)
-			; // 에러
-		if (dup2(fd, 1) == -1)
-			; // 에러
-	}
-	else if (strcmp(rdir, ">>"))
-	{
-		if (access(file, F_OK) == -1)
-			; //fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		else
-			; //fd = open(file, O_RDWR | O_APPEND, 0644);
-		if (fd < 0)
-			; // 에러
-		if (dup2(fd, 1) == -1)
-			; // 에러
-	}
-	*/
-}
-
-void	search_tree(node *n)
+void	search_tree(t_data *data, node *n)
 {
 	if (n->left)
-		search_tree(n->left);
+		search_tree(data, n->left);
 	if (n->right)
-		search_tree(n->right);
-
+		search_tree(data, n->right);
 	if (n->type == PIPE)
 		;
 	else if (n->type == RDIR)
 	{
+		printf("::::RDIR::::\n");
 		decode_text(n->node_str);
 		printf("::%s\n", n->node_str);
-		set_RDIR(n);
+		//set_rdir(n);
 	}
 	else if (n->type == SCMD)
 	{
-		printf("SCMD::::\n");
-		printf("str::%s\n", n->node_str);
-		decode_text(n->node_str);
-		printf("::%s\n", n->node_str);
+		// 빌트인인지 아닌지 구분
+		// 아니면 명령어 경로 찾아서 exec
+		printf("::::SCMD::::\n");
+		set_scmd(data, n);
 	}
-	
 }
 
-void init_tree(char *line)
+void	make_list(t_list *env, char **envp)
 {
-	node *head = malloc(sizeof(node));
-	head->level = 0;
+	int	idx;
+
+	idx = -1;
+	while (envp[++idx])
+	{
+		env->str = strdup(envp[idx]);
+		env->next = malloc(sizeof(t_list));
+		env = env->next;
+	}
+}
+
+void init_tree(char *line, char **envp)
+{
+	t_data	*data = malloc(sizeof(t_data));
+	t_list	*env = malloc(sizeof(t_list));
+	make_list(env, envp);
+
+	node *head = init_node(NULL);
+
+	data->env = env;
+	data->head = head;
 
 	char *temp;
 
 	temp = set_text(line);
-	decode_text(temp);
-	printf("... %s\n", temp);
-
 	make_tree(temp, head);
-	printf("after make\n");
-	print_tree(head);
-	printf("after print\n");
-	search_tree(head);
-
-	//
+	free(temp);
+	
+	search_tree(data, head);
 }
