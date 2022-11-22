@@ -63,7 +63,7 @@ int main(int argc, char **argv, char **envp)
     return (0);
 }
 
-//gcc -I/Users/sueshin/.brew/Cellar/readline/8.2.1/include -L/Users/sueshin/.brew/Cellar/readline/8.2.1/lib -lreadline test.c tree.c text.c util.c util2.c tree_case.c rdir.c cmd.c get_next_line_bonus.c get_next_line_utils_bonus.c -fsanitize=address
+//gcc -I/Users/sueshin/goinfre/.brew/Cellar/readline/8.2.1/include -L/Users/sueshin/.brew/Cellar/readline/8.2.1/lib -lreadline test.c tree.c text.c util.c util2.c tree_case.c rdir.c cmd.c get_next_line_bonus.c get_next_line_utils_bonus.c builtin.c -fsanitize=address
 
 // <a < b cat >c | echo "abc"
 // ls -a -l >> a < b > c | grep "" | cat << x > y

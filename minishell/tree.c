@@ -90,14 +90,20 @@ void	search_tree(t_data *data, node *n)
 void	make_list(t_list *env, char **envp)
 {
 	int	idx;
+	int	idx2;
 
 	idx = -1;
 	while (envp[++idx])
 	{
-		env->str = strdup(envp[idx]);
+		idx2 = -1;
+		while (envp[idx][++idx2] != '=')
+			;
+		env->key = str_cut_front(envp[idx], idx2 + 1);
+		env->value = str_cut_back(envp[idx], idx2);
 		env->next = malloc(sizeof(t_list));
 		env = env->next;
 	}
+	env = NULL;
 }
 
 void init_tree(char *line, char **envp)

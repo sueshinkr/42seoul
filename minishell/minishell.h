@@ -12,16 +12,16 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <termios.h>
+#include <errno.h>
 
 enum TYPE {WORD, PIPE, CMD, SCMD, RDIRS, RDIR};
 
-
 typedef struct s_list
 {
-	char			*str;
+	char			*key;
+	char			*value;
 	struct s_list	*next;
-	// env 저장하는 리스트
-} t_list;
+}	t_list;
 
 typedef struct Node
 {
@@ -78,5 +78,13 @@ int		case_rdir(char *str, node *n, int idx);
 
 void	set_rdir(node *n);
 void	set_scmd(t_data *data, node *n);
+
+int	ft_cd(char **argvs);
+int	ft_echo(char **argvs);
+int	ft_env(char **argv, t_list *env);
+int	ft_export(char **argvs, t_list *env);
+int	ft_unset(char **argv, t_list *env);
+int	ft_pwd(char **argvs);
+int	ft_exit(char **argvs);
 
 #endif

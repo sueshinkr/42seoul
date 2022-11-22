@@ -51,10 +51,10 @@ char	*check_path(t_list *env, char *cmd)
 {
 	char	*str;
 	char	**path;
-	while (env->str)
+	while (env->key)
 	{
-		if (!strncmp(env->str, "PATH=", 5))
-			path = ft_split(env->str + 5, ':');
+		if (!strcmp(env->key, "PATH"))
+			path = ft_split(env->value, ':');
 		env = env->next;
 	}
 
@@ -110,7 +110,7 @@ void	pipe_in(node *n, char *cmd_path, char **cmd_str, char **env)
 	waitpid(pid, NULL, 0);
 }
 
-char	**make_env(t_data * data)
+char	**make_env(t_data *data)
 {
 	int		len;
 	t_list	*temp;
@@ -127,9 +127,11 @@ char	**make_env(t_data * data)
 	env = malloc((len + 1) * sizeof(char *));
 	temp = data->env;
 	idx = -1;
-	while (temp)
+	while (temp->key)
 	{
-		env[++idx] = strdup(data->env->str);
+		env[++idx] = strdup(temp->key);
+		env[idx] = ft_strjoin_pipex(env[idx], "=");
+		env[idx] = ft_strjoin_pipex(env[idx], temp->value);
 		temp = temp->next;
 	}
 	return (env);
@@ -143,19 +145,22 @@ void	set_scmd(t_data *data, node *n)
 
 	cmd_str = ft_split(n->node_str, ' ');
 	if (!strcmp(cmd_str[0], "echo"))
-		;
+	{
+		//printf("?echo?");
+		ft_echo(cmd_str);
+	}
 	else if (!strcmp(cmd_str[0], "cd"))
-		;
+		ft_cd(cmd_str);
 	else if (!strcmp(cmd_str[0], "pwd"))
-		;
+		ft_pwd(cmd_str);
 	else if (!strcmp(cmd_str[0], "export"))
-		;
+		ft_export(cmd_str, data->env);
 	else if (!strcmp(cmd_str[0], "unset"))
-		;
+		ft_unset(cmd_str, data->env);
 	else if (!strcmp(cmd_str[0], "env"))
-		;
+		ft_env(cmd_str, data->env);
 	else if (!strcmp(cmd_str[0], "exit"))
-		;
+		ft_exit(cmd_str);
 	else
 	{
 		cmd_path = check_path(data->env, cmd_str[0]);
