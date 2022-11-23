@@ -91,4 +91,7 @@ void set_rdir(node *n)
 		if (dup2(fd, 1) == -1)
 			printf("dup error\n");
 	}
+
+	free(rdir);
+	free(file);
 }

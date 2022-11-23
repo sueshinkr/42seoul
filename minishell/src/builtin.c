@@ -208,8 +208,8 @@ int	ft_export(char **argvs, t_data *data)
 			{
 				write(2, "export: `", strlen("export: `"));
 				write(2, argvs[idx], strlen(argvs[idx]));
-				write(2, "': not a valid identifier", \
-				strlen("': not a valid identifier"));
+				write(2, "': not a valid identifie\n", \
+				strlen("': not a valid identifier\n"));
 				ret = 1;
 			}
 			idx++;
@@ -298,6 +298,7 @@ int	is_numeric(char *s)
 			;
 		else
 			return (0);
+		idx++;
 	}
 	return (1);
 }
@@ -332,16 +333,18 @@ int	ft_exit(char **argvs)
 	printf("exit\n");
 	if (!argvs[1])
 		exit(0);
-	if (!is_numeric(argvs[2]))
+	
+	if (!is_numeric(argvs[1]))
 	{
-		write(2, "exit: numeric argument required", \
-		strlen("exit: numeric argument required"));
+		write(2, "exit: numeric argument required\n", \
+		strlen("exit: numeric argument required\n"));
 		return (1);
 	}
+
 	if (argvs[2])
 	{
-		write(2, "exit: too many arguments", \
-		strlen("exit: too many arguments"));
+		write(2, "exit: too many arguments\n", \
+		strlen("exit: too many arguments\n"));
 		return (1);
 	}
 	exit(ft_atoi(argvs[1]));

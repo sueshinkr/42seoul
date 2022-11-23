@@ -6,13 +6,13 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
-#    Updated: 2022/11/23 13:35:06 by sueshin          ###   ########.fr        #
+#    Updated: 2022/11/23 19:05:10 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g
 
 LIB_DIR = ./lib/
 LIB = $(LIB_DIR)libft.a

@@ -70,9 +70,9 @@ int main(int argc, char **argv, char **envp)
         line = readline("MINISHELL$ ");
         if (line)
         {
-            add_history(line);
             if (check_empty(line))
                 continue;
+            add_history(line);
             init_tree(line, data);
             free(line);
             line = NULL;
