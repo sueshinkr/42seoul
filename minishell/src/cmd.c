@@ -70,7 +70,7 @@ char	*check_path(t_list *env, char *cmd)
 	return (NULL);
 }
 
-void do_exec(node *n, char *cmd_path, char **cmd_str, char **env)
+void do_exec(char *cmd_path, char **cmd_str, char **env)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -89,7 +89,7 @@ void do_exec(node *n, char *cmd_path, char **cmd_str, char **env)
 	waitpid(pid, NULL, 0);
 }
 
-void	pipe_in(node *n, char *cmd_path, char **cmd_str, char **env)
+void	pipe_in(char *cmd_path, char **cmd_str, char **env)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -144,19 +144,17 @@ void	set_scmd(t_data *data, node *n)
 	char	**env;
 
 	cmd_str = ft_split(n->node_str, ' ');
+	
 	if (!strcmp(cmd_str[0], "echo"))
-	{
-		//printf("?echo?");
 		ft_echo(cmd_str);
-	}
 	else if (!strcmp(cmd_str[0], "cd"))
 		ft_cd(cmd_str);
 	else if (!strcmp(cmd_str[0], "pwd"))
 		ft_pwd(cmd_str);
 	else if (!strcmp(cmd_str[0], "export"))
-		ft_export(cmd_str, data->env);
+		ft_export(cmd_str, data);
 	else if (!strcmp(cmd_str[0], "unset"))
-		ft_unset(cmd_str, data->env);
+		ft_unset(cmd_str, data);
 	else if (!strcmp(cmd_str[0], "env"))
 		ft_env(cmd_str, data->env);
 	else if (!strcmp(cmd_str[0], "exit"))
@@ -171,8 +169,8 @@ void	set_scmd(t_data *data, node *n)
 		}
 		env = make_env(data);
 		if (n->pipe < 1)
-			do_exec(n, cmd_path, cmd_str, env);
+			do_exec(cmd_path, cmd_str, env);
 		else
-			pipe_in(n, cmd_path, cmd_str, env);
+			pipe_in(cmd_path, cmd_str, env);
 	}
 }

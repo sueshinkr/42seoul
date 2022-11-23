@@ -32,6 +32,7 @@ static void	write_str(char **argvs, int mode)
 		idx = 1;
 	else
 		idx = 2;
+
 	while (argvs[idx])
 	{
 		if (idx != mode)
@@ -46,7 +47,9 @@ static void	write_str(char **argvs, int mode)
 
 int	ft_echo(char **argvs)
 {
-	if (strcmp(argvs[1], "-n") == 0)
+	if (!argvs[1])
+		write(1, "\n", 1);
+	else if (strcmp(argvs[1], "-n") == 0)
 		write_str(argvs, 2);
 	else
 		write_str(argvs, 1);
@@ -103,6 +106,8 @@ char	*find_key(char *s)
 	idx = 0;
 	while (s[idx] != '=')
 		idx++;
+
+	return (str_cut_front(s, idx));
 	s[idx] = '\0';
 	return (ft_strdup(s));
 }
@@ -147,7 +152,7 @@ int	ft_env(char **argv, t_list *env)
 		strlen("No such file or directory\n"));
 		return (127);
 	}
-	while (env)
+	while (env->key)
 	{
 		if (env->value)
 			printf("%s=%s\n", env->key, env->value);
@@ -167,9 +172,7 @@ int	is_valid(char c)
 	return (0);
 }
 
-
-// value없이 key값만 넣는경우 고려해야할듯
-int	ft_export(char **argvs, t_list *env)
+int	ft_export(char **argvs, t_data *data)
 {
 	t_list	*node;
 	int		idx;
@@ -179,13 +182,13 @@ int	ft_export(char **argvs, t_list *env)
 	ret = 0;
 	if (!argvs[1])
 	{
-		while (env->key)
+		while (data->env->key)
 		{
-			if (env->value)
-				printf("declare -x %s=\"%s\"\n", env->key, env->value);
+			if (data->env->value)
+				printf("declare -x %s=\"%s\"\n", data->env->key, data->env->value);
 			else
-				printf("declare -x %s\n", env->key);
-			env = env->next;
+				printf("declare -x %s\n", data->env->key);
+			data->env = data->env->next;
 		}
 	}
 	else
@@ -194,12 +197,16 @@ int	ft_export(char **argvs, t_list *env)
 		{
 			if (is_valid(argvs[idx][0]))
 			{
-				node = ft_lstnew(find_key(argvs[idx]), find_val(argvs[idx]));
-				ft_lstadd_front(&env, node);
+				int idx2= 0;
+	
+				while (argvs[idx][idx2] != '=')
+					idx2++;
+				node = ft_lstnew(str_cut_front(argvs[idx], idx2 + 1), str_cut_back(argvs[idx], idx2));
+				ft_lstadd_front(&data->env, node);
 			}
 			else
 			{
-				write(2, "unset: `", strlen("unset: `"));
+				write(2, "export: `", strlen("export: `"));
 				write(2, argvs[idx], strlen(argvs[idx]));
 				write(2, "': not a valid identifier", \
 				strlen("': not a valid identifier"));
@@ -213,31 +220,47 @@ int	ft_export(char **argvs, t_list *env)
 
 void	ft_lstdel_value(t_list *lst, char *val)
 {
-	t_list	*prev;
+	t_list	*temp;
 
-	prev = NULL;
-	while (lst && strncmp(lst->key, val, strlen(val) + 1))
+	while (lst->next->key)
 	{
-		prev = lst;
-		lst = lst->next;
+		if (!strcmp(lst->next->key, val))
+		{
+			temp = lst->next;
+			lst->next = lst->next->next;
+			free(temp->key);
+			free(temp->value);
+			free(temp);
+			return ;
+		}
+		else
+			lst = lst->next;
 	}
-	prev->next = lst->next;
-	free(lst->key);
-	free(lst->value);
-	free(lst);
 }
 
-int	ft_unset(char **argv, t_list *env)
+int	ft_unset(char **argv, t_data *data)
 {
 	int	idx;
 	int	ret;
+	t_list	*temp;
 
 	idx = 1;
 	ret = 0;
 	while (argv[idx])
 	{
 		if (is_valid(argv[idx][0]))
-			ft_lstdel_value(env, argv[idx]);
+		{
+			if (!strcmp(data->env->key, argv[idx]))
+			{
+				temp = data->env;
+				data->env = data->env->next;
+				free(temp->key);
+				free(temp->value);
+				free(temp);
+			}
+			else
+				ft_lstdel_value(data->env, argv[idx]);
+		}
 		else
 		{
 			write(2, "unset: `", strlen("unset: `"));
@@ -253,6 +276,7 @@ int	ft_unset(char **argv, t_list *env)
 
 int	ft_pwd(char **argvs)
 {
+	(void)argvs;
 	char	*path;
 
 	path = getcwd(NULL, 0);

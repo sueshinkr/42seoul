@@ -6,11 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:50 by sueshin           #+#    #+#             */
-/*   Updated: 2022/11/21 16:52:29 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/17 20:17:35 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "get_next_line_bonus.h"
 
 t_list_gnl	*add_fd_remain(t_list_gnl *remain, int fd)
 {

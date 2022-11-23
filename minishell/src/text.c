@@ -76,8 +76,6 @@ char	*interpret_dollar(char *str, char *ret, int *idx)
 
 char	*interpret_bigquotes(char *str, char *ret, int *idx)
 {
-	char	*temp;
-
 	if (check_bigquotes(&str[*idx + 1]))
 	{
 		while (str[++(*idx)] && str[*idx] != '\"')

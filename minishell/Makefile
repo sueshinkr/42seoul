@@ -1,0 +1,51 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
+#    Updated: 2022/11/23 13:35:06 by sueshin          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME = minishell
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+
+LIB_DIR = ./lib/
+LIB = $(LIB_DIR)libft.a
+INCS_DIR = ./include/
+
+READLINE_LIB	=	-lreadline -L${HOME}/goinfre/.brew/opt/readline/lib
+READLINE_INC	=	-I${HOME}/goinfre/.brew/opt/readline/include
+
+SRCS_DIR = ./src/
+SRCS = $(addprefix $(SRCS_DIR), $(SRC))
+SRC = test.c tree.c tree_case.c text.c rdir.c cmd.c builtin.c util.c util2.c
+OBJS = $(SRCS:.c=.o)
+
+all : $(NAME)
+
+$(NAME): $(OBJS)
+	@cd lib && make
+	$(CC) $(CFALGS) -o $(NAME) $(OBJS) $(READLINE_LIB) $(LIB)
+
+%.o : %.c
+	$(CC) $(CFLAGS) ${READLINE_INC} -I$(INCS_DIR) -c -o $@ $<
+
+clean :
+	@cd lib && make clean
+	rm -f $(OBJS)
+
+fclean : clean
+	@cd lib && make fclean
+	rm -f $(NAME)
+
+re : 
+	make fclean
+	make all
+
+.PHONY : all clean fclean re
+

@@ -6,11 +6,11 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 11:59:46 by sueshin           #+#    #+#             */
-/*   Updated: 2022/11/21 16:53:19 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/07/19 00:14:30 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "get_next_line_bonus.h"
 
 static char	*check_remain(t_list_gnl *remain, int fd)
 {

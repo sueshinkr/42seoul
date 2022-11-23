@@ -56,10 +56,8 @@ char		*ft_strchr_gnl(const char *str, int c);
 char		*ft_strdup_gnl(const char *src);
 char		*ft_strjoin_gnl(char *str1, char *str2);
 
-
-
 node	*init_node(node *n);
-void	init_tree(char *line, char **envp);
+void	init_tree(char *line, t_data *data);
 void	make_tree(char *str, node *n);
 char	*set_text(char *str);
 void	decode_text(char *str);
@@ -82,8 +80,8 @@ void	set_scmd(t_data *data, node *n);
 int	ft_cd(char **argvs);
 int	ft_echo(char **argvs);
 int	ft_env(char **argv, t_list *env);
-int	ft_export(char **argvs, t_list *env);
-int	ft_unset(char **argv, t_list *env);
+int	ft_export(char **argvs, t_data *data);
+int	ft_unset(char **argv, t_data *data);
 int	ft_pwd(char **argvs);
 int	ft_exit(char **argvs);
 

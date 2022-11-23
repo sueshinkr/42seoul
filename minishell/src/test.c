@@ -27,12 +27,37 @@ int check_empty(char *str)
     return (1);
 }
 
+void	make_list(t_list *env, char **envp)
+{
+	int	idx;
+	int	idx2;
+
+	idx = -1;
+	while (envp[++idx])
+	{
+		idx2 = -1;
+		while (envp[idx][++idx2] != '=')
+			;
+		env->key = str_cut_front(envp[idx], idx2 + 1);
+		env->value = str_cut_back(envp[idx], idx2);
+		env->next = malloc(sizeof(t_list));
+		env = env->next;
+	}
+	env = NULL;
+}
+
 int main(int argc, char **argv, char **envp)
 {
     struct termios term;
     char *line;
-
+    (void)argc;
+    (void)argv;
     // 환경변수 받아와야됨
+
+    t_data	*data = malloc(sizeof(t_data));
+	t_list	*env = malloc(sizeof(t_list));
+	make_list(env, envp);
+    data->env = env;
 
     tcgetattr(STDIN_FILENO, &term);
     term.c_lflag &= ~(ECHOCTL);
@@ -48,7 +73,7 @@ int main(int argc, char **argv, char **envp)
             add_history(line);
             if (check_empty(line))
                 continue;
-            init_tree(line, envp);
+            init_tree(line, data);
             free(line);
             line = NULL;
         }
@@ -63,7 +88,7 @@ int main(int argc, char **argv, char **envp)
     return (0);
 }
 
-//gcc -I/Users/sueshin/goinfre/.brew/Cellar/readline/8.2.1/include -L/Users/sueshin/.brew/Cellar/readline/8.2.1/lib -lreadline test.c tree.c text.c util.c util2.c tree_case.c rdir.c cmd.c get_next_line_bonus.c get_next_line_utils_bonus.c builtin.c -fsanitize=address
+//gcc -I/Users/sueshin/goinfre/.brew/Cellar/readline/8.2.1/include -L/Users/sueshin/goinfre/.brew/Cellar/readline/8.2.1/lib -lreadline test.c tree.c text.c util.c util2.c tree_case.c rdir.c cmd.c get_next_line_bonus.c get_next_line_utils_bonus.c builtin.c -fsanitize=address
 
 // <a < b cat >c | echo "abc"
 // ls -a -l >> a < b > c | grep "" | cat << x > y
