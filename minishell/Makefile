@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
-#    Updated: 2022/11/23 19:05:10 by sueshin          ###   ########.fr        #
+#    Updated: 2022/11/24 11:44:58 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,10 @@ LIB_DIR = ./lib/
 LIB = $(LIB_DIR)libft.a
 INCS_DIR = ./include/
 
-READLINE_LIB	=	-lreadline -L${HOME}/goinfre/.brew/opt/readline/lib
-READLINE_INC	=	-I${HOME}/goinfre/.brew/opt/readline/include
+READLINE_LIB	=	-lreadline -L/opt/homebrew/opt/readline/lib
+READLINE_INC	=	-I/opt/homebrew/opt/readline/include
+#READLINE_LIB	=	-lreadline -L${HOME}/goinfre/.brew/opt/readline/lib
+#READLINE_INC	=	-I${HOME}/goinfre/.brew/opt/readline/include
 
 SRCS_DIR = ./src/
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))

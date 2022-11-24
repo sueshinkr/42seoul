@@ -84,5 +84,6 @@ int	ft_export(char **argvs, t_data *data);
 int	ft_unset(char **argv, t_data *data);
 int	ft_pwd(char **argvs);
 int	ft_exit(char **argvs);
+int	is_valid(char c);
 
 #endif

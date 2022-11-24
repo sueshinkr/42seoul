@@ -114,9 +114,6 @@ char	*find_key(char *s)
 
 char	*find_val(char *s)
 {
-	int	idx;
-
-	idx = 0;
 	while (*s != '=')
 		s++;
 	return (ft_strdup(++s));

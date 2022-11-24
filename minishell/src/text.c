@@ -30,13 +30,17 @@ int	check_bigquotes(char *str)
 	return (0);
 }
 
-char	*check_env(char *str)
+char	*check_env(char *str, int *idx)
 {
 	char	*temp;
 
 	temp = strdup("");
-	while (*str && !strchr(" \"\'", *str))
+	while (*str && is_valid(*str))
+	{
 		temp = ft_strjoin(temp, str++, 1);
+		(*idx)++;
+	}
+	(*idx)--;
 	return (getenv(temp));
 }
 
@@ -60,17 +64,32 @@ char	*interpret_dollar(char *str, char *ret, int *idx)
 {
 	char	*temp;
 
-	temp = check_env(&str[*idx + 1]);
-	if (!temp)
+	//시작이 공백
+	if (str[++(*idx)] && str[*idx] == ' ')
 	{
-		while (str[++(*idx)] && !strchr(" \"\'", str[*idx]))
-			;
+		while (str[(*idx)] && str[*idx] == ' ')
+			(*idx)++;
+		str[--(*idx)] = -1;
+		(*idx)--;
 		return (ret);
 	}
+	//시작이 따옴표
+	else if (str[(*idx)] == '\"' || str[(*idx)] == '\'')
+	{
+		(*idx)--;
+		return (ret);
+	}
+	//시작이 not_valid한 문자
+	//시작이 valid한 문자
+	if (str[(*idx)] && !is_valid(str[*idx]))
+	{
+		(*str)++;
+		return (ret);
+	}
+	temp = check_env(&str[(*idx)], idx);
+	if (!temp)
+		return (ret);
 	ret = ft_strjoin(ret, temp, strlen(temp));
-	while (str[++(*idx)] && !strchr(" \"\'", str[*idx]))
-		;
-	(*idx)--;
 	return (ret);
 }
 
