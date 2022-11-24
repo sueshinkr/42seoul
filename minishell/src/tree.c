@@ -94,7 +94,7 @@ void init_tree(char *line, t_data *data)
 
 	char *temp;
 
-	temp = set_text(line);
+	temp = set_text(line, data);
 	make_tree(temp, head);
 	free(temp);
 	

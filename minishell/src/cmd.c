@@ -148,7 +148,7 @@ void	set_scmd(t_data *data, node *n)
 	if (!strcmp(cmd_str[0], "echo"))
 		ft_echo(cmd_str);
 	else if (!strcmp(cmd_str[0], "cd"))
-		ft_cd(cmd_str);
+		ft_cd(cmd_str, data);
 	else if (!strcmp(cmd_str[0], "pwd"))
 		ft_pwd(cmd_str);
 	else if (!strcmp(cmd_str[0], "export"))

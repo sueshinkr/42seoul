@@ -30,7 +30,22 @@ int	check_bigquotes(char *str)
 	return (0);
 }
 
-char	*check_env(char *str, int *idx)
+char	*get_env(char *str, t_list *env)
+{
+	while (env->key)
+	{
+		if (!strcmp(str, env->key))
+		{
+			free(str);
+			return (strdup(env->value));
+		}
+		env = env->next;
+	}
+	free(str);
+	return (NULL);
+}
+
+char	*check_env(char *str, int *idx, t_data *data)
 {
 	char	*temp;
 
@@ -41,7 +56,8 @@ char	*check_env(char *str, int *idx)
 		(*idx)++;
 	}
 	(*idx)--;
-	return (getenv(temp));
+	temp = get_env(temp, data->env);
+	return (temp);
 }
 
 char	*interpret_smallquotes(char *str, char *ret, int *idx)
@@ -60,7 +76,7 @@ char	*interpret_smallquotes(char *str, char *ret, int *idx)
 	return (ret);
 }
 
-char	*interpret_dollar(char *str, char *ret, int *idx)
+char	*interpret_dollar(char *str, char *ret, int *idx, t_data *data)
 {
 	char	*temp;
 
@@ -86,14 +102,14 @@ char	*interpret_dollar(char *str, char *ret, int *idx)
 		(*str)++;
 		return (ret);
 	}
-	temp = check_env(&str[(*idx)], idx);
+	temp = check_env(&str[(*idx)], idx, data);
 	if (!temp)
 		return (ret);
 	ret = ft_strjoin(ret, temp, strlen(temp));
 	return (ret);
 }
 
-char	*interpret_bigquotes(char *str, char *ret, int *idx)
+char	*interpret_bigquotes(char *str, char *ret, int *idx, t_data *data)
 {
 	if (check_bigquotes(&str[*idx + 1]))
 	{
@@ -102,7 +118,7 @@ char	*interpret_bigquotes(char *str, char *ret, int *idx)
 			if (str[*idx] == ' ')
 				str[*idx] = -1;
 			if (str[*idx] == '$')
-				ret = interpret_dollar(str, ret, idx);
+				ret = interpret_dollar(str, ret, idx, data);
 			else
 				ret = ft_strjoin(ret, &str[*idx], 1);
 		}
@@ -112,7 +128,7 @@ char	*interpret_bigquotes(char *str, char *ret, int *idx)
 	return (ret);
 }
 
-char	*set_text(char *str)
+char	*set_text(char *str, t_data *data)
 {
 	int		idx;
 	char	*ret;
@@ -124,9 +140,9 @@ char	*set_text(char *str)
 		if (str[idx] == '\'')
 			ret = interpret_smallquotes(str, ret, &idx);
 		else if (str[idx] == '\"')
-			ret = interpret_bigquotes(str, ret, &idx);
+			ret = interpret_bigquotes(str, ret, &idx, data);
 		else if (str[idx] == '$')
-			ret = interpret_dollar(str, ret, &idx);
+			ret = interpret_dollar(str, ret, &idx, data);
 		else
 			ret = ft_strjoin(ret, &str[idx], 1);
 	}

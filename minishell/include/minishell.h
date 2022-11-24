@@ -59,7 +59,8 @@ char		*ft_strjoin_gnl(char *str1, char *str2);
 node	*init_node(node *n);
 void	init_tree(char *line, t_data *data);
 void	make_tree(char *str, node *n);
-char	*set_text(char *str);
+char	*set_text(char *str, t_data *data);
+char	*get_env(char *str, t_list *env);
 void	decode_text(char *str);
 
 char*	str_cut_front(char *str, int idx);
@@ -77,7 +78,7 @@ int		case_rdir(char *str, node *n, int idx);
 void	set_rdir(node *n);
 void	set_scmd(t_data *data, node *n);
 
-int	ft_cd(char **argvs);
+int	ft_cd(char **argvs, t_data *data);
 int	ft_echo(char **argvs);
 int	ft_env(char **argv, t_list *env);
 int	ft_export(char **argvs, t_data *data);
