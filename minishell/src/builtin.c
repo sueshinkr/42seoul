@@ -191,18 +191,29 @@ void	valid_export(char *str, t_data *data)
 	char	*temp_val;
 
 	idx = 0;
-	while (str[idx] != '=')
+	while (str[idx] && str[idx] != '=')
 		idx++;
-	temp_key = str_cut_front(str, idx + 1);
-	temp_val = str_cut_back(str, idx);
+	if (!str[idx])
+	{
+		temp_key = str_cut_front(str, idx + 1);
+		temp_val = NULL;
+	}
+	else
+	{
+		temp_key = str_cut_front(str, idx + 1);
+		temp_val = str_cut_back(str, idx);
+	}
 	temp = data->env;
 	while (temp->key)
 	{
 		if (!strcmp(temp_key, temp->key))
 		{
+			if (!temp_val)
+				temp->value = strdup("");
+			else
+				temp->value = temp_val;
 			free(temp_key);
 			free(temp->value);
-			temp->value = temp_val;
 			return ;
 		}	
 		temp = temp->next;
