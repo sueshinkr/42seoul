@@ -79,14 +79,15 @@ char	*interpret_dollar(char *str, char *ret, int *idx, t_data *data)
 	char	*temp;
 
 	//다음 문자가 없음
-	if (!str[++(*idx)])
+	if (!str[++(*idx)] || (str[*idx - 2] == '\"' && str[*idx] == '\"'))
 	{
 		ret = ft_strjoin(ret, "$", 1);
 		return (ret);
 	}
 	else if (str[(*idx)] == ' ')
 	{
-		ret = ft_strjoin(ret, "$ ", 2);
+		ret = ft_strjoin(ret, "$", 1);
+		(*idx)--;
 		return (ret);
 	}
 	//시작이 따옴표

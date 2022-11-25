@@ -214,7 +214,7 @@ void	invalid_export(char *str)
 {
 	write(2, "export: `", strlen("export: `"));
 	write(2, str, strlen(str));
-	write(2, "': not a valid identifie\n", \
+	write(2, "': not a valid identifier\n", \
 	strlen("': not a valid identifier\n"));
 }
 
@@ -231,6 +231,7 @@ int	ft_export(char **argvs, t_data *data)
 	{
 		while (argvs[idx])
 		{
+			decode_text(argvs[idx]);
 			if (is_valid(argvs[idx][0]))
 				valid_export(argvs[idx], data);
 			else
@@ -272,10 +273,14 @@ int	ft_unset(char **argv, t_data *data)
 
 	idx = 1;
 	ret = 0;
+	if(!argv[idx])
+		return (ret);
 	while (argv[idx])
 	{
+		decode_text(argv[idx]);
 		if (is_valid(argv[idx][0]))
 		{
+			// 맨 처음 환경변수 삭제
 			if (!strcmp(data->env->key, argv[idx]))
 			{
 				temp = data->env;
