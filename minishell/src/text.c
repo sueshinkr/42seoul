@@ -35,19 +35,16 @@ char	*get_env(char *str, t_list *env)
 	while (env->key)
 	{
 		if (!strcmp(str, env->key))
-		{
-			free(str);
 			return (strdup(env->value));
-		}
 		env = env->next;
 	}
-	free(str);
 	return (NULL);
 }
 
 char	*check_env(char *str, int *idx, t_data *data)
 {
 	char	*temp;
+	char	*ret;
 
 	temp = strdup("");
 	while (*str && is_valid(*str))
@@ -56,8 +53,9 @@ char	*check_env(char *str, int *idx, t_data *data)
 		(*idx)++;
 	}
 	(*idx)--;
-	temp = get_env(temp, data->env);
-	return (temp);
+	ret = get_env(temp, data->env);
+	free(temp);
+	return (ret);
 }
 
 char	*interpret_smallquotes(char *str, char *ret, int *idx)
@@ -80,13 +78,15 @@ char	*interpret_dollar(char *str, char *ret, int *idx, t_data *data)
 {
 	char	*temp;
 
-	//시작이 공백
-	if (str[++(*idx)] && str[*idx] == ' ')
+	//다음 문자가 없음
+	if (!str[++(*idx)])
 	{
-		while (str[(*idx)] && str[*idx] == ' ')
-			(*idx)++;
-		str[--(*idx)] = -1;
-		(*idx)--;
+		ret = ft_strjoin(ret, "$", 1);
+		return (ret);
+	}
+	else if (str[(*idx)] == ' ')
+	{
+		ret = ft_strjoin(ret, "$ ", 2);
 		return (ret);
 	}
 	//시작이 따옴표

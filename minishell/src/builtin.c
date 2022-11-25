@@ -171,44 +171,71 @@ int	is_valid(char c)
 	return (0);
 }
 
+void	no_input_export(t_list *env)
+{
+	while (env->key)
+	{
+		if (env->value)
+			printf("declare -x %s=\"%s\"\n", env->key, env->value);
+		else
+			printf("declare -x %s\n", env->key);
+		env = env->next;
+	}
+}
+
+void	valid_export(char *str, t_data *data)
+{
+	int		idx;
+	t_list	*temp;
+	char	*temp_key;
+	char	*temp_val;
+
+	idx = 0;
+	while (str[idx] != '=')
+		idx++;
+	temp_key = str_cut_front(str, idx + 1);
+	temp_val = str_cut_back(str, idx);
+	temp = data->env;
+	while (temp->key)
+	{
+		if (!strcmp(temp_key, temp->key))
+		{
+			free(temp_key);
+			free(temp->value);
+			temp->value = temp_val;
+			return ;
+		}	
+		temp = temp->next;
+	}
+	ft_lstadd_front(&data->env, ft_lstnew(temp_key, temp_val));
+}
+
+void	invalid_export(char *str)
+{
+	write(2, "export: `", strlen("export: `"));
+	write(2, str, strlen(str));
+	write(2, "': not a valid identifie\n", \
+	strlen("': not a valid identifier\n"));
+}
+
 int	ft_export(char **argvs, t_data *data)
 {
-	t_list	*node;
 	int		idx;
 	int		ret;
 
 	idx = 1;
 	ret = 0;
 	if (!argvs[1])
-	{
-		while (data->env->key)
-		{
-			if (data->env->value)
-				printf("declare -x %s=\"%s\"\n", data->env->key, data->env->value);
-			else
-				printf("declare -x %s\n", data->env->key);
-			data->env = data->env->next;
-		}
-	}
+		no_input_export(data->env);
 	else
 	{
 		while (argvs[idx])
 		{
 			if (is_valid(argvs[idx][0]))
-			{
-				int idx2= 0;
-	
-				while (argvs[idx][idx2] != '=')
-					idx2++;
-				node = ft_lstnew(str_cut_front(argvs[idx], idx2 + 1), str_cut_back(argvs[idx], idx2));
-				ft_lstadd_front(&data->env, node);
-			}
+				valid_export(argvs[idx], data);
 			else
 			{
-				write(2, "export: `", strlen("export: `"));
-				write(2, argvs[idx], strlen(argvs[idx]));
-				write(2, "': not a valid identifie\n", \
-				strlen("': not a valid identifier\n"));
+				invalid_export(argvs[idx]);
 				ret = 1;
 			}
 			idx++;
