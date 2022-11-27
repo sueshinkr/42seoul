@@ -22,7 +22,7 @@ node	*init_node(node *n)
 	return (new);
 }
 
-void	make_tree(char *str, node *n)
+void	make_tree(t_data *data, char *str, node *n)
 {
 	int	idx;
 
@@ -30,20 +30,21 @@ void	make_tree(char *str, node *n)
 	n->node_str = str;
 	while (str[++idx])
 	{
-		if (case_pipe(str, n, idx))
+		if (case_pipe(data, str, n, idx))
 			return ;
-		if (case_cmd(str, n, idx))
+		if (case_cmd(data, str, n, idx))
 			return ;
-		if (case_rdir(str, n, idx))
+		if (case_rdir(data, str, n, idx))
 			return ;
 	}
 	if (n->type == WORD)
 	{
 		n->type = CMD;
-		make_tree(str, n);
+		make_tree(data, str, n);
 	}
 }
 
+/*
 void	print_tree(node *n)
 {
 	if (n->left)
@@ -57,11 +58,7 @@ void	print_tree(node *n)
 	printf("type : %s\n", arr[n->type]); 
 	printf("level : %d\n", n->level);
 }
-
-// 전위탐색하면서 타입따라서 작동하게?
-// RDIR이면 dup하고, SCMD면 빌트인찾거나 exec하고
-// 맨밑단은 저거 두개밖에 없으니 저것만 만들면 되나?
-// PIPE는 작동을 어케하더라
+*/
 
 void	search_tree(t_data *data, node *n)
 {
@@ -70,13 +67,20 @@ void	search_tree(t_data *data, node *n)
 	if (n->right)
 		search_tree(data, n->right);
 	if (n->type == PIPE)
-		;
+	{
+		close(data->infile_fd);
+		close(data->outfile_fd);
+		data->infile_fd = -1;
+		data->outfile_fd = -1;
+		dup2(0, data->stdin_fd);
+		dup2(0, data->stdout_fd);
+	}
 	else if (n->type == RDIR)
 	{
 		//printf("::::RDIR::::\n");
 		//decode_text(n->node_str);
 		//printf("::%s\n", n->node_str);
-		set_rdir(n);
+		set_rdir(data, n);
 	}
 	else if (n->type == SCMD)
 	{
@@ -95,15 +99,16 @@ void init_tree(char *line, t_data *data)
 	char *temp;
 
 	temp = set_text(line, data);
-	make_tree(temp, head);
+	make_tree(data, temp, head);
 	free(temp);
-	
-	int fdin;
-	int fdout;
 
-	fdin = dup(0);
-	fdout = dup(1);
+	data->stdin_fd = dup(0);
+	data->stdout_fd = dup(1);
+	data->last_pipe[0] = -1;
+	data->last_pipe[1] = -1;
 	search_tree(data, head);
-	dup2(fdin, 0);
-	dup2(fdout, 1);
+	close(data->last_pipe[0]);
+	close(data->last_pipe[1]);
+	dup2(data->stdin_fd, 0);
+	dup2(data->stdout_fd, 1);
 }

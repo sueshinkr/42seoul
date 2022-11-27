@@ -56,6 +56,10 @@ int main(int argc, char **argv, char **envp)
 
     t_data	*data = malloc(sizeof(t_data));
 	t_list	*env = malloc(sizeof(t_list));
+
+	data->infile_fd = -1;
+	data->outfile_fd = -1;
+    data->pipe_num = 0;
 	make_list(env, envp);
     data->env = env;
 

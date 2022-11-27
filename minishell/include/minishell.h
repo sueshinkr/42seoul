@@ -37,6 +37,12 @@ typedef struct s_data
 {
 	node	*head;
 	t_list	*env;
+	int		outfile_fd;
+	int		infile_fd;
+	int		stdout_fd;
+	int		stdin_fd;
+	int		last_pipe[2];
+	int		pipe_num;
 } t_data;
 
 # define BUFFER_SIZE 1
@@ -58,7 +64,7 @@ char		*ft_strjoin_gnl(char *str1, char *str2);
 
 node	*init_node(node *n);
 void	init_tree(char *line, t_data *data);
-void	make_tree(char *str, node *n);
+void	make_tree(t_data *data, char *str, node *n);
 char	*set_text(char *str, t_data *data);
 char	*get_env(char *str, t_list *env);
 void	decode_text(char *str);
@@ -68,14 +74,14 @@ char*	str_cut_back(char *str, int idx);
 char	*ft_strjoin(char *str1, char *str2, int len);
 char	**ft_split(char const *str, char c);
 
-int		case_pipe(char *str, node *n, int idx);
-int		case_cmd(char *str, node *n, int idx);
-void	case_cmd_rdir(char *str, node *n, int idx);
-void	case_rdir_cmd(char *str, node *n, int idx);
+int		case_pipe(t_data *data, char *str, node *n, int idx);
+int		case_cmd(t_data *data, char *str, node *n, int idx);
+void	case_cmd_rdir(t_data *data, char *str, node *n, int idx);
+void	case_rdir_cmd(t_data *data, char *str, node *n, int idx);
+int		case_rdir(t_data *data, char *str, node *n, int idx);
 void	case_scmd(char *str, node *n);
-int		case_rdir(char *str, node *n, int idx);
 
-void	set_rdir(node *n);
+void	set_rdir(t_data *data, node *n);
 void	set_scmd(t_data *data, node *n);
 
 int	ft_cd(char **argvs, t_data *data);

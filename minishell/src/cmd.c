@@ -72,42 +72,36 @@ char	*check_path(t_list *env, char *cmd)
 
 void do_exec(char *cmd_path, char **cmd_str, char **env)
 {
-	int		fd[2];
 	pid_t	pid;
 
-	if (pipe(fd) == -1)
-		printf("pipe error\n");
 	pid = fork();
 	if (pid == -1)
 		printf("error\n");
 	if (pid == 0)
 	{
-		close(fd[0]);
 		execve(cmd_path, cmd_str, env);
 	}
-	close(fd[1]);
 	waitpid(pid, NULL, 0);
 }
 
-void	pipe_in(char *cmd_path, char **cmd_str, char **env)
+void	pipe_in(char *cmd_path, char **cmd_str, char **env, t_data *data)
 {
-	int		fd[2];
-	pid_t	pid;
-
-	if (pipe(fd) == -1)
-		printf("pipe error\n");
-	pid = fork();
-	if (pid == -1)
-		printf("error\n");
-	if (pid == 0)
-	{
-		close(fd[0]);
-		dup2(fd[1], 1);
+	if (!strcmp(cmd_str[0], "echo"))
+		ft_echo(cmd_str);
+	else if (!strcmp(cmd_str[0], "cd"))
+		ft_cd(cmd_str, data);
+	else if (!strcmp(cmd_str[0], "pwd"))
+		ft_pwd(cmd_str);
+	else if (!strcmp(cmd_str[0], "export"))
+		ft_export(cmd_str, data);
+	else if (!strcmp(cmd_str[0], "unset"))
+		ft_unset(cmd_str, data);
+	else if (!strcmp(cmd_str[0], "env"))
+		ft_env(cmd_str, data->env);
+	else if (!strcmp(cmd_str[0], "exit"))
+		ft_exit(cmd_str);
+	else
 		execve(cmd_path, cmd_str, env);
-	}
-	close(fd[1]);
-	dup2(fd[0], 0);
-	waitpid(pid, NULL, 0);
 }
 
 char	**make_env(t_data *data)
@@ -142,23 +136,37 @@ void	set_scmd(t_data *data, node *n)
 	char	**cmd_str;
 	char	*cmd_path;
 	char	**env;
+	int		p[2];
 
 	cmd_str = ft_split(n->node_str, ' ');
-	
-	if (!strcmp(cmd_str[0], "echo"))
-		ft_echo(cmd_str);
-	else if (!strcmp(cmd_str[0], "cd"))
-		ft_cd(cmd_str, data);
-	else if (!strcmp(cmd_str[0], "pwd"))
-		ft_pwd(cmd_str);
-	else if (!strcmp(cmd_str[0], "export"))
-		ft_export(cmd_str, data);
-	else if (!strcmp(cmd_str[0], "unset"))
-		ft_unset(cmd_str, data);
-	else if (!strcmp(cmd_str[0], "env"))
-		ft_env(cmd_str, data->env);
-	else if (!strcmp(cmd_str[0], "exit"))
-		ft_exit(cmd_str);
+	env = make_env(data);
+	if (n->pipe < 1)
+	{
+		if (!strcmp(cmd_str[0], "echo"))
+			ft_echo(cmd_str);
+		else if (!strcmp(cmd_str[0], "cd"))
+			ft_cd(cmd_str, data);
+		else if (!strcmp(cmd_str[0], "pwd"))
+			ft_pwd(cmd_str);
+		else if (!strcmp(cmd_str[0], "export"))
+			ft_export(cmd_str, data);
+		else if (!strcmp(cmd_str[0], "unset"))
+			ft_unset(cmd_str, data);
+		else if (!strcmp(cmd_str[0], "env"))
+			ft_env(cmd_str, data->env);
+		else if (!strcmp(cmd_str[0], "exit"))
+			ft_exit(cmd_str);
+		else
+		{
+			cmd_path = check_path(data->env, cmd_str[0]);
+			if (!cmd_path)
+			{
+				printf("cmd error\n");
+				return ;
+			}
+			do_exec(cmd_path, cmd_str, env);
+		}
+	}
 	else
 	{
 		cmd_path = check_path(data->env, cmd_str[0]);
@@ -167,10 +175,35 @@ void	set_scmd(t_data *data, node *n)
 			printf("cmd error\n");
 			return ;
 		}
-		env = make_env(data);
-		if (n->pipe < 1)
-			do_exec(cmd_path, cmd_str, env);
+		if (pipe(p) == -1)
+			printf("pipe error\n");
+		if (data->last_pipe[0] == -1)
+			dup2(p[0], 0);
+		pid_t	pid;
+		pid = fork();
+		if (pid == 0)
+		{
+			if (data->last_pipe[0] == -1)
+			{
+				dup2(p[1], 1);
+				close(p[0]);
+				pipe_in(cmd_path, cmd_str, env, data);
+			}
+			else
+			{
+				dup2(data->last_pipe[0], 0);
+				close(data->last_pipe[1]);
+				dup2(p[1], 1);
+				close(p[0]);
+				pipe_in(cmd_path, cmd_str, env, data);
+			}
+		}
 		else
-			pipe_in(cmd_path, cmd_str, env);
+		{
+			close(data->last_pipe[0]);
+			close(data->last_pipe[1]);
+			data->last_pipe[0] = p[0];
+			data->last_pipe[1] = p[1];
+		}
 	}
 }
