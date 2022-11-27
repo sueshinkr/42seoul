@@ -72,8 +72,8 @@ void	search_tree(t_data *data, node *n)
 		close(data->outfile_fd);
 		data->infile_fd = -1;
 		data->outfile_fd = -1;
-		dup2(0, data->stdin_fd);
-		dup2(0, data->stdout_fd);
+		dup2(data->stdin_fd, 0);
+		dup2(data->stdout_fd, 1);
 	}
 	else if (n->type == RDIR)
 	{
@@ -111,4 +111,6 @@ void init_tree(char *line, t_data *data)
 	close(data->last_pipe[1]);
 	dup2(data->stdin_fd, 0);
 	dup2(data->stdout_fd, 1);
+	while (wait(0) != -1)
+		;
 }

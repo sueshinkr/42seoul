@@ -208,12 +208,16 @@ void	valid_export(char *str, t_data *data)
 	{
 		if (!strcmp(temp_key, temp->key))
 		{
-			if (!temp_val)
+			if (!temp_val && (strlen(temp->value) == 0))
 				temp->value = strdup("");
+			else if (!temp_val)
+				;
 			else
+			{
+				free(temp->value);
 				temp->value = temp_val;
+			}
 			free(temp_key);
-			free(temp->value);
 			return ;
 		}	
 		temp = temp->next;

@@ -43,6 +43,7 @@ typedef struct s_data
 	int		stdin_fd;
 	int		last_pipe[2];
 	int		pipe_num;
+	int		exit_code;
 } t_data;
 
 # define BUFFER_SIZE 1

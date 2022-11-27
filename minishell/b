@@ -1,11 +1,10 @@
-total 160
-drwxr-xr-x  10 sueshin  2022_seoul    340 Nov 23 17:28 .
-drwxrwxrwx  16 sueshin  2022_seoul    544 Nov 19 10:27 ..
--rw-r--r--   1 sueshin  2022_seoul   1640 Nov 23 13:35 Makefile
--rw-r--r--   1 sueshin  2022_seoul      5 Nov 23 17:21 a
--rw-r--r--   1 sueshin  2022_seoul      0 Nov 23 17:31 b
-drwxr-xr-x   5 sueshin  2022_seoul    170 Nov 23 13:34 include
-drwxr-xr-x  26 sueshin  2022_seoul    884 Nov 23 17:14 lib
--rwxr-xr-x   1 sueshin  2022_seoul  70744 Nov 23 17:28 minishell
-drwxr-xr-x  20 sueshin  2022_seoul    680 Nov 23 17:28 src
--rw-r--r--   1 sueshin  2022_seoul      0 Nov 21 17:11 y
+Makefile
+a
+a.txt
+b
+here_doc
+include
+lib
+minishell
+src
+y

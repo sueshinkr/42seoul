@@ -77,7 +77,9 @@ void	case_rdir_cmd(t_data *data, char *str, node *n, int idx)
 		}
 		else if (check == 1 && str[idx] == ' ')
 		{
-			if (str[idx + 1] && strchr("<>", str[idx + 1]))
+			if (!str[idx + 1])
+				break ;
+			else if (strchr("<>", str[idx + 1]))
 			{
 				check = 0;
 				idx++;
@@ -96,8 +98,9 @@ void	case_rdir_cmd(t_data *data, char *str, node *n, int idx)
 		else
 			idx++;
 	}
-	n->type = RDIR;
-	make_tree(data, str, n);
+	n->left = init_node(n);
+	n->left->type = RDIR;
+	make_tree(data, str_cut_front(str, idx + 1), n->left);
 }
 
 void	case_scmd(char *str, node *n)

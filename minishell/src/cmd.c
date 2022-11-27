@@ -123,9 +123,12 @@ char	**make_env(t_data *data)
 	idx = -1;
 	while (temp->key)
 	{
-		env[++idx] = strdup(temp->key);
-		env[idx] = ft_strjoin_pipex(env[idx], "=");
-		env[idx] = ft_strjoin_pipex(env[idx], temp->value);
+		if (temp->value)
+		{
+			env[++idx] = strdup(temp->key);
+			env[idx] = ft_strjoin_pipex(env[idx], "=");
+			env[idx] = ft_strjoin_pipex(env[idx], temp->value);
+		}
 		temp = temp->next;
 	}
 	return (env);
@@ -133,14 +136,16 @@ char	**make_env(t_data *data)
 
 void	set_scmd(t_data *data, node *n)
 {
-	char	**cmd_str;
-	char	*cmd_path;
-	char	**env;
-	int		p[2];
+	static int	cmd_cnt = -1;
+	char		**cmd_str;
+	char		*cmd_path;
+	char		**env;
+	int			p[2];
 
+	cmd_cnt++;
 	cmd_str = ft_split(n->node_str, ' ');
 	env = make_env(data);
-	if (n->pipe < 1)
+	if (data->pipe_num < 1)
 	{
 		if (!strcmp(cmd_str[0], "echo"))
 			ft_echo(cmd_str);
@@ -177,8 +182,6 @@ void	set_scmd(t_data *data, node *n)
 		}
 		if (pipe(p) == -1)
 			printf("pipe error\n");
-		if (data->last_pipe[0] == -1)
-			dup2(p[0], 0);
 		pid_t	pid;
 		pid = fork();
 		if (pid == 0)
@@ -192,9 +195,16 @@ void	set_scmd(t_data *data, node *n)
 			else
 			{
 				dup2(data->last_pipe[0], 0);
+				if (cmd_cnt < data->pipe_num)
+				{
+					dup2(p[1], 1);
+					close(p[0]);
+				}
+				else
+				{
+					dup2(data->outfile_fd, 1);
+				}
 				close(data->last_pipe[1]);
-				dup2(p[1], 1);
-				close(p[0]);
 				pipe_in(cmd_path, cmd_str, env, data);
 			}
 		}

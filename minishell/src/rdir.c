@@ -58,7 +58,7 @@ int	read_heredoc(char *delimiter, t_data *data)
 		write(fd, tmp, strlen(tmp));
 		free(tmp);
 	}
-	return (open("here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644));
+	return (open("here_doc", O_RDONLY, 0644));
 }
 
 void	set_rdir(t_data *data, node *n)
@@ -92,6 +92,8 @@ void	set_rdir(t_data *data, node *n)
 		if (data->infile_fd != -1)
 			close(data->infile_fd);
 		data->infile_fd = read_heredoc(file, data);
+		if (dup2(data->infile_fd, 0) == -1)
+			printf("dup error\n");
 	}
 	else if (!strcmp(rdir, ">"))
 	{
