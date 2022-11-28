@@ -68,8 +68,13 @@ void	set_rdir(t_data *data, node *n)
 	int		idx = -1;
 	// < 분리
 
-	while (strchr("<>", n->node_str[++idx]))
+	while (n->node_str[++idx] && strchr("<>", n->node_str[idx]))
 		;
+	if (!n->node_str[idx])
+	{
+		printf("syntax error\n");
+		return ;
+	}
 	rdir = str_cut_front(n->node_str, idx + 1);
 	file = str_cut_back(n->node_str, idx - 1);
 
