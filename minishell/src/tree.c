@@ -1,21 +1,11 @@
 #include "minishell.h"
 
-char *arr[] = {"WORD", "PIPE", "CMD", "SCMD", "RDIRS", "RDIR"};
-
-node	*init_node(node *n)
+node	*init_node(void)
 {
-	node *new = (node *)malloc(sizeof(node));
+	node	*new;
+
+	new = (node *)malloc(sizeof(node));
 	new->type = WORD;
-	if (n)
-	{
-		new->pipe = n->pipe;
-		new->level = n->level + 1;
-	}
-	else
-	{
-		new->pipe = 0;
-		new->level = 0;
-	}
 	new->left = NULL;
 	new->right = NULL;
 	new->node_str = NULL;
@@ -44,22 +34,6 @@ void	make_tree(t_data *data, char *str, node *n)
 	}
 }
 
-/*
-void	print_tree(node *n)
-{
-	if (n->left)
-		print_tree(n->left);
-	if (n->right)
-		print_tree(n->right);
-
-	printf("==============\n");
-	decode_text(n->node_str);
-	printf("%s\n", n->node_str);
-	printf("type : %s\n", arr[n->type]); 
-	printf("level : %d\n", n->level);
-}
-*/
-
 void	search_tree(t_data *data, node *n)
 {
 	if (n->left)
@@ -67,7 +41,12 @@ void	search_tree(t_data *data, node *n)
 	if (n->right)
 		search_tree(data, n->right);
 	if (n->type == PIPE)
+		;
+	else if (n->type == RDIR)
+		set_rdir(data, n);
+	else if (n->type == SCMD)
 	{
+		set_scmd(data, n);
 		close(data->infile_fd);
 		close(data->outfile_fd);
 		data->infile_fd = -1;
@@ -75,42 +54,26 @@ void	search_tree(t_data *data, node *n)
 		dup2(data->stdin_fd, 0);
 		dup2(data->stdout_fd, 1);
 	}
-	else if (n->type == RDIR)
-	{
-		//printf("::::RDIR::::\n");
-		//decode_text(n->node_str);
-		//printf("::%s\n", n->node_str);
-		set_rdir(data, n);
-	}
-	else if (n->type == SCMD)
-	{
-		// 빌트인인지 아닌지 구분
-		// 아니면 명령어 경로 찾아서 exec
-		//printf("::::SCMD::::\n");
-		set_scmd(data, n);
-	}
 }
 
-void init_tree(char *line, t_data *data)
+void	init_tree(char *line, t_data *data)
 {
-	node *head = init_node(NULL);
+	node	*head;
+	char	*parsed_line;
+
+	head = init_node();
 	data->head = head;
-
-	char *temp;
-
-	temp = set_text(line, data);
-	make_tree(data, temp, head);
-	free(temp);
-
-	data->stdin_fd = dup(0);
-	data->stdout_fd = dup(1);
+	parsed_line = parse_line(line, data);
+	make_tree(data, parsed_line, head);
+	free(parsed_line);
+	data->cmd_cnt = -1;
 	data->last_pipe[0] = -1;
 	data->last_pipe[1] = -1;
 	search_tree(data, head);
 	close(data->last_pipe[0]);
 	close(data->last_pipe[1]);
-	dup2(data->stdin_fd, 0);
-	dup2(data->stdout_fd, 1);
+	data->last_pipe[0] = -1;
+	data->last_pipe[1] = -1;
 	while (wait(0) != -1)
 		;
 }

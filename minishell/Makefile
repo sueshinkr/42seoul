@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
-#    Updated: 2022/11/27 17:02:50 by sueshin          ###   ########.fr        #
+#    Updated: 2022/11/28 14:17:32 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,11 @@ READLINE_INC	=	-I${HOME}/goinfre/.brew/opt/readline/include
 
 SRCS_DIR = ./src/
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))
-SRC = test.c tree.c tree_case.c text.c rdir.c cmd.c builtin.c util.c util2.c
+SRC = test.c parse.c interpret_text.c \
+	  tree.c tree_case_pipe.c tree_case_cmd.c tree_case_rdir.c \
+	  ft_cd.c ft_echo.c ft_env.c ft_export.c ft_unset.c ft_exit.c ft_pwd.c \
+	  rdir.c cmd.c \
+	  util1.c util2.c util3.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)

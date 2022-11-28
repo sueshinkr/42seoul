@@ -29,8 +29,6 @@ typedef struct Node
 	struct Node	*left;
 	struct Node	*right;
 	char	*node_str;
-	int		pipe;
-	int level;
 } node;
 
 typedef struct s_data
@@ -43,6 +41,7 @@ typedef struct s_data
 	int		stdin_fd;
 	int		last_pipe[2];
 	int		pipe_num;
+	int		cmd_cnt;
 	int		exit_code;
 } t_data;
 
@@ -63,24 +62,35 @@ char		*ft_strchr_gnl(const char *str, int c);
 char		*ft_strdup_gnl(const char *src);
 char		*ft_strjoin_gnl(char *str1, char *str2);
 
-node	*init_node(node *n);
+node	*init_node(void);
 void	init_tree(char *line, t_data *data);
 void	make_tree(t_data *data, char *str, node *n);
-char	*set_text(char *str, t_data *data);
+char	*parse_line(char *str, t_data *data);
 char	*get_env(char *str, t_list *env);
 void	decode_text(char *str);
+
+char	*get_env(char *str, t_list *env);
+char	*check_env(char *str, int *idx, t_data *data);
+int		check_smallquotes(char *str);
+int		check_bigquotes(char *str);
+char	*interpret_smallquotes(char *str, char *ret, int *idx);
+char	*interpret_bigquotes(char *str, char *ret, int *idx, t_data *data);
+char	*interpret_dollar(char *str, char *ret, int *idx, t_data *data);
 
 char*	str_cut_front(char *str, int idx);
 char*	str_cut_back(char *str, int idx);
 char	*ft_strjoin(char *str1, char *str2, int len);
+char	*ft_strdup(const char *s1);
 char	**ft_split(char const *str, char c);
+int		is_numeric(char *s);
+int		ft_atoi(const char *str);
+void	ft_lstadd_front(t_list **lst, t_list *new);
+t_list	*ft_lstnew(char *key, char *val);
 
 int		case_pipe(t_data *data, char *str, node *n, int idx);
 int		case_cmd(t_data *data, char *str, node *n, int idx);
-void	case_cmd_rdir(t_data *data, char *str, node *n, int idx);
-void	case_rdir_cmd(t_data *data, char *str, node *n, int idx);
 int		case_rdir(t_data *data, char *str, node *n, int idx);
-void	case_scmd(char *str, node *n);
+void	case_rdir_cmd(t_data *data, char *str, node *n, int idx);
 
 void	set_rdir(t_data *data, node *n);
 void	set_scmd(t_data *data, node *n);

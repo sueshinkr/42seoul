@@ -102,6 +102,7 @@ void	pipe_in(char *cmd_path, char **cmd_str, char **env, t_data *data)
 		ft_exit(cmd_str);
 	else
 		execve(cmd_path, cmd_str, env);
+	exit(0);
 }
 
 char	**make_env(t_data *data)
@@ -136,13 +137,12 @@ char	**make_env(t_data *data)
 
 void	set_scmd(t_data *data, node *n)
 {
-	static int	cmd_cnt = -1;
 	char		**cmd_str;
 	char		*cmd_path;
 	char		**env;
 	int			p[2];
 
-	cmd_cnt++;
+	data->cmd_cnt++;
 	cmd_str = ft_split(n->node_str, ' ');
 	env = make_env(data);
 	if (data->pipe_num < 1)
@@ -194,8 +194,11 @@ void	set_scmd(t_data *data, node *n)
 			}
 			else
 			{
-				dup2(data->last_pipe[0], 0);
-				if (cmd_cnt < data->pipe_num)
+				if (data->infile_fd == -1)
+					dup2(data->last_pipe[0], 0);
+				else
+					dup2(data->infile_fd, 0);
+				if (data->cmd_cnt < data->pipe_num)
 				{
 					dup2(p[1], 1);
 					close(p[0]);

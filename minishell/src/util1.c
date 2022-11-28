@@ -57,3 +57,25 @@ char	*ft_strjoin(char *str1, char *str2, int len)
 	free(str1);
 	return (joinstr);
 }
+
+char	*ft_strdup(const char *s1)
+{
+	int		len;
+	int		idx;
+	char	*dest;
+
+	idx = 0;
+	len = 0;
+	while (s1[len] != '\0')
+		len++;
+	dest = (char *)malloc(sizeof(char) * (len + 1));
+	if (!(dest))
+		return (NULL);
+	while (idx < len)
+	{
+		dest[idx] = s1[idx];
+		idx++;
+	}
+	dest[idx] = '\0';
+	return (dest);
+}

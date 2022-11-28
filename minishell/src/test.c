@@ -46,6 +46,24 @@ void	make_list(t_list *env, char **envp)
 	env = NULL;
 }
 
+t_data  *init_data(char **envp)
+{
+    t_data *data;
+    t_list *env;
+    
+    data = malloc(sizeof(t_data));
+    env = malloc(sizeof(t_list));
+    data->infile_fd = -1;
+	data->outfile_fd = -1;
+    data->pipe_num = 0;
+	data->stdin_fd = dup(0);
+	data->stdout_fd = dup(1);
+    make_list(env, envp);
+    data->env = env;
+    return (data);
+}
+
+
 int main(int argc, char **argv, char **envp)
 {
     struct termios term;
@@ -54,14 +72,9 @@ int main(int argc, char **argv, char **envp)
     (void)argv;
     // 환경변수 받아와야됨
 
-    t_data	*data = malloc(sizeof(t_data));
-	t_list	*env = malloc(sizeof(t_list));
+    t_data	*data;
 
-	data->infile_fd = -1;
-	data->outfile_fd = -1;
-    data->pipe_num = 0;
-	make_list(env, envp);
-    data->env = env;
+    data = init_data(envp);
 
     tcgetattr(STDIN_FILENO, &term);
     term.c_lflag &= ~(ECHOCTL);
@@ -71,6 +84,7 @@ int main(int argc, char **argv, char **envp)
 
     while (1)
     {
+		data->pipe_num = 0;
         line = readline("MINISHELL$ ");
         if (line)
         {
