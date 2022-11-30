@@ -4,7 +4,7 @@ static size_t	ft_strlcpy(char *dst, char *src, size_t size)
 {
 	int	src_len;
 
-	src_len = strlen(src);
+	src_len = ft_strlen(src);
 	if (size == 0)
 		return (src_len);
 	while (size-- > 1 && *src)

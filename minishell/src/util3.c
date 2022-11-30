@@ -61,3 +61,16 @@ int	ft_atoi(const char *str)
 	}
 	return (result);
 }
+
+void	free_arr(char **arr)
+{
+	int	idx;
+
+	idx = 0;
+	while (arr[idx])
+	{
+		free(arr[idx]);
+		idx++;
+	}
+	free(arr);
+}

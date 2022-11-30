@@ -2,10 +2,10 @@
 
 char	*get_env(char *str, t_list *env)
 {
-	while (env->key)
+	while (env && env->key)
 	{
-		if (!strcmp(str, env->key))
-			return (strdup(env->value));
+		if (!ft_strcmp(str, env->key))
+			return (ft_strdup(env->value));
 		env = env->next;
 	}
 	return (NULL);
@@ -16,10 +16,10 @@ char	*check_env(char *str, int *idx, t_data *data)
 	char	*temp;
 	char	*ret;
 
-	temp = strdup("");
+	temp = ft_strdup("");
 	while (*str && is_valid(*str))
 	{
-		temp = ft_strjoin(temp, str++, 1);
+		temp = ft_strjoin_len(temp, str++, 1);
 		(*idx)++;
 	}
 	(*idx)--;
@@ -34,7 +34,7 @@ char	*parse_line(char *str, t_data *data)
 	char	*ret;
 
 	idx = -1;
-	ret = strdup("");
+	ret = ft_strdup("");
 	while (str[++idx])
 	{
 		if (str[idx] == '\'')
@@ -44,7 +44,7 @@ char	*parse_line(char *str, t_data *data)
 		else if (str[idx] == '$')
 			ret = interpret_dollar(str, ret, &idx, data);
 		else
-			ret = ft_strjoin(ret, &str[idx], 1);
+			ret = ft_strjoin_len(ret, &str[idx], 1);
 	}
 	return (ret);
 }

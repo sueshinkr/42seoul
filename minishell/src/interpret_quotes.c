@@ -34,39 +34,11 @@ char	*interpret_smallquotes(char *str, char *ret, int *idx)
 		{
 			if (str[*idx] == ' ')
 				str[*idx] = -1;
-			ret = ft_strjoin(ret, &str[*idx], 1);
+			ret = ft_strjoin_len(ret, &str[*idx], 1);
 		}
 	}
 	else
-		ret = ft_strjoin(ret, &str[*idx], 1);
-	return (ret);
-}
-
-char	*interpret_dollar(char *str, char *ret, int *idx, t_data *data)
-{
-	char	*temp;
-
-	if (!str[++(*idx)] || (str[*idx - 2] == '\"' && str[*idx] == '\"'))
-		ret = ft_strjoin(ret, "$", 1);
-	else if (str[(*idx)] == ' ')
-	{
-		ret = ft_strjoin(ret, "$", 1);
-		(*idx)--;
-	}
-	else if (str[(*idx)] == '\"' || str[(*idx)] == '\'')
-		(*idx)--;
-	else
-	{
-		if (str[(*idx)] && !is_valid(str[*idx]))
-			(*str)++;
-		else
-		{
-			temp = check_env(&str[(*idx)], idx, data);
-			if (!temp)
-				return (ret);
-			ret = ft_strjoin(ret, temp, strlen(temp));
-		}
-	}
+		ret = ft_strjoin_len(ret, &str[*idx], 1);
 	return (ret);
 }
 
@@ -81,10 +53,10 @@ char	*interpret_bigquotes(char *str, char *ret, int *idx, t_data *data)
 			if (str[*idx] == '$')
 				ret = interpret_dollar(str, ret, idx, data);
 			else
-				ret = ft_strjoin(ret, &str[*idx], 1);
+				ret = ft_strjoin_len(ret, &str[*idx], 1);
 		}
 	}
 	else
-		ret = ft_strjoin(ret, &str[*idx], 1);
+		ret = ft_strjoin_len(ret, &str[*idx], 1);
 	return (ret);
 }

@@ -1,10 +1,10 @@
 #include "minishell.h"
 
-node	*init_node(void)
+t_node	*init_node(void)
 {
-	node	*new;
+	t_node	*new;
 
-	new = (node *)malloc(sizeof(node));
+	new = (t_node *)malloc(sizeof(t_node));
 	new->type = WORD;
 	new->left = NULL;
 	new->right = NULL;
@@ -12,7 +12,7 @@ node	*init_node(void)
 	return (new);
 }
 
-void	make_tree(t_data *data, char *str, node *n)
+void	make_tree(t_data *data, char *str, t_node *n)
 {
 	int	idx;
 
@@ -34,7 +34,7 @@ void	make_tree(t_data *data, char *str, node *n)
 	}
 }
 
-void	search_tree(t_data *data, node *n)
+void	search_tree(t_data *data, t_node *n)
 {
 	if (n->left)
 		search_tree(data, n->left);
@@ -63,14 +63,13 @@ void	search_tree(t_data *data, node *n)
 
 void	init_tree(char *line, t_data *data)
 {
-	node	*head;
+	t_node	*head;
 	char	*parsed_line;
 
 	head = init_node();
 	data->head = head;
 	parsed_line = parse_line(line, data);
 	make_tree(data, parsed_line, head);
-	free(parsed_line);
 	data->cmd_cnt = -1;
 	data->last_pipe[0] = -1;
 	data->last_pipe[1] = -1;
@@ -85,4 +84,14 @@ void	init_tree(char *line, t_data *data)
 	waitpid(data->pid, &data->exit_code, 0);
 	while (wait(0) != -1)
 		;
+}
+
+void	free_tree(t_data *data, t_node *n)
+{
+	if (n->left)
+		free_tree(data, n->left);
+	if (n->right)
+		free_tree(data, n->right);
+	free(n->node_str);
+	free(n);
 }

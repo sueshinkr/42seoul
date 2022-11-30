@@ -8,7 +8,7 @@ int	ft_pwd(char **argvs)
 	path = getcwd(NULL, 0);
 	if (path == NULL)
 		return (1);
-	printf("%s\n", path);
+	ft_printf("%s\n", path);
 	free(path);
 	return (0);
 }

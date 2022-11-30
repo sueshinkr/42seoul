@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:33:18 by sueshin           #+#    #+#             */
-/*   Updated: 2022/06/04 16:13:59 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/11/30 19:02:19 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static int	cal_count(long long n)
 	if (n == 0)
 		count++;
 	else if (n < 0)
+	{
 		n = n * -1;
+		//count++;
+	}
 	while (n > 0)
 	{
 		n /= 10;
@@ -53,6 +56,8 @@ char	*ft_itoa(int n, int *minus)
 		*(str + --count) = nb % 10 | '0';
 		nb /= 10;
 	}
+	//if (*minus == -1)
+	//	*str = '-';
 	return (str);
 }
 

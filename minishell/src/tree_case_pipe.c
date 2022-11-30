@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	case_pipe(t_data *data, char *str, node *n, int idx)
+int	case_pipe(t_data *data, char *str, t_node *n, int idx)
 {
 	if (str[idx] == '|')
 	{
@@ -15,4 +15,3 @@ int	case_pipe(t_data *data, char *str, node *n, int idx)
 	}
 	return (0);
 }
-

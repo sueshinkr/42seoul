@@ -86,7 +86,7 @@ int main(int argc, char **argv, char **envp)
     while (1)
     {
 		data->pipe_num = 0;
-		printf("error Code : %d\n", data->exit_code);
+		//printf("error Code : %d\n", data->exit_code);
         line = readline("MINISHELL$ ");
         if (line)
         {
@@ -94,6 +94,7 @@ int main(int argc, char **argv, char **envp)
                 continue;
             add_history(line);
             init_tree(line, data);
+			free_tree(data, data->head);
             free(line);
             line = NULL;
         }
