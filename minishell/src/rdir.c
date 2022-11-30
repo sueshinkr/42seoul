@@ -1,28 +1,5 @@
 #include "minishell.h"
 
-void	get_input(int fd[2], char *file)
-{
-	char	*str;
-
-	close(fd[0]);
-	dup2(fd[1], 1);
-	while (1)
-	{
-		str = get_next_line(0);
-		if (strncmp(file, str, strlen(file)) == 0)
-		{
-			free(str);
-			break;
-		}
-		else
-		{
-			write(1, str, strlen(str));
-			free(str);
-		}
-	}
-	return ;
-}
-
 int	ft_newline_strcmp(char *s1, char *s2)
 {
 	while (*s1 != '\n' && *s2 != '\0')
@@ -44,7 +21,7 @@ int	read_heredoc(char *delimiter, t_data *data)
 
 	fd = open("here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		printf("File Open Error");
+		return (-1);
 	while (1)
 	{
 		write(1, "here_doc> ", 10);
@@ -61,68 +38,138 @@ int	read_heredoc(char *delimiter, t_data *data)
 	return (open("here_doc", O_RDONLY, 0644));
 }
 
+int	r_infile(t_data *data, char *file)
+{
+	if (access(file, F_OK) == -1 || access(file, R_OK) == -1)
+	{
+		perror(file);
+		data->exit_code = 1;
+		data->err_flag = 1;
+		return (1);
+	}
+	if (data->infile_fd != -1)
+		close(data->infile_fd);
+	data->infile_fd = open(file, O_RDONLY);
+	if (data->infile_fd < 0)
+	{
+		perror(file);
+		data->exit_code = 1;
+		data->err_flag = 1;
+		return (1);
+	}
+	if (dup2(data->infile_fd, 0) == -1)
+	{
+		perror("Dup Error :");
+		exit(1);
+	}
+	return (0);
+}
+
+int	r_heredoc(t_data *data, char *delimeter)
+{
+	if (data->infile_fd != -1)
+		close(data->infile_fd);
+	data->infile_fd = read_heredoc(delimeter, data);
+	if (data->infile_fd < 0)
+	{
+		perror("heredoc");
+		data->exit_code = 1;
+		data->err_flag = 1;
+	}
+	if (dup2(data->infile_fd, 0) == -1)
+	{
+		perror("Dup Error :");
+		exit(1);
+	}
+	return (0);
+}
+
+int	r_outfile(t_data *data, char *file)
+{
+	if (data->outfile_fd != -1)
+		close(data->outfile_fd);
+	data->outfile_fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (data->outfile_fd < 0)
+	{
+		perror(file);
+		data->exit_code = 1;
+		data->err_flag = 1;
+		return (1);
+	}
+	if (dup2(data->outfile_fd, 1) == -1)
+	{
+		perror("Dup Error :");
+		exit(1);
+	}
+	return (0);
+}
+
+int	r_appendfile(t_data *data, char *file)
+{
+	if (data->outfile_fd != -1)
+		close(data->outfile_fd);
+	if (access(file, F_OK) == -1)
+		data->outfile_fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	else
+		data->outfile_fd = open(file, O_RDWR | O_APPEND, 0644);
+	if (data->outfile_fd < 0)
+	{
+		perror(file);
+		data->exit_code = 1;
+		data->err_flag = 1;
+		return (1);
+	}
+	if (dup2(data->outfile_fd, 1) == -1)
+	{
+		perror("Dup Error :");
+		exit(1);
+	}
+	return (0);
+}
+
+void	exe_rdir(t_data *data, char *rdir, char *file)
+{
+	if (!strcmp(rdir, "<"))
+	{
+		if (r_infile(data, file))
+			return ;
+	}
+	else if (!strcmp(rdir, "<<"))
+	{
+		if (r_heredoc(data, file))
+			return ;
+	}
+	else if (!strcmp(rdir, ">"))
+	{
+		if (r_outfile(data, file))
+			return ;
+	}
+	else if (!strcmp(rdir, ">>"))
+	{
+		if (r_appendfile(data, file))
+			return ;
+	}
+}
+
 void	set_rdir(t_data *data, node *n)
 {
 	char	*rdir;
 	char	*file;
-	int		idx = -1;
-	// < 분리
+	int		idx;
 
+	idx = -1;
 	while (n->node_str[++idx] && strchr("<>", n->node_str[idx]))
 		;
 	if (!n->node_str[idx])
 	{
-		printf("syntax error\n");
+		write(2, "Syntax Error\n", ft_strlen_gnl("Syntax Error\n"));
+		data->exit_code = 1;
+		data->err_flag = 1;
 		return ;
 	}
 	rdir = str_cut_front(n->node_str, idx + 1);
 	file = str_cut_back(n->node_str, idx - 1);
-
-	//printf("rdir:%s, file :%s!\n", rdir, file);
-
-	if (!strcmp(rdir, "<"))
-	{
-		if (access(file, F_OK) == -1)
-			printf("access error\n");
-		if (data->infile_fd != -1)
-			close(data->infile_fd);
-		data->infile_fd = open(file, O_RDONLY);
-		if (data->infile_fd < 0)
-			printf("open error\n");
-		if (dup2(data->infile_fd, 0) == -1)
-			printf("dup error\n");
-	}
-	else if (!strcmp(rdir, "<<"))
-	{
-		if (data->infile_fd != -1)
-			close(data->infile_fd);
-		data->infile_fd = read_heredoc(file, data);
-		if (dup2(data->infile_fd, 0) == -1)
-			printf("dup error\n");
-	}
-	else if (!strcmp(rdir, ">"))
-	{
-		if (data->outfile_fd != -1)
-			close(data->outfile_fd);
-		data->outfile_fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (data->outfile_fd < 0)
-			printf("open error\n");
-		if (dup2(data->outfile_fd, 1) == -1)
-			printf("dup error\n");
-	}
-	else if (!strcmp(rdir, ">>"))
-	{
-		if (data->outfile_fd != -1)
-			close(data->outfile_fd);
-		if (access(file, F_OK) == -1)
-			data->outfile_fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		else
-			data->outfile_fd = open(file, O_RDWR | O_APPEND, 0644);
-		if (data->outfile_fd < 0)
-			printf("open error\n");
-		if (dup2(data->outfile_fd, 1) == -1)
-			printf("dup error\n");
-	}
+	exe_rdir(data, rdir, file);
 	free(rdir);
 	free(file);
 }

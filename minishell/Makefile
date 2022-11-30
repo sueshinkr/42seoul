@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: taehyeok <taehyeok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
-#    Updated: 2022/11/28 14:17:32 by sueshin          ###   ########.fr        #
+#    Updated: 2022/11/29 22:18:20 by taehyeok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,12 @@ LIB_DIR = ./lib/
 LIB = $(LIB_DIR)libft.a
 INCS_DIR = ./include/
 
+READLINE_LIB	=	-lreadline -L/usr/local/opt/readline/lib
+READLINE_INC	=	-I/usr/local/opt/readline/include
 #READLINE_LIB	=	-lreadline -L/opt/homebrew/opt/readline/lib
 #READLINE_INC	=	-I/opt/homebrew/opt/readline/include
-READLINE_LIB	=	-lreadline -L${HOME}/goinfre/.brew/opt/readline/lib
-READLINE_INC	=	-I${HOME}/goinfre/.brew/opt/readline/include
+#READLINE_LIB	=	-lreadline -L${HOME}/goinfre/.brew/opt/readline/lib
+#READLINE_INC	=	-I${HOME}/goinfre/.brew/opt/readline/include
 
 SRCS_DIR = ./src/
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))

@@ -43,10 +43,15 @@ void	search_tree(t_data *data, node *n)
 	if (n->type == PIPE)
 		;
 	else if (n->type == RDIR)
-		set_rdir(data, n);
+	{
+		if (!data->err_flag)
+			set_rdir(data, n);
+	}
 	else if (n->type == SCMD)
 	{
-		set_scmd(data, n);
+		if (!data->err_flag)
+			set_scmd(data, n);
+		data->err_flag = 0;
 		close(data->infile_fd);
 		close(data->outfile_fd);
 		data->infile_fd = -1;
@@ -74,6 +79,10 @@ void	init_tree(char *line, t_data *data)
 	close(data->last_pipe[1]);
 	data->last_pipe[0] = -1;
 	data->last_pipe[1] = -1;
+	data->err_flag = 0;
+	dup2(data->stdin_fd, 0);
+	dup2(data->stdout_fd, 1);
+	waitpid(data->pid, &data->exit_code, 0);
 	while (wait(0) != -1)
 		;
 }

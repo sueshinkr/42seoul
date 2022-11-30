@@ -15,7 +15,7 @@ int	ft_cd(char **argvs, t_data *data)
 		}
 	}
 	else
-		path = argvs[1];
+		path = ft_strdup(argvs[1]);
 	if (chdir(path) == -1)
 	{
 		free(path);

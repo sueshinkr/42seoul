@@ -56,6 +56,7 @@ t_data  *init_data(char **envp)
     data->infile_fd = -1;
 	data->outfile_fd = -1;
     data->pipe_num = 0;
+	data->err_flag = 0;
 	data->stdin_fd = dup(0);
 	data->stdout_fd = dup(1);
     make_list(env, envp);
@@ -85,6 +86,7 @@ int main(int argc, char **argv, char **envp)
     while (1)
     {
 		data->pipe_num = 0;
+		printf("error Code : %d\n", data->exit_code);
         line = readline("MINISHELL$ ");
         if (line)
         {

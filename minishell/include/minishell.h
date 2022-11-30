@@ -35,6 +35,7 @@ typedef struct s_data
 {
 	node	*head;
 	t_list	*env;
+	pid_t	pid;
 	int		outfile_fd;
 	int		infile_fd;
 	int		stdout_fd;
@@ -43,6 +44,7 @@ typedef struct s_data
 	int		pipe_num;
 	int		cmd_cnt;
 	int		exit_code;
+	int		err_flag;
 } t_data;
 
 # define BUFFER_SIZE 1
