@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static size_t	ft_strlcpy(char *dst, char *src, size_t size)
+size_t	ft_strlcpy(char *dst, char *src, size_t size)
 {
 	int	src_len;
 

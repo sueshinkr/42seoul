@@ -10,7 +10,7 @@ char	*str_cut_front(char *str, int idx)
 		idx--;
 	}
 	tmp = malloc((idx + 1) * sizeof(char));
-	strlcpy(tmp, str, idx);
+	ft_strlcpy(tmp, str, idx);
 	tmp[idx] = '\0';
 	return (tmp);
 }
@@ -26,7 +26,7 @@ char	*str_cut_back(char *str, int idx)
 	while (*(str + len - 1) == ' ')
 		len--;
 	tmp = malloc((len - idx) * sizeof(char));
-	strlcpy(tmp, str + idx + 1, len - idx);
+	ft_strlcpy(tmp, str + idx + 1, len - idx);
 	return (tmp);
 }
 

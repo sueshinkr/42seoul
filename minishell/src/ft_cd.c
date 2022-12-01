@@ -6,7 +6,7 @@ int	ft_cd(char **argvs, t_data *data)
 
 	if (argvs[1] == 0)
 	{
-		path = get_env(ft_strdup("HOME"), data->env);
+		path = get_env("HOME", data->env);
 		if (path == NULL)
 		{
 			errno = 1;

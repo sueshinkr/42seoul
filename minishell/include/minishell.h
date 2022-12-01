@@ -72,6 +72,7 @@ char*	str_cut_back(char *str, int idx);
 char	*ft_strjoin_len(char *str1, char *str2, int len);
 char	*ft_strjoin_nofree(char *str1, char *str2);
 int		ft_strcmp(const char *str1, const char *str2);
+size_t	ft_strlcpy(char *dst, char *src, size_t size);
 char	**ft_split(char const *str, char c);
 int		is_numeric(char *s);
 int		ft_atoi(const char *str);

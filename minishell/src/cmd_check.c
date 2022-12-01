@@ -40,7 +40,7 @@ char	*check_path(t_list *env, t_data *data, char *cmd)
 	if (is_inslash(cmd) && !access(cmd, F_OK))
 	{
 		if (!access(cmd, X_OK))
-			return (cmd);
+			return (ft_strdup(cmd));
 		data->exit_code = 126;
 		return (NULL);
 	}
