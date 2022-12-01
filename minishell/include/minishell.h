@@ -50,6 +50,8 @@ typedef struct s_data
 	int		err_flag;
 } t_data;
 
+void	set_signal(int argc, char **argv);
+
 t_node	*init_node(void);
 void	init_tree(char *line, t_data *data);
 void	make_tree(t_data *data, char *str, t_node *n);

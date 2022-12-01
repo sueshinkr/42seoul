@@ -61,6 +61,7 @@ int	case_rdir(t_data *data, char *str, t_node *n, int idx)
 				n->right = init_node();
 				n->right->type = RDIR;
 				make_tree(data, str_cut_back(str, idx - 1), n->right);
+				return (1);
 			}
 		}
 		return (1);

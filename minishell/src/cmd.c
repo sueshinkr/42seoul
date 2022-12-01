@@ -55,6 +55,8 @@ static void	do_exec(t_data *data, char *cmd_path, char **cmd_str, char **env)
 		exit(errno);
 	}
 	waitpid(pid, &data->exit_code, 0);
+	data->exit_code = data->exit_code >> 8;
+	data->pid = 0;
 }
 
 void	single_cmd(t_data *data, char **cmd_str, char **env)

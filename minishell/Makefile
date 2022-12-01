@@ -6,7 +6,7 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
-#    Updated: 2022/11/30 19:38:01 by sueshin          ###   ########.fr        #
+#    Updated: 2022/12/01 22:01:39 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ READLINE_INC	=	-I/opt/homebrew/opt/readline/include
 
 SRCS_DIR = ./src/
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))
-SRC = test.c parse.c interpret_quotes.c interpret_dollar.c \
+SRC = test.c signal.c \
+	  parse.c interpret_quotes.c interpret_dollar.c \
 	  tree.c tree_case_pipe.c tree_case_cmd.c tree_case_rdir.c \
 	  ft_cd.c ft_echo.c ft_env.c ft_export.c ft_unset.c ft_exit.c ft_pwd.c \
 	  cmd.c cmd_pipe.c cmd_check.c rdir.c rdir_heredoc.c \

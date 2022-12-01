@@ -81,7 +81,11 @@ void	init_tree(char *line, t_data *data)
 	data->err_flag = 0;
 	dup2(data->stdin_fd, 0);
 	dup2(data->stdout_fd, 1);
-	waitpid(data->pid, &data->exit_code, 0);
+	if (data->pid)
+	{
+		waitpid(data->pid, &data->exit_code, 0);
+		data->exit_code = data->exit_code >> 8;
+	}
 	while (wait(0) != -1)
 		;
 }
