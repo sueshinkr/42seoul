@@ -1,23 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/04 17:03:14 by sueshin           #+#    #+#             */
+/*   Updated: 2022/12/05 15:26:49 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	no_input_export(t_list *env)
 {
-	while (env->key)
+	while (env && env->key)
 	{
 		if (env->value)
-			printf("declare -x %s=\"%s\"\n", env->key, env->value);
+			ft_printf("declare -x %s=\"%s\"\n", env->key, env->value);
 		else
-			printf("declare -x %s\n", env->key);
+			ft_printf("declare -x %s\n", env->key);
 		env = env->next;
 	}
 }
 
 static int	exist_export(t_list *temp, char *temp_key, char *temp_val)
 {
-	if (!strcmp(temp_key, temp->key))
+	if (!ft_strcmp(temp_key, temp->key))
 	{
-		if (!temp_val && (strlen(temp->value) == 0))
-			temp->value = strdup("");
+		if (!temp_val && (ft_strlen(temp->value) == 0))
+			temp->value = ft_strdup("");
 		else if (!temp_val)
 			;
 		else
@@ -58,10 +70,10 @@ static void	valid_export(char *str, t_data *data)
 
 static void	invalid_export(char *str)
 {
-	write(2, "export: `", strlen("export: `"));
-	write(2, str, strlen(str));
+	write(2, "export: `", ft_strlen("export: `"));
+	write(2, str, ft_strlen(str));
 	write(2, "': not a valid identifier\n", \
-	strlen("': not a valid identifier\n"));
+	ft_strlen("': not a valid identifier\n"));
 }
 
 int	ft_export(char **argvs, t_data *data)

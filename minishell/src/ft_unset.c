@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/04 17:03:18 by sueshin           #+#    #+#             */
+/*   Updated: 2022/12/05 15:26:51 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	is_valid(char c)
@@ -15,9 +27,9 @@ void	ft_lstdel_value(t_list *lst, char *val)
 {
 	t_list	*temp;
 
-	while (lst->next->key)
+	while (lst->next && lst->next->key)
 	{
-		if (!strcmp(lst->next->key, val))
+		if (!ft_strcmp(lst->next->key, val))
 		{
 			temp = lst->next;
 			lst->next = lst->next->next;
@@ -35,7 +47,7 @@ static void	valid_unset(char *str, t_data *data)
 {
 	t_list	*temp;
 
-	if (!strcmp(data->env->key, str))
+	if (!ft_strcmp(data->env->key, str))
 	{
 		temp = data->env;
 		data->env = data->env->next;
@@ -49,10 +61,10 @@ static void	valid_unset(char *str, t_data *data)
 
 static void	invalid_unset(char *str)
 {
-	write(2, "unset: `", strlen("unset: `"));
-	write(2, str, strlen(str));
+	write(2, "unset: `", ft_strlen("unset: `"));
+	write(2, str, ft_strlen(str));
 	write(2, "': not a valid identifier", \
-	strlen("': not a valid identifier"));
+	ft_strlen("': not a valid identifier"));
 }
 
 int	ft_unset(char **argv, t_data *data)

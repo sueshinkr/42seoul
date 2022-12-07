@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util2.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/04 17:03:48 by sueshin           #+#    #+#             */
+/*   Updated: 2022/12/04 17:11:41 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static size_t	ft_strlcpy(char *dst, char *src, size_t size)
+size_t	ft_strlcpy(char *dst, char *src, size_t size)
 {
 	int	src_len;
 
-	src_len = strlen(src);
+	src_len = ft_strlen(src);
 	if (size == 0)
 		return (src_len);
 	while (size-- > 1 && *src)
@@ -20,7 +32,7 @@ static void	free_str(char **splitstr)
 	free(splitstr);
 }
 
-static int	word_count(char const *str, char c)
+static int	_word_count(char const *str, char c)
 {
 	int	count;
 
@@ -39,7 +51,7 @@ static int	word_count(char const *str, char c)
 	return (count);
 }
 
-static int	plus_word(char const *str, char c, char **splitstr)
+static int	plus__word(char const *str, char c, char **splitstr)
 {
 	int	len;
 
@@ -72,10 +84,10 @@ char	**ft_split(char const *str, char c)
 {
 	char	**splitstr;
 
-	splitstr = (char **)malloc((word_count(str, c) + 1) * sizeof(char *));
+	splitstr = (char **)malloc((_word_count(str, c) + 1) * sizeof(char *));
 	if (!splitstr)
 		return (NULL);
-	if ((plus_word(str, c, splitstr)) == -1)
+	if ((plus__word(str, c, splitstr)) == -1)
 		return (NULL);
 	return (splitstr);
 }

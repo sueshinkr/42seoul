@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util3.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/04 17:03:50 by sueshin           #+#    #+#             */
+/*   Updated: 2022/12/04 17:11:43 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
@@ -60,4 +72,17 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	return (result);
+}
+
+void	free_arr(char **arr)
+{
+	int	idx;
+
+	idx = 0;
+	while (arr[idx])
+	{
+		free(arr[idx]);
+		idx++;
+	}
+	free(arr);
 }

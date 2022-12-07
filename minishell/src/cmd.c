@@ -1,118 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/04 17:03:01 by sueshin           #+#    #+#             */
+/*   Updated: 2022/12/05 15:45:29 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char	*ft_strjoin_pipex(char *str1, char *str2)
+static char	**make_env(t_data *data, int len)
 {
-	char	*joinstr;
-	size_t	joinstr_len;
-	size_t	idx1;
-	size_t	idx2;
-
-	idx1 = 0;
-	idx2 = 0;
-	joinstr_len = strlen(str1) + strlen(str2) + 1;
-	joinstr = (char *)malloc(joinstr_len * sizeof(char));
-	if (!joinstr)
-		return (NULL);
-	while (*(str1 + idx1))
-	{
-		*(joinstr + idx1) = *(str1 + idx1);
-		idx1++;
-	}
-	while (*(str2 + idx2))
-	{
-		*(joinstr + idx1 + idx2) = *(str2 + idx2);
-		idx2++;
-	}
-	*(joinstr + idx1 + idx2) = 0;
-	return (joinstr);
-}
-
-static char	*check_slash(char *path, char *cmd)
-{
-	char	*temp;
-	char	*ret;
-	int		len;
-
-	if (cmd[0] == '/')
-		return (strdup(cmd));
-	len = strlen(path);
-	if (path[len - 1] == '/')
-		ret = ft_strjoin_pipex(path, cmd);
-	else
-	{
-		temp = ft_strjoin_pipex("/", cmd);
-		ret = ft_strjoin_pipex(path, temp);
-		free(temp);
-	}
-	return (ret);
-}
-
-char	*check_path(t_list *env, char *cmd)
-{
-	char	*str;
-	char	**path;
-	while (env->key)
-	{
-		if (!strcmp(env->key, "PATH"))
-			path = ft_split(env->value, ':');
-		env = env->next;
-	}
-
-	while (*path)
-	{
-		str = check_slash(*path, cmd);
-		if (!access(str, F_OK))
-			return (str);
-		else
-			free(str);
-		path++;
-	}
-	return (NULL);
-}
-
-void do_exec(char *cmd_path, char **cmd_str, char **env)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		printf("error\n");
-	if (pid == 0)
-	{
-		execve(cmd_path, cmd_str, env);
-	}
-	waitpid(pid, NULL, 0);
-}
-
-void	pipe_in(char *cmd_path, char **cmd_str, char **env, t_data *data)
-{
-	if (!strcmp(cmd_str[0], "echo"))
-		ft_echo(cmd_str);
-	else if (!strcmp(cmd_str[0], "cd"))
-		ft_cd(cmd_str, data);
-	else if (!strcmp(cmd_str[0], "pwd"))
-		ft_pwd(cmd_str);
-	else if (!strcmp(cmd_str[0], "export"))
-		ft_export(cmd_str, data);
-	else if (!strcmp(cmd_str[0], "unset"))
-		ft_unset(cmd_str, data);
-	else if (!strcmp(cmd_str[0], "env"))
-		ft_env(cmd_str, data->env);
-	else if (!strcmp(cmd_str[0], "exit"))
-		ft_exit(cmd_str);
-	else
-		execve(cmd_path, cmd_str, env);
-	exit(0);
-}
-
-char	**make_env(t_data *data)
-{
-	int		len;
 	t_list	*temp;
 	char	**env;
 	int		idx;
 
-	len = 0;
 	temp = data->env;
 	while (temp)
 	{
@@ -126,97 +31,82 @@ char	**make_env(t_data *data)
 	{
 		if (temp->value)
 		{
-			env[++idx] = strdup(temp->key);
-			env[idx] = ft_strjoin_pipex(env[idx], "=");
-			env[idx] = ft_strjoin_pipex(env[idx], temp->value);
+			env[++idx] = ft_strdup(temp->key);
+			env[idx] = ft_strjoin_gnl(env[idx], "=");
+			env[idx] = ft_strjoin_gnl(env[idx], temp->value);
 		}
 		temp = temp->next;
 	}
+	env[++idx] = 0;
 	return (env);
 }
 
-void	set_scmd(t_data *data, node *n)
+void	prt_execute_err(t_data *data)
 {
-	char		**cmd_str;
-	char		*cmd_path;
-	char		**env;
-	int			p[2];
+	if (data->exit_code == 126)
+		write(2, "permission denied\n", ft_strlen("permission denied\n"));
+	else
+		write(2, "command not found\n", ft_strlen("command not found\n"));
+	return ;
+}
 
-	data->cmd_cnt++;
-	cmd_str = ft_split(n->node_str, ' ');
-	env = make_env(data);
-	if (data->pipe_num < 1)
+static void	do_exec(t_data *data, char *cmd_path, char **cmd_str, char **env)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
 	{
-		if (!strcmp(cmd_str[0], "echo"))
-			ft_echo(cmd_str);
-		else if (!strcmp(cmd_str[0], "cd"))
-			ft_cd(cmd_str, data);
-		else if (!strcmp(cmd_str[0], "pwd"))
-			ft_pwd(cmd_str);
-		else if (!strcmp(cmd_str[0], "export"))
-			ft_export(cmd_str, data);
-		else if (!strcmp(cmd_str[0], "unset"))
-			ft_unset(cmd_str, data);
-		else if (!strcmp(cmd_str[0], "env"))
-			ft_env(cmd_str, data->env);
-		else if (!strcmp(cmd_str[0], "exit"))
-			ft_exit(cmd_str);
-		else
-		{
-			cmd_path = check_path(data->env, cmd_str[0]);
-			if (!cmd_path)
-			{
-				printf("cmd error\n");
-				return ;
-			}
-			do_exec(cmd_path, cmd_str, env);
-		}
+		perror("Fork :");
+		exit(1);
 	}
+	if (pid == 0)
+	{
+		execve(cmd_path, cmd_str, env);
+		perror(cmd_str[0]);
+		exit(errno);
+	}
+	waitpid(pid, &data->exit_code, 0);
+	data->exit_code = data->exit_code >> 8;
+	data->pid = 0;
+}
+
+void	single_cmd(t_data *data, char **cmd_str, char **env)
+{
+	char	*cmd_path;
+
+	if (is_builtin(data, cmd_str))
+		;
 	else
 	{
-		cmd_path = check_path(data->env, cmd_str[0]);
+		cmd_path = check_path(data->env, data, cmd_str[0]);
 		if (!cmd_path)
 		{
-			printf("cmd error\n");
+			prt_execute_err(data);
 			return ;
 		}
-		if (pipe(p) == -1)
-			printf("pipe error\n");
-		pid_t	pid;
-		pid = fork();
-		if (pid == 0)
-		{
-			if (data->last_pipe[0] == -1)
-			{
-				dup2(p[1], 1);
-				close(p[0]);
-				pipe_in(cmd_path, cmd_str, env, data);
-			}
-			else
-			{
-				if (data->infile_fd == -1)
-					dup2(data->last_pipe[0], 0);
-				else
-					dup2(data->infile_fd, 0);
-				if (data->cmd_cnt < data->pipe_num)
-				{
-					dup2(p[1], 1);
-					close(p[0]);
-				}
-				else
-				{
-					dup2(data->outfile_fd, 1);
-				}
-				close(data->last_pipe[1]);
-				pipe_in(cmd_path, cmd_str, env, data);
-			}
-		}
-		else
-		{
-			close(data->last_pipe[0]);
-			close(data->last_pipe[1]);
-			data->last_pipe[0] = p[0];
-			data->last_pipe[1] = p[1];
-		}
+		do_exec(data, cmd_path, cmd_str, env);
+		free(cmd_path);
 	}
+}
+
+void	set_scmd(t_data *data, t_node *n)
+{
+	char	**cmd_str;
+	char	**env;
+	int		idx;
+
+	idx = -1;
+	data->cmd_cnt++;
+	cmd_str = ft_split(n->node_str, ' ');
+	while (cmd_str[++idx])
+		decode_text(cmd_str[idx]);
+	env = make_env(data, 0);
+	if (data->pipe_num < 1)
+		single_cmd(data, cmd_str, env);
+	else
+		pipe_cmd(data, cmd_str, env);
+	free_arr(cmd_str);
+	free_arr(env);
+	unlink("/tmp/here_doc");
 }
