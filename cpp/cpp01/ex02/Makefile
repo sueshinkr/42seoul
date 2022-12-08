@@ -6,11 +6,11 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
-#    Updated: 2022/12/08 12:19:52 by sueshin          ###   ########.fr        #
+#    Updated: 2022/12/08 13:15:45 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = phonebook
+NAME = brain
 CC = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 

@@ -6,12 +6,12 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
-#    Updated: 2022/12/07 10:01:40 by sueshin          ###   ########.fr        #
+#    Updated: 2022/12/08 12:20:00 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = $(SRCS:.cpp=)
-CC = g++
+CC = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRCS_DIR = ./
