@@ -1,68 +1,69 @@
 #include "Fixed.hpp"
+#include <cmath>
 
 const int Fixed::fractional_bits = 8;
 
 Fixed::Fixed()
 {
-    std::cout << "Default constructor called\n";
-    fixed_value = 0;
+	std::cout << "Default constructor called\n";
+	fixed_value = 0;
 }
 
-Fixed::Fixed(const int)
+Fixed::Fixed(const int num)
 {
-    std::cout << "Int constructor called\n";
-
+	std::cout << "Int constructor called\n";
+	fixed_value = num << fractional_bits;
 }
 
-Fixed::Fixed(const float)
+Fixed::Fixed(const float num)
 {
-    std::cout << "Float constructor called\n";
+	std::cout << "Float constructor called\n";
+	fixed_value = roundf(num * (1 << fractional_bits));
 }
 
 Fixed::Fixed(const Fixed& fx) : fixed_value(fx.fixed_value)
 {
-    std::cout << "Copy constructor called\n";
-    fixed_value = fx.getRawBits();
+	std::cout << "Copy constructor called\n";
+	fixed_value = fx.getRawBits();
 }
 
 Fixed::~Fixed()
 {
-    std::cout << "Destructor called\n";
+	std::cout << "Destructor called\n";
 }
 
-Fixed&  Fixed::operator=(const Fixed& fx)
+Fixed&	Fixed::operator=(const Fixed& fx)
 {
-    std::cout << "Copy assignment operator called\n";
+	std::cout << "Copy assignment operator called\n";
 
-    if (this != &fx)
-        fixed_value = fx.getRawBits();
+	if (this != &fx)
+		fixed_value = fx.getRawBits();
 
-    return *this;
+	return *this;
 }
 
-int     Fixed::getRawBits(void) const
+int		Fixed::getRawBits(void) const
 {
-    std::cout << "getRawBits member function called\n";
-    return fixed_value;
+	return fixed_value;
 }
 
-void    Fixed::setRawBits(int const raw)
+void	Fixed::setRawBits(int const raw)
 {
-    fixed_value = raw;
+	fixed_value = raw;
 }
 
 float Fixed::toFloat(void) const
 {
-    return static_cast<float>(fixed_value);
+	return (static_cast<float>(fixed_value) / (1 << fractional_bits));
 }
 
 int Fixed::toInt(void) const
 {
-    return fixed_value;
+	return (fixed_value >> fractional_bits);
 }
 
-std::ostream&   operator<<(std::ostream& os, const Fixed& fx)
+std::ostream&	operator<<(std::ostream& os, const Fixed& fx)
 {
-    os << fx.toFloat();
-    return os;
+	os << fx.toFloat();
+	return os;
 }
