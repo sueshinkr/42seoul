@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:33:34 by sueshin           #+#    #+#             */
-/*   Updated: 2022/05/23 22:26:01 by sueshin          ###   ########.fr       */
+/*   Updated: 2022/10/26 13:30:49 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <stdio.h>
-//# include "libft.h"
 
 int		ft_printf(const char *str, ...);
 void	select_format(const char *str, va_list *ap, int *count);
