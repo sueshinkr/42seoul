@@ -9,7 +9,7 @@ int	main()
 	{
 		std::cout << "==============================\n";
 		std::cout << "Select CMD (ADD, SEARCH, EXIT)\n";
-		std::cin >> cmd;
+		std::getline(std::cin, cmd);
 		if (cmd == "ADD")
 			pb.add_contact();
 		else if (cmd == "SEARCH")

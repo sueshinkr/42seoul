@@ -2,10 +2,11 @@
 
 void	Contact::add_data()
 {
-	std::cin.ignore(INT_MAX, '\n');
+	//std::cin.ignore(INT_MAX, '\n');
 
 	std::cout << "first name : ";
 	std::getline(std::cin, first_name);
+	first_name.find_first_not_of()
 	while (first_name.empty())
 	{
 		std::cout << "Please write the first name\nfirst name : ";
