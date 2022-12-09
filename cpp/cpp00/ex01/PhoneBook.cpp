@@ -2,12 +2,9 @@
 
 void	Contact::add_data()
 {
-	//std::cin.ignore(INT_MAX, '\n');
-
 	std::cout << "first name : ";
 	std::getline(std::cin, first_name);
-	first_name.find_first_not_of()
-	while (first_name.empty())
+	while (first_name.find_first_not_of(" \t\v\f\r") == std::string::npos)
 	{
 		std::cout << "Please write the first name\nfirst name : ";
 		std::getline(std::cin, first_name);
@@ -15,7 +12,7 @@ void	Contact::add_data()
 
 	std::cout << "last name : ";
 	std::getline(std::cin, last_name);
-	while (last_name.empty())
+	while (last_name.find_first_not_of(" \t\v\f\r") == std::string::npos)
 	{
 		std::cout << "Please write the last name\nlast name : ";
 		std::getline(std::cin, last_name);
@@ -23,7 +20,7 @@ void	Contact::add_data()
 
 	std::cout << "nickname : ";
 	std::getline(std::cin, nick_name);
-	while (nick_name.empty())
+	while (nick_name.find_first_not_of(" \t\v\f\r") == std::string::npos)
 	{
 		std::cout << "Please write the nickname\nnickname : ";
 		std::getline(std::cin, nick_name);
@@ -31,7 +28,7 @@ void	Contact::add_data()
 
 	std::cout << "phone number : ";
 	std::getline(std::cin, phone_number);
-	while (phone_number.empty())
+	while (phone_number.find_first_not_of(" \t\v\f\r") == std::string::npos)
 	{
 		std::cout << "Please write the phone number\nphone number : ";
 		std::getline(std::cin, phone_number);
@@ -39,7 +36,7 @@ void	Contact::add_data()
 
 	std::cout << "darkest secret : ";
 	std::getline(std::cin, darkest_secret);
-	while (darkest_secret.empty())
+	while (darkest_secret.find_first_not_of(" \t\v\f\r") == std::string::npos)
 	{
 		std::cout << "Please write the darkest secret\ndarkest secret : ";
 		std::getline(std::cin, darkest_secret);
@@ -57,7 +54,7 @@ void	Contact::show(int idx)
 {
 	std::cout << std::setfill(' ') << std::setw(10) << idx << "|";
 
-	std::cout << std::setfill(' ') << std::setw(10);
+	std::cout << std::setfill(' ') << std::setw(20);
 	if (first_name.length() > 10)
 		std::cout << (first_name.substr(0, 9) + ".") << "|";
 	else
@@ -124,7 +121,6 @@ void	PhoneBook::search_contact()
 	contact[num].show_secret();
 }
 
-PhoneBook::PhoneBook()
+PhoneBook::PhoneBook() : idx(0)
 {
-	idx = 0;
 }
