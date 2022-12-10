@@ -24,7 +24,6 @@ Fixed::Fixed(const float num)
 Fixed::Fixed(const Fixed& fx) : fixed_value(fx.fixed_value)
 {
 	std::cout << "Copy constructor called\n";
-	fixed_value = fx.getRawBits();
 }
 
 Fixed::~Fixed()
@@ -37,7 +36,7 @@ Fixed&	Fixed::operator=(const Fixed& fx)
 	std::cout << "Copy assignment operator called\n";
 
 	if (this != &fx)
-		fixed_value = fx.getRawBits();
+		fixed_value = fx.fixed_value;
 
 	return *this;
 }
