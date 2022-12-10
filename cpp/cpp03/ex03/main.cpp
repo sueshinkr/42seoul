@@ -1,9 +1,9 @@
-#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 
 int	main()
 {
-	FragTrap a("a");
-	FragTrap b("b");
+	DiamondTrap a("a");
+	DiamondTrap b("b");
 
 	a.attack("b");
 	b.takeDamage(30);
@@ -22,9 +22,9 @@ int	main()
 
 	std::cout << "===========================\n";
 
-	FragTrap c;
+	DiamondTrap c;
 	c = a;
-	FragTrap d(b);
+	DiamondTrap d(b);
 
 	c.attack("d");
 	d.takeDamage(30);
@@ -37,6 +37,7 @@ int	main()
 
 	std::cout << "===========================\n";
 
-	FragTrap e("e");
+	DiamondTrap e("e");
+	e.GuardGate();
 	e.highFivesGuys();
 }

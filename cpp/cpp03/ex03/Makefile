@@ -6,11 +6,11 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
-#    Updated: 2022/12/10 21:00:43 by sueshin          ###   ########.fr        #
+#    Updated: 2022/12/11 00:11:04 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fragtrap
+NAME = diamondtrap
 CC = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 

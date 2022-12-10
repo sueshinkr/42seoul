@@ -1,3 +1,4 @@
+#pragma once
 #include "ScavTrap.hpp"
 #include "FragTrap.hpp"
 
