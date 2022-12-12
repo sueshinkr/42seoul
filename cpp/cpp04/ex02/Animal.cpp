@@ -28,11 +28,6 @@ Animal&	Animal::operator=(const Animal& am)
 	return *this;
 }
 
-void		Animal::makeSound() const
-{
-	std::cout << "What is the Animal's Sound...?\n";
-}
-
 std::string	Animal::getType() const
 {
 	return type;
@@ -41,10 +36,4 @@ std::string	Animal::getType() const
 void		Animal::setType(std::string const newtype)
 {
 	type = newtype;
-}
-
-Brain*		Animal::getBrain() const
-{
-	std::cout << "class Animal doesn't have Brain...";
-	return NULL;
 }

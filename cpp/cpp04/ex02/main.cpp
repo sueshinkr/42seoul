@@ -8,6 +8,7 @@ int main()
 {
 	const Animal*	j = new Dog();
 	const Animal*	i = new Cat();
+	//const Animal*	animal = new Animal();
 
 	delete j;
 	delete i;
