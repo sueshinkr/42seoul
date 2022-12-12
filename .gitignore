@@ -7,8 +7,4 @@
 a.out
 *.a
 .dSYM*
-<<<<<<< HEAD
 .DS_Store
-=======
-.txt
->>>>>>> ffc4441 (.)
