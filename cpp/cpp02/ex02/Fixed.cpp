@@ -7,22 +7,21 @@ const int Fixed::fractional_bits = 8;
 	Orthodox Canonical Form
 -----------------------------*/
 
-Fixed::Fixed()
+Fixed::Fixed() : fixed_value(0)
 {
-	fixed_value = 0;
 }
 
 Fixed::Fixed(const int num)
 {
-	fixed_value = num << fractional_bits;
+	setRawBits(num << fractional_bits);
 }
 
 Fixed::Fixed(const float num)
 {
-	fixed_value = roundf(num * (1 << fractional_bits));
+	setRawBits(roundf(num * (1 << fractional_bits)));
 }
 
-Fixed::Fixed(const Fixed& fx) : fixed_value(fx.fixed_value)
+Fixed::Fixed(const Fixed& fx) : fixed_value(fx.getRawBits())
 {
 }
 
@@ -33,7 +32,7 @@ Fixed::~Fixed()
 Fixed&	Fixed::operator=(const Fixed& fx)
 {
 	if (this != &fx)
-		fixed_value = fx.fixed_value;
+		setRawBits(fx.getRawBits());
 
 	return *this;
 }
@@ -44,7 +43,7 @@ Fixed&	Fixed::operator=(const Fixed& fx)
 
 bool	Fixed::operator<(const Fixed& fx) const
 {
-	if (fixed_value < fx.fixed_value)
+	if (getRawBits() < fx.getRawBits())
 		return true;
 	else
 		return false;
@@ -52,7 +51,7 @@ bool	Fixed::operator<(const Fixed& fx) const
 
 bool	Fixed::operator>(const Fixed& fx) const
 {
-	if (fixed_value > fx.fixed_value)
+	if (getRawBits() > fx.getRawBits())
 		return true;
 	else
 		return false;
@@ -60,7 +59,7 @@ bool	Fixed::operator>(const Fixed& fx) const
 
 bool	Fixed::operator<=(const Fixed& fx) const
 {
-	if (fixed_value <= fx.fixed_value)
+	if (getRawBits() <= fx.getRawBits())
 		return true;
 	else
 		return false;
@@ -68,7 +67,23 @@ bool	Fixed::operator<=(const Fixed& fx) const
 
 bool	Fixed::operator>=(const Fixed& fx) const
 {
-	if (fixed_value >= fx.fixed_value)
+	if (getRawBits() >= fx.getRawBits())
+		return true;
+	else
+		return false;
+}
+
+bool	Fixed::operator==(const Fixed& fx) const
+{
+	if (getRawBits() == fx.getRawBits())
+		return true;
+	else
+		return false;
+}
+
+bool	Fixed::operator!=(const Fixed& fx) const
+{
+	if (getRawBits() == fx.getRawBits())
 		return true;
 	else
 		return false;
@@ -80,32 +95,28 @@ bool	Fixed::operator>=(const Fixed& fx) const
 
 Fixed	Fixed::operator+(const Fixed& fx) const
 {
-	Fixed plus_Fixed;
-
-	plus_Fixed.fixed_value = fixed_value + fx.fixed_value;
+	Fixed plus_Fixed(getRawBits() + fx.getRawBits());
 
 	return plus_Fixed;
 }
 
 Fixed	Fixed::operator-(const Fixed& fx) const
 {
-	Fixed plus_Fixed;
-
-	plus_Fixed.fixed_value = fixed_value - fx.fixed_value;
+	Fixed minus_Fixed(getRawBits() - fx.getRawBits());
 	
-	return plus_Fixed;
+	return minus_Fixed;
 }
 
 Fixed	Fixed::operator*(const Fixed& fx) const
 {
-	Fixed plus_Fixed(toFloat() * fx.toFloat());
+	Fixed multiple_Fixed(toFloat() * fx.toFloat());
 	
-	return plus_Fixed;
+	return multiple_Fixed;
 }
 
 Fixed	Fixed::operator/(const Fixed& fx) const
 {
-	if (fx.fixed_value == 0)
+	if (fx.getRawBits() == 0)
 	{
 		std::cerr << "Can't devide by 0\n";
 		exit(1);
@@ -124,15 +135,15 @@ Fixed	Fixed::operator++(int)
 {
 	Fixed post_Fixed(*this);
 
-	fixed_value += 1;
+	setRawBits(getRawBits() + 1);
 	
 	return post_Fixed;
 }
 
 Fixed&	Fixed::operator++(void)
 {
-	fixed_value += 1;
-	
+	setRawBits(getRawBits() + 1);
+
 	return *this;
 }
 
@@ -140,14 +151,14 @@ Fixed	Fixed::operator--(int)
 {
 	Fixed post_Fixed(*this);
 
-	fixed_value -= 1;
+	setRawBits(getRawBits() - 1);
 	
 	return post_Fixed;
 }
 
 Fixed&	Fixed::operator--(void)
 {
-	fixed_value -= 1;
+	setRawBits(getRawBits() - 1);
 	
 	return *this;
 }
@@ -192,12 +203,12 @@ void	Fixed::setRawBits(int const raw)
 
 float	Fixed::toFloat(void) const
 {
-	return (static_cast<float>(fixed_value) / (1 << fractional_bits));
+	return (static_cast<float>(getRawBits()) / (1 << fractional_bits));
 }
 
 int		Fixed::toInt(void) const
 {
-	return (fixed_value >> fractional_bits);
+	return (getRawBits() >> fractional_bits);
 }
 
 /*------------------

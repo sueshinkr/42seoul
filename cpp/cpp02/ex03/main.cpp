@@ -4,7 +4,7 @@ void	print_triangle(Point const a, Point const b, Point const c, Point const poi
 {
 	for (int y = 50; y >= 0; y--)
 	{
-		for (int x = 50; x >= 0; x--)
+		for (int x = 0; x <= 50; x++)
 		{
 			if ((x == roundf(a.getx()) && y == roundf(a.gety()))
 				|| (x == roundf(b.getx()) && y == roundf(b.gety()))
