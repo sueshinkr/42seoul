@@ -54,7 +54,7 @@ void	Contact::show(int idx)
 {
 	std::cout << std::setfill(' ') << std::setw(10) << idx << "|";
 
-	std::cout << std::setfill(' ') << std::setw(20);
+	std::cout << std::setfill(' ') << std::setw(10);
 	if (first_name.length() > 10)
 		std::cout << (first_name.substr(0, 9) + ".") << "|";
 	else
@@ -108,6 +108,11 @@ void	PhoneBook::search_contact()
 {
 	int	num;
 
+	if (!contact[0].is_exist())
+	{
+		std::cout << "there is no phone number in this phonebook\n";
+		return ;
+	}
 	show_list();
 	for (int i = 0; i < 8 && contact[i].is_exist(); i++)
 		contact[i].show(i);

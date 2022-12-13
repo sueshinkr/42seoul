@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
-#    Updated: 2022/12/09 11:55:30 by sueshin          ###   ########.fr        #
+#    Updated: 2022/12/13 15:22:21 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = $(SRCS:.cpp=)
 CC = c++
-CXXFLAGS = -Wall -Wextra -Werror #-std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRCS_DIR = ./
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))

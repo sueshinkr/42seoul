@@ -10,6 +10,11 @@ int	main()
 		std::cout << "==============================\n";
 		std::cout << "Select CMD (ADD, SEARCH, EXIT)\n";
 		std::getline(std::cin, cmd);
+		if (std::cin.eof() || std::cin.bad())
+		{
+			std::cout << "BAD INPUT. EXIT PROGRAM\n";
+			exit(1);
+		}
 		if (cmd == "ADD")
 			pb.add_contact();
 		else if (cmd == "SEARCH")
