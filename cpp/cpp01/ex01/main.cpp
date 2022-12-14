@@ -13,5 +13,6 @@ int	main()
 	}
 
 	delete [] zb;
+
 	return 0;
 }

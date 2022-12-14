@@ -21,6 +21,7 @@ int	main(int argc, char** argv)
 	char		ch;
 	while (fin.get(ch))
 		temp += ch;
+	fin.close();
 
 	size_t	pos;
 	while ((pos = temp.find(argv[2])) != std::string::npos)
@@ -37,6 +38,7 @@ int	main(int argc, char** argv)
 		return 1;
 	}
 	fout << temp;
+	fout.close();
 
 	std::cout << "Copy and Replace Success!\n";
 
