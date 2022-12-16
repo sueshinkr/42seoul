@@ -38,23 +38,44 @@ Base*	generate(void)
 
 void	identify(Base* p)
 {
-	A* a = dynamic_cast<A*>(p);
-	B* b = dynamic_cast<B*>(p);
-	C* c = dynamic_cast<C*>(p);
-
-	if (a)
+	if (dynamic_cast<A*>(p))
 		std::cout << "Acutal type of the object is A\n";
-	else if (b)
+	else if (dynamic_cast<B*>(p))
 		std::cout << "Acutal type of the object is B\n";
-	else if (c)
+	else if (dynamic_cast<C*>(p))
 		std::cout << "Acutal type of the object is C\n";
 	else
 		std::cout << "What?\n";
 }
 
-/*
 void	identify(Base& p)
 {
-
+	try
+	{
+		A& a = dynamic_cast<A&>(p);
+		static_cast<void>(a);
+		std::cout << "Acutal type of the object is A\n";
+	}
+	catch(const std::exception& e)
+	{
+		try
+		{
+			B& b = dynamic_cast<B&>(p);
+			static_cast<void>(b);
+			std::cout << "Acutal type of the object is B\n";
+		}
+		catch(const std::exception& e)
+		{
+			try
+			{
+				C& c= dynamic_cast<C&>(p);
+				static_cast<void>(c);
+				std::cout << "Acutal type of the object is C\n";
+			}
+			catch(const std::exception& e)
+			{
+				std::cerr << e.what() << '\n';
+			}
+		}
+	}
 }
-*/
