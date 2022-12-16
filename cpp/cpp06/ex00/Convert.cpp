@@ -30,8 +30,8 @@ void	Convert::Check()
 {
 	try
 	{
-		if (ptr && val == 0)
-			throw std::bad_alloc();
+		if (ptr && *ptr && !(std::isinf(val) || *ptr == 'f'))
+				throw std::bad_alloc();
 		type_char();
 		type_int();
 		type_float();
@@ -47,7 +47,7 @@ void	Convert::type_char()
 {
 	char c = static_cast<char>(val);
 	std::cout << "char : ";
-	if (std::isnan(val) || std::isinf(val))
+	if (std::isnan(val) || std::isinf(val) || val > 127 || val < 0)
 		std::cout << "impossible\n";
 	else if (std::isprint(c))
 		std::cout << c << std::endl;
