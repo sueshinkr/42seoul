@@ -1,5 +1,4 @@
 #include "Fixed.hpp"
-#include <cmath>
 
 const int Fixed::fractional_bits = 8;
 
@@ -50,12 +49,12 @@ void	Fixed::setRawBits(int const raw)
 	fixed_value = raw;
 }
 
-float Fixed::toFloat(void) const
+float	Fixed::toFloat(void) const
 {
 	return (static_cast<float>(getRawBits()) / (1 << fractional_bits));
 }
 
-int Fixed::toInt(void) const
+int		Fixed::toInt(void) const
 {
 	return (getRawBits() >> fractional_bits);
 }
