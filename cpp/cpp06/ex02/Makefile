@@ -6,11 +6,11 @@
 #    By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
-#    Updated: 2022/12/16 14:14:25 by sueshin          ###   ########.fr        #
+#    Updated: 2022/12/16 14:14:44 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = convert
+NAME = identify
 CC = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
