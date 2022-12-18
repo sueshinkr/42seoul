@@ -4,7 +4,7 @@ Ice::Ice() : AMateria("ice")
 {
 }
 
-Ice::Ice(const Ice& i) : AMateria(i.getType())
+Ice::Ice(Ice const& i) : AMateria(i.getType())
 {
 }
 
@@ -12,7 +12,7 @@ Ice::~Ice()
 {
 }
 
-Ice&	Ice::operator=(const Ice& i)
+Ice&	Ice::operator=(Ice const& i)
 {
 	type = i.getType();
 

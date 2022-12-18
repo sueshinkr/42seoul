@@ -10,7 +10,7 @@ WrongAnimal::WrongAnimal(std::string newtype) : type(newtype)
 	std::cout << "class WrongAnimal is constructed\n";
 }
 
-WrongAnimal::WrongAnimal(const WrongAnimal& am) : type(am.getType())
+WrongAnimal::WrongAnimal(WrongAnimal const& am) : type(am.getType())
 {
 	std::cout << "class WrongAnimal is constructed by copy\n";
 }
@@ -20,10 +20,13 @@ WrongAnimal::~WrongAnimal()
 	std::cout << "class WrongAnimal is destructed\n";
 }
 
-WrongAnimal&	WrongAnimal::operator=(const WrongAnimal& am)
+WrongAnimal&	WrongAnimal::operator=(WrongAnimal const& am)
 {
-	setType(am.getType());
-	std::cout << "class WrongAnimal is copied by assignment\n";
+	if (this != &am)
+	{
+		setType(am.getType());
+		std::cout << "class WrongAnimal is copied by assignment\n";
+	}
 
 	return *this;
 }

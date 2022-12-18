@@ -8,11 +8,17 @@ MateriaSource::MateriaSource()
 	}
 }
 
-MateriaSource::MateriaSource(MateriaSource& ms)
+MateriaSource::MateriaSource(MateriaSource const& ms)
 {
 	for (int idx = 0; idx < 4; idx++)
 	{
-		materia[idx] = ms.materia[idx];
+		if (materia[idx])
+		{
+			delete materia[idx];
+			materia[idx] = nullptr;
+		}
+		if (ms.materia[idx])
+			materia[idx] = ms.materia[idx]->clone();
 	}
 }
 
@@ -28,11 +34,20 @@ MateriaSource::~MateriaSource()
 	}
 }
 
-MateriaSource&	MateriaSource::operator=(MateriaSource& ms)
+MateriaSource&	MateriaSource::operator=(MateriaSource const& ms)
 {
-	for (int idx = 0; idx < 4; idx++)
+	if (this != &ms)
 	{
-		materia[idx] = ms.materia[idx];
+		for (int idx = 0; idx < 4; idx++)
+		{
+			if (materia[idx])
+			{
+				delete materia[idx];
+				materia[idx] = nullptr;
+			}
+			if (ms.materia[idx])
+				materia[idx] = ms.materia[idx]->clone();
+		}
 	}
 
 	return *this;

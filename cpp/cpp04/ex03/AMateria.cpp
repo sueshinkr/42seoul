@@ -9,7 +9,7 @@ AMateria::AMateria(std::string const& type) : type(type)
 {
 }
 
-AMateria::AMateria(const AMateria& am) : type(am.getType())
+AMateria::AMateria(AMateria const& am) : type(am.getType())
 {
 
 }
@@ -18,9 +18,12 @@ AMateria::~AMateria()
 {
 }
 
-AMateria& AMateria::operator=(const AMateria& am)
+AMateria& AMateria::operator=(AMateria const& am)
 {
-	type = am.getType();
+	if(this != &am)
+	{
+		type = am.getType();
+	}
 
 	return *this;
 }

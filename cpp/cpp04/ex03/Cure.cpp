@@ -4,7 +4,7 @@ Cure::Cure() : AMateria("cure")
 {
 }
 
-Cure::Cure(const Cure& c) : AMateria(c.getType())
+Cure::Cure(Cure const& c) : AMateria(c.getType())
 {
 }
 
@@ -12,7 +12,7 @@ Cure::~Cure()
 {
 }
 
-Cure&	Cure::operator=(const Cure& c)
+Cure&	Cure::operator=(Cure const& c)
 {
 	type = c.getType();
 

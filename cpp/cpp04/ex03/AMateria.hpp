@@ -9,9 +9,9 @@ class AMateria
 	public:
 		AMateria();
 		AMateria(std::string const& type);
-		AMateria(const AMateria& am);
+		AMateria(AMateria const& am);
 		virtual ~AMateria();
-		AMateria& operator=(const AMateria& am);
+		AMateria& operator=(AMateria const& am);
 
 		std::string const&	getType() const;
 		virtual AMateria*	clone() const;

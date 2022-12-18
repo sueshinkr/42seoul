@@ -16,11 +16,17 @@ Character::Character(std::string name) : name(name)
 	}
 }
 
-Character::Character(Character& ch) : name(ch.getName())
+Character::Character(Character const& ch) : name(ch.getName())
 {
 	for (int idx = 0; idx < 4; idx++)
 	{
-		materia[idx] = ch.materia[idx];
+		if (materia[idx])
+		{
+			delete materia[idx];
+			materia[idx] = nullptr;
+		}
+		if (ch.materia[idx])
+			materia[idx] = ch.materia[idx]->clone();
 	}
 }
 
@@ -36,12 +42,21 @@ Character::~Character()
 	}
 }
 
-Character& Character::operator=(Character& ch)
+Character& Character::operator=(Character const& ch)
 {
-	name = ch.getName();
-	for (int idx = 0; idx < 4; idx++)
+	if (this != &ch)
 	{
-		materia[idx] = ch.materia[idx];
+		name = ch.getName();
+		for (int idx = 0; idx < 4; idx++)
+		{
+			if (materia[idx])
+			{
+				delete materia[idx];
+				materia[idx] = nullptr;
+			}
+			if (ch.materia[idx])
+				materia[idx] = ch.materia[idx]->clone();
+		}
 	}
 	
 	return *this;

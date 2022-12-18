@@ -9,7 +9,7 @@ Brain::Brain()
 	std::cout << "class Brain constructed\n";
 }
 
-Brain::Brain(const Brain& brain)
+Brain::Brain(Brain const& brain)
 {
 	for (int i = 0; i < 100; i++)
 		ideas[i] = brain.ideas[i];
@@ -21,10 +21,13 @@ Brain::~Brain()
 	std::cout << "class Brain is destructed\n";
 }
 
-Brain&		Brain::operator=(const Brain& brain)
+Brain&		Brain::operator=(Brain const& brain)
 {
-	for (int i = 0; i < 100; i++)
-		ideas[i] = brain.ideas[i];
+	if (this != &brain)
+	{
+		for (int i = 0; i < 100; i++)
+			ideas[i] = brain.ideas[i];
+	}
 
 	std::cout << "class Brain is copied by assignment\n";
 

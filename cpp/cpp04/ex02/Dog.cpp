@@ -6,7 +6,7 @@ Dog::Dog() : Animal("Dog"), type("Dog")
 	std::cout << "class Dog constructed\n";
 }
 
-Dog::Dog(const Dog& dog) : Animal(dog), type(dog.type)
+Dog::Dog(Dog const& dog) : Animal(dog), type(dog.type)
 {
 	DogBrain = new Brain(*(dog.DogBrain));
 	std::cout << "class Dog is constructed by copy\n";
@@ -18,13 +18,16 @@ Dog::~Dog()
 	std::cout << "class Dog is destructed\n";
 }
 
-Dog&	Dog::operator=(const Dog& dog)
+Dog&	Dog::operator=(Dog const& dog)
 {
-	setType(dog.getType());
-	Animal::setType(dog.Animal::getType());
+	if (this != &dog)
+	{
+		setType(dog.getType());
+		Animal::setType(dog.Animal::getType());
 
-	delete DogBrain;
-	DogBrain = new Brain(*(dog.DogBrain));
+		delete DogBrain;
+		DogBrain = new Brain(*(dog.DogBrain));
+	}
 
 	std::cout << "class Dog is copied by assignment\n";
 

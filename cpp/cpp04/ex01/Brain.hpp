@@ -8,9 +8,9 @@ class Brain
 
 	public:
 		Brain();
-		Brain(const Brain& brain);
+		Brain(Brain const& brain);
 		~Brain();
-		Brain& operator=(const Brain& brain);
+		Brain& operator=(Brain const& brain);
 
 		std::string	getIdea(int idx);
 		void		setIdea(std::string idea, int idx);

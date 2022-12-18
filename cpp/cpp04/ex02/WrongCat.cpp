@@ -5,7 +5,7 @@ WrongCat::WrongCat() : WrongAnimal("WrongCat"), type("WrongCat")
 	std::cout << "class WrongCat constructed\n";
 }
 
-WrongCat::WrongCat(const WrongCat& cat) : WrongAnimal(cat), type(cat.type)
+WrongCat::WrongCat(WrongCat const& cat) : WrongAnimal(cat), type(cat.type)
 {
 	std::cout << "class WrongCat is constructed by copy\n";
 }
@@ -15,10 +15,13 @@ WrongCat::~WrongCat()
 	std::cout << "class WrongCat is destructed\n";
 }
 
-WrongCat&	WrongCat::operator=(const WrongCat& cat)
+WrongCat&	WrongCat::operator=(WrongCat const& cat)
 {
-	setType(cat.getType());
-	WrongAnimal::setType(cat.WrongAnimal::getType());
+	if (this != &cat)
+	{
+		setType(cat.getType());
+		WrongAnimal::setType(cat.WrongAnimal::getType());
+	}
 	std::cout << "class WrongCat is copied by assignment\n";
 
 	return *this;
