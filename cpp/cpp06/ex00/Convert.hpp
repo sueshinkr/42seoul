@@ -1,9 +1,6 @@
 #include <iostream>
 #include <limits>
-#include <string>
 #include <cmath>
-#include <cstring>
-#include <climits>
 #include "iomanip"
 
 class Convert

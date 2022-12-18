@@ -22,7 +22,11 @@ Convert::~Convert()
 
 Convert&	Convert::operator=(Convert const& cv)
 {
-	val = cv.val;
+	if (this != &cv)
+	{
+		val = cv.val;
+	}
+
 	return *this;
 }
 

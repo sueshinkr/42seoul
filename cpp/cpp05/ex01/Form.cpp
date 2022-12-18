@@ -62,7 +62,7 @@ void		Form::beSigned(Bureaucrat const& br)
 
 std::ostream&	operator<<(std::ostream& os, const Form& fm)
 {
-	os << fm.getName() << ", Form signed : " << fm.getSign()
+	os << fm.getName() << ", Form signed : " << std::boolalpha << fm.getSign()
 	   << ", required grade to sign : " << fm.getGrade_to_sign()
 	   << ", required grade to excute : " << fm.getGrade_to_execute();
 
