@@ -30,10 +30,13 @@ ScavTrap::~ScavTrap()
 
 ScavTrap&	ScavTrap::operator=(const ScavTrap& st)
 {
-	name = st.name;
-	Hit_points = st.Hit_points;
-	Energy_points = st.Energy_points;
-	Attack_damage = st.Attack_damage;
+	if (this != &st)
+	{
+		name = st.name;
+		Hit_points = st.Hit_points;
+		Energy_points = st.Energy_points;
+		Attack_damage = st.Attack_damage;
+	}
 
 	std::cout << "ScavTrap " << name << " is copied\n";
 

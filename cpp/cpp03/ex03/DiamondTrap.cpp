@@ -33,11 +33,14 @@ DiamondTrap::~DiamondTrap()
 
 DiamondTrap&	DiamondTrap::operator=(const DiamondTrap& dt)
 {
-	ClapTrap::name = dt.ClapTrap::name;
-	name = dt.name;
-	Hit_points = dt.Hit_points;
-	Energy_points = dt.Energy_points;
-	Attack_damage = dt.Attack_damage;
+	if (this != &dt)
+	{
+		ClapTrap::name = dt.ClapTrap::name;
+		name = dt.name;
+		Hit_points = dt.Hit_points;
+		Energy_points = dt.Energy_points;
+		Attack_damage = dt.Attack_damage;
+	}
 
 	std::cout << "DiamondTrap " << name << " is copied\n";
 

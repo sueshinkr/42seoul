@@ -25,10 +25,13 @@ ClapTrap::~ClapTrap()
 
 ClapTrap&	ClapTrap::operator=(const ClapTrap& ct)
 {
-	name = ct.name;
-	Hit_points = ct.Hit_points;
-	Energy_points = ct.Energy_points;
-	Attack_damage = ct.Attack_damage;
+	if (this != & ct)
+	{
+		name = ct.name;
+		Hit_points = ct.Hit_points;
+		Energy_points = ct.Energy_points;
+		Attack_damage = ct.Attack_damage;
+	}
 
 	std::cout << "ClapTrap " << name << " is copied\n";
 

@@ -18,7 +18,7 @@ FragTrap::FragTrap(std::string newname) : ClapTrap(newname)
 	std::cout << "FragTrap " << name << " is made\n";
 }
 
-FragTrap::FragTrap(const FragTrap& st) : ClapTrap(st)
+FragTrap::FragTrap(const FragTrap& ft) : ClapTrap(ft)
 {
 	std::cout << "FragTrap " << name << " is made by copy\n";
 }
@@ -28,12 +28,15 @@ FragTrap::~FragTrap()
 	std::cout << "FragTrap " << name << " is destructed\n";
 }
 
-FragTrap&	FragTrap::operator=(const FragTrap& st)
+FragTrap&	FragTrap::operator=(const FragTrap& ft)
 {
-	name = st.name;
-	Hit_points = st.Hit_points;
-	Energy_points = st.Energy_points;
-	Attack_damage = st.Attack_damage;
+	if (this != &ft)
+	{
+		name = ft.name;
+		Hit_points = ft.Hit_points;
+		Energy_points = ft.Energy_points;
+		Attack_damage = ft.Attack_damage;
+	}
 
 	std::cout << "FragTrap " << name << " is copied\n";
 
