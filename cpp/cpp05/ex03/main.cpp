@@ -11,7 +11,28 @@ int main()
 		Intern someRandomIntern;
 		AForm* rrf;
 
-		if ((rrf = someRandomIntern.makeForm("robotomy request", "abc")))
+		if ((rrf = someRandomIntern.makeForm("robotomy request", "aaaaaa")))
+		{
+			br1.executeForm(*rrf);
+			br1.signForm(*rrf);
+			br1.executeForm(*rrf);
+		}
+
+		if ((rrf = someRandomIntern.makeForm("shrubbery creation", "bbbbbb")))
+		{
+			br1.executeForm(*rrf);
+			br1.signForm(*rrf);
+			br1.executeForm(*rrf);
+		}
+
+		if ((rrf = someRandomIntern.makeForm("presidential pardon", "cccccc")))
+		{
+			br1.executeForm(*rrf);
+			br1.signForm(*rrf);
+			br1.executeForm(*rrf);
+		}
+
+		if ((rrf = someRandomIntern.makeForm("wowwowowowowow", "cccccc")))
 		{
 			br1.executeForm(*rrf);
 			br1.signForm(*rrf);

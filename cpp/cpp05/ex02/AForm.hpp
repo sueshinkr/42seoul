@@ -16,7 +16,6 @@ class AForm
 		AForm(std::string name, int gtos, int gtoe);
 		AForm(AForm const& fm);
 		virtual	~AForm();
-		
 
 		std::string		getName() const;
 		bool			getSign() const;
@@ -27,16 +26,6 @@ class AForm
 		virtual void	execute(Bureaucrat const& executor) const = 0;
 	
 	public:
-		class GradeTooHighException : public std::exception
-		{
-			public:
-				virtual char const*	what() const throw();
-		};
-		class GradeTooLowException : public std::exception
-		{
-			public:
-				virtual char const*	what() const throw();
-		};
 		class NotSignedException : public std::exception
 		{
 			public:

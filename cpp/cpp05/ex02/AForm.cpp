@@ -11,6 +11,10 @@ AForm::AForm(std::string name) : name(name), sign(false), grade_to_sign(1), grad
 AForm::AForm(std::string name, int gtos, int gtoe)
 	: name(name), sign(false), grade_to_sign(gtos), grade_to_execute(gtoe)
 {
+	if (gtos > 150 || gtoe > 150)
+		throw Bureaucrat::GradeTooLowException();
+	else if (gtos < 1 || gtoe < 1)
+		throw Bureaucrat::GradeTooHighException();
 }
 
 AForm::AForm(AForm const& fm)
@@ -25,7 +29,7 @@ AForm::~AForm()
 
 AForm&	AForm::operator=(AForm const& fm)
 {
-	(void)fm;
+	static_cast<void>(fm);
 	return *this;
 }
 
@@ -54,7 +58,7 @@ void		AForm::beSigned(Bureaucrat const& br)
 	if (br.getGrade() <= getGrade_to_sign())
 		sign = true;
 	else
-		throw AForm::GradeTooLowException();
+		throw Bureaucrat::GradeTooLowException();
 }
 
 void		AForm::check_execute(Bureaucrat const& br) const
@@ -62,7 +66,7 @@ void		AForm::check_execute(Bureaucrat const& br) const
 	if (getSign() == false)
 		throw AForm::NotSignedException();
 	else if (br.getGrade() > getGrade_to_execute())
-		throw AForm::GradeTooLowException();
+		throw Bureaucrat::GradeTooLowException();
 	else
 		std::cout << br.getName() << " has enough grade to execute\n";		
 }
@@ -74,16 +78,6 @@ std::ostream&	operator<<(std::ostream& os, const AForm& fm)
 	   << ", required grade to excute : " << fm.getGrade_to_execute();
 
 	return os;
-}
-
-char const*	AForm::GradeTooHighException::what() const throw()
-{
-	return "Grade Too High";
-}
-
-char const*	AForm::GradeTooLowException::what() const throw()
-{
-	return "Grade Too Low";
 }
 
 char const*	AForm::NotSignedException::what() const throw()

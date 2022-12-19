@@ -38,12 +38,7 @@ Bureaucrat::~Bureaucrat()
 
 Bureaucrat& Bureaucrat::operator=(Bureaucrat const& br)
 {
-	if (this != &br)
-	{
-		*(const_cast<std::string*>(&name)) = br.getName();
-		grade = br.getGrade();
-	}
-
+	static_cast<void>(br);
 	return *this;
 }
 

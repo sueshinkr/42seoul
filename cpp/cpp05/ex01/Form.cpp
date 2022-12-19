@@ -7,6 +7,10 @@ Form::Form() : name("default"), sign(false), grade_to_sign(1), grade_to_execute(
 Form::Form(std::string name, int gtos, int gtoe)
 	: name(name), sign(false), grade_to_sign(gtos), grade_to_execute(gtoe)
 {
+	if (gtos > 150 || gtoe > 150)
+		throw Bureaucrat::GradeTooLowException();
+	else if (gtos < 1 || gtoe < 1)
+		throw Bureaucrat::GradeTooHighException();
 }
 
 Form::Form(Form const& fm)
@@ -21,14 +25,7 @@ Form::~Form()
 
 Form&	Form::operator=(Form const& fm)
 {
-	if (this != &fm)
-	{
-		*(const_cast<std::string*>(&name)) = fm.getName();
-		sign = fm.getSign();
-		*(const_cast<int*>(&grade_to_sign)) = fm.getGrade_to_sign();
-		*(const_cast<int*>(&grade_to_execute)) = fm.getGrade_to_execute();
-	}
-
+	static_cast<void>(fm);
 	return *this;
 }
 
@@ -57,7 +54,7 @@ void		Form::beSigned(Bureaucrat const& br)
 	if (br.getGrade() <= getGrade_to_sign())
 		sign = true;
 	else
-		throw Form::GradeTooLowException();
+		throw Bureaucrat::GradeTooLowException();
 }
 
 std::ostream&	operator<<(std::ostream& os, const Form& fm)
@@ -67,14 +64,4 @@ std::ostream&	operator<<(std::ostream& os, const Form& fm)
 	   << ", required grade to excute : " << fm.getGrade_to_execute();
 
 	return os;
-}
-
-char const*	Form::GradeTooHighException::what() const throw()
-{
-	return "Grade Too High";
-}
-
-char const*	Form::GradeTooLowException::what() const throw()
-{
-	return "Grade Too Low";
 }

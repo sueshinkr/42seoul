@@ -6,7 +6,7 @@ Intern::Intern()
 
 Intern::Intern(Intern const& in)
 {
-	(void)in;
+	static_cast<void>(in);
 }
 
 Intern::~Intern()
@@ -15,7 +15,7 @@ Intern::~Intern()
 
 Intern&	Intern::operator=(Intern const& in)
 {
-	(void)in;
+	static_cast<void>(in);
 	return *this;
 }
 
