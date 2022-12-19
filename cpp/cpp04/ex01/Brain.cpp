@@ -3,8 +3,11 @@
 
 Brain::Brain()
 {
+	std::string s;
 	for (int i = 0; i < 100; i++)
+	{
 		ideas[i] = "default idea";
+	}
 
 	std::cout << "class Brain constructed\n";
 }

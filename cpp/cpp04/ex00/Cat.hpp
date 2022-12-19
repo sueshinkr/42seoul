@@ -4,7 +4,6 @@
 class Cat : public Animal
 {
 	private:
-		std::string type;
 
 	public:
 		Cat();
@@ -12,7 +11,5 @@ class Cat : public Animal
 		~Cat();
 		Cat& operator=(Cat const& Cat);
 
-		virtual void		makeSound() const;
-		virtual std::string	getType() const;
-		virtual void		setType(std::string const newtype);
+		virtual void	makeSound() const;
 };

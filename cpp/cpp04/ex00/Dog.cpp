@@ -1,11 +1,11 @@
 #include "Dog.hpp"
 
-Dog::Dog() : Animal("Dog"), type("Dog")
+Dog::Dog() : Animal("Dog")
 {
 	std::cout << "class Dog constructed\n";
 }
 
-Dog::Dog(Dog const& dog) : Animal(dog), type(dog.type)
+Dog::Dog(Dog const& dog) : Animal(dog)
 {
 	std::cout << "class Dog is constructed by copy\n";
 }
@@ -20,7 +20,6 @@ Dog&	Dog::operator=(Dog const& dog)
 	if (this != &dog)
 	{
 		setType(dog.getType());
-		Animal::setType(dog.Animal::getType());
 	}
 	std::cout << "class Dog is copied by assignment\n";
 
@@ -30,15 +29,5 @@ Dog&	Dog::operator=(Dog const& dog)
 void		Dog::makeSound() const
 {
 	std::cout << "Bow-Wow!\n";
-}
-
-std::string	Dog::getType() const
-{
-	return type;
-}
-
-void		Dog::setType(std::string const newtype)
-{
-	type = newtype;
 }
 

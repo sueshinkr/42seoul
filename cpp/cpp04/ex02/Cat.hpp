@@ -5,7 +5,6 @@
 class Cat : public Animal
 {
 	private:
-		std::string type;
 		Brain*		CatBrain;
 
 	public:
@@ -15,7 +14,5 @@ class Cat : public Animal
 		Cat& operator=(Cat const& Cat);
 
 		virtual void		makeSound() const;
-		virtual std::string	getType() const;
-		virtual void		setType(std::string const newtype);
 		virtual Brain*		getBrain() const;
 };

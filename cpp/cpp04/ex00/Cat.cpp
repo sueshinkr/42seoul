@@ -1,11 +1,11 @@
 #include "Cat.hpp"
 
-Cat::Cat() : Animal("Cat"), type("Cat")
+Cat::Cat() : Animal("Cat")
 {
 	std::cout << "class Cat constructed\n";
 }
 
-Cat::Cat(Cat const& cat) : Animal(cat), type(cat.type)
+Cat::Cat(Cat const& cat) : Animal(cat)
 {
 	std::cout << "class Cat is constructed by copy\n";
 }
@@ -20,7 +20,6 @@ Cat&	Cat::operator=(Cat const& cat)
 	if (this != &cat)
 	{
 		setType(cat.getType());
-		Animal::setType(cat.Animal::getType());
 	}
 	std::cout << "class Cat is copied by assignment\n";
 
@@ -31,14 +30,3 @@ void		Cat::makeSound() const
 {
 	std::cout << "Meowwwww!\n";
 }
-
-std::string	Cat::getType() const
-{
-	return type;
-}
-
-void		Cat::setType(std::string const newtype)
-{
-	type = newtype;
-}
-

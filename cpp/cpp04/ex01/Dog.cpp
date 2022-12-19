@@ -1,12 +1,12 @@
 #include "Dog.hpp"
 
-Dog::Dog() : Animal("Dog"), type("Dog")
+Dog::Dog() : Animal("Dog")
 {
 	DogBrain = new Brain;
 	std::cout << "class Dog constructed\n";
 }
 
-Dog::Dog(Dog const& dog) : Animal(dog), type(dog.type)
+Dog::Dog(Dog const& dog) : Animal(dog)
 {
 	DogBrain = new Brain(*(dog.DogBrain));
 	std::cout << "class Dog is constructed by copy\n";
@@ -23,9 +23,9 @@ Dog&	Dog::operator=(Dog const& dog)
 	if (this != &dog)
 	{
 		setType(dog.getType());
-		Animal::setType(dog.Animal::getType());
 
-		delete DogBrain;
+		if (DogBrain)
+			delete DogBrain;
 		DogBrain = new Brain(*(dog.DogBrain));
 	}
 
@@ -37,16 +37,6 @@ Dog&	Dog::operator=(Dog const& dog)
 void		Dog::makeSound() const
 {
 	std::cout << "Bow-Wow!\n";
-}
-
-std::string	Dog::getType() const
-{
-	return type;
-}
-
-void		Dog::setType(std::string const newtype)
-{
-	type = newtype;
 }
 
 Brain*		Dog::getBrain() const

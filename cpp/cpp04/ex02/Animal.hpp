@@ -15,7 +15,7 @@ class Animal
 		Animal&	operator=(Animal const& am);
 
 		virtual	void		makeSound() const = 0;
-		virtual std::string	getType() const;
-		virtual void		setType(std::string const newtype);
 		virtual Brain*		getBrain() const = 0;
+		std::string			getType() const;
+		void				setType(std::string const newtype);
 };
