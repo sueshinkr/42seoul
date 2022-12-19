@@ -20,6 +20,9 @@ int	main()
 	a.takeDamage(30);
 	a.beRepaired(10);
 
+	a.whoAmI();
+	b.whoAmI();
+
 	std::cout << "===========================\n";
 
 	DiamondTrap c;
