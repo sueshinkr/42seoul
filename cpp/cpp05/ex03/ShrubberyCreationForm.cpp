@@ -19,13 +19,14 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 
 ShrubberyCreationForm& ShrubberyCreationForm::operator=(ShrubberyCreationForm const& sh)
 {
-	(void)sh;
+	static_cast<void>(sh);
 	return *this;
 }
 
 void	ShrubberyCreationForm::execute(Bureaucrat const& br) const
 {
-	std::string file = br.getName() + "_shrubbery";
+	check_execute(br);
+	std::string file = getName() + "_shrubbery";
 	std::ofstream fout(file);
 	fout <<
 	"		  		*			\n\

@@ -18,6 +18,8 @@ int main()
 			br1.executeForm(*rrf);
 		}
 
+		std::cout << "==================================================\n";
+
 		if ((rrf = someRandomIntern.makeForm("shrubbery creation", "bbbbbb")))
 		{
 			br1.executeForm(*rrf);
@@ -25,12 +27,16 @@ int main()
 			br1.executeForm(*rrf);
 		}
 
+		std::cout << "==================================================\n";
+
 		if ((rrf = someRandomIntern.makeForm("presidential pardon", "cccccc")))
 		{
 			br1.executeForm(*rrf);
 			br1.signForm(*rrf);
 			br1.executeForm(*rrf);
 		}
+
+		std::cout << "==================================================\n";
 
 		if ((rrf = someRandomIntern.makeForm("wowwowowowowow", "cccccc")))
 		{

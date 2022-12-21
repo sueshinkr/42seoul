@@ -25,6 +25,7 @@ ShrubberyCreationForm& ShrubberyCreationForm::operator=(ShrubberyCreationForm co
 
 void	ShrubberyCreationForm::execute(Bureaucrat const& br) const
 {
+	check_execute(br);
 	std::string file = getName() + "_shrubbery";
 	std::ofstream fout(file);
 	fout <<

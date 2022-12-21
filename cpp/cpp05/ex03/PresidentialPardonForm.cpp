@@ -19,11 +19,12 @@ PresidentialPardonForm::~PresidentialPardonForm()
 
 PresidentialPardonForm& PresidentialPardonForm::operator=(PresidentialPardonForm const& ps)
 {
-	(void)ps;
+	static_cast<void>(ps);
 	return *this;
 }
 
 void	PresidentialPardonForm::execute(Bureaucrat const& br) const
 {
-	std::cout << br.getName() << " has been pardoned by Zaphod Beeblebrox\n";
+	check_execute(br);
+	std::cout << getName() << " has been pardoned by Zaphod Beeblebrox\n";
 }

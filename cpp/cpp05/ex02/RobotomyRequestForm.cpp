@@ -25,6 +25,7 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(RobotomyRequestForm const& r
 
 void	RobotomyRequestForm::execute(Bureaucrat const& br) const
 {
+	check_execute(br);
 	std::cout << "Sorry, I'll make some noses...\n"
 			  << "Drrrrrrrrrrrrrrrrrrrrrrr\n";
 
