@@ -9,8 +9,6 @@ struct Data
 class Serial
 {
 	private:
-//uintptr_t	u_int;
-//Data*		data_ptr;
 
 	public:
 		Serial();

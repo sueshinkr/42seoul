@@ -2,7 +2,7 @@
 
 int	main()
 {
-	srand(time(NULL));
+	srand(clock());
 
 	Base* random_base = generate();
 	identify(random_base);

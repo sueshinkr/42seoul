@@ -12,7 +12,7 @@ Convert::Convert(char* s) : str(s), ptr(nullptr)
 		val = std::strtod(s, &ptr);
 }
 
-Convert::Convert(Convert const& cv) : ptr(cv.ptr), val(cv.val)
+Convert::Convert(Convert const& cv) : str(cv.str), ptr(cv.ptr), val(cv.val)
 {
 }
 
@@ -24,6 +24,8 @@ Convert&	Convert::operator=(Convert const& cv)
 {
 	if (this != &cv)
 	{
+		str = cv.str;
+		ptr = cv.ptr;
 		val = cv.val;
 	}
 
@@ -35,7 +37,7 @@ void	Convert::Check()
 	try
 	{
 		if (ptr && *ptr && !(std::isinf(val) || *ptr == 'f'))
-				throw std::bad_alloc();
+			throw std::bad_alloc();
 		type_char();
 		type_int();
 		type_float();

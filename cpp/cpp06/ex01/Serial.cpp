@@ -6,7 +6,7 @@ Serial::Serial()
 
 Serial::Serial(Serial const& s)
 {
-	(void)s;
+	static_cast<void>(s);
 }
 
 Serial::~Serial()
@@ -16,7 +16,7 @@ Serial::~Serial()
 
 Serial&		Serial::operator=(Serial const& s)
 {
-	(void)s;
+	static_cast<void>(s);
 	return *this;
 }
 
