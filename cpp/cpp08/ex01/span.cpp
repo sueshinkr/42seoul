@@ -35,6 +35,15 @@ void	Span::addNumber(int num)
 		data.push_back(num);
 }
 
+void	Span::addManyNumber(unsigned int n)
+{
+	if (n > 0)
+	{
+		for (unsigned int i = 0; i < n; i++)
+			addNumber(rand());
+	}
+}
+
 int		Span::shortestSpan()
 {
 	if (data.size() <= 1)

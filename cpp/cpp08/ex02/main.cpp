@@ -14,6 +14,8 @@ int main()
 	mstack.pop();
 
 	std::cout << mstack.size() << std::endl;
+	
+	std::cout << "=====================================\n";
 
 	mstack.push(3);
 	mstack.push(5);
@@ -33,8 +35,17 @@ int main()
 		++it;
 	}
 
+	std::cout << "================================\n";
+
 	std::stack<int> s(mstack);
 
+	while (!s.empty())
+	{
+		std::cout << s.top() << std::endl;
+		s.pop();
+	}
+
+	std::cout << "================================\n";
 	std::cout << "================================\n";
 
 	std::list<int> list;
@@ -47,6 +58,8 @@ int main()
 	list.pop_back();
 
 	std::cout << list.size() << std::endl;
+
+	std::cout << "================================\n";
 
 	list.push_back(3);
 	list.push_back(5);
@@ -66,6 +79,11 @@ int main()
 		++it_list;
 	}
 
+	std::cout << "================================\n";
+	
 	std::list<int> s_list(list);
+
+	for (std::list<int>::iterator it = s_list.begin(); it != s_list.end(); it++)
+		std::cout << *it << std::endl;
 
 }

@@ -19,8 +19,7 @@ int	main()
 
 	Span sp(size);
 
-	for (unsigned int i = 0; i < size; i++)
-		sp.addNumber(rand());
+	sp.addManyNumber(10000);
 	
 	std::cout << "shortest span : " << sp.shortestSpan() << std::endl;
 	std::cout << "longest span : " << sp.longestSpan() << std::endl;
