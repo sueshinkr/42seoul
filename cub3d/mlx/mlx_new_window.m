@@ -10,7 +10,6 @@
 #include "mlx_int.h"
 #include "mlx_new_window.h"
 
-
 NSOpenGLPixelFormatAttribute pfa_attrs[] =
   {
     NSOpenGLPFADepthSize, 32,

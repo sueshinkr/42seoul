@@ -10,7 +10,4 @@ int	main(int argc, char** argv)
 
 	Convert cv(argv[1]);
 	cv.Check();
-
-	//char형만 좀더 손보면될듯
-	
 }
