@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:50 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/13 16:07:37 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/13 16:11:34 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ t_list	*add_fd_remain(t_list *remain, int fd)
 	return (remain);
 }
 
-size_t	ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
-	size_t	len;
+	int_least16_t	len;
 
 	len = 0;
 	while (*str++)
