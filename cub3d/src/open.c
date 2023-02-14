@@ -48,7 +48,7 @@ static int	map_color(char *line, int i, t_info *d)
 		}
 	}
 	d->cub->count++;
-	return i;
+	return i - 1;
 }
 
 static void	complete_map(t_map *map)
@@ -62,7 +62,6 @@ static void	complete_map(t_map *map)
 	while (++i < map->row)
 	{
 		map->field[i] = ft_strdup("");
-		
 		while (map->temp_field[++len])
 		{
 			if (map->temp_field[len] == '\n')

@@ -1,6 +1,15 @@
 #include "cub3d.h"
 
-void	calc(t_cub *cub)
+void	verLine(t_info *d, int x, int drawStart, int drawEnd, int color)
+{
+	while (drawStart <= drawEnd)
+	{
+		mlx_pixel_put(d->mlx, d->win, x, drawStart, color);
+		drawStart++;
+	}
+}
+
+int	calc(t_info *d)
 {
 	int	x;
 
@@ -8,17 +17,17 @@ void	calc(t_cub *cub)
 	while (x < width)
 	{
 		double	cameraX = 2 * x / (double)width - 1;
-		double	rayDirX = cub->player->DirX + cub->player->planeX * cameraX;
-		double	rayDirY = cub->player->DirY + cub->player->planeY * cameraX;
+		double	rayDirX = d->cub->player->dirX + d->cub->player->planeX * cameraX;
+		double	rayDirY = d->cub->player->dirY + d->cub->player->planeY * cameraX;
 		
-		int	mapX = int(posX);
-		int	mapY = int(posY);
+		int	mapX = (int)d->cub->player->posX;
+		int	mapY = (int)d->cub->player->posY;
 
 		double	sideDistX;
 		double	sideDistY;
 
-		double	deltaDistX = abs(1 / rayDirX);
-		double	deltaDistY = abs(1 / rayDirY);
+		double	deltaDistX = fabs(1 / rayDirX);
+		double	deltaDistY = fabs(1 / rayDirY);
 		double	perpWallDist;
 
 		int	stepX;
@@ -30,23 +39,31 @@ void	calc(t_cub *cub)
 		if (rayDirX < 0)
 		{
 			stepX = -1;
-			sideDistX = (posX - mapX) * deltaDistX;
+			sideDistX = (d->cub->player->posX - mapX) * deltaDistX;
 		}
 		else
 		{
 			stepX = 1;
-			sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+			sideDistX = (mapX + 1.0 - d->cub->player->posX) * deltaDistX;
 		}
 
 		if (rayDirY < 0)
 		{
 			stepY = -1;
-			sideDistY = (posY - mapY) * deltaDistY;
+			sideDistY = (d->cub->player->posY - mapY) * deltaDistY;
 		}
 		else
 		{
 			stepY = 1;
-			sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+			sideDistY = (mapY + 1.0 - d->cub->player->posY) * deltaDistY;
+		}
+
+		if (x % 40 == 0)
+		{
+			printf("stepX : %d, stepY : %d\n", stepX, stepY);
+			printf("start loc : %d, %d\n", mapX, mapY);
+			printf("sideDistX : %f, sideDistY : %f\n", sideDistX, sideDistY);
+			printf("deltaDistX : %f, deltaDistY : %f\n", deltaDistX, deltaDistY);
 		}
 
 		while (hit == 0)
@@ -63,25 +80,36 @@ void	calc(t_cub *cub)
 				mapY += stepY;
 				side = 1;
 			}
-			if (cub->map->field[mapX][mapY] > 0)
+			if (d->cub->map->field[mapY][mapX] > '0')
+			{
+				if (x % 40 == 0)
+					printf("x : %d, mapX, mapY : %d, %d\n", x, mapX, mapY);
 				hit = 1;
+			}
 		}
 
 		if (side == 0)
-			perpWallDist = (mapX - posX + (1 - stepX) / 2 ) / rayDirX;
+			perpWallDist = (mapX - d->cub->player->posX + (1 - stepX) / 2 ) / rayDirX;
 		else
-			perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
+			perpWallDist = (mapY - d->cub->player->posY + (1 - stepY) / 2) / rayDirY;
 
-		int	lineHeight = (int)(h / perpWallDist);
-		int	drawStart = -lineHeight / 2 + h / 2;
+		int	lineHeight = (int)(height / perpWallDist);
+		int	drawStart = -lineHeight / 2 + height / 2;
 		if (drawStart < 0)
 			drawStart = 0;
-		int drawEnd = lineHeight / 2 + h / 2;
-		if (drawEnd <= h)
-			drawEnd = h - 1;
+		int drawEnd = lineHeight / 2 + height / 2;
+		if (drawEnd <= height)
+			drawEnd = height - 1;
 		
+		int	color;
+		color = 0xFF0000;
+		if (side == 1)
+			color = color / 2;
 		
+		verLine(d, x, drawStart, drawEnd, color);
+		x++;
 	}
+	return 0;
 }
 
 int	main(int argc, char **argv)
@@ -112,9 +140,11 @@ int	main(int argc, char **argv)
 	{
 		printf("%s\n", d->cub->map->field[i]);
 	}
+	printf(":::: %f\n", d->cub->player->dirX);
+	//sleep(5);
 
-	mlx_hook(d->win, 17, 0, &exit_game_with_red, NULL);
-	mlx_loop_hook(d->mlx, &calc, d->cub);
+	//mlx_hook(d->win, 17, 0, &exit_game_with_red, NULL);
+	mlx_loop_hook(d->mlx, &calc, d);
 	mlx_loop(d->mlx);
 
 

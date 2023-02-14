@@ -35,7 +35,7 @@ static void	init_cub(t_cub *cub)
 void	init_data(t_info *d)
 {
 	d->mlx = mlx_init();
-	d->win = mlx_new_window(d->win, width, height, "cub3d");
+	d->win = mlx_new_window(d->mlx, width, height, "cub3d");
 	d->cub = malloc(sizeof(t_cub));
 	init_cub(d->cub);
 }

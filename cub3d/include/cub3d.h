@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/14 13:25:21 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/14 14:12:53 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <fcntl.h>
 #include <ctype.h>
 #include <limits.h>
+#include <math.h>
 
 #include "../mlx/mlx.h"
 #include "./get_next_line_bonus.h"
@@ -78,7 +79,7 @@ void	init_data(t_info *d);
 void	open_cub(char *cub_file, t_info *d);
 
 void	check_map_wall(t_map *map, char **field, int r, int c);
-void	check_map_chr(t_map *map, char **field, int r, int c);
+void	check_map_chr(t_cub *cub, char **field, int r, int c);
 
 void	exit_game_with_map(int flag);
 int		exit_game_with_red(void);

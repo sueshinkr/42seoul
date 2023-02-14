@@ -18,7 +18,7 @@ void	exit_game_with_map(int flag)
 		printf("Game Clear!\n");
 	else if (flag == 7)
 		printf("Don't touch the cow!\n");
-	exit(0);
+	//exit(0);
 }
 
 int	exit_game_with_red(void)
