@@ -2,11 +2,11 @@
 
 int	keypress(int keycode, t_info *d)
 {
-	(void*)d;
 	if (keycode == 53)
 		exit_game_with_map(5);
 	else if (keycode == 13)
 	{
+
 	}
 	else if (keycode == 0)
 	{

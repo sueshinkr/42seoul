@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:50 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/13 16:11:34 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/14 21:36:13 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_list	*add_fd_remain(t_list *remain, int fd)
 
 int	ft_strlen(const char *str)
 {
-	int_least16_t	len;
+	int	len;
 
 	len = 0;
 	while (*str++)

@@ -13,6 +13,8 @@ static void	init_player(t_player *player)
 	player->dirY = 0;
 	player->planeX = 0;
 	player->planeY = 0.66;
+	player->movsp = 0.05;
+	player->camsp = 0.05;
 }
 
 static void	init_cub(t_cub *cub)

@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/14 21:05:10 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/14 21:43:58 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ typedef struct	s_player
 	// 카메라평면
 	double	planeX;
 	double	planeY;
+	// 이동속도
+	double	movsp;
+	double	camsp;
 }				t_player;
 
 typedef struct	s_cub
