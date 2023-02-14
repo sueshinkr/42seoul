@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/14 14:12:53 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/14 15:43:42 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 #include "../mlx/mlx.h"
 #include "./get_next_line_bonus.h"
-
+/*
 #define width	640
 #define height	480
 
@@ -84,5 +84,5 @@ void	check_map_chr(t_cub *cub, char **field, int r, int c);
 void	exit_game_with_map(int flag);
 int		exit_game_with_red(void);
 char	*ft_strjoin_len(char *str1, char *str2, int len);
-
+*/
 #endif

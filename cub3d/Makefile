@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+         #
+#    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2023/02/14 14:38:06 by sueshin          ###   ########.fr        #
+#    Updated: 2023/02/14 15:42:06 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ MLX_FLAGS	= -L$(MLX_DIR) -lmlx -framework OpenGL -framework Appkit -lz
 AR = ar rcs
 
 INCS_DIR = ./include/
-SRCS_DIR = ./src/
+SRCS_DIR = ./srctemp/
 MLX_DIR = ./mlx/
 #SRCS = $(addprefix $(SRCS_DIR), $(SRC))
 #SRC = $(wildcard *.c)
