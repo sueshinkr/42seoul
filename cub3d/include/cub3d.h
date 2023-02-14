@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/14 17:39:06 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/14 21:05:10 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@
 #include "../mlx/mlx.h"
 #include "./get_next_line_bonus.h"
 
-#define width	640
-#define height	480
+#define width		640
+#define height		480
+#define texwidth	64
+#define texheight	48
 
 typedef struct	s_map
 {

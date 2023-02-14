@@ -48,8 +48,8 @@ void	check_map_chr(t_cub *cub, char **field, int r, int c)
 				field[r][c] == 'W' || field[r][c] == 'E')
 			{
 				count++;
-				cub->player->posX = r;
-				cub->player->posY = c;
+				cub->player->posX = r + 0.5;
+				cub->player->posY = c + 0.5;
 			}
 			if (count > 1)
 				exit_game_with_map(3);
