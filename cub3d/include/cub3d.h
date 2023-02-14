@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/14 21:43:58 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/14 21:51:58 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,6 @@ typedef struct	s_cub
 
 typedef struct	s_info
 {
-	double	moveSpeed;
-	double	rotSpeed;
-
 	void	*mlx;
 	void	*win;
 	t_cub	*cub;
@@ -85,7 +82,7 @@ void	open_cub(char *cub_file, t_info *d);
 void	check_map_wall(t_map *map, char **field, int r, int c);
 void	check_map_chr(t_cub *cub, char **field, int r, int c);
 
-int	keypress(int keycode, t_info *d);
+int		keypress(int keycode, t_cub *cub);
 
 void	exit_game_with_map(int flag);
 int		exit_game_with_red(void);

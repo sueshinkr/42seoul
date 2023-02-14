@@ -47,6 +47,34 @@ void	check_map_chr(t_cub *cub, char **field, int r, int c)
 			if (field[r][c] == 'N' || field[r][c] == 'S' || 
 				field[r][c] == 'W' || field[r][c] == 'E')
 			{
+				if (field[r][c] == 'N')
+				{
+					cub->player->dirX = -1;
+					cub->player->dirY = 0;
+					cub->player->planeX = 0;
+					cub->player->planeY = 0.66;
+				}
+				else if (field[r][c] == 'S')
+				{
+					cub->player->dirX = 1;
+					cub->player->dirY = 0;
+					cub->player->planeX = 0;
+					cub->player->planeY = 0.66;
+				}
+				else if (field[r][c] == 'W')
+				{
+					cub->player->dirX = 0;
+					cub->player->dirY = -1;
+					cub->player->planeX = 0.66;
+					cub->player->planeY = 0;
+				}
+				else if (field[r][c] == 'E')
+				{
+					cub->player->dirX = 0;
+					cub->player->dirY = 1;
+					cub->player->planeX = 0.66;
+					cub->player->planeY = 0;
+				}
 				count++;
 				cub->player->posX = r + 0.5;
 				cub->player->posY = c + 0.5;

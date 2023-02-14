@@ -13,6 +13,7 @@ int	calc(t_info *d)
 {
 	int	x;
 
+	mlx_clear_window(d->mlx, d->win);
 	x = 0;
 	while (x < width)
 	{
@@ -133,7 +134,7 @@ int	main(int argc, char **argv)
 	//sleep(5);
 
 	mlx_hook(d->win, 17, 0, &exit_game_with_red, NULL);
-	mlx_hook(d->win, 2, 0, &keypress, d);
+	mlx_hook(d->win, 2, 0, &keypress, d->cub);
 	mlx_loop_hook(d->mlx, &calc, d);
 	mlx_loop(d->mlx);
 
@@ -142,9 +143,10 @@ int	main(int argc, char **argv)
 }
 
 /* 추가로 해야될것
+시작방위따라 방향벡터 조정
 텍스쳐 추가
 천장 바닥 추가
-움직임
+움직임 OK
 화면회전
 */
 
