@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/13 18:58:32 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/14 13:25:21 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 #include "../mlx/mlx.h"
 #include "./get_next_line_bonus.h"
 
+#define width	640
+#define height	480
+
 typedef struct	s_map
 {
 	char	*temp_field;
@@ -32,37 +35,53 @@ typedef struct	s_map
 	int		row;
 }				t_map;
 
+typedef struct	s_player
+{
+	// 위치벡터
+	double	posX;
+	double	posY;
+	// 방향벡터
+	double	dirX;
+	double	dirY;
+	// 카메라평면
+	double	planeX;
+	double	planeY;
+}				t_player;
+
 typedef struct	s_cub
 {
-	int		fd;
-	int		count;
-	char	*north_texture;
-	char	*south_texture;
-	char	*west_texture;
-	char	*east_texture;
-	int		floor_color[3];
-	int		ceiling_color[3];
-	t_map	*map;
+	int			fd;
+	int			count;
+	char		*north_texture;
+	char		*south_texture;
+	char		*west_texture;
+	char		*east_texture;
+	int			floor_color[3];
+	int			ceiling_color[3];
+	t_map		*map;
+	t_player	*player;
 }				t_cub;
 
 typedef struct	s_info
 {
-/*
-	double posX;
-	double posY;
-	double dirX;
-	double dirY;
-	double planeX;
-	double planeY;
 	double	moveSpeed;
 	double	rotSpeed;
-*/
+
 	void	*mlx;
 	void	*win;
 	t_cub	*cub;
 }				t_info;
 
+
+void	init_data(t_info *d);
+
+void	open_cub(char *cub_file, t_info *d);
+
+void	check_map_wall(t_map *map, char **field, int r, int c);
+void	check_map_chr(t_map *map, char **field, int r, int c);
+
 void	exit_game_with_map(int flag);
+int		exit_game_with_red(void);
 char	*ft_strjoin_len(char *str1, char *str2, int len);
 
 #endif
