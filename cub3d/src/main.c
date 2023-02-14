@@ -58,12 +58,6 @@ int	calc(t_info *d)
 			sideDistY = (mapY + 1.0 - d->cub->player->posY) * deltaDistY;
 		}
 
-		if (x % 40 == 0)
-		{
-			printf("start loc : %d, %d\n", mapX, mapY);
-			printf("deltaX : %f, deltaY : %f\n", deltaDistX, deltaDistY);
-		}
-
 		while (hit == 0)
 		{
 			if (sideDistX < sideDistY)
@@ -78,22 +72,18 @@ int	calc(t_info *d)
 				mapY += stepY;
 				side = 1;
 			}
-			if (x % 40 == 0)
-				printf("sideX, sideY : %f , %f, map : %d\n", sideDistX, sideDistY, d->cub->map->field[mapX][mapY] - '0');
 			if (d->cub->map->field[mapX][mapY] > '0')
-			{
-				if (x % 40 == 0)
-					printf("x : %d, mapX, mapY : %d, %d, side : %d\n\n", x, mapX, mapY, side);
 				hit = 1;
-			}
 		}
 
 		if (side == 0)
 			perpWallDist = (mapX - d->cub->player->posX + (1 - stepX) / 2 ) / rayDirX;
 		else
 			perpWallDist = (mapY - d->cub->player->posY + (1 - stepY) / 2) / rayDirY;
+		// 벽에 붙어서 시작할때 perpWallDist가 0이되는경우는 어떻게?
 
 		int	lineHeight = (int)(height / perpWallDist);
+		
 		int	drawStart = -lineHeight / 2 + height / 2;
 		if (drawStart < 0)
 			drawStart = 0;
@@ -102,7 +92,7 @@ int	calc(t_info *d)
 			drawEnd = height - 1;
 		
 		int	color;
-		color = 0xFF0000;
+		color = 0xFFFF00;
 		if (side == 1)
 			color = color / 2;
 		
@@ -140,10 +130,10 @@ int	main(int argc, char **argv)
 	{
 		printf("%s\n", d->cub->map->field[i]);
 	}
-	printf(":::: %f\n", d->cub->player->dirX);
 	//sleep(5);
 
-	//mlx_hook(d->win, 17, 0, &exit_game_with_red, NULL);
+	mlx_hook(d->win, 17, 0, &exit_game_with_red, NULL);
+	mlx_hook(d->win, 2, 0, &keypress, d);
 	mlx_loop_hook(d->mlx, &calc, d);
 	mlx_loop(d->mlx);
 
@@ -151,7 +141,6 @@ int	main(int argc, char **argv)
 	return 0;
 }
 /*
-	mlx_hook(d->cub->win, 2, 0, &keypress, data);
 	
 	mlx_loop_hook(d->cub->mlx, &sel_animation, data);
 	mlx_loop(d->cub->mlx);
