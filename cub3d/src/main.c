@@ -140,8 +140,11 @@ int	main(int argc, char **argv)
 
 	return 0;
 }
-/*
-	
-	mlx_loop_hook(d->cub->mlx, &sel_animation, data);
-	mlx_loop(d->cub->mlx);
+
+/* 추가로 해야될것
+텍스쳐 추가
+천장 바닥 추가
+움직임
+화면회전
 */
+

@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/14 17:27:09 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/14 17:39:06 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct	s_info
 	void	*win;
 	t_cub	*cub;
 }				t_info;
-
 
 void	init_data(t_info *d);
 
