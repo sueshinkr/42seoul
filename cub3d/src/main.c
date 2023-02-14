@@ -80,6 +80,7 @@ void	calc(t_cub *cub)
 		if (drawEnd <= h)
 			drawEnd = h - 1;
 		
+		
 	}
 }
 
