@@ -60,10 +60,8 @@ int	calc(t_info *d)
 
 		if (x % 40 == 0)
 		{
-			printf("stepX : %d, stepY : %d\n", stepX, stepY);
 			printf("start loc : %d, %d\n", mapX, mapY);
-			printf("sideDistX : %f, sideDistY : %f\n", sideDistX, sideDistY);
-			printf("deltaDistX : %f, deltaDistY : %f\n", deltaDistX, deltaDistY);
+			printf("deltaX : %f, deltaY : %f\n", deltaDistX, deltaDistY);
 		}
 
 		while (hit == 0)
@@ -80,10 +78,12 @@ int	calc(t_info *d)
 				mapY += stepY;
 				side = 1;
 			}
-			if (d->cub->map->field[mapY][mapX] > '0')
+			if (x % 40 == 0)
+				printf("sideX, sideY : %f , %f, map : %d\n", sideDistX, sideDistY, d->cub->map->field[mapX][mapY] - '0');
+			if (d->cub->map->field[mapX][mapY] > '0')
 			{
 				if (x % 40 == 0)
-					printf("x : %d, mapX, mapY : %d, %d\n", x, mapX, mapY);
+					printf("x : %d, mapX, mapY : %d, %d, side : %d\n\n", x, mapX, mapY, side);
 				hit = 1;
 			}
 		}
@@ -98,7 +98,7 @@ int	calc(t_info *d)
 		if (drawStart < 0)
 			drawStart = 0;
 		int drawEnd = lineHeight / 2 + height / 2;
-		if (drawEnd <= height)
+		if (drawEnd >= height)
 			drawEnd = height - 1;
 		
 		int	color;
