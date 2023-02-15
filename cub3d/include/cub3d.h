@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/14 21:51:58 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:54:32 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 
 #define width		640
 #define height		480
-#define texwidth	64
-#define texheight	48
+#define texwidth	24
+#define texheight	24
 
 typedef struct	s_map
 {
@@ -54,25 +54,41 @@ typedef struct	s_player
 	double	camsp;
 }				t_player;
 
+typedef struct	s_img
+{
+	void	*img;
+	int		*data;
+	int		sl;
+	int		bpp;
+	int		endian;
+	int		img_width;
+	int		img_height;
+}				t_img;
+
+
 typedef struct	s_cub
 {
 	int			fd;
 	int			count;
+	int			**texture;
+	int			buf[height][width];
+	int			rebuf;
 	char		*north_texture;
 	char		*south_texture;
 	char		*west_texture;
 	char		*east_texture;
 	int			floor_color[3];
 	int			ceiling_color[3];
-	t_map		*map;
-	t_player	*player;
 }				t_cub;
 
 typedef struct	s_info
 {
-	void	*mlx;
-	void	*win;
-	t_cub	*cub;
+	void		*mlx;
+	void		*win;
+	t_cub		cub;
+	t_map		map;
+	t_player	player;
+	t_img		img;
 }				t_info;
 
 void	init_data(t_info *d);
@@ -80,9 +96,17 @@ void	init_data(t_info *d);
 void	open_cub(char *cub_file, t_info *d);
 
 void	check_map_wall(t_map *map, char **field, int r, int c);
-void	check_map_chr(t_cub *cub, char **field, int r, int c);
+void	check_map_chr(t_info *d, char **field, int r, int c);
 
-int		keypress(int keycode, t_cub *cub);
+int		keypress(int keycode, t_info *d);
+
+void	move_up(t_map *map, t_player *p);
+void	move_down(t_map *map, t_player *p);
+void	move_left(t_map *map, t_player *p);
+void	move_right(t_map *map, t_player *p);
+
+void	camera_left(t_player *p);
+void	camera_right(t_player *p);
 
 void	exit_game_with_map(int flag);
 int		exit_game_with_red(void);

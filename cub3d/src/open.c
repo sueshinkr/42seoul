@@ -9,18 +9,18 @@ static int	map_texture(char *line, int i, t_info *d)
 	i++;
 	while (line[++i] == ' ')
 		;
-	texture = ft_strjoin(ft_strdup(""), &line[++i]);
+	texture = ft_strjoin(ft_strdup(""), &line[i]);
 	if (line[start] == 'N' && line[start + 1] == 'O')
-		d->cub->north_texture = texture;
+		d->cub.north_texture = texture;
 	else if (line[start] == 'S' && line[start + 1] == 'O')
-		d->cub->south_texture = texture;
+		d->cub.south_texture = texture;
 	else if (line[start] == 'W' && line[start + 1] == 'E')
-		d->cub->west_texture = texture;
+		d->cub.west_texture = texture;
 	else if (line[start] == 'E' && line[start + 1] == 'A')
-		d->cub->east_texture = texture;
+		d->cub.east_texture = texture;
 	else
-		d->cub->count--;
-	d->cub->count++;
+		d->cub.count--;
+	d->cub.count++;
 	while (line[i++])
 		;
 	return i;
@@ -33,9 +33,9 @@ static int	map_color(char *line, int i, t_info *d)
 
 	rgb = 0;
 	if (line[i] == 'F')
-		object = d->cub->floor_color;
+		object = d->cub.floor_color;
 	else
-		object = d->cub->ceiling_color;
+		object = d->cub.ceiling_color;
 	while (line[++i])
 	{
 		if (isdigit(line[i]))
@@ -47,7 +47,7 @@ static int	map_color(char *line, int i, t_info *d)
 			rgb++;
 		}
 	}
-	d->cub->count++;
+	d->cub.count++;
 	return i - 1;
 }
 
@@ -71,7 +71,7 @@ static void	complete_map(t_map *map)
 	}
 }
 
-static void	open_map(int fd, t_cub *cub)
+static void	open_map(int fd, t_info *d)
 {
 	char	*line;
 
@@ -80,17 +80,17 @@ static void	open_map(int fd, t_cub *cub)
 	{
 		if (ft_strlen(line))
 		{
-			if (ft_strlen(line) > cub->map->col)
-				cub->map->col = ft_strlen(line);
-			cub->map->row++;
+			if (ft_strlen(line) > d->map.col)
+				d->map.col = ft_strlen(line);
+			d->map.row++;
 			line = ft_strjoin(line, ft_strdup("\n"));
-			cub->map->temp_field = ft_strjoin(cub->map->temp_field, line);
+			d->map.temp_field = ft_strjoin(d->map.temp_field, line);
 		}
 		line = get_next_line(fd);
 	}
-	complete_map(cub->map);
-	check_map_wall(cub->map, cub->map->field, -1, -1);
-	check_map_chr(cub, cub->map->field, -1, -1);
+	complete_map(&d->map);
+	check_map_wall(&d->map, d->map.field, -1, -1);
+	check_map_chr(d, d->map.field, -1, -1);
 }
 
 void	open_cub(char *cub_file, t_info *d)
@@ -99,8 +99,8 @@ void	open_cub(char *cub_file, t_info *d)
 	char	*line;
 
 	i = -1;
-	d->cub->fd = open(cub_file, O_RDONLY);
-	line = get_next_line(d->cub->fd);
+	d->cub.fd = open(cub_file, O_RDONLY);
+	line = get_next_line(d->cub.fd);
 	while (line)
 	{
 		while (line[++i])
@@ -110,13 +110,13 @@ void	open_cub(char *cub_file, t_info *d)
 			else if (line[i] == 'F' || line[i] == 'C')
 				i = map_color(line, i, d);
 		}
-		if (d->cub->count == 6)
+		if (d->cub.count == 6)
 			break;
 		i = -1;
-		line = get_next_line(d->cub->fd);
+		line = get_next_line(d->cub.fd);
 	}
-	if (d->cub->count != 6)
+	if (d->cub.count != 6)
 		exit_game_with_map(0);
 	free(line);
-	open_map(d->cub->fd, d->cub);
+	open_map(d->cub.fd, d);
 }

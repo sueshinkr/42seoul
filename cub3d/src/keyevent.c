@@ -1,48 +1,42 @@
 #include "cub3d.h"
 
-static void	move_left(t_map *map, t_player *p)
+int	keypress(int keycode, t_info *d)
 {
-	if (map->field[(int)(p->posX + p->dirY * p->movsp)][(int)(p->posY)] != '1')
-		p->posX += p->dirY * p->movsp;
-	if (map->field[(int)(p->posX)][(int)(p->posY + p->dirX * p->movsp)] != '1')
-		p->posY += p->dirX * p->movsp;
-}
-
-static void	move_right(t_map *map, t_player *p)
-{
-	if (map->field[(int)(p->posX - p->dirY * p->movsp)][(int)(p->posY)] != '1')
-		p->posX -= p->dirY * p->movsp;
-	if (map->field[(int)(p->posX)][(int)(p->posY - p->dirX * p->movsp)] != '1')
-		p->posY -= p->dirX * p->movsp;
-}
-
-int	keypress(int keycode, t_cub *cub)
-{
-	t_player *p = cub->player;
-
 	if (keycode == 53)
 		exit_game_with_map(5);
 	else if (keycode == 13)
-	{
-		if (cub->map->field[(int)(p->posX + p->dirX * p->movsp)][(int)(p->posY)] != '1')
-			p->posX += p->dirX * p->movsp;
-		if (cub->map->field[(int)(p->posX)][(int)(p->posY + p->dirY * p->movsp)] != '1')
-			p->posY += p->dirY * p->movsp;
-	}
+		move_up(&d->map, &d->player);
 	else if (keycode == 1)
-	{
-		if (cub->map->field[(int)(p->posX - p->dirX * p->movsp)][(int)(p->posY)] != '1')
-			p->posX -= p->dirX * p->movsp;
-		if (cub->map->field[(int)(p->posX)][(int)(p->posY - p->dirY * p->movsp)] != '1')
-			p->posY -= p->dirY * p->movsp;
-	}
+		move_down(&d->map, &d->player);
 	else if (keycode == 0)
-		move_left(cub->map, cub->player);
+	{
+		if (fabs(d->player.dirX) > fabs(d->player.dirY))
+			move_left(&d->map, &d->player);
+		else
+			move_right(&d->map, &d->player);
+	}
 	else if (keycode == 2)
-		move_right(cub->map, cub->player);
-	printf("(%f, %f)\n", p->posX, p->posY);
+	{
+		if (fabs(d->player.dirX) > fabs(d->player.dirY))
+			move_right(&d->map, &d->player);
+		else
+			move_left(&d->map, &d->player);
+	}
+	
+	if (keycode == 123)
+	{
+		camera_left(&d->player);
+	}
+	else if (keycode == 124)
+	{
+		camera_right(&d->player);
+	}
+	printf("pos(%f, %f)\n", d->player.posX, d->player.posY);
+	printf("dir(%f, %f)\n", d->player.dirX, d->player.dirY);
 	
 	return (0);
 }
 
+// up 126 down 125
+// left 123 right 124
 // w 13 d 2 a 0 s 1 esc 53
