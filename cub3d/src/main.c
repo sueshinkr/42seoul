@@ -1,16 +1,5 @@
 #include "cub3d.h"
 
-/*
-void	verLine(t_info *d, int x, int drawStart, int drawEnd, int color)
-{
-	while (drawStart <= drawEnd)
-	{
-		mlx_pixel_put(d->mlx, d->win, x, drawStart, color);
-		drawStart++;
-	}
-}
-*/
-
 void	calc(t_info *d)
 {
 	int	x;
@@ -135,14 +124,6 @@ void	calc(t_info *d)
 			d->cub.rebuf = 1;
 			y++;
 		}
-		/*
-		int	color;
-		color = 0xFFFF00;
-		if (side == 1)
-			color = color / 2;
-		
-		verLine(d, x, drawStart, drawEnd, color);
-		*/
 		x++;
 	}
 }
