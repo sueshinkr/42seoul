@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:54:49 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/16 13:54:57 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:30:20 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ char	*ft_strjoin_len(char *str1, char *str2, int len)
 	*(joinstr + idx1 + idx2) = 0;
 	free(str1);
 	return (joinstr);
+}
+
+void	*ft_memset(void *ptr, int value, size_t size)
+{
+	void	*result;
+
+	result = ptr;
+	while (size-- > 0)
+		*(unsigned char *)ptr++ = value;
+	return (result);
 }
 
 int	makecolor(int *color)

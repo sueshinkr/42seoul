@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/16 15:13:07 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:26:00 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,13 @@ void	check_map_wall(t_map *map, char **field, int r, int c);
 void	check_map_chr(t_info *d, char **field, int r, int c);
 
 void	load_texture(t_info *d);
+void	set_texture_base(t_player *p, t_camera *cam);
+void	set_texture_buffer(t_info *d, t_camera *cam, int x, int y);
 
-void	raycasting(t_info *d, t_player *p);
+void	set_cam_base(t_player *p, t_camera *cam, int x);
+void	set_dist_step(t_player *p, t_camera *cam);
+void	run_dda(t_info *d, t_player *p, t_camera *cam, int hit);
+void	set_drawposition(t_camera *cam);
 
 int		keypress(int keycode, t_info *d);
 
@@ -154,7 +159,9 @@ void	camera_right(t_player *p);
 
 void	exit_game(int flag);
 int		exit_game_with_red(void);
+
 char	*ft_strjoin_len(char *str1, char *str2, int len);
+void	*ft_memset(void *ptr, int value, size_t size);
 int		makecolor(int *color);
 
 #endif

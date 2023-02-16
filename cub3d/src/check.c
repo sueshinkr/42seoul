@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:37:24 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/16 15:04:45 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:17:28 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,39 +40,42 @@ void	check_map_wall(t_map *map, char **f, int r, int c)
 	}
 }
 
-static void	set_ns(t_info *d, char dir, int *count)
+static void	set_ns(t_info *d, int r, int c, int *count)
 {
 	d->player.dir_y = 0;
 	d->player.plane_x = 0;
-	if (dir == 'N')
+	if (d->map.field[r][c] == 'N')
 	{
 		d->player.dir_x = -1;
 		d->player.plane_y = 0.66;
 	}
-	else if (dir == 'S')
+	else if (d->map.field[r][c] == 'S')
 	{
 		d->player.dir_x = 1;
 		d->player.plane_y = -0.66;
 	}
+	d->player.pos_x = r + 0.5;
+	d->player.pos_y = c + 0.5;
 	(*count)++;
 }
 
-static void	set_we(t_info *d, char dir, int *count)
+static void	set_we(t_info *d, int r, int c, int *count)
 {
 	d->player.dir_x = 0;
 	d->player.plane_y = 0;
-	if (dir == 'W')
+	if (d->map.field[r][c] == 'W')
 	{
 		d->player.dir_y = -1;
 		d->player.plane_x = -0.66;
 	}
-	else if (dir == 'E')
+	else if (d->map.field[r][c] == 'E')
 	{
 		d->player.dir_y = 1;
 		d->player.plane_x = 0.66;
 	}
+	d->player.pos_x = r + 0.5;
+	d->player.pos_y = c + 0.5;
 	(*count)++;
-	printf("we\n");
 }
 
 void	check_map_chr(t_info *d, char **f, int r, int c)
@@ -93,13 +96,11 @@ void	check_map_chr(t_info *d, char **f, int r, int c)
 				f[r][c] == 'E'))
 				exit_game(2);
 			else if (f[r][c] == 'N' || f[r][c] == 'S')
-				set_ns(d, f[r][c], &count);
+				set_ns(d, r, c, &count);
 			else if (f[r][c] == 'W' || f[r][c] == 'E')
-				set_we(d, f[r][c], &count);
-			d->player.pos_x = r + 0.5;
-			d->player.pos_y = c + 0.5;
+				set_we(d, r, c, &count);
 		}	
 	}
 	if (count != 1)
-			exit_game(3);
+		exit_game(3);
 }

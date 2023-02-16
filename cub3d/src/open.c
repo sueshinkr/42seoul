@@ -6,7 +6,7 @@
 /*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:50:42 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/16 15:52:51 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:00:37 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,8 @@ static int	map_color(char *line, int i, t_info *d)
 			while (isdigit(line[i]))
 				object[rgb] = object[rgb] * 10 + line[i++] - '0';
 			i--;
-			printf("--------------\n");
-			printf(":::object[%d] : %d\n", rgb, object[rgb]);
-			printf("line : %s\n", line);
-			printf("i : %d, after line : %s\n", i, &line[i]);
 			if (object[rgb] < 0 || object[rgb] > 255)
-			{
-				
-				printf("object[%d] : %d\n", rgb, object[rgb]);
 				exit_game(4);
-			}
 			rgb++;
 		}
 	}

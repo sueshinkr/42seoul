@@ -6,11 +6,33 @@
 /*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:48:04 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/16 15:38:10 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:32:18 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	raycasting(t_info *d, t_player *p)
+{
+	t_camera	cam;
+	int			x;
+
+	mlx_clear_window(d->mlx, d->win);
+	if (d->cub.rebuf == 1)
+		ft_memset(&d->cub.buf, 0, sizeof(d->cub.buf));
+	x = 0;
+	while (x < width)
+	{
+		ft_memset(&cam, 0, sizeof(t_camera));
+		set_cam_base(p, &cam, x);
+		set_dist_step(p, &cam);
+		run_dda(d, p, &cam, 0);
+		set_drawposition(&cam);
+		set_texture_base(p, &cam);
+		set_texture_buffer(d, &cam, x, -1);
+		x++;
+	}
+}
 
 void	draw(t_info *d)
 {
@@ -47,8 +69,6 @@ int	main(int argc, char **argv)
 	init_data(d);
 	open_cub(argv[1], d, -1);
 	load_texture(d);
-
-	printf("------\n");
 	d->img.img = mlx_new_image(d->mlx, width, height);
 	d->img.data = (int *)mlx_get_data_addr
 		(d->img.img, &d->img.bpp, &d->img.sl, &d->img.endian);
@@ -69,6 +89,7 @@ int	main(int argc, char **argv)
 방위따라 다른 텍스쳐 OK
 천장 바닥 추가 OK
 한칸짜리벽 통과하는거 손보기 OK
+놈 OK
 
 ---------------진행중
 맵파싱 좀더 손보기
