@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:15:20 by sueshin           #+#    #+#              #
-#    Updated: 2023/02/16 00:34:45 by sueshin          ###   ########.fr        #
+#    Updated: 2023/02/16 15:37:35 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ all : $(NAME)
 
 $(NAME): $(OBJS)
 	@make -C $(MLX_DIR)
-	$(CC) -o $(NAME) $(OBJS) $(MLX_FLAGS) -fsanitize=address
+	$(CC) -o $(NAME) $(OBJS) $(MLX_FLAGS) -g
 
 %.o : %.c
 	$(CC) $(CFLAGS) -I$(INCS_DIR) -c -o $@ $<

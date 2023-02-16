@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/16 13:41:13 by sueshin           #+#    #+#             */
+/*   Updated: 2023/02/16 13:41:15 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void	init_map_player(t_map *map, t_player *player)
@@ -21,13 +33,13 @@ static void	init_texture(t_cub *cub)
 		while (++j < width)
 			cub->buf[i][j] = 0;
 	}
-	cub->texture = (int **)malloc(sizeof(int*) * 4);
+	cub->texture = (int **)malloc(sizeof(int *) * 4);
 	i = -1;
 	while (++i < 4)
 	{
-		cub->texture[i] = (int *)malloc(sizeof(int) * height * width / 100);
+		cub->texture[i] = (int *)malloc(sizeof(int) * texwidth * texheight);
 		j = -1;
-		while (++j < height * width / 100)
+		while (++j < texwidth * texheight)
 			cub->texture[i][j] = 0;
 	}
 	cub->rebuf = 0;

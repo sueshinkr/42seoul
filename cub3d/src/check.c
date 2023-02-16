@@ -1,34 +1,81 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/16 13:37:24 by sueshin           #+#    #+#             */
+/*   Updated: 2023/02/16 15:04:45 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void	check_map_wall(t_map *map, char **field, int r, int c)
+void	check_map_wall(t_map *map, char **f, int r, int c)
 {
-	int len;
+	int	len;
 
 	while (++r < map->row)
 	{
 		c = -1;
-		len = ft_strlen(field[r]);
+		len = ft_strlen(f[r]);
 		while (++c < len)
 		{
-			if (field[r][c] == '0')
+			if (f[r][c] == '0')
 			{
 				if (r == 0 || r == map->row - 1 || c == 0 || c == len - 1)
-					exit_game_with_map(1);
-				else if (r != 0 && (c >= ft_strlen(field[r - 1]) || 
-				 		(c < ft_strlen(field[r - 1]) && field[r - 1][c] == ' ')))
-					exit_game_with_map(1);
-				else if (r != map->row - 1 && (c >= ft_strlen(field[r + 1]) ||
-						(c < ft_strlen(field[r + 1]) && field[r + 1][c] == ' ')))
-					exit_game_with_map(1);
-				else if ((c != 0 && field[r][c - 1] == ' ') ||
-						(c != len - 1 && field[r][c + 1] == ' '))
-					exit_game_with_map(1);
+					exit_game(1);
+				else if (r != 0 && (c >= ft_strlen(f[r - 1])
+						|| (c < ft_strlen(f[r - 1]) && f[r - 1][c] == ' ')))
+					exit_game(1);
+				else if (r != map->row - 1 && (c >= ft_strlen(f[r + 1])
+						|| (c < ft_strlen(f[r + 1]) && f[r + 1][c] == ' ')))
+					exit_game(1);
+				if ((c != 0 && f[r][c - 1] == ' ') ||
+						(c != len - 1 && f[r][c + 1] == ' '))
+					exit_game(1);
 			}
 		}
 	}
 }
 
-void	check_map_chr(t_info *d, char **field, int r, int c)
+static void	set_ns(t_info *d, char dir, int *count)
+{
+	d->player.dir_y = 0;
+	d->player.plane_x = 0;
+	if (dir == 'N')
+	{
+		d->player.dir_x = -1;
+		d->player.plane_y = 0.66;
+	}
+	else if (dir == 'S')
+	{
+		d->player.dir_x = 1;
+		d->player.plane_y = -0.66;
+	}
+	(*count)++;
+}
+
+static void	set_we(t_info *d, char dir, int *count)
+{
+	d->player.dir_x = 0;
+	d->player.plane_y = 0;
+	if (dir == 'W')
+	{
+		d->player.dir_y = -1;
+		d->player.plane_x = -0.66;
+	}
+	else if (dir == 'E')
+	{
+		d->player.dir_y = 1;
+		d->player.plane_x = 0.66;
+	}
+	(*count)++;
+	printf("we\n");
+}
+
+void	check_map_chr(t_info *d, char **f, int r, int c)
 {
 	int	len;
 	int	count;
@@ -37,50 +84,22 @@ void	check_map_chr(t_info *d, char **field, int r, int c)
 	while (++r < d->map.row)
 	{
 		c = -1;
-		len = ft_strlen(field[r]);
+		len = ft_strlen(f[r]);
 		while (++c < len)
 		{
-			if (!(field[r][c] == '0' || field[r][c] == '1' ||
-				field[r][c] == ' ' || field[r][c] == 'N' ||
-				field[r][c] == 'S' || field[r][c] == 'W' || field[r][c] == 'E'))
-				exit_game_with_map(2);
-			if (field[r][c] == 'N' || field[r][c] == 'S' || 
-				field[r][c] == 'W' || field[r][c] == 'E')
-			{
-				if (field[r][c] == 'N')
-				{
-					d->player.dirX = -1;
-					d->player.dirY = 0;
-					d->player.planeX = 0;
-					d->player.planeY = 0.66;
-				}
-				else if (field[r][c] == 'S')
-				{
-					d->player.dirX = 1;
-					d->player.dirY = 0;
-					d->player.planeX = 0;
-					d->player.planeY = -0.66;
-				}
-				else if (field[r][c] == 'W')
-				{
-					d->player.dirX = 0;
-					d->player.dirY = -1;
-					d->player.planeX = -0.66;
-					d->player.planeY = 0;
-				}
-				else if (field[r][c] == 'E')
-				{
-					d->player.dirX = 0;
-					d->player.dirY = 1;
-					d->player.planeX = 0.66;
-					d->player.planeY = 0;
-				}
-				count++;
-				d->player.posX = r + 0.5;
-				d->player.posY = c + 0.5;
-			}
-			if (count > 1)
-				exit_game_with_map(3);
-		}
+			if (!(f[r][c] == '0' || f[r][c] == '1' ||
+				f[r][c] == ' ' || f[r][c] == 'N' ||
+				f[r][c] == 'S' || f[r][c] == 'W' ||
+				f[r][c] == 'E'))
+				exit_game(2);
+			else if (f[r][c] == 'N' || f[r][c] == 'S')
+				set_ns(d, f[r][c], &count);
+			else if (f[r][c] == 'W' || f[r][c] == 'E')
+				set_we(d, f[r][c], &count);
+			d->player.pos_x = r + 0.5;
+			d->player.pos_y = c + 0.5;
+		}	
 	}
+	if (count != 1)
+			exit_game(3);
 }

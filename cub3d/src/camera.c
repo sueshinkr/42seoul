@@ -1,27 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/16 13:30:37 by sueshin           #+#    #+#             */
+/*   Updated: 2023/02/16 13:33:01 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	camera_right(t_player *p)
 {
-	double bfdirX;
-	double bfplaneX;
-	
-	bfdirX = p->dirX;
-	p->dirX = p->dirX * cos(-p->camsp) - p->dirY * sin(-p->camsp);
-	p->dirY = bfdirX * sin(-p->camsp) + p->dirY * cos(-p->camsp);
-	bfplaneX = p->planeX;
-	p->planeX = p->planeX * cos(-p->camsp) - p->planeY * sin(-p->camsp);
-	p->planeY = bfplaneX * sin(-p->camsp) + p->planeY * cos(-p->camsp);
+	double	bfdir_x;
+	double	bfplane_x;
+
+	bfdir_x = p->dir_x;
+	p->dir_x = p->dir_x * cos(-p->camsp) - p->dir_y * sin(-p->camsp);
+	p->dir_y = bfdir_x * sin(-p->camsp) + p->dir_y * cos(-p->camsp);
+	bfplane_x = p->plane_x;
+	p->plane_x = p->plane_x * cos(-p->camsp) - p->plane_y * sin(-p->camsp);
+	p->plane_y = bfplane_x * sin(-p->camsp) + p->plane_y * cos(-p->camsp);
 }
 
 void	camera_left(t_player *p)
 {
-	double bfdirX;
-	double bfplaneX;
-	
-	bfdirX = p->dirX;
-	p->dirX = p->dirX * cos(p->camsp) - p->dirY * sin(p->camsp);
-	p->dirY = bfdirX * sin(p->camsp) + p->dirY * cos(p->camsp);
-	bfplaneX = p->planeX;
-	p->planeX = p->planeX * cos(p->camsp) - p->planeY * sin(p->camsp);
-	p->planeY = bfplaneX * sin(p->camsp) + p->planeY * cos(p->camsp);
+	double	bfdir_x;
+	double	bfplane_x;
+
+	bfdir_x = p->dir_x;
+	p->dir_x = p->dir_x * cos(p->camsp) - p->dir_y * sin(p->camsp);
+	p->dir_y = bfdir_x * sin(p->camsp) + p->dir_y * cos(p->camsp);
+	bfplane_x = p->plane_x;
+	p->plane_x = p->plane_x * cos(p->camsp) - p->plane_y * sin(p->camsp);
+	p->plane_y = bfplane_x * sin(p->camsp) + p->plane_y * cos(p->camsp);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/16 13:54:49 by sueshin           #+#    #+#             */
+/*   Updated: 2023/02/16 13:54:57 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 char	*ft_strjoin_len(char *str1, char *str2, int len)
@@ -26,4 +38,15 @@ char	*ft_strjoin_len(char *str1, char *str2, int len)
 	*(joinstr + idx1 + idx2) = 0;
 	free(str1);
 	return (joinstr);
+}
+
+int	makecolor(int *color)
+{
+	int	c;
+
+	c = 0;
+	c += (color[0] & 0xff) << 16;
+	c += (color[1] & 0xff) << 8;
+	c += (color[2] & 0xff);
+	return (c);
 }

@@ -47,19 +47,19 @@ void	calc(t_info *info)
 	while (x < width)
 	{
 		double cameraX = 2 * x / (double)width - 1;
-		double rayDirX = info->dirX + info->planeX * cameraX;
-		double rayDirY = info->dirY + info->planeY * cameraX;
+		double raydir_x = info->dir_x + info->plane_x * cameraX;
+		double raydir_y = info->dir_y + info->plane_y * cameraX;
 		
-		int mapX = (int)info->posX;
-		int mapY = (int)info->posY;
+		int mapX = (int)info->pos_x;
+		int mapY = (int)info->pos_y;
 
 		//length of ray from current position to next x or y-side
 		double sideDistX;
 		double sideDistY;
 		
 		 //length of ray from one x or y-side to next x or y-side
-		double deltaDistX = fabs(1 / rayDirX);
-		double deltaDistY = fabs(1 / rayDirY);
+		double deltaDistX = fabs(1 / raydir_x);
+		double deltaDistY = fabs(1 / raydir_y);
 		double perpWallDist;
 		
 		//what direction to step in x or y-direction (either +1 or -1)
@@ -69,25 +69,25 @@ void	calc(t_info *info)
 		int hit = 0; //was there a wall hit?
 		int side; //was a NS or a EW wall hit?
 
-		if (rayDirX < 0)
+		if (raydir_x < 0)
 		{
 			stepX = -1;
-			sideDistX = (info->posX - mapX) * deltaDistX;
+			sideDistX = (info->pos_x - mapX) * deltaDistX;
 		}
 		else
 		{
 			stepX = 1;
-			sideDistX = (mapX + 1.0 - info->posX) * deltaDistX;
+			sideDistX = (mapX + 1.0 - info->pos_x) * deltaDistX;
 		}
-		if (rayDirY < 0)
+		if (raydir_y < 0)
 		{
 			stepY = -1;
-			sideDistY = (info->posY - mapY) * deltaDistY;
+			sideDistY = (info->pos_y - mapY) * deltaDistY;
 		}
 		else
 		{
 			stepY = 1;
-			sideDistY = (mapY + 1.0 - info->posY) * deltaDistY;
+			sideDistY = (mapY + 1.0 - info->pos_y) * deltaDistY;
 		}
 
 		while (hit == 0)
@@ -109,9 +109,9 @@ void	calc(t_info *info)
 			if (worldMap[mapX][mapY] > 0) hit = 1;
 		}
 		if (side == 0)
-			perpWallDist = (mapX - info->posX + (1 - stepX) / 2) / rayDirX;
+			perpWallDist = (mapX - info->pos_x + (1 - stepX) / 2) / raydir_x;
 		else
-			perpWallDist = (mapY - info->posY + (1 - stepY) / 2) / rayDirY;
+			perpWallDist = (mapY - info->pos_y + (1 - stepY) / 2) / raydir_y;
 
 		//Calculate height of line to draw on screen
 		int lineHeight = (int)(height / perpWallDist);
@@ -157,40 +157,40 @@ int	key_press(int key, t_info *info)
 {
 	if (key == K_W)
 	{
-		if (!worldMap[(int)(info->posX + info->dirX * info->moveSpeed)][(int)(info->posY)])
-			info->posX += info->dirX * info->moveSpeed;
-		if (!worldMap[(int)(info->posX)][(int)(info->posY + info->dirY * info->moveSpeed)])
-			info->posY += info->dirY * info->moveSpeed;
+		if (!worldMap[(int)(info->pos_x + info->dir_x * info->moveSpeed)][(int)(info->pos_y)])
+			info->pos_x += info->dir_x * info->moveSpeed;
+		if (!worldMap[(int)(info->pos_x)][(int)(info->pos_y + info->dir_y * info->moveSpeed)])
+			info->pos_y += info->dir_y * info->moveSpeed;
 	}
 	//move backwards if no wall behind you
 	if (key == K_S)
 	{
-		if (!worldMap[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)])
-			info->posX -= info->dirX * info->moveSpeed;
-		if (!worldMap[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)])
-			info->posY -= info->dirY * info->moveSpeed;
+		if (!worldMap[(int)(info->pos_x - info->dir_x * info->moveSpeed)][(int)(info->pos_y)])
+			info->pos_x -= info->dir_x * info->moveSpeed;
+		if (!worldMap[(int)(info->pos_x)][(int)(info->pos_y - info->dir_y * info->moveSpeed)])
+			info->pos_y -= info->dir_y * info->moveSpeed;
 	}
 	//rotate to the right
 	if (key == K_D)
 	{
 		//both camera direction and camera plane must be rotated
-		double oldDirX = info->dirX;
-		info->dirX = info->dirX * cos(-info->rotSpeed) - info->dirY * sin(-info->rotSpeed);
-		info->dirY = oldDirX * sin(-info->rotSpeed) + info->dirY * cos(-info->rotSpeed);
-		double oldPlaneX = info->planeX;
-		info->planeX = info->planeX * cos(-info->rotSpeed) - info->planeY * sin(-info->rotSpeed);
-		info->planeY = oldPlaneX * sin(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
+		double olddir_x = info->dir_x;
+		info->dir_x = info->dir_x * cos(-info->rotSpeed) - info->dir_y * sin(-info->rotSpeed);
+		info->dir_y = olddir_x * sin(-info->rotSpeed) + info->dir_y * cos(-info->rotSpeed);
+		double oldplane_x = info->plane_x;
+		info->plane_x = info->plane_x * cos(-info->rotSpeed) - info->plane_y * sin(-info->rotSpeed);
+		info->plane_y = oldplane_x * sin(-info->rotSpeed) + info->plane_y * cos(-info->rotSpeed);
 	}
 	//rotate to the left
 	if (key == K_A)
 	{
 		//both camera direction and camera plane must be rotated
-		double oldDirX = info->dirX;
-		info->dirX = info->dirX * cos(info->rotSpeed) - info->dirY * sin(info->rotSpeed);
-		info->dirY = oldDirX * sin(info->rotSpeed) + info->dirY * cos(info->rotSpeed);
-		double oldPlaneX = info->planeX;
-		info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
-		info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
+		double olddir_x = info->dir_x;
+		info->dir_x = info->dir_x * cos(info->rotSpeed) - info->dir_y * sin(info->rotSpeed);
+		info->dir_y = olddir_x * sin(info->rotSpeed) + info->dir_y * cos(info->rotSpeed);
+		double oldplane_x = info->plane_x;
+		info->plane_x = info->plane_x * cos(info->rotSpeed) - info->plane_y * sin(info->rotSpeed);
+		info->plane_y = oldplane_x * sin(info->rotSpeed) + info->plane_y * cos(info->rotSpeed);
 	}
 	if (key == K_ESC)
 		exit(0);
@@ -202,12 +202,12 @@ int	main(void)
 	t_info info;
 	info.mlx = mlx_init();
 
-	info.posX = 12;
-	info.posY = 5;
-	info.dirX = -1;
-	info.dirY = 0;
-	info.planeX = 0;
-	info.planeY = 0.66;
+	info.pos_x = 12;
+	info.pos_y = 5;
+	info.dir_x = -1;
+	info.dir_y = 0;
+	info.plane_x = 0;
+	info.plane_y = 0.66;
 	info.moveSpeed = 0.05;
 	info.rotSpeed = 0.05;
 	

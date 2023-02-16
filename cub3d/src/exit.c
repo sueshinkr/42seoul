@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/16 13:40:42 by sueshin           #+#    #+#             */
+/*   Updated: 2023/02/16 13:40:44 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void	exit_game_with_map(int flag)
+void	exit_game(int flag)
 {
 	if (flag == 0)
 		printf("Empty input map : Error\n");
@@ -13,11 +25,9 @@ void	exit_game_with_map(int flag)
 	else if (flag == 4)
 		printf("Wrong color range : Error\n");
 	else if (flag == 5)
-		printf("Exit Game...\n");
+		printf("wrong texture file : Error\n");
 	else if (flag == 6)
-		printf("Game Clear!\n");
-	else if (flag == 7)
-		printf("Don't touch the cow!\n");
+		printf("Exit Game...\n");
 	exit(0);
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   open.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/16 13:50:42 by sueshin           #+#    #+#             */
+/*   Updated: 2023/02/16 15:52:51 by sueshin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	map_texture(char *line, int i, t_info *d)
@@ -23,7 +35,7 @@ static int	map_texture(char *line, int i, t_info *d)
 	d->cub.count++;
 	while (line[i++])
 		;
-	return i;
+	return (i);
 }
 
 static int	map_color(char *line, int i, t_info *d)
@@ -42,13 +54,22 @@ static int	map_color(char *line, int i, t_info *d)
 		{
 			while (isdigit(line[i]))
 				object[rgb] = object[rgb] * 10 + line[i++] - '0';
+			i--;
+			printf("--------------\n");
+			printf(":::object[%d] : %d\n", rgb, object[rgb]);
+			printf("line : %s\n", line);
+			printf("i : %d, after line : %s\n", i, &line[i]);
 			if (object[rgb] < 0 || object[rgb] > 255)
-				exit_game_with_map(4);
+			{
+				
+				printf("object[%d] : %d\n", rgb, object[rgb]);
+				exit_game(4);
+			}
 			rgb++;
 		}
 	}
 	d->cub.count++;
-	return i - 1;
+	return (i);
 }
 
 static void	complete_map(t_map *map)
@@ -58,15 +79,16 @@ static void	complete_map(t_map *map)
 
 	i = -1;
 	len = -1;
-	map->field = malloc(sizeof(char*) * map->row);
+	map->field = malloc(sizeof(char *) * map->row);
 	while (++i < map->row)
 	{
 		map->field[i] = ft_strdup("");
 		while (map->temp_field[++len])
 		{
 			if (map->temp_field[len] == '\n')
-				break;
-			map->field[i] = ft_strjoin_len(map->field[i], &map->temp_field[len], 1);
+				break ;
+			map->field[i] = ft_strjoin_len(map->field[i],
+					&map->temp_field[len], 1);
 		}
 	}
 }
@@ -86,6 +108,7 @@ static void	open_map(int fd, t_info *d)
 			line = ft_strjoin(line, ft_strdup("\n"));
 			d->map.temp_field = ft_strjoin(d->map.temp_field, line);
 		}
+		free(line);
 		line = get_next_line(fd);
 	}
 	complete_map(&d->map);
@@ -93,30 +116,31 @@ static void	open_map(int fd, t_info *d)
 	check_map_chr(d, d->map.field, -1, -1);
 }
 
-void	open_cub(char *cub_file, t_info *d)
+void	open_cub(char *cub_file, t_info *d, int i)
 {
-	int		i;
 	char	*line;
 
-	i = -1;
 	d->cub.fd = open(cub_file, O_RDONLY);
 	line = get_next_line(d->cub.fd);
 	while (line)
 	{
 		while (line[++i])
 		{
-			if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
+			if (line[i] == 'N' || line[i] == 'S'
+				|| line[i] == 'W' || line[i] == 'E')
 				i = map_texture(line, i, d);
 			else if (line[i] == 'F' || line[i] == 'C')
 				i = map_color(line, i, d);
 		}
 		if (d->cub.count == 6)
-			break;
+			break ;
 		i = -1;
+		free(line);
 		line = get_next_line(d->cub.fd);
 	}
+	if (line)
+		free(line);
 	if (d->cub.count != 6)
-		exit_game_with_map(0);
-	free(line);
+		exit_game(0);
 	open_map(d->cub.fd, d);
 }
