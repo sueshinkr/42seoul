@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: taehyeok <taehyeok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:54:49 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/16 16:30:20 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/19 17:45:30 by taehyeok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,35 @@ int	makecolor(int *color)
 	c += (color[1] & 0xff) << 8;
 	c += (color[2] & 0xff);
 	return (c);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	idx;
+
+	idx = 0;
+	while (s1[idx] != '\0' && s2[idx] != '\0' && idx < n)
+	{
+		if (s1[idx] != s2[idx])
+		{
+			return ((unsigned char)s1[idx] - (unsigned char)s2[idx]);
+		}
+		idx++;
+	}
+	if (idx == n)
+		return (0);
+	return ((unsigned char)s1[idx] - (unsigned char)s2[idx]);
+}
+
+void	free_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }

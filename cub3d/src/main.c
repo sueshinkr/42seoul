@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: taehyeok <taehyeok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:48:04 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/16 16:32:18 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/19 21:18:26 by taehyeok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,37 @@ int	cub3d(t_info *d)
 	return (0);
 }
 
+int	check_extension(char *mapname)
+{
+	int	len;
+
+	len = ft_strlen(mapname);
+	if (ft_strncmp(&mapname[len - 4], ".cub", 4) == 0)
+		return (0);
+	return (1);
+}
+
+// Main Intro
 int	main(int argc, char **argv)
 {
-	t_info	*d;
+	t_info	d;
 
-	if (argc != 2)
+	if (argc != 2 || check_extension(argv[1]))
 	{
 		printf("Wrong input file : Error\n");
-		return (0);
+		return (1);
 	}
-	d = malloc(sizeof(t_info));
-	init_data(d);
-	open_cub(argv[1], d, -1);
-	load_texture(d);
-	d->img.img = mlx_new_image(d->mlx, width, height);
-	d->img.data = (int *)mlx_get_data_addr
-		(d->img.img, &d->img.bpp, &d->img.sl, &d->img.endian);
-	mlx_hook(d->win, 17, 0, &exit_game_with_red, NULL);
-	mlx_hook(d->win, 2, 0, &keypress, d);
-	mlx_loop_hook(d->mlx, &cub3d, d);
-	mlx_loop(d->mlx);
+	//d = malloc(sizeof(t_info));
+	init_data(&d);
+	open_cub(argv[1], &d);
+	load_texture(&d);
+	d.img.img = mlx_new_image(d.mlx, width, height);
+	d.img.data = (int *)mlx_get_data_addr
+		(d.img.img, &d.img.bpp, &d.img.sl, &d.img.endian);
+	mlx_hook(d.win, 17, 0, &exit_game_with_red, NULL);
+	mlx_hook(d.win, 2, 0, &keypress, &d);
+	mlx_loop_hook(d.mlx, &cub3d, &d);
+	mlx_loop(d.mlx);
 	return (0);
 }
 
@@ -90,10 +101,14 @@ int	main(int argc, char **argv)
 천장 바닥 추가 OK
 한칸짜리벽 통과하는거 손보기 OK
 놈 OK
+맵파싱 좀더 손보기 OK
+
+---------------완벽하진 않음
+릭체크
 
 ---------------진행중
-맵파싱 좀더 손보기
-릭체크
-에러처리 보완
+에러처리 보완 (Error 문구 불일치)
+Atoi와 같은 비허용 함수 사용 수정
+불필요한 주석 제거
 
 */
