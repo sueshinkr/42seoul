@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: taehyeok <taehyeok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:40:42 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/16 13:40:44 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/19 10:45:59 by taehyeok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	exit_game(int flag)
 		printf("wrong texture file : Error\n");
 	else if (flag == 6)
 		printf("Exit Game...\n");
+	else if (flag == -1)
+		printf("System Error : Error\n");
 	exit(0);
 }
 

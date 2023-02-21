@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyevent.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:43:39 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/16 16:12:27 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/20 02:56:52 by sueshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,9 @@ int	keypress(int keycode, t_info *d)
 	else if (keycode == K_S)
 		move_down(&d->map, &d->player);
 	else if (keycode == K_A)
-	{
-		if (fabs(d->player.dir_x) > fabs(d->player.dir_y))
-			move_left(&d->map, &d->player);
-		else
-			move_right(&d->map, &d->player);
-	}
+		move_left(&d->map, &d->player);
 	else if (keycode == K_D)
-	{
-		if (fabs(d->player.dir_x) > fabs(d->player.dir_y))
-			move_right(&d->map, &d->player);
-		else
-			move_left(&d->map, &d->player);
-	}
+		move_right(&d->map, &d->player);
 	if (keycode == K_LEFT)
 		camera_left(&d->player);
 	else if (keycode == K_RIGHT)

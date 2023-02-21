@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: taehyeok <taehyeok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:37:24 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/16 16:17:28 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/19 20:44:18 by taehyeok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,19 @@ void	check_map_wall(t_map *map, char **f, int r, int c)
 		len = ft_strlen(f[r]);
 		while (++c < len)
 		{
-			if (f[r][c] == '0')
+			if ((r == 0 || r == map->row - 1 || c == 0 || c == len - 1)
+				&& !(f[r][c] == '1' || f[r][c] == ' '))
+				exit_game(1);
+			if (f[r][c] == ' ')
 			{
-				if (r == 0 || r == map->row - 1 || c == 0 || c == len - 1)
-					exit_game(1);
-				else if (r != 0 && (c >= ft_strlen(f[r - 1])
-						|| (c < ft_strlen(f[r - 1]) && f[r - 1][c] == ' ')))
-					exit_game(1);
-				else if (r != map->row - 1 && (c >= ft_strlen(f[r + 1])
-						|| (c < ft_strlen(f[r + 1]) && f[r + 1][c] == ' ')))
-					exit_game(1);
-				if ((c != 0 && f[r][c - 1] == ' ') ||
-						(c != len - 1 && f[r][c + 1] == ' '))
+				if (((r != map->row - 1 && f[r + 1][c])
+					&& !(f[r + 1][c] == '1' || f[r + 1][c] == ' '))
+					|| ((r != 0 && f[r - 1][c])
+					&& !(f[r - 1][c] == '1' || f[r - 1][c] == ' '))
+					|| ((c != len - 1 && f[r][c + 1])
+					&& !(f[r][c + 1] == '1' || f[r][c + 1] == ' '))
+					|| ((c != 0 && f[r][c - 1])
+					&& !(f[r][c - 1] == '1' || f[r][c - 1] == ' ')))
 					exit_game(1);
 			}
 		}

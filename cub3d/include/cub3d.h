@@ -3,46 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueshin <sueshin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: taehyeok <taehyeok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 01:37:53 by sueshin           #+#    #+#             */
-/*   Updated: 2023/02/16 16:26:00 by sueshin          ###   ########.fr       */
+/*   Updated: 2023/02/19 19:39:37 by taehyeok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <ctype.h>
-#include <limits.h>
-#include <math.h>
+# include <string.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <ctype.h>
+# include <limits.h>
+# include <math.h>
 
-#include "../mlx/mlx.h"
-#include "./get_next_line_bonus.h"
+# include "../mlx/mlx.h"
+# include "./get_next_line_bonus.h"
 
-#define width		640
-#define height		480
-#define texwidth	64
-#define texheight	64
-#define	NO			0
-#define SO			1
-#define WE			2
-#define EA			3
-#define K_UP		126
-#define K_DOWN		125
-#define K_LEFT		123
-#define K_RIGHT		124
-#define K_W			13
-#define K_D			2
-#define K_A			0
-#define K_S			1
-#define K_ESC		53
+// Window resolution
+# define width		640
+# define height		480
 
+// Texture resolution
+# define texwidth	64
+# define texheight	64
+
+// Direction Index
+# define NO			0
+# define SO			1
+# define WE			2
+# define EA			3
+
+// Key Number
+# define K_UP		126
+# define K_DOWN		125
+# define K_LEFT		123
+# define K_RIGHT	124
+# define K_W		13
+# define K_D		2
+# define K_A		0
+# define K_S		1
+# define K_ESC		53
+
+// Map Struct
 typedef struct	s_map
 {
 	char	*temp_field;
@@ -51,6 +59,7 @@ typedef struct	s_map
 	int		row;
 }				t_map;
 
+// Player data
 typedef struct	s_player
 {
 	// 위치벡터
@@ -67,6 +76,7 @@ typedef struct	s_player
 	double	camsp;
 }				t_player;
 
+// Image Data
 typedef struct	s_img
 {
 	void	*img;
@@ -77,7 +87,6 @@ typedef struct	s_img
 	int		img_width;
 	int		img_height;
 }				t_img;
-
 
 typedef struct	s_cub
 {
@@ -133,7 +142,7 @@ typedef struct	s_info
 
 void	init_data(t_info *d);
 
-void	open_cub(char *cub_file, t_info *d, int i);
+void	open_cub(char *cub_file, t_info *d);
 
 void	check_map_wall(t_map *map, char **field, int r, int c);
 void	check_map_chr(t_info *d, char **field, int r, int c);
@@ -163,5 +172,13 @@ int		exit_game_with_red(void);
 char	*ft_strjoin_len(char *str1, char *str2, int len);
 void	*ft_memset(void *ptr, int value, size_t size);
 int		makecolor(int *color);
+
+//add Function
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	**ft_split(char const *str, char c);
+void	free_arr(char **arr);
+int		ft_atoi(const char *str);
+int		is_emptyline(char *str);
+int		is_space(char c);
 
 #endif

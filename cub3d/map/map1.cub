@@ -7,9 +7,13 @@ WE   ./texture/path_to_the_west_texture.xpm
 
 EA    ./texture/path_to_the_east_texture.xpm
 
-F 204,102, 0
-C    51,254,255
+F 204, 102,   0
+    
+C    51,254,255     
 
+
+
+				    
 
 
         1111  1111111111111111111
