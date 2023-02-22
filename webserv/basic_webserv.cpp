@@ -1,27 +1,37 @@
 #include <iostream>
 #include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <fcntl.h>
 #include <pthread.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <sys/epoll.h>
 
 using namespace std;
 
 #define BUF_SIZE	2048
 #define BUF_SMALL	100
+#define EPOLL_SIZE	50
 
 void*	request_handler(void *arg);
-char*	content_type(char *file);
+const char*	content_type(char *file);
 void	send_data(FILE *fp, char *ct, char *filename);
 void	send_error(FILE *fp);
-void	error_handling(char *message);
+void	setnonblock(int fd);
+void	error_handling(const char *message);
 
 int	main(int argc, char *argv[])
 {
 	int					serv_sock, clnt_sock;
 	struct sockaddr_in	serv_adr, clnt_adr;
 	socklen_t			clnt_adr_size;
-	char				buf[BUF_SIZE];
 	pthread_t			t_id;
+
+	struct epoll_event	*ep_events;
+	struct epoll_event	event;
+	int					epfd, event_cnt;
 
 	if(argc != 2)
 	{
@@ -38,17 +48,43 @@ int	main(int argc, char *argv[])
 	if (::bind(serv_sock, (sockaddr*)&serv_adr, sizeof(serv_adr)) == -1)
 		error_handling("bind() error");
 
-	if (::listen(serv_sock, 20) == -1)
+	if (::listen(serv_sock, 5) == -1)
 		error_handling("listen() error");
+
+	epfd = epoll_create(EPOLL_SIZE);	// epoll 인스턴스 생성성
+	ep_events = new epoll_event[EPOLL_SIZE];
+
+	setnonblock(serv_sock);
+	event.events = EPOLLIN;
+	event.data.fd = serv_sock;
+	epoll_ctl(epfd, EPOLL_CTL_ADD, serv_sock, &event);	// epoll 인스턴스에 관찰대상이 되는 fd 등록
 
 	//	요청 및 응답
 	while (1)
 	{
-		clnt_adr_size = sizeof(clnt_adr);
-		clnt_sock = accept(serv_sock, (sockaddr*)&clnt_adr, &clnt_adr_size);
-		cout << "Connection Request : " << inet_ntoa(clnt_adr.sin_addr) << " : " << ntohs(clnt_adr.sin_port) << endl;
-		pthread_create(&t_id, NULL, request_handler, &clnt_sock);
-		pthread_detach(t_id);
+		event_cnt = epoll_wait(epfd, ep_events, EPOLL_SIZE, -1);
+		if (event_cnt == -1)
+			break;
+
+		for (int i = 0; i < event_cnt; i++)
+		{
+			
+			if (ep_events[i].data.fd == serv_sock)
+			{
+				clnt_adr_size = sizeof(clnt_adr);
+				clnt_sock = accept(serv_sock, (sockaddr*)&clnt_adr, &clnt_adr_size);
+				setnonblock(clnt_sock);
+				event.events = EPOLLIN | EPOLLET;
+				event.data.fd = clnt_sock;
+				epoll_ctl(epfd, EPOLL_CTL_ADD, clnt_sock, &event);
+				cout << "Connection Request : " << inet_ntoa(clnt_adr.sin_addr) << " : " << ntohs(clnt_adr.sin_port) << endl;
+			}
+			else
+			{
+				pthread_create(&t_id, NULL, request_handler, &ep_events[i]);
+				pthread_detach(t_id);
+			}
+		}
 	}
 	close(serv_sock);
 	return 0;
@@ -56,10 +92,11 @@ int	main(int argc, char *argv[])
 
 void*	request_handler(void *arg)
 {
-	int		clnt_sock = *((int*)arg);
-	char	req_line[BUF_SMALL];
-	FILE	*clnt_read;
-	FILE	*clnt_write;
+	epoll_event	ep_event = *(epoll_event *)arg;
+	int			clnt_sock = ep_event.data.fd;
+	char		req_line[BUF_SMALL];
+	FILE		*clnt_read;
+	FILE		*clnt_write;
 
 	char	method[BUF_SMALL];
 	char	ct[BUF_SMALL];
@@ -89,6 +126,7 @@ void*	request_handler(void *arg)
 	
 	fclose(clnt_read);
 	send_data(clnt_write, ct, file_name);	// 응답
+	return NULL;
 }
 
 void	send_data(FILE *fp, char *ct, char *file_name)
@@ -139,10 +177,11 @@ void	send_error(FILE *fp)	// 오류 발생시 메시지 전달
 	fputs(server, fp);
 	fputs(cnt_len, fp);
 	fputs(cnt_type, fp);
+	fputs(content, fp);
 	fflush(fp);
 }
 
-char*	content_type(char *file)	// Content-Type 구분
+const char*	content_type(char *file)	// Content-Type 구분
 {
 	char	extension[BUF_SMALL];
 	char	file_name[BUF_SMALL];
@@ -156,7 +195,13 @@ char*	content_type(char *file)	// Content-Type 구분
 		return "text/plain";
 }
 
-void	error_handling(char *message)
+void	setnonblock(int fd)
+{
+	int flag = fcntl(fd, F_GETFL, 0);
+	fcntl(fd, F_SETFL, flag | O_NONBLOCK);
+}
+
+void	error_handling(const char *message)
 {
 	fputs(message, stderr);
 	fputc('\n', stderr);
