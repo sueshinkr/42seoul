@@ -6,13 +6,13 @@
 #    By: sueshin <sueshin@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 13:09:50 by sueshin           #+#    #+#              #
-#    Updated: 2023/02/22 16:57:10 by sueshin          ###   ########.fr        #
+#    Updated: 2023/02/23 14:40:35 by sueshin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = serv
 CC = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++11 -pthread
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 INCS_DIR = ./
 SRCS_DIR = ./

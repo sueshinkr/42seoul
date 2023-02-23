@@ -15,19 +15,17 @@ using namespace std;
 #define BUF_SMALL	100
 #define EPOLL_SIZE	50
 
-void*	request_handler(void *arg);
+void	request_handler(int clnt_sock);
 const char*	content_type(char *file);
-void	send_data(FILE *fp, char *ct, char *filename);
-void	send_error(FILE *fp);
+void	send_data(int fd, char *ct, char *filename);
+void	send_error(int fd);
 void	setnonblock(int fd);
-void	error_handling(const char *message);
 
 int	main(int argc, char *argv[])
 {
 	int					serv_sock, clnt_sock;
 	struct sockaddr_in	serv_adr, clnt_adr;
 	socklen_t			clnt_adr_size;
-	pthread_t			t_id;
 
 	struct epoll_event	*ep_events;
 	struct epoll_event	event;
@@ -46,10 +44,10 @@ int	main(int argc, char *argv[])
 	serv_adr.sin_port = htons(atoi(argv[1]));
 
 	if (::bind(serv_sock, (sockaddr*)&serv_adr, sizeof(serv_adr)) == -1)
-		error_handling("bind() error");
+		return 1;
 
 	if (::listen(serv_sock, 5) == -1)
-		error_handling("listen() error");
+		return 1;
 
 	epfd = epoll_create(EPOLL_SIZE);	// epoll 인스턴스 생성성
 	ep_events = new epoll_event[EPOLL_SIZE];
@@ -62,6 +60,8 @@ int	main(int argc, char *argv[])
 	//	요청 및 응답
 	while (1)
 	{
+		cout << "wait for new connection...\n";
+
 		event_cnt = epoll_wait(epfd, ep_events, EPOLL_SIZE, -1);
 		if (event_cnt == -1)
 			break;
@@ -77,12 +77,12 @@ int	main(int argc, char *argv[])
 				event.events = EPOLLIN | EPOLLET;
 				event.data.fd = clnt_sock;
 				epoll_ctl(epfd, EPOLL_CTL_ADD, clnt_sock, &event);
-				cout << "Connection Request : " << inet_ntoa(clnt_adr.sin_addr) << " : " << ntohs(clnt_adr.sin_port) << endl;
+				cout << "Connection Request : " << "socket " << clnt_sock << " - " << inet_ntoa(clnt_adr.sin_addr) << " : " << ntohs(clnt_adr.sin_port) << endl;
 			}
 			else
 			{
-				pthread_create(&t_id, NULL, request_handler, &ep_events[i]);
-				pthread_detach(t_id);
+				cout << "Client request\n";
+				request_handler(ep_events[i].data.fd);
 			}
 		}
 	}
@@ -90,102 +90,71 @@ int	main(int argc, char *argv[])
 	return 0;
 }
 
-void*	request_handler(void *arg)
+void	request_handler(int clnt_sock)
 {
-	epoll_event	ep_event = *(epoll_event *)arg;
-	int			clnt_sock = ep_event.data.fd;
-	char		req_line[BUF_SMALL];
-	FILE		*clnt_read;
-	FILE		*clnt_write;
+	char	req_line[BUF_SMALL + 1];
 
 	char	method[BUF_SMALL];
 	char	ct[BUF_SMALL];
 	char	file_name[BUF_SMALL];
 
-	clnt_read = fdopen(clnt_sock, "r");
-	clnt_write = fdopen(dup(clnt_sock), "w");
-	fgets(req_line, BUF_SMALL, clnt_read);
+	recv(clnt_sock, req_line, BUF_SMALL, 0);
 	if (strstr(req_line, "HTTP/") == NULL)
-	{
-		send_error(clnt_write);
-		fclose(clnt_read);
-		fclose(clnt_write);
-		return NULL;
-	}
+		send_error(clnt_sock);
 
 	strcpy(method, strtok(req_line, " /"));
 	strcpy(file_name, strtok(NULL, " /"));	// 요청 파일이름 확인
 	strcpy(ct, content_type(file_name));	// Content-type 확인
 	if (strcmp(method, "GET"))				// Get 방식 요청인지 확인
-	{
-		send_error(clnt_write);
-		fclose(clnt_read);
-		fclose(clnt_write);
-		return NULL;
-	}
-	
-	fclose(clnt_read);
-	send_data(clnt_write, ct, file_name);	// 응답
-	return NULL;
+		send_error(clnt_sock);
+
+	send_data(clnt_sock, ct, file_name);	// 응답
 }
 
-void	send_data(FILE *fp, char *ct, char *file_name)
+void	send_data(int fd, char *ct, char *file_name)
 {
-	char	protocol[] = "HTTP/1.0 200 OK\r\n";
-	char	server[] = "Server : simple web server\r\n";
-	char	cnt_len[] = "Content-length : 2048\r\n";
-	char	cnt_type[BUF_SMALL];
-	char	buf[BUF_SIZE];
+	std::string	protocol = "HTTP/1.0 200 OK\r\n";
+	std::string	server = "Server : simple web server\r\n";
+	std::string	cnt_len = "Content-length : 2048\r\n";
+	std::string	cnt_type = "Content-type : ";
+	std::string	data;
+	char buf[BUF_SIZE];
 	FILE	*send_file;
 
-	sprintf(cnt_type, "Content-type : %s\r\n\r\n", ct);
+	cnt_type += ct;
+	cnt_type += "\r\n\r\n";
 	if ((send_file = fopen(file_name, "r")) == NULL)
 	{
 		printf("no file\n");
-		send_error(fp);
+		send_error(fd);
 		return ;
 	}
-
-	// 헤더 정보 전송
-	fputs(protocol, fp);
-	fputs(server, fp);
-	fputs(cnt_len, fp);
-	fputs(cnt_type, fp);
-
-	// 요청 데이터 전송
+	data = protocol + server + cnt_len + cnt_type;
 	while (fgets(buf, BUF_SIZE, send_file) != NULL)
-	{
-		fputs(buf, fp);
-		fflush(fp);
-	}
-	fflush(fp);
-	fclose(fp);
+		data += buf;
+	send(fd, data.c_str(), data.size(), 0);
 }
 
-void	send_error(FILE *fp)	// 오류 발생시 메시지 전달
+void	send_error(int fd)	// 오류 발생시 메시지 전달
 {
-	char	protocol[] = "HTTP/1.0 400 Bad Request\r\n";
-	char	server[] = "Server:siple web server\r\n";
-	char	cnt_len[] = "Content-length:2048\r\n";
-	char	cnt_type[] = "Content-type:text/html\r\n\r\n";
-	char	content[] = "<html><head><title>NETWORK</title></head>"
+	std::string	protocol = "HTTP/1.0 400 Bad Request\r\n";
+	std::string	server = "Server:siple web server\r\n";
+	std::string	cnt_len = "Content-length:2048\r\n";
+	std::string	cnt_type = "Content-type:text/html\r\n\r\n";
+	std::string	content = "<html><head><title>NETWORK</title></head>"
 		"<body><font size=+5><br>오류 발생! 요청 파일명 및 요청 방식 확인!"
 		"</font></body></html>";
+	std::string error_msg = protocol + server + cnt_len + cnt_type + content;
 
-	printf("send_error\n");
-	fputs(protocol, fp);
-	fputs(server, fp);
-	fputs(cnt_len, fp);
-	fputs(cnt_type, fp);
-	fputs(content, fp);
-	fflush(fp);
+	send(fd, error_msg.c_str(), error_msg.size(), 0);
 }
 
 const char*	content_type(char *file)	// Content-Type 구분
 {
 	char	extension[BUF_SMALL];
 	char	file_name[BUF_SMALL];
-	
+
+	cout << "file : " << file << endl;
 	strcpy(file_name, file);
 	strtok(file_name, ".");
 	strcpy(extension, strtok(NULL, "."));
@@ -199,11 +168,4 @@ void	setnonblock(int fd)
 {
 	int flag = fcntl(fd, F_GETFL, 0);
 	fcntl(fd, F_SETFL, flag | O_NONBLOCK);
-}
-
-void	error_handling(const char *message)
-{
-	fputs(message, stderr);
-	fputc('\n', stderr);
-	exit(1);
 }
