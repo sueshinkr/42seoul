@@ -116,11 +116,11 @@ int						CONFIG::_initCONFIG(const std::string confFile)
 							avalMethods[POST] = true; 
 						else if (method == "DELETE")
 							avalMethods[DELETE] = true;
+
 						if (sep != std::string::npos)
 							start = sep + 1;
 						else
-							start = std::string::npos;
-						//start = sep + 1;
+							break;
 						sep = data.find(" ", sep + 1);
 					}
 					_avalMethods.push_back(avalMethods);
