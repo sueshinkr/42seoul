@@ -1,8 +1,16 @@
-#include "socket.hpp"
+#include "../include/socket.hpp"
+
 #define PASS	0
 #define ERR		-1
 #define BACKLOG	5
+
 SOCKET::SOCKET()
+{
+	if (_initSOCKET())
+		this->_errcheck = ERR;
+}
+
+SOCKET::SOCKET(const CONFIG &config) : _config(config)
 {
 	if (_initSOCKET())
 		this->_errcheck = ERR;
@@ -10,51 +18,55 @@ SOCKET::SOCKET()
 
 int	SOCKET::_initSOCKET(void)
 {
-	int	serv_sock;
+	int	servSock;
 
-	for (size_t i = 0; i < _config.size(); i++)
+	for (int i = 0; i < _config.getservNum(); i++)
 	{
-		if ((serv_sock =socket(PF_INET, SOCK_STREAM, 0)) < 0)
+		if ((servSock = socket(PF_INET, SOCK_STREAM, 0)) < 0)
 		{
 			perror("socket() error");
 			return (ERR);
 		}
 
-		_setAddr(_config[i]);
+		_setAddr(_config, i);
 
-		if (bind(serv_sock, (sockaddr*)&getAddr(i), sizeof(getAddrLen(i)) == -1))
+		if (bind(servSock, (struct sockaddr*)&getAddr(i), getAddrLen(i)) == -1)
 		{
 			perror("bind() error");
 			return (ERR);
 		}
 
-		if (listen(serv_sock, BACKLOG) < 0)
+		if (listen(servSock, BACKLOG) < 0)
 		{
 			perror("listen() error");
 			return (ERR);
 		}
 	}
+	std::cout << "init serv OK\n";
 	return (PASS);
 }
 
-const sockaddr_in SOCKET::getAddr(int num) const
+const sockaddr_in & SOCKET::getAddr(int num) const
 {
 	return (_addr[num]);
 }
 
-const socklen_t SOCKET::getAddrLen(int num) const
+const socklen_t & SOCKET::getAddrLen(int num) const
 {
 	return (_addrLen[num]);
 }
 
-void			SOCKET::_setAddr(CONFIG conf)
+void			SOCKET::_setAddr(CONFIG conf, int servNum)
 {
 	struct sockaddr_in	addr;
+	const char	*host;
 
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = conf.getHost().c_str();
-	addr.sin_port = conf.getPort();
+	host = conf.getHost(servNum).c_str();
+	std::cout << "host : " << conf.getHost(servNum) << std::endl;
+	addr.sin_addr.s_addr = inet_addr(strcmp(host, "localhost") == 0 ? "127.0.0.1" : host);
+	addr.sin_port = htons(conf.getPort(servNum));
 
 	this->_addr.push_back(addr);
 	this->_addrLen.push_back(sizeof(addr));

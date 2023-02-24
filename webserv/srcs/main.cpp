@@ -1,28 +1,19 @@
-#ifndef SOCKET_HPP
-# define SOCKET_HPP
-#include <vector>
-#include <sys/socket.h>
-#include <sys/epoll.h>
-#include <arpa/inet.h>
 
-class SOCKET
+#include "../include/socket.hpp"
+
+std::string configName(int argc, char **argv)
 {
-	private:
-		std::vector<CONFIG>			_config;
-		std::vector<sockaddr_in>	_addr;
-		std::vector<socklen_t>		_addrlen;
-		int							_epollfd;
+	std::string confFile = "default.conf";
 
-		int							_initSOCKET(void);
+	if (argc >= 2)
+		confFile = argv[1];
+	return (confFile);
+}
 
-	public:
-		SOCKET();
-		SOCKET(const SOCKET &socket);
-		~SOCKET();
+int main(int argc, char **argv)
+{
+	CONFIG config(configName(argc, argv));
+	SOCKET sock(config);
 
-		SOCKET	&operator=(const SOCKET &socket);
-
-
-};
-
-#endif
+	return (0);
+}

@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <map>
+#include <iostream>
 
 class CONFIG
 {
@@ -18,22 +19,26 @@ class CONFIG
 		std::vector<std::string>		_servName;
 		std::vector<std::string>		_root;
 		std::vector<std::string>		_index;
-		std::vector<std::vector<bool>>	_avalMethods;
+		std::vector<std::vector<bool> >	_avalMethods;
+		int								_servNum;
 
 		int							_initCONFIG(const std::string confFile);
 
 	public:
 		CONFIG();
-		CONFIG(char *confFile);
-		CONFIG(const CONFIG &CONFIG);
-		~CONFIG();
+		CONFIG(const std::string confFile);
+		CONFIG(const CONFIG &config);
+		//~CONFIG();
 
-		CONFIG	&operator=(const CONFIG &CONFIG);
+		//CONFIG	&operator=(const CONFIG &CONFIG);
 		
-		const int				getPort() const;
-		const std::string		getHost() const;
-		const std::string		getServName() const;
-		const std::vector<bool>	getAvalMethods() const;
+		int				getservNum() const;
+		int				getPort(int num) const;
+		const std::string		getHost(int num) const;
+		const std::string		getServName(int num) const;
+		const std::string		getRoot(int num) const;
+		const std::string		getIndex(int num) const;
+		const std::vector<bool>	getAvalMethods(int num) const;
 };
 
 #endif
