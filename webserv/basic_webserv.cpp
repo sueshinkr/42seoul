@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <sys/epoll.h>
+#include <cerrno>
 
 using namespace std;
 
@@ -52,7 +53,7 @@ int	main(int argc, char *argv[])
 	epfd = epoll_create(EPOLL_SIZE);	// epoll 인스턴스 생성성
 	ep_events = new epoll_event[EPOLL_SIZE];
 
-	setnonblock(serv_sock);
+	//setnonblock(serv_sock);
 	event.events = EPOLLIN;
 	event.data.fd = serv_sock;
 	epoll_ctl(epfd, EPOLL_CTL_ADD, serv_sock, &event);	// epoll 인스턴스에 관찰대상이 되는 fd 등록
@@ -73,8 +74,8 @@ int	main(int argc, char *argv[])
 			{
 				clnt_adr_size = sizeof(clnt_adr);
 				clnt_sock = accept(serv_sock, (sockaddr*)&clnt_adr, &clnt_adr_size);
-				setnonblock(clnt_sock);
-				event.events = EPOLLIN | EPOLLET;
+				//setnonblock(clnt_sock);
+				event.events = EPOLLIN;
 				event.data.fd = clnt_sock;
 				epoll_ctl(epfd, EPOLL_CTL_ADD, clnt_sock, &event);
 				cout << "Connection Request : " << "socket " << clnt_sock << " - " << inet_ntoa(clnt_adr.sin_addr) << " : " << ntohs(clnt_adr.sin_port) << endl;
@@ -93,12 +94,21 @@ int	main(int argc, char *argv[])
 void	request_handler(int clnt_sock)
 {
 	char	req_line[BUF_SMALL + 1];
-
 	char	method[BUF_SMALL];
 	char	ct[BUF_SMALL];
 	char	file_name[BUF_SMALL];
 
-	recv(clnt_sock, req_line, BUF_SMALL, 0);
+/*
+	while (1)
+	{
+		if (recv(clnt_sock, req_line, 20, 0) < 0 && errno == EAGAIN)
+			break;
+		cout << ":" << req_line << endl;
+	}
+*/
+
+	recv(clnt_sock, req_line, 50, 0);
+	cout << ":" << req_line << endl;
 	if (strstr(req_line, "HTTP/") == NULL)
 		send_error(clnt_sock);
 
@@ -133,6 +143,7 @@ void	send_data(int fd, char *ct, char *file_name)
 	while (fgets(buf, BUF_SIZE, send_file) != NULL)
 		data += buf;
 	send(fd, data.c_str(), data.size(), 0);
+	cout << "send data : " << data << endl;
 }
 
 void	send_error(int fd)	// 오류 발생시 메시지 전달
