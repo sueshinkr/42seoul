@@ -57,6 +57,7 @@ int	SOCKET::_registerEpoll(void)
 	{
 		_events.events = EPOLLIN;
 		_events.data.fd = _server[i].getfd();
+		std::cout << "server fd : " << _server[i].getfd() << std::endl;
 		if (epoll_ctl(_epollFd, EPOLL_CTL_ADD, _server[i].getfd(), &_events) == -1)
 			return (ERR);
 	}

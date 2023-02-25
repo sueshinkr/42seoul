@@ -53,7 +53,7 @@ int	main(int argc, char *argv[])
 	epfd = epoll_create(EPOLL_SIZE);	// epoll 인스턴스 생성성
 	ep_events = new epoll_event[EPOLL_SIZE];
 
-	//setnonblock(serv_sock);
+	setnonblock(serv_sock);
 	event.events = EPOLLIN;
 	event.data.fd = serv_sock;
 	epoll_ctl(epfd, EPOLL_CTL_ADD, serv_sock, &event);	// epoll 인스턴스에 관찰대상이 되는 fd 등록
