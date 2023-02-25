@@ -16,7 +16,7 @@ int	connectClient(int epollFd, int servSock)
 	struct sockaddr_in	clntAddr;
 	socklen_t			clntAddrLen;
 	struct epoll_event	event;
-	char buf[10000];
+	//char buf[10000];
 
 	clntAddrLen = sizeof(clntAddr);
 	if ((clntSock = accept(servSock, (sockaddr*)&clntAddr, &clntAddrLen)) == -1)	
@@ -31,9 +31,9 @@ int	connectClient(int epollFd, int servSock)
 	if (epoll_ctl(epollFd, EPOLL_CTL_ADD, clntSock, &event) == -1)
 		return (ERR);
 
-	while (recv(servSock, buf, 10000, 0) > 0)
-		;
-	std::cout << "buf : " << buf << std::endl;
+	//while (recv(servSock, buf, 10000, 0) > 0)
+	//	;
+	//std::cout << "buf : " << buf << std::endl;
 	std::cout << "Connection Request : " << "socket " << clntSock << " - " << inet_ntoa(clntAddr.sin_addr) << " : " << ntohs(clntAddr.sin_port) << std::endl << std::endl;
 
 	return (PASS);
