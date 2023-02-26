@@ -3,6 +3,7 @@
 
 #include "config.hpp"
 #include "server.hpp"
+#include "client.hpp"
 
 #include <sys/socket.h>
 #include <sys/epoll.h>
@@ -24,11 +25,13 @@ class SOCKET
 	private:
 		CONFIG						_config;
 		std::vector<SERVER>			_server;
+		std::vector<CLIENT>			_client;
 		std::vector<sockaddr_in>	_addr;
 		std::vector<socklen_t>		_addrLen;
 		int							_epollFd;
 		int							_errcheck;
 		struct epoll_event			_events;
+		std::map<int, int>			_fdToClient;
 
 		int							_initSOCKET(void);
 		int							_registerEpoll(void);
@@ -45,8 +48,12 @@ class SOCKET
 		
 		const sockaddr_in &			getAddr(int num) const;
 		const socklen_t &			getAddrLen(int num) const;
+		SERVER						getServer(int num) const;
+		CLIENT &					getClient(int clnt);
 		int							getEpollFd(void) const;
 		int							findServerFd(int fd) const;
+		void						addClient(int clnt);
+		
 };
 
 #endif

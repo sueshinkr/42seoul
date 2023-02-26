@@ -8,7 +8,13 @@ SERVER::SERVER(int fd) : _fd(fd)
 {
 }
 
-int	SERVER::getfd(void) const
+/*---------------------------
+		get_function
+----------------------------*/
+
+int	SERVER::getFd(void) const
 {
 	return (_fd);
 }
+
+

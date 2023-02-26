@@ -56,9 +56,9 @@ int	SOCKET::_registerEpoll(void)
 	for (size_t i = 0; i < _server.size(); i++)
 	{
 		_events.events = EPOLLIN;
-		_events.data.fd = _server[i].getfd();
-		std::cout << "server fd : " << _server[i].getfd() << std::endl;
-		if (epoll_ctl(_epollFd, EPOLL_CTL_ADD, _server[i].getfd(), &_events) == -1)
+		_events.data.fd = _server[i].getFd();
+		std::cout << "server fd : " << _server[i].getFd() << std::endl;
+		if (epoll_ctl(_epollFd, EPOLL_CTL_ADD, _server[i].getFd(), &_events) == -1)
 			return (ERR);
 	}
 	return (PASS);
@@ -90,11 +90,17 @@ int					SOCKET::findServerFd(int fd) const
 {
 	for (size_t i = 0; i < _server.size(); i++)
 	{
-		if (fd == _server[i].getfd())
-			return (fd);
+		if (fd == _server[i].getFd())
+			return (i);
 	}
 	
-	return (0);
+	return (-1);
+}
+
+void				SOCKET::addClient(int clnt)
+{
+	_fdToClient[clnt] = _client.size();
+	_client.push_back(clnt);
 }
 
 /*---------------------------
@@ -114,4 +120,14 @@ const socklen_t &	SOCKET::getAddrLen(int num) const
 int					SOCKET::getEpollFd(void) const
 {
 	return (_epollFd);
+}
+
+SERVER				SOCKET::getServer(int num) const
+{
+	return (_server[num]);
+}
+
+CLIENT &			SOCKET::getClient(int clnt)
+{
+	return (_client[_fdToClient.find(clnt)->second]);
 }

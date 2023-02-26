@@ -4,13 +4,13 @@
 class SERVER
 {
 	private:
-		int	_fd;
+		int					_fd;
 
 	public:
 		SERVER();
 		SERVER(int fd);
 
-		int	getfd(void) const;
+		int	getFd(void) const;
 };
 
 #endif
