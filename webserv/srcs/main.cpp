@@ -16,7 +16,6 @@ int	connectClient(int epollFd, int servSock)
 	struct sockaddr_in	clntAddr;
 	socklen_t			clntAddrLen;
 	struct epoll_event	event;
-	//char buf[10000];
 
 	clntAddrLen = sizeof(clntAddr);
 	if ((clntSock = accept(servSock, (sockaddr*)&clntAddr, &clntAddrLen)) == -1)	
@@ -31,9 +30,6 @@ int	connectClient(int epollFd, int servSock)
 	if (epoll_ctl(epollFd, EPOLL_CTL_ADD, clntSock, &event) == -1)
 		return (ERR);
 
-	//while (recv(servSock, buf, 10000, 0) > 0)
-	//	;
-	//std::cout << "buf : " << buf << std::endl;
 	std::cout << "Connection Request : " << "socket " << clntSock << " - " << inet_ntoa(clntAddr.sin_addr) << " : " << ntohs(clntAddr.sin_port) << std::endl << std::endl;
 
 	return (PASS);
@@ -46,11 +42,24 @@ int recvRequest(int clntSock)
 	char buf[10000];
 	memset(buf, 0, sizeof(buf));
 
-	while (recv(clntSock, buf, 10000, 0) > 0)
-		;
+	if (recv(clntSock, buf, 10000, 0) < 1)
+	{
+		close(clntSock);
+	}
 
 	std::cout << buf << std::endl;
 
+	std::string	protocol = "HTTP/1.0 200 OK\r\n";
+	std::string	server = "Server: simple web server\r\n";
+	std::string	cnt_len = "Content-length: 2048\r\n";
+	std::string	cnt_type = "Content-type: text/html\r\n\r\n";
+	std::string body = "hello, world!\n";
+
+	std::string to_send = protocol + server + cnt_len + cnt_type + body;
+
+	send(clntSock, to_send.c_str(), to_send.size(), 0);
+
+	//close(clntSock);
 	return (PASS);
 }
 
@@ -70,7 +79,7 @@ int	waitEvent(SOCKET sock)
 	for (int i = 0; i < eventCnt; i++)
 	{
 		int fd = events[i].data.fd;
-		std::cout << "event fd : " << fd << std::endl;
+		std::cout << "event fd : " << fd << " : " << events[i].events << std::endl;
 		if (sock.findServerFd(fd))
 			connectClient(epollFd, fd);
 		else

@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <sys/epoll.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 #include <fcntl.h>
