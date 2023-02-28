@@ -29,7 +29,6 @@ int		CLIENT::recvMessage(void)
 	{
 		std::cout << "recvLen : " << recvLen << std::endl;
 		std::cout << buf << std::endl;
-
 		addMessage(buf);
 
 		if (getMessage().find("\r\n") != std::string::npos)
@@ -38,9 +37,10 @@ int		CLIENT::recvMessage(void)
 			std::cout << getMessage() << std::endl;
 			std::cout << "==============Finish===============\n";
 
-			epoll_ctl(getEpollFd(), EPOLL_CTL_DEL, getFd(), NULL);
-			close(getFd());
+			//epoll_ctl(getEpollFd(), EPOLL_CTL_DEL, getFd(), NULL);
+			//close(getFd());
 		}
+
 	}
 	return (PASS);
 }
