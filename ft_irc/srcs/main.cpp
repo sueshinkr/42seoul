@@ -1,43 +1,38 @@
 
 #include "../include/server.hpp"
 
-int	waitEvent(SERVER & serv)
-{
-	struct epoll_event	events[EPOLL_SIZE];
-	int					eventCnt;
-	int					epollFd;
+int waitEvent(SERVER &serv) {
+  struct epoll_event events[EPOLL_SIZE];
+  int event_cnt;
+  int epoll_fd;
 
-	epollFd = serv.getEpollFd();
-	if ((eventCnt = epoll_wait(epollFd, events, EPOLL_SIZE, -1)) == -1)
-	{
-		perror("epoll_wait() error");
-		return (ERR);
-	}
+  epoll_fd = serv.get_m_epoll_fd();
+  if ((event_cnt = epoll_wait(epoll_fd, events, EPOLL_SIZE, -1)) == -1) {
+    perror("epoll_wait() error");
+    return (ERR);
+  }
 
-	for (int i = 0; i < eventCnt; i++)
-	{
-		int eventFd = events[i].data.fd;
+  for (int i = 0; i < event_cnt; i++) {
+    int event_fd = events[i].data.fd;
 
-		if (eventFd == serv.getFd())
-			serv.connectClient();
-		else
-			serv.getClient(eventFd).recvMessage();
-	}
-	return (PASS);
+    if (event_fd == serv.get_m_serv_fd())
+      serv.connectClient();
+    else
+      serv.get_m_client(event_fd).recvMessage();
+  }
+  return (PASS);
 }
 
-int main(int argc, char **argv)
-{
-	if(argc != 3)
-	{
-		std::cout << "Usage : " << argv[0] << " <port> <password>\n";
-		exit(1);
-	}
+int main(int argc, char **argv) {
+  if (argc != 3) {
+    std::cout << "Usage : " << argv[0] << " <port> <password>\n";
+    exit(1);
+  }
 
-	SERVER serv(atoi(argv[1]), argv[2]);
+  SERVER serv(atoi(argv[1]), argv[2]);
 
-	while (waitEvent(serv) != ERR)
-		;
+  while (waitEvent(serv) != ERR)
+    ;
 
-	return (0);
+  return (0);
 }

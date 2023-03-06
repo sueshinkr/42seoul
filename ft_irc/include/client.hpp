@@ -1,42 +1,36 @@
 #ifndef CLIENT_HPP
-# define CLIENT_HPP
+#define CLIENT_HPP
 
-//#include "../include/server.hpp"
-#include <string>
-#include <sys/socket.h>
-#include <sys/epoll.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <string.h>
-#include <fcntl.h>
-#include <iostream>
-#include <vector>
+#include <sys/epoll.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
-#define PASS		0
-#define ERR			-1
-#define BACKLOG		5
+#include <iostream>
+#include <string>
+
+#define PASS 0
+#define ERR -1
+#define BACKLOG 5
 #define EPOLL_SIZE 50
 
+class CLIENT {
+ private:
+  int m_clnt_fd;
+  int m_epoll_fd;
+  std::string m_message;
 
-class CLIENT
-{
-	private:
-		int							_fd;
-		int							_epollFd;
-        std::string					_message;
+ public:
+  CLIENT();
+  CLIENT(int fd, int epollFd);
 
-	public:
-		CLIENT();
-		CLIENT(int fd, int epollFd);
-		//CLIENT	&operator=(const CLIENT &client);
+  int recvMessage(void);
+  void cleanMessage(void);
+  void addMessage(char *buf);
 
-		int			recvMessage(void);
-		void		addMessage(char *buf);
-
-		int			getFd(void) const;
-		int			getEpollFd(void) const;
-		std::string	getMessage(void) const;
+  int get_m_clnt_fd(void) const;
+  int get_m_epoll_fd(void) const;
+  std::string get_m_message(void) const;
 };
 
 #endif
