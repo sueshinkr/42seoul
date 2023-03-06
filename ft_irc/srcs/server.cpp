@@ -8,8 +8,10 @@ SERVER::SERVER() {}
 
 SERVER::SERVER(int port, std::string password)
     : m_port(port), m_password(password) {
-  if (initServer()) this->m_err_check = ERR;
-  if (registerEpoll()) this->m_err_check = ERR;
+  if (initServer())
+    this->m_err_check = ERR;
+  if (registerEpoll())
+    this->m_err_check = ERR;
 }
 
 int SERVER::initServer() {
@@ -22,7 +24,8 @@ int SERVER::initServer() {
 
   set_m_addr();
 
-  if (bind(servSock, (struct sockaddr *)&get_m_addr(), sizeof(get_m_addr())) == -1) {
+  if (bind(servSock, (struct sockaddr *)&get_m_addr(), sizeof(get_m_addr())) ==
+      -1) {
     perror("bind() error");
     return (ERR);
   }
@@ -40,11 +43,13 @@ int SERVER::initServer() {
 }
 
 int SERVER::registerEpoll(void) {
-  if ((m_epoll_fd = epoll_create(EPOLL_SIZE)) == -1) return (ERR);
+  if ((m_epoll_fd = epoll_create(EPOLL_SIZE)) == -1)
+    return (ERR);
 
   m_events.events = EPOLLIN;
   m_events.data.fd = get_m_serv_fd();
-  if (epoll_ctl(m_epoll_fd, EPOLL_CTL_ADD, get_m_serv_fd(), &m_events) == -1) return (ERR);
+  if (epoll_ctl(m_epoll_fd, EPOLL_CTL_ADD, get_m_serv_fd(), &m_events) == -1)
+    return (ERR);
 
   return (PASS);
 }
@@ -72,7 +77,8 @@ int SERVER::connectClient() {
   struct epoll_event event;
 
   clntAddrLen = sizeof(clntAddr);
-  if ((clntSock = accept(get_m_serv_fd(), (sockaddr *)&clntAddr, &clntAddrLen)) == -1)
+  if ((clntSock =
+           accept(get_m_serv_fd(), (sockaddr *)&clntAddr, &clntAddrLen)) == -1)
     return (ERR);
 
   event.events = EPOLLIN;

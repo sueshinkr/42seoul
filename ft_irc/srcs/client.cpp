@@ -30,8 +30,8 @@ int CLIENT::recvMessage(void) {
     size_t cur = m_message.find("\r\n");
     while (cur != std::string::npos) {
       std::string cmd_line = m_message.substr(prev, cur - prev);
-	  std::cout << "cmd::::\n";
-	  std::cout << cmd_line << std::endl;
+      std::cout << "cmd::::\n";
+      std::cout << cmd_line << std::endl;
       // handler(cmd_line);
       prev = cur + 2;
       cur = m_message.find("\r\n", prev);

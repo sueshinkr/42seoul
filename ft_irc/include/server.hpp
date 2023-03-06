@@ -15,7 +15,7 @@
 #define EPOLL_SIZE 50
 
 class SERVER {
- private:
+private:
   std::vector<CLIENT> m_client;
   int m_serv_fd;
   int m_epoll_fd;
@@ -31,7 +31,7 @@ class SERVER {
   void setNonBlock(int servSock);
   int registerEpoll(void);
 
- public:
+public:
   SERVER();
   SERVER(int port, std::string password);
 

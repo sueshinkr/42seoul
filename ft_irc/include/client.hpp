@@ -15,12 +15,12 @@
 #define EPOLL_SIZE 50
 
 class CLIENT {
- private:
+private:
   int m_clnt_fd;
   int m_epoll_fd;
   std::string m_message;
 
- public:
+public:
   CLIENT();
   CLIENT(int fd, int epollFd);
 
