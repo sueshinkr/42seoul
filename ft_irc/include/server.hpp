@@ -3,6 +3,7 @@
 
 #include <arpa/inet.h>
 #include <fcntl.h>
+#include <netdb.h>
 
 #include <map>
 #include <vector>
@@ -16,34 +17,45 @@
 
 class SERVER {
 private:
-  std::vector<CLIENT> m_client;
   int m_serv_fd;
   int m_epoll_fd;
-  int m_err_check;
   int m_port;
+  int m_err_check;
+
+  std::string m_serv_name;
   std::string m_password;
+  std::string m_data;
+  std::string m_cmd_line;
+
   struct sockaddr_in m_addr;
   struct epoll_event m_events;
-  std::map<int, int> m_clntFdtoClient;
+  std::map<int, CLIENT> m_fd_to_client;
+  std::map<std::string, CLIENT> m_nick_to_client;
+  //std::map<std::string, Channel> m_ch_to_channel;
 
   int initServer();
-
-  void setNonBlock(int servSock);
   int registerEpoll(void);
+  void setNonBlock(int serv_fd);
 
 public:
   SERVER();
   SERVER(int port, std::string password);
 
   int connectClient(void);
+  int recvData(int clnt_fd);
+  int splitCmd(void);
 
   int get_m_serv_fd(void) const;
   int get_m_epoll_fd(void) const;
   int get_m_port() const;
-  const sockaddr_in &get_m_addr();
+  std::string get_m_serv_name() const;
+  std::string get_m_data() const;
+  std::string get_m_cmd_line() const;
   CLIENT &get_m_client(int clnt);
+  CLIENT &get_m_client(std::string nickname);
+  //Channel &get_m_channel(std::string ch);
 
-  void set_m_addr(void);
+
 };
 
 #endif

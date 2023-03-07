@@ -18,7 +18,7 @@ int waitEvent(SERVER &serv) {
     if (event_fd == serv.get_m_serv_fd())
       serv.connectClient();
     else
-      serv.get_m_client(event_fd).recvMessage();
+      serv.recvData(event_fd);
   }
   return (PASS);
 }

@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <string>
+#include <list>
 
 #define PASS 0
 #define ERR -1
@@ -18,19 +19,32 @@ class CLIENT {
 private:
   int m_clnt_fd;
   int m_epoll_fd;
-  std::string m_message;
+
+  std::string m_hostname;
+  std::string m_nickname;
+  std::string m_username;
+  std::string m_realname;
+
+  bool m_oper_flag;
+
 
 public:
   CLIENT();
-  CLIENT(int fd, int epollFd);
-
-  int recvMessage(void);
-  void cleanMessage(void);
-  void addMessage(char *buf);
+  CLIENT(int fd, int epollFd, std::string hostname);
 
   int get_m_clnt_fd(void) const;
   int get_m_epoll_fd(void) const;
-  std::string get_m_message(void) const;
+  std::string get_m_hostname(void) const;
+  std::string get_m_nickname(void) const;
+  std::string get_m_username(void) const;
+  std::string get_m_realname(void) const;
+
+  void set_m_hostname();
+  void set_m_nickname(std::string nickname);
+  void set_m_username(std::string username);
+  void set_m_realname(std::string realname);
+  void set_m_oper_flag(bool flag);
+
 };
 
 #endif
