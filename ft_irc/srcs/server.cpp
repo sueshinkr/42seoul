@@ -93,7 +93,7 @@ int SERVER::connectClient() {
   if (epoll_ctl(get_m_epoll_fd(), EPOLL_CTL_ADD, clntSock, &event) == -1)
     return (ERR);
 
-  CLIENT clnt(clntSock, get_m_epoll_fd(), inet_ntoa(clntAddr.sin_addr));
+  CLIENT clnt(clntSock, get_m_epoll_fd());
   m_fd_to_client[clntSock] = clnt;
 
   std::cout << "Connection Request : "

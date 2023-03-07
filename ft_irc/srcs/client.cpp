@@ -6,8 +6,8 @@
 
 CLIENT::CLIENT() {}
 
-CLIENT::CLIENT(int fd, int epollFd, std::string hostname)
-    : m_clnt_fd(fd), m_epoll_fd(epollFd), m_hostname(hostname) {
+CLIENT::CLIENT(int fd, int epollFd)
+    : m_clnt_fd(fd), m_epoll_fd(epollFd) {
 }
 
 /*---------------------------
@@ -29,6 +29,8 @@ std::string CLIENT::get_m_realname(void) const { return (m_realname); }
 /*---------------------------
                 set_function
 ----------------------------*/
+
+void CLIENT::set_m_hostname(std::string hostname) { m_hostname = hostname; }
 
 void CLIENT::set_m_nickname(std::string nickname) { m_nickname = nickname; }
 

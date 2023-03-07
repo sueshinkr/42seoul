@@ -30,7 +30,7 @@ private:
 
 public:
   CLIENT();
-  CLIENT(int fd, int epollFd, std::string hostname);
+  CLIENT(int fd, int epollFd);
 
   int get_m_clnt_fd(void) const;
   int get_m_epoll_fd(void) const;
@@ -39,7 +39,7 @@ public:
   std::string get_m_username(void) const;
   std::string get_m_realname(void) const;
 
-  void set_m_hostname();
+  void set_m_hostname(std::string hostname);
   void set_m_nickname(std::string nickname);
   void set_m_username(std::string username);
   void set_m_realname(std::string realname);
