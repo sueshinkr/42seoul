@@ -20,7 +20,7 @@ class Channel {
   bool m_notice_flag;
   int m_limit;
   int m_oper_cnt;
-  std::map<std::string, std::pair<Client, ChannelAuth>> m_clients;
+  std::map<std::string, std::pair<Client, ChannelAuth> > m_clients;
 
  public:
   Channel();

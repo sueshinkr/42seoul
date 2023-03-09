@@ -4,21 +4,19 @@
 -----------generator------------
 ===============================*/
 
-//Client::Client() {} 
+Client::Client() {}
 
-Client::Client(Server &server) : m_server(server)
-{
-	std::cout << server.get_m_port() << std::endl;
-}
-
-Client::Client(int fd, int epollFd) : m_clnt_fd(fd), m_epoll_fd(epollFd) {}
+Client::Client(int fd, int epollFd) : m_clnt_fd(fd), m_epoll_fd(epollFd), m_authorized(false) {}
 
 /*==============================
 --------private_function--------
 ===============================*/
 
 int Client::sendMsg(std::string msg) {
-  if (send(get_m_clnt_fd(), msg.c_str(), sizeof(msg), 0) == -1) return (ERR);
+  if (send(get_m_clnt_fd(), msg.c_str(), msg.length(), 0) == -1) return (ERR);
+  std::cout << "send to client================================\n";
+  std::cout << msg;
+  std::cout << "==============================================\n";
   return (PASS);
 }
 
@@ -29,6 +27,8 @@ int Client::sendMsg(std::string msg) {
 int Client::get_m_clnt_fd(void) const { return (m_clnt_fd); }
 
 int Client::get_m_epoll_fd(void) const { return (m_epoll_fd); }
+
+bool Client::get_m_authorized() const { return (m_authorized); }
 
 std::string Client::get_m_hostname(void) const { return (m_hostname); }
 
@@ -51,3 +51,5 @@ void Client::set_m_username(std::string username) { m_username = username; }
 void Client::set_m_realname(std::string realname) { m_realname = realname; }
 
 void Client::set_m_oper_flag(bool flag) { m_oper_flag = flag; }
+
+void Client::set_m_authorized(bool flag) { m_authorized = flag; }

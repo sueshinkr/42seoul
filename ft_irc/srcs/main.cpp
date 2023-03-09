@@ -1,5 +1,6 @@
-
 #include "Server.hpp"
+
+std::string Response::m_serv_name = "";
 
 int waitEvent(Server &serv) {
   struct epoll_event events[EPOLL_SIZE];
