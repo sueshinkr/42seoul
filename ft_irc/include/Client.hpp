@@ -7,16 +7,18 @@
 #include <unistd.h>
 
 #include <iostream>
-#include <string>
 #include <list>
+#include <string>
 
 #define PASS 0
 #define ERR -1
 #define BACKLOG 5
 #define EPOLL_SIZE 50
 
-class CLIENT {
-private:
+#include "Server.hpp"
+
+class Client {
+ private:
   int m_clnt_fd;
   int m_epoll_fd;
 
@@ -27,10 +29,14 @@ private:
 
   bool m_oper_flag;
 
+ public:
+  //Client();
+  Client(Server &server);
+  Client(int fd, int epollFd);
 
-public:
-  CLIENT();
-  CLIENT(int fd, int epollFd);
+  Server &m_server;
+
+  int sendMsg(std::string msg);
 
   int get_m_clnt_fd(void) const;
   int get_m_epoll_fd(void) const;
@@ -44,7 +50,6 @@ public:
   void set_m_username(std::string username);
   void set_m_realname(std::string realname);
   void set_m_oper_flag(bool flag);
-
 };
 
 #endif

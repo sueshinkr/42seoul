@@ -1,7 +1,7 @@
 
-#include "../include/server.hpp"
+#include "Server.hpp"
 
-int waitEvent(SERVER &serv) {
+int waitEvent(Server &serv) {
   struct epoll_event events[EPOLL_SIZE];
   int event_cnt;
   int epoll_fd;
@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
-  SERVER serv(atoi(argv[1]), argv[2]);
+  Server serv(atoi(argv[1]), argv[2]);
 
   while (waitEvent(serv) != ERR)
     ;
