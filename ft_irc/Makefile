@@ -11,8 +11,10 @@
 # **************************************************************************** #
 
 NAME = serv
-CC = c++ -Wall -Wextra -Werror -std=c++11 -g
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+
+CC = c++ -std=c++98
+#CC = c++ -Wall -Wextra -Werror -std=c++98 
+#CXXFLAGS = -Wall -Wextra -Werror -std=c++98 
 
 INCS_DIR = ./include/
 MAIN_INC = -I$(INCS_DIR)
