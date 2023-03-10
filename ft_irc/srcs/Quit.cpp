@@ -4,8 +4,7 @@
 -----------generator------------
 ===============================*/
 
-Quit::Quit(Server &server)
-    : BaseHandler(server) {}
+Quit::Quit(Server &server) : BaseHandler(server) {}
 
 /*==============================
 --------private_function--------
@@ -17,7 +16,7 @@ Quit::Quit(Server &server)
 
 bool Quit::handle(std::string &cmd, std::string &request, Client &c) {
   if (cmd == "QUIT") {
-    //something Send To Client
+    // something Send To Client
     return (true);
   }
   return (BaseHandler::handle(cmd, request, c));

@@ -4,8 +4,7 @@
 -----------generator------------
 ===============================*/
 
-Pong::Pong(Server &server)
-    : BaseHandler(server) {}
+Pong::Pong(Server &server) : BaseHandler(server) {}
 
 /*==============================
 --------private_function--------
@@ -17,7 +16,7 @@ Pong::Pong(Server &server)
 
 bool Pong::handle(std::string &cmd, std::string &request, Client &c) {
   if (cmd == "PONG") {
-    //something Send To Client
+    // something Send To Client
     return (true);
   }
   return (BaseHandler::handle(cmd, request, c));

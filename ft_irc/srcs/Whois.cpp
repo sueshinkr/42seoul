@@ -4,8 +4,7 @@
 -----------generator------------
 ===============================*/
 
-Whois::Whois(Server &server)
-    : BaseHandler(server) {}
+Whois::Whois(Server &server) : BaseHandler(server) {}
 
 /*==============================
 --------private_function--------
@@ -17,7 +16,7 @@ Whois::Whois(Server &server)
 
 bool Whois::handle(std::string &cmd, std::string &request, Client &c) {
   if (cmd == "WHOIS") {
-    //something Send To Client
+    // something Send To Client
     return (true);
   }
   return (BaseHandler::handle(cmd, request, c));

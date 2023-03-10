@@ -1,12 +1,12 @@
 #include "Handler.hpp"
+
 #include "Server.hpp"
 
 /*==============================
 -----------generator------------
 ===============================*/
 
-BaseHandler::BaseHandler(Server &server)
-    : m_next(NULL), m_server(&server) {}
+BaseHandler::BaseHandler(Server &server) : m_next(NULL), m_server(&server) {}
 
 /*==============================
 --------private_function--------

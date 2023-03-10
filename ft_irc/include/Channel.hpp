@@ -20,14 +20,15 @@ class Channel {
   bool m_notice_flag;
   int m_limit;
   int m_oper_cnt;
-  std::map<std::string, std::pair<Client, ChannelAuth> > m_clients;
+  std::map<std::string, std::pair<Client, ChannelAuth> > m_name_to_client;
+  std::vector<Client> m_clients;
 
  public:
   Channel();
-  Channel(std::string channel_name, Client clnt);
+  Channel(std::string channel_name, Client &clnt);
 
-  int sendMsg(std::string msg, int clnt_fd);
-  void add_client(Client clnt);
+  int sendMsg(std::string msg);
+  void add_client(Client &clnt);
 
   std::string get_m_channel_name(void) const;
   std::string get_m_password(void) const;
@@ -42,6 +43,8 @@ class Channel {
   void set_m_notice_flag(bool flag);
   void set_m_limit(int limit);
   void set_m_oper_cnt(int oper_cnt);
+
+  void change_m_name_to_client(std::string prev_nickname, std::string nickname);
 };
 
 #endif

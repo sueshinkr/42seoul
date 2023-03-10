@@ -8,6 +8,10 @@ class Response {
   static std::string rplWelcome(std::string nick_name, std::string user_name,
                                 std::string host_name);
   static std::string rplYourHost(void);
+  static std::string rplSaveNick(std::string prevNickname, std::string nick_name, std::string user_name,
+                                std::string host_name);
+  static std::string setNickname(std::string nickname);
+
   static std::string errNotRegistered(std::string cmd);
   static std::string errNeedMoreParams(std::string cmd);
   static std::string errNicknameInUse(std::string nick_name);

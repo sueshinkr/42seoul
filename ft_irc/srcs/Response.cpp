@@ -1,14 +1,24 @@
 #include "Response.hpp"
 
-std::string Response::rplWelcome(std::string nick_name, std::string user_name,
-                                 std::string host_name) {
-  return (":" + m_serv_name + " 001 " + nick_name +
-          " :Welcome to the Internet Relay Network " + nick_name + "!" +
-          user_name + "@" + host_name + "\r\n");
+std::string Response::rplWelcome(std::string nickname, std::string username,
+                                 std::string hostname) {
+  return (":" + m_serv_name + " 001 " + nickname +
+          " :Welcome to the Internet Relay Network " + nickname + "!" +
+          username + "@" + hostname + "\r\n");
 }
 
 std::string Response::rplYourHost(void) {
   return (":" + m_serv_name + " 002 * :Your host is " + m_serv_name + "\r\n");
+}
+
+std::string Response::rplSaveNick(std::string prevNickname,
+                                  std::string nickname, std::string username,
+                                  std::string hostname) {
+  return (":" + prevNickname + "!" + username + "@:" + hostname + " NICK " + nickname + "\r\n");
+}
+
+std::string Response::setNickname(std::string nickname) {
+  return (":" + m_serv_name + " NICK :" + nickname + "\r\n");
 }
 
 std::string Response::errNotRegistered(std::string cmd) {
@@ -20,7 +30,7 @@ std::string Response::errNeedMoreParams(std::string cmd) {
 }
 
 std::string Response::errNicknameInUse(std::string nick_name) {
-  return (":" + m_serv_name + " 433 Nick " + nick_name +
+  return (":" + m_serv_name + " 433 * " + nick_name +
           " :Nickname is already in use\r\n");
 }
 

@@ -4,8 +4,7 @@
 -----------generator------------
 ===============================*/
 
-Kill::Kill(Server &server)
-    : BaseHandler(server) {}
+Kill::Kill(Server &server) : BaseHandler(server) {}
 
 /*==============================
 --------private_function--------
@@ -17,7 +16,7 @@ Kill::Kill(Server &server)
 
 bool Kill::handle(std::string &cmd, std::string &request, Client &c) {
   if (cmd == "KILL") {
-    //something Send To Client
+    // something Send To Client
     return (true);
   }
   return (BaseHandler::handle(cmd, request, c));

@@ -4,8 +4,7 @@
 -----------generator------------
 ===============================*/
 
-Oper::Oper(Server &server)
-    : BaseHandler(server) {}
+Oper::Oper(Server &server) : BaseHandler(server) {}
 
 /*==============================
 --------private_function--------
@@ -17,7 +16,7 @@ Oper::Oper(Server &server)
 
 bool Oper::handle(std::string &cmd, std::string &request, Client &c) {
   if (cmd == "OPER") {
-    //something Send To Client
+    // something Send To Client
     return (true);
   }
   return (BaseHandler::handle(cmd, request, c));

@@ -4,8 +4,7 @@
 -----------generator------------
 ===============================*/
 
-Part::Part(Server &server)
-    : BaseHandler(server) {}
+Part::Part(Server &server) : BaseHandler(server) {}
 
 /*==============================
 --------private_function--------
@@ -17,7 +16,7 @@ Part::Part(Server &server)
 
 bool Part::handle(std::string &cmd, std::string &request, Client &c) {
   if (cmd == "PART") {
-    //something Send To Client
+    // something Send To Client
     return (true);
   }
   return (BaseHandler::handle(cmd, request, c));

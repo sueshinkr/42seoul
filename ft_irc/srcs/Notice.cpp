@@ -4,8 +4,7 @@
 -----------generator------------
 ===============================*/
 
-Notice::Notice(Server &server)
-    : BaseHandler(server) {}
+Notice::Notice(Server &server) : BaseHandler(server) {}
 
 /*==============================
 --------private_function--------
@@ -17,7 +16,7 @@ Notice::Notice(Server &server)
 
 bool Notice::handle(std::string &cmd, std::string &request, Client &c) {
   if (cmd == "NOTICE") {
-    //something Send To Client
+    // something Send To Client
     return (true);
   }
   return (BaseHandler::handle(cmd, request, c));

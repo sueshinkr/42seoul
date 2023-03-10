@@ -4,8 +4,7 @@
 -----------generator------------
 ===============================*/
 
-Privmsg::Privmsg(Server &server)
-    : BaseHandler(server) {}
+Privmsg::Privmsg(Server &server) : BaseHandler(server) {}
 
 /*==============================
 --------private_function--------
@@ -17,7 +16,7 @@ Privmsg::Privmsg(Server &server)
 
 bool Privmsg::handle(std::string &cmd, std::string &request, Client &c) {
   if (cmd == "PRIVMSG") {
-    //something Send To Client
+    // something Send To Client
     return (true);
   }
   return (BaseHandler::handle(cmd, request, c));

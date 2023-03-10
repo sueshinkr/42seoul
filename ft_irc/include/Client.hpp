@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 #include <iostream>
-#include <list>
+#include <vector>
 #include <string>
 
 #define PASS 0
@@ -21,11 +21,13 @@ class Client {
   int m_epoll_fd;
 
   bool m_authorized;
+  bool m_registered;
 
   std::string m_hostname;
   std::string m_nickname;
   std::string m_username;
   std::string m_realname;
+  std::vector<std::string> m_channel;
 
   bool m_oper_flag;
 
@@ -38,10 +40,12 @@ class Client {
   int get_m_clnt_fd(void) const;
   int get_m_epoll_fd(void) const;
   bool get_m_authorized(void) const;
+  bool get_m_registered(void) const;
   std::string get_m_hostname(void) const;
   std::string get_m_nickname(void) const;
   std::string get_m_username(void) const;
   std::string get_m_realname(void) const;
+  std::vector<std::string> get_m_channel(void) const;
 
   void set_m_hostname(std::string hostname);
   void set_m_nickname(std::string nickname);
@@ -49,6 +53,7 @@ class Client {
   void set_m_realname(std::string realname);
   void set_m_oper_flag(bool flag);
   void set_m_authorized(bool flag);
+  void set_m_registered(bool flag);
 };
 
 #endif
