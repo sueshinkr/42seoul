@@ -137,8 +137,6 @@ int SERVER::splitCmd(){
 	//m_base_handler.set_cmd_line(m_cmd_line);
     //ExecuteCmd(m_base_handler);
 
-	
-
 	prev = cur + 2;
     cur = m_data.find("\r\n", prev);
   }
