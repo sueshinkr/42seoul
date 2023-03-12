@@ -1,4 +1,5 @@
 #include "Command.hpp"
+#include "Server.hpp"
 
 /*==============================
 -----------generator------------
@@ -16,7 +17,8 @@ Whois::Whois(Server &server) : BaseHandler(server) {}
 
 bool Whois::handle(std::string &cmd, std::string &request, Client &c) {
   if (cmd == "WHOIS") {
-    // something Send To Client
+    c.sendMsg(Response::rplWhoisUser(request, c.get_m_username(),
+                                     c.get_m_hostname(), c.get_m_realname()));
     return (true);
   }
   return (BaseHandler::handle(cmd, request, c));

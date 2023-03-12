@@ -5,12 +5,12 @@ class Response {
   static std::string m_serv_name;
 
  public:
-  static std::string rplWelcome(std::string nick_name, std::string user_name,
-                                std::string host_name);
+  static std::string rplWelcome(std::string nickname, std::string username,
+                                std::string hostname);
   static std::string rplYourHost(void);
-  static std::string rplSaveNick(std::string prevNickname, std::string nick_name, std::string user_name,
-                                std::string host_name);
-  static std::string setNickname(std::string nickname);
+  static std::string rplSaveNick(std::string prevNickname, std::string nickname, std::string user_name,
+                                std::string hostname);
+  static std::string rplWhoisUser(std::string nickname, std::string username, std::string hostname, std::string realname);
 
   static std::string errNotRegistered(std::string cmd);
   static std::string errNeedMoreParams(std::string cmd);

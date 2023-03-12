@@ -14,12 +14,13 @@ std::string Response::rplYourHost(void) {
 std::string Response::rplSaveNick(std::string prevNickname,
                                   std::string nickname, std::string username,
                                   std::string hostname) {
-  return (":" + prevNickname + "!" + username + "@:" + hostname + " NICK " + nickname + "\r\n");
+  return (":" + prevNickname + "!" + username + "@:" + hostname + " NICK " +
+          nickname + "\r\n");
 }
 
-std::string Response::setNickname(std::string nickname) {
-  return (":" + m_serv_name + " NICK :" + nickname + "\r\n");
-}
+std::string Response::rplWhoisUser(std::string nickname, std::string username,
+                                   std::string hostname, std::string realname){
+    return (":" + m_serv_name + " 311 " + nickname + " " + username + " " + hostname + " * :" + realname + "\r\n"); }
 
 std::string Response::errNotRegistered(std::string cmd) {
   return (":" + m_serv_name + " 451 " + cmd + " :You have not registered\r\n");

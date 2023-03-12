@@ -27,7 +27,7 @@ bool User::handle(std::string &cmd, std::string &request, Client &c) {
 
     cur = request.find(" ", prev);
     c.set_m_hostname(request.substr(prev, cur - prev));
-    prev = cur + 1;
+    prev = cur + 2;
 
     cur = request.find(" ", prev);
     c.set_m_realname(request.substr(prev, cur - prev));
