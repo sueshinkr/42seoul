@@ -22,20 +22,24 @@ std::string Response::rplWhoisUser(std::string requestNickname,
           username + " " + hostname + " * :" + realname + "\r\n");
 }
 
-std::string Response::rplWhoisServer(std::string requestNickname, std::string nickname)
-{
-	return (":" + m_serv_name + " 312 " + requestNickname + " " + nickname + " testServer :version 1.0\r\n");
+std::string Response::rplWhoisServer(std::string requestNickname,
+                                     std::string nickname) {
+  return (":" + m_serv_name + " 312 " + requestNickname + " " + nickname +
+          " testServer :version 1.0\r\n");
 }
 
 // 채널관련 동작 완성후 확인해봐야됨
-std::string Response::rplWhoisChannels(std::string requestNickname, std::string nickname, std::string chlist)
-{
-	return (":" + m_serv_name + " 319 " + nickname + " : " + chlist + "\r\n");//:is an IRC Operator\r\n");
+std::string Response::rplWhoisChannels(std::string requestNickname,
+                                       std::string nickname,
+                                       std::string chlist) {
+  return (":" + m_serv_name + " 319 " + nickname + " : " + chlist +
+          "\r\n");  //:is an IRC Operator\r\n");
 }
 
-std::string Response::rplEndofWhois(std::string requestNickname, std::string nickname)
-{
-	return (":" + m_serv_name + " 318 " + requestNickname + " " + nickname + "\r\n");
+std::string Response::rplEndofWhois(std::string requestNickname,
+                                    std::string nickname) {
+  return (":" + m_serv_name + " 318 " + requestNickname + " " + nickname +
+          "\r\n");
 }
 
 /*==============================
@@ -61,6 +65,32 @@ std::string Response::errNoNicknameGiven(void) {
 
 std::string Response::errNoSuchNick(std::string cmd, std::string nickname) {
   return (":" + m_serv_name + " 401 " + cmd + " :" + nickname + "\r\n");
+}
+
+std::string Response::errUsersDontMatch(void) {
+  return (":" + m_serv_name +
+          "502 Mode :Cannot change mode for other users\r\n");
+}
+
+std::string Response::errUmodeUnknownFlag(void) {
+  return (":" + m_serv_name + "501 Mode :Unknown MODE flag\r\n");
+}
+
+std::string Response::errUnknownMode(std::string mode,
+                                     std::string channel_name) {
+  return (":" + m_serv_name + "472 " + mode +
+          " :is unknown mode char to me for " + channel_name + "\r\n");
+}
+
+std::string Response::errChaNoPrivsNeeded(std::string channel_name) {
+  return (":" + m_serv_name + "482 " + channel_name +
+          " :You're not channel operator\r\n");
+}
+
+std::string Response::errUserNotInChannel(std::string nick,
+                                          std::string channel_name) {
+  return (":" + m_serv_name + "441 " + nick + " " + channel_name +
+          " :They aren't on that channel\r\n");
 }
 
 /*==============================

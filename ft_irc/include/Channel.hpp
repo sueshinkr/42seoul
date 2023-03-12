@@ -5,13 +5,8 @@
 #include <map>
 #include <string>
 
+#include "ChannelAuth.hpp"
 #include "Client.hpp"
-
-class ChannelAuth {
- private:
-  bool m_oper;
-  bool m_voice;
-};
 
 class Channel {
  private:

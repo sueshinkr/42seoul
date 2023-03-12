@@ -7,7 +7,9 @@
 Client::Client() {}
 
 Client::Client(int fd, int epollFd)
-    : m_clnt_fd(fd), m_epoll_fd(epollFd), m_authorized(false),
+    : m_clnt_fd(fd),
+      m_epoll_fd(epollFd),
+      m_authorized(false),
       m_registered(false) {}
 
 /*==============================
@@ -15,8 +17,7 @@ Client::Client(int fd, int epollFd)
 ===============================*/
 
 int Client::sendMsg(std::string msg) {
-  if (send(get_m_clnt_fd(), msg.c_str(), msg.length(), 0) == -1)
-    return (ERR);
+  if (send(get_m_clnt_fd(), msg.c_str(), msg.length(), 0) == -1) return (ERR);
   std::cout << "send to client================================\n";
   std::cout << msg;
   std::cout << "==============================================\n";
@@ -32,6 +33,8 @@ int Client::get_m_clnt_fd(void) const { return (m_clnt_fd); }
 int Client::get_m_epoll_fd(void) const { return (m_epoll_fd); }
 
 bool Client::get_m_authorized() const { return (m_authorized); }
+
+bool Client::get_m_oper_flag(void) const { return (m_oper_flag); }
 
 bool Client::get_m_registered() const { return (m_registered); }
 

@@ -31,7 +31,6 @@ bool Pass::handle(std::string &cmd, std::string &request, Client &c) {
   // 잘못된 패스워드의 경우 클라이언트와의 연결 해제
   if (!response.empty()) {
     c.sendMsg(response);
-    m_server->del_m_fd_to_client(c.get_m_clnt_fd());
 	m_server->disconnectClient(c.get_m_clnt_fd());
     return (false);
     // 올바른 패스워드가 들어온 경우

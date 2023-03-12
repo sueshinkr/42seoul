@@ -7,8 +7,8 @@
 #include <unistd.h>
 
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 
 #define PASS 0
 #define ERR -1
@@ -40,7 +40,9 @@ class Client {
   int get_m_clnt_fd(void) const;
   int get_m_epoll_fd(void) const;
   bool get_m_authorized(void) const;
+  bool get_m_oper_flag(void) const;
   bool get_m_registered(void) const;
+
   std::string get_m_hostname(void) const;
   std::string get_m_nickname(void) const;
   std::string get_m_username(void) const;
