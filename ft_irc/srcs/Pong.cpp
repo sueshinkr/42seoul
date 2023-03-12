@@ -1,4 +1,5 @@
 #include "Command.hpp"
+#include "Server.hpp"
 
 /*==============================
 -----------generator------------
@@ -15,8 +16,8 @@ Pong::Pong(Server &server) : BaseHandler(server) {}
 ===============================*/
 
 bool Pong::handle(std::string &cmd, std::string &request, Client &c) {
-  if (cmd == "PONG") {
-    // something Send To Client
+  if (cmd == "PING") {
+    c.sendMsg(Response::responsePong());
     return (true);
   }
   return (BaseHandler::handle(cmd, request, c));

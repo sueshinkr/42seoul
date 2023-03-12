@@ -32,8 +32,10 @@ bool User::handle(std::string &cmd, std::string &request, Client &c) {
     cur = request.find(" ", prev);
     c.set_m_realname(request.substr(prev, cur - prev));
 
-	c.set_m_registered(true);
-	// 정상적으로 닉네임이 설정되어 있는 경우라면 등록
+    c.set_m_registered(true);
+
+    // 정상적으로 닉네임이 설정되어 있는 경우라면 등록
+
     if (!c.get_m_nickname().empty()) {
       c.sendMsg(Response::rplWelcome(c.get_m_nickname(), c.get_m_username(),
                                      c.get_m_hostname()));

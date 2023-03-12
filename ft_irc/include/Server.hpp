@@ -21,7 +21,7 @@
 #define EPOLL_SIZE 50
 
 class Server {
- private:
+private:
   int m_serv_fd;
   int m_epoll_fd;
   int m_port;
@@ -34,9 +34,9 @@ class Server {
 
   struct sockaddr_in m_addr;
   struct epoll_event m_events;
-  std::map<int, Client> m_fd_to_client;
-  std::map<std::string, Client> m_nick_to_client;
-  std::map<std::string, Channel> m_ch_to_channel;
+  std::map<int, Client *> m_fd_to_client;
+  std::map<std::string, Client *> m_nick_to_client;
+  std::map<std::string, Channel *> m_ch_to_channel;
 
   Pass pass;
   Nick nick;
@@ -61,12 +61,13 @@ class Server {
   int ExecuteCmd(BaseHandler &handler, std::string cmd, std::string cmd_line,
                  int clnt_fd);
 
- public:
+public:
   // Server();
   Server(int port, std::string password);
 
   int connectClient(void);
   int recvData(int clnt_fd);
+  void disconnectClient(int clnt_fd);
 
   int get_m_serv_fd(void) const;
   int get_m_epoll_fd(void) const;
@@ -82,14 +83,13 @@ class Server {
   Channel &get_m_channel(std::string ch);
 
   void set_m_data(std::string data);
-  void set_m_fd_to_client(int clnt_fd, Client client);
-  void set_m_nick_to_client(std::string nickname, Client client);
-  void set_m_ch_to_channel(std::string ch, Channel channel);
+  void set_m_fd_to_client(int clnt_fd, Client *client);
+  void set_m_nick_to_client(std::string nickname, Client *client);
+  void set_m_ch_to_channel(std::string ch, Channel *channel);
 
   void del_m_fd_to_client(int clnt_fd);
   void del_m_nick_to_client(std::string nickname);
   void del_m_ch_to_channel(std::string ch);
-
 };
 
 #endif

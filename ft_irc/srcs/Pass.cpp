@@ -32,9 +32,7 @@ bool Pass::handle(std::string &cmd, std::string &request, Client &c) {
   if (!response.empty()) {
     c.sendMsg(response);
     m_server->del_m_fd_to_client(c.get_m_clnt_fd());
-    epoll_ctl(c.get_m_epoll_fd(), EPOLL_CTL_DEL, c.get_m_clnt_fd(),
-              &(m_server->get_m_events()));
-    close(c.get_m_clnt_fd());
+	m_server->disconnectClient(c.get_m_clnt_fd());
     return (false);
     // 올바른 패스워드가 들어온 경우
   } else if (c.get_m_authorized() == false) {

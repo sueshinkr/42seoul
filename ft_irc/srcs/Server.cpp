@@ -7,24 +7,14 @@
 // Server::Server() {}
 
 Server::Server(int port, std::string password)
-    : m_port(port),
-      m_password(password),
-      pass(*this),
-      nick(*this),
-      user(*this),
-      mode(*this),
-      pong(*this),
-      join(*this),
-      whois(*this),
-      part(*this),
-      privmsg(*this),
-      notice(*this),
-      oper(*this),
-      kick(*this),
-      kill(*this),
+    : m_port(port), m_password(password), pass(*this), nick(*this), user(*this),
+      mode(*this), pong(*this), join(*this), whois(*this), part(*this),
+      privmsg(*this), notice(*this), oper(*this), kick(*this), kill(*this),
       quit(*this) {
-  if (initServer()) this->m_err_check = ERR;
-  if (registerEpoll()) this->m_err_check = ERR;
+  if (initServer())
+    this->m_err_check = ERR;
+  if (registerEpoll())
+    this->m_err_check = ERR;
   handlerSetting();
 }
 
@@ -68,7 +58,8 @@ int Server::initServer() {
 }
 
 int Server::registerEpoll(void) {
-  if ((m_epoll_fd = epoll_create(EPOLL_SIZE)) == -1) return (ERR);
+  if ((m_epoll_fd = epoll_create(EPOLL_SIZE)) == -1)
+    return (ERR);
 
   m_events.events = EPOLLIN;
   m_events.data.fd = get_m_serv_fd();
@@ -109,8 +100,9 @@ void Server::splitLine(int clnt_fd) {
     std::string cmd = m_cmd_line.substr(0, line_cur);
     std::string request = m_cmd_line.substr(line_cur + 1, -1);
     std::cout << "cmd : " << cmd << std::endl;
-    std::cout << "request : " << request << std::endl;
-    if (ExecuteCmd(pass, cmd, request, clnt_fd) == -1) break;
+    std::cout << "request : " << request << "!!!" << std::endl;
+    if (ExecuteCmd(pass, cmd, request, clnt_fd) == -1)
+      break;
 
     prev = cur + 2;
     cur = m_data.find("\r\n", prev);
@@ -120,7 +112,8 @@ void Server::splitLine(int clnt_fd) {
 
 int Server::ExecuteCmd(BaseHandler &handler, std::string cmd,
                        std::string request, int clnt_fd) {
-  if (handler.handle(cmd, request, get_m_client(clnt_fd))) return (PASS);
+  if (handler.handle(cmd, request, get_m_client(clnt_fd)))
+    return (PASS);
   return (ERR);
 }
 
@@ -147,7 +140,7 @@ int Server::connectClient() {
   if (epoll_ctl(get_m_epoll_fd(), EPOLL_CTL_ADD, clnt_sock, &event) == -1)
     return (ERR);
 
-  Client clnt(clnt_sock, get_m_epoll_fd());
+  Client *clnt = new Client(clnt_sock, get_m_epoll_fd());
   m_fd_to_client[clnt_sock] = clnt;
 
   std::cout << "Connection Request : "
@@ -166,15 +159,25 @@ int Server::recvData(int clnt_fd) {
 
   if ((recv_len = recv(clnt_fd, buf, 1024, 0)) < 1) {
     std::cout << "recvError\n";
-    epoll_ctl(get_m_epoll_fd(), EPOLL_CTL_DEL, clnt_fd, NULL);
-    close(clnt_fd);
+    disconnectClient(clnt_fd);
     return (ERR);
   } else {
+	std::cout << "=============================\n";
+	std::cout << buf << std::endl;
+	std::cout << "=============================\n";
+	sleep(1);
     set_m_data(static_cast<std::string>(buf));
     splitLine(clnt_fd);
   }
 
   return (PASS);
+}
+
+void Server::disconnectClient(int clnt_fd) {
+  Client clnt = get_m_client(clnt_fd);
+  epoll_ctl(clnt.get_m_epoll_fd(), EPOLL_CTL_DEL, clnt_fd, &get_m_events());
+  close(clnt_fd);
+  delete &clnt;
 }
 
 /*==============================
@@ -200,29 +203,32 @@ struct epoll_event &Server::get_m_events() {
 }
 
 Client &Server::get_m_client(int clnt_fd) {
-  std::map<int, Client>::iterator client_iter = m_fd_to_client.find(clnt_fd);
+  std::map<int, Client *>::iterator client_iter = m_fd_to_client.find(clnt_fd);
 
-  if (client_iter == m_fd_to_client.end()) throw std::out_of_range("");
+  if (client_iter == m_fd_to_client.end())
+    throw std::out_of_range("");
 
-  return (client_iter->second);
+  return (*(client_iter->second));
 }
 
 Client &Server::get_m_client(std::string nickname) {
-  std::map<std::string, Client>::iterator client_iter =
+  std::map<std::string, Client *>::iterator client_iter =
       m_nick_to_client.find(nickname);
 
-  if (client_iter != m_nick_to_client.end()) throw std::exception();
+  if (client_iter == m_nick_to_client.end())
+    throw std::exception();
 
-  return (client_iter->second);
+  return (*(client_iter->second));
 }
 
 Channel &Server::get_m_channel(std::string ch) {
-  std::map<std::string, Channel>::iterator channel_iter =
+  std::map<std::string, Channel *>::iterator channel_iter =
       m_ch_to_channel.find(ch);
 
-  if (channel_iter == m_ch_to_channel.end()) throw std::out_of_range("");
+  if (channel_iter == m_ch_to_channel.end())
+    throw std::out_of_range("");
 
-  return (channel_iter->second);
+  return (*(channel_iter->second));
 }
 
 /*==============================
@@ -231,15 +237,15 @@ Channel &Server::get_m_channel(std::string ch) {
 
 void Server::set_m_data(std::string data) { m_data = data; }
 
-void Server::set_m_fd_to_client(int clnt_fd, Client client) {
+void Server::set_m_fd_to_client(int clnt_fd, Client *client) {
   m_fd_to_client[clnt_fd] = client;
 }
 
-void Server::set_m_nick_to_client(std::string nickname, Client client) {
+void Server::set_m_nick_to_client(std::string nickname, Client *client) {
   m_nick_to_client[nickname] = client;
 }
 
-void Server::set_m_ch_to_channel(std::string ch, Channel channel) {
+void Server::set_m_ch_to_channel(std::string ch, Channel *channel) {
   m_ch_to_channel[ch] = channel;
 }
 
