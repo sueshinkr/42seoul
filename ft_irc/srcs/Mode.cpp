@@ -133,27 +133,42 @@ bool Mode::handle(std::string &cmd, std::string &request, Client &c) {
       }
     } else  // User Mode Message
     {
-      try {
-        std::cout << type << std::endl;
-        Client &user = m_server->get_m_client(type);
+      std::string option = request.substr(prev, cur - prev);
+      prev = cur + 1;
+      cur = request.find(" ", prev);
 
-        std::string option = request.substr(prev, cur - prev);
-        prev = cur + 1;
-        cur = request.find(" ", prev);
-
-        // 권한이 없을 때 에러 문구 처리 필요
-        if (c.get_m_oper_flag() && !option.compare("+o")) {
-          user.set_m_oper_flag(true);
-          c.sendMsg(request);
-        } else if (c.get_m_oper_flag() && !option.compare("-o")) {
-          user.set_m_oper_flag(false);
-          c.sendMsg(request);
+      // 유저 모드는 자기 자신에 대한 명령이 왔을 때만 적용 가능
+      if (type == c.get_m_nickname()) {
+        // 자기 자신에 대한 +o는 무시되어야함
+        if (!option.compare("+o")) c.sendMsg(Response::errNoPrivileges());
+        // 자기 자신에 대한 -o는 적용
+        else if (!option.compare("-o")) {
+          if (c.get_m_oper_flag())
+            c.sendMsg(Response::setMode(c.get_m_nickname(), c.get_m_username(),
+                                        c.get_m_hostname(), option));
         } else if (!option.compare("+i")) {
-          ;  // Need Review
-        } else
+          if (!c.get_m_invisible_flag()) {
+            c.sendMsg(Response::setMode(c.get_m_nickname(), c.get_m_username(),
+                                        c.get_m_hostname(), option));
+            c.set_m_invisible_flag(true);
+          }
+        } else if (!option.compare("-i")) {
+          if (c.get_m_invisible_flag()) {
+            c.sendMsg(Response::setMode(c.get_m_nickname(), c.get_m_username(),
+                                        c.get_m_hostname(), option));
+            c.set_m_invisible_flag(false);
+          }
+        }
+        // o,i를 제외한 다른 플래그들은 에러처리
+        else
           c.sendMsg(Response::errUmodeUnknownFlag());
-      } catch (const std::exception &error) {
-        c.sendMsg(Response::errUsersDontMatch());
+      } else {
+        try {
+          m_server->get_m_client(type);
+          c.sendMsg(Response::errUsersDontMatch(option));
+        } catch (const std::exception &e) {
+          c.sendMsg(Response::errNoSuchNick(cmd, type));
+        }
       }
     }
     return (true);

@@ -23,8 +23,8 @@ public:
   BaseHandler(Server &server);
   virtual Handler *setNext(Handler *handler);
   virtual bool handle(std::string &cmd, std::string &request, Client &c);
-  std::vector<std::string> splitParam(std::string &request,
-                                      std::string &limiter);
+  //std::vector<std::string> splitParam(std::string &request,
+  //                                    std::string &limiter);
 };
 
 #endif

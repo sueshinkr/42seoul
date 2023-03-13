@@ -30,6 +30,7 @@ class Client {
   std::vector<std::string> m_channel;
 
   bool m_oper_flag;
+  bool m_invisible_flag;
 
  public:
   Client();
@@ -40,8 +41,9 @@ class Client {
   int get_m_clnt_fd(void) const;
   int get_m_epoll_fd(void) const;
   bool get_m_authorized(void) const;
-  bool get_m_oper_flag(void) const;
   bool get_m_registered(void) const;
+  bool get_m_oper_flag(void) const;
+  bool get_m_invisible_flag(void) const;
 
   std::string get_m_hostname(void) const;
   std::string get_m_nickname(void) const;
@@ -53,9 +55,11 @@ class Client {
   void set_m_nickname(std::string nickname);
   void set_m_username(std::string username);
   void set_m_realname(std::string realname);
-  void set_m_oper_flag(bool flag);
+
   void set_m_authorized(bool flag);
   void set_m_registered(bool flag);
+  void set_m_oper_flag(bool flag);
+  void set_m_invisible_flag(bool flag);
 };
 
 #endif

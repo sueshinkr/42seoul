@@ -10,7 +10,9 @@ Client::Client(int fd, int epollFd)
     : m_clnt_fd(fd),
       m_epoll_fd(epollFd),
       m_authorized(false),
-      m_registered(false) {}
+      m_registered(false),
+      m_oper_flag(false),
+      m_invisible_flag(false) {}
 
 /*==============================
 --------private_function--------
@@ -34,9 +36,11 @@ int Client::get_m_epoll_fd(void) const { return (m_epoll_fd); }
 
 bool Client::get_m_authorized() const { return (m_authorized); }
 
+bool Client::get_m_registered() const { return (m_registered); }
+
 bool Client::get_m_oper_flag(void) const { return (m_oper_flag); }
 
-bool Client::get_m_registered() const { return (m_registered); }
+bool Client::get_m_invisible_flag(void) const { return (m_invisible_flag); }
 
 std::string Client::get_m_hostname(void) const { return (m_hostname); }
 
@@ -62,8 +66,10 @@ void Client::set_m_username(std::string username) { m_username = username; }
 
 void Client::set_m_realname(std::string realname) { m_realname = realname; }
 
-void Client::set_m_oper_flag(bool flag) { m_oper_flag = flag; }
-
 void Client::set_m_authorized(bool flag) { m_authorized = flag; }
 
 void Client::set_m_registered(bool flag) { m_registered = flag; }
+
+void Client::set_m_oper_flag(bool flag) { m_oper_flag = flag; }
+
+void Client::set_m_invisible_flag(bool flag) { m_invisible_flag = flag; }
