@@ -1,6 +1,6 @@
 #include "Handler.hpp"
+
 #include "Server.hpp"
-#include <string>
 
 /*==============================
 -----------generator------------
@@ -15,9 +15,9 @@ BaseHandler::BaseHandler(Server &server) : m_next(NULL), m_server(&server) {}
 /*==============================
 ---------public_function--------
 ===============================*/
-/*
+
 std::vector<std::string> splitParam(std::string &request,
-                                    std::string &limiter) {
+                                    char limiter) {
   std::vector<std::string> params;
   std::stringstream ss(request);
   std::string temp;
@@ -27,7 +27,7 @@ std::vector<std::string> splitParam(std::string &request,
   }
   return (params);
 }
-*/
+
 Handler *BaseHandler::setNext(Handler *handler) {
   this->m_next = handler;
   return (handler);
