@@ -77,3 +77,11 @@ void Channel::change_m_name_to_client(std::string prev_nickname,
                                               get_m_channelauth(prev_nickname));
   m_name_to_client.erase(prev_nickname);
 }
+
+void Channel::del_m_client(std::string nickname) {
+  for (std::vector<Client>::iterator iter = m_clients.begin();
+       iter != m_clients.end(); iter++) {
+    if ((*iter).get_m_nickname() == nickname) m_clients.erase(iter);
+  }
+  m_name_to_client.erase(nickname);
+}

@@ -178,7 +178,20 @@ int Server::recvData(int clnt_fd) {
 
 void Server::disconnectClient(int clnt_fd) {
   Client *clnt = &get_m_client(clnt_fd);
+  std::string nickname = clnt->get_m_nickname();
   del_m_fd_to_client(clnt_fd);
+  try {
+    get_m_client(nickname);
+    del_m_nick_to_client(nickname);
+
+    std::vector<std::string> ch = clnt->get_m_channel();
+    for (std::vector<std::string>::iterator iter = ch.begin(); iter != ch.end();
+         iter++) {
+      Channel *channel = &get_m_channel(*iter);
+      channel->del_m_client(nickname);
+    }
+  } catch (const std::exception &e) {
+  }
   epoll_ctl((*clnt).get_m_epoll_fd(), EPOLL_CTL_DEL, clnt_fd, &get_m_events());
   close(clnt_fd);
   delete clnt;

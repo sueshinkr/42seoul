@@ -19,6 +19,7 @@ class Response {
                                    std::string nickname);
   static std::string rplUModeIs(std::string ninckname, std::string mode);
   static std::string rplYoureOper(void);
+  static std::string rplKillDone(std::string nickname, std::string msg);
 
   static std::string errNotRegistered(std::string cmd);
   static std::string errNeedMoreParams(std::string cmd);
@@ -39,6 +40,8 @@ class Response {
   static std::string responsePong(void);
   static std::string setMode(std::string nickname, std::string username,
                              std::string hostname, std::string mode);
+  static std::string noticeKill(std::string nickname, std::string username,
+                                std::string hostname, std::string kill_msg);
 
   static void set_m_serv_name(std::string serv_name);
 

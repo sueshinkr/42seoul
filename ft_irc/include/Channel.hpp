@@ -39,6 +39,8 @@ class Channel {
   void set_m_limit(int limit);
   void set_m_oper_cnt(int oper_cnt);
 
+  void del_m_client(std::string nickname);
+
   void change_m_name_to_client(std::string prev_nickname, std::string nickname);
 };
 

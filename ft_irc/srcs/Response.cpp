@@ -47,7 +47,11 @@ std::string Response::rplUModeIs(std::string nickname, std::string mode) {
 }
 
 std::string Response::rplYoureOper(void) {
-  return (":" + m_serv_name + "381 :You are now an IRC operator\r\n");
+  return (":" + m_serv_name + " 381 OPER :You are now an IRC operator\r\n");
+}
+
+std::string Response::rplKillDone(std::string nickname, std::string msg) {
+  return (":" + m_serv_name + " 361 " + msg + "\r\n");
 }
 
 /*==============================
@@ -127,6 +131,12 @@ std::string Response::setMode(std::string nickname, std::string username,
                               std::string hostname, std::string mode) {
   return (":" + nickname + "!" + username + "@" + hostname + " MODE " +
           nickname + " :" + mode + "\r\n");
+}
+
+std::string Response::noticeKill(std::string nickname,
+                                 std::string username, std::string hostname,
+                                 std::string kill_msg) {
+  return (":" + nickname + "!" + username + "@" + hostname + " KILL" + " * " + kill_msg + "\r\n");
 }
 
 /*==============================
