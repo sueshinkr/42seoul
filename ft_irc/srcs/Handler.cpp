@@ -16,8 +16,8 @@ BaseHandler::BaseHandler(Server &server) : m_next(NULL), m_server(&server) {}
 ---------public_function--------
 ===============================*/
 
-std::vector<std::string> splitParam(std::string &request,
-                                    char limiter) {
+std::vector<std::string> BaseHandler::splitParam(std::string &request,
+                                                 char limiter) {
   std::vector<std::string> params;
   std::stringstream ss(request);
   std::string temp;

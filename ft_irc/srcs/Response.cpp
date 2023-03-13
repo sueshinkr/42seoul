@@ -42,6 +42,14 @@ std::string Response::rplEndofWhois(std::string requestNickname,
           "\r\n");
 }
 
+std::string Response::rplUModeIs(std::string nickname, std::string mode) {
+  return (":" + m_serv_name + " 221 " + nickname + " :" + mode + "\r\n");
+}
+
+std::string Response::rplYoureOper(void) {
+  return (":" + m_serv_name + "381 :You are now an IRC operator\r\n");
+}
+
 /*==============================
 --------------ERR_--------------
 ===============================*/
@@ -67,9 +75,9 @@ std::string Response::errNoSuchNick(std::string cmd, std::string nickname) {
   return (":" + m_serv_name + " 401 " + cmd + " :" + nickname + "\r\n");
 }
 
-std::string Response::errUsersDontMatch(std::string mode) {
+std::string Response::errUsersDontMatch(void) {
   return (":" + m_serv_name +
-          " 502 Mode :Cannot change mode for other users\r\n");
+          " 502 Mode :Cannot set/get mode for other users\r\n");
 }
 
 std::string Response::errUmodeUnknownFlag(void) {
@@ -97,6 +105,10 @@ std::string Response::errNoPrivileges(void) {
   return (":" + m_serv_name + " 481" + " : Permission Denied\r\n");
 }
 
+std::string Response::errPassWDMismatch(void) {
+  return (":" + m_serv_name + "464 :Password incorrect\r\n");
+}
+
 /*==============================
 ---------NON_NUMERIC RPL--------
 ===============================*/
@@ -113,7 +125,8 @@ std::string Response::responsePong(void) {
 
 std::string Response::setMode(std::string nickname, std::string username,
                               std::string hostname, std::string mode) {
-  return (":" + nickname + "!" + username + "@" + hostname + " MODE " + nickname + " :" + mode + "\r\n");
+  return (":" + nickname + "!" + username + "@" + hostname + " MODE " +
+          nickname + " :" + mode + "\r\n");
 }
 
 /*==============================

@@ -17,17 +17,15 @@ Mode::Mode(Server &server) : BaseHandler(server) {}
 
 bool Mode::handle(std::string &cmd, std::string &request, Client &c) {
   if (cmd == "MODE") {
-    size_t prev = 0;
-    size_t cur = request.find(" ");
-
-    // 1st Argument
-    if (cur == std::string::npos) {
+    if (request.empty()) {
       c.sendMsg(Response::errNeedMoreParams("Mode"));
       return (true);
     }
+
+    // 1st Argument
+    size_t prev = 0;
+    size_t cur = request.find(" ");
     std::string type = request.substr(prev, cur - prev);
-    prev = cur + 1;
-    cur = request.find(" ", prev);
 
     if (type[0] == '!' || type[0] == '&' || type[0] == '#' ||
         type[0] == '+')  // Channel Mode Message
@@ -39,6 +37,8 @@ bool Mode::handle(std::string &cmd, std::string &request, Client &c) {
       }
 
       // 2nd Argument
+      prev = cur + 1;
+      cur = request.find(" ", prev);
       std::string channel_name = request.substr(prev, cur - prev);
       prev = cur + 1;
       cur = request.find(" ", prev);
@@ -133,41 +133,61 @@ bool Mode::handle(std::string &cmd, std::string &request, Client &c) {
       }
     } else  // User Mode Message
     {
-      std::string option = request.substr(prev, cur - prev);
-      prev = cur + 1;
-      cur = request.find(" ", prev);
-
-      // 유저 모드는 자기 자신에 대한 명령이 왔을 때만 적용 가능
-      if (type == c.get_m_nickname()) {
-        // 자기 자신에 대한 +o는 무시되어야함
-        if (!option.compare("+o")) c.sendMsg(Response::errNoPrivileges());
-        // 자기 자신에 대한 -o는 적용
-        else if (!option.compare("-o")) {
-          if (c.get_m_oper_flag())
-            c.sendMsg(Response::setMode(c.get_m_nickname(), c.get_m_username(),
-                                        c.get_m_hostname(), option));
-        } else if (!option.compare("+i")) {
-          if (!c.get_m_invisible_flag()) {
-            c.sendMsg(Response::setMode(c.get_m_nickname(), c.get_m_username(),
-                                        c.get_m_hostname(), option));
-            c.set_m_invisible_flag(true);
+      // 옵션에 대한 인자가 들어오지 않았을 경우 현재 적용중인 옵션을 표시
+      if (cur == std::string::npos) {
+        if (type != c.get_m_nickname()) {
+          try {
+            m_server->get_m_client(type);
+            c.sendMsg(Response::errUsersDontMatch());
+          } catch (const std::exception &e) {
+            c.sendMsg(Response::errNoSuchNick(cmd, type));
           }
-        } else if (!option.compare("-i")) {
-          if (c.get_m_invisible_flag()) {
-            c.sendMsg(Response::setMode(c.get_m_nickname(), c.get_m_username(),
-                                        c.get_m_hostname(), option));
-            c.set_m_invisible_flag(false);
-          }
+        } else {
+          std::string mode = "";
+          if (c.get_m_oper_flag()) mode += "+o ";
+          if (c.get_m_invisible_flag()) mode += "+i";
+          c.sendMsg(Response::rplUModeIs(c.get_m_nickname(), mode));
         }
-        // o,i를 제외한 다른 플래그들은 에러처리
-        else
-          c.sendMsg(Response::errUmodeUnknownFlag());
       } else {
-        try {
-          m_server->get_m_client(type);
-          c.sendMsg(Response::errUsersDontMatch(option));
-        } catch (const std::exception &e) {
-          c.sendMsg(Response::errNoSuchNick(cmd, type));
+        prev = cur + 1;
+        cur = request.find(" ", prev);
+        std::string option = request.substr(prev, cur - prev);
+
+        // 유저 모드는 자기 자신에 대한 명령이 왔을 때만 적용 가능
+        if (type == c.get_m_nickname()) {
+          // 자기 자신에 대한 +o는 무시되어야함
+          if (!option.compare("+o")) c.sendMsg(Response::errNoPrivileges());
+          // 자기 자신에 대한 -o는 적용
+          else if (!option.compare("-o")) {
+            if (c.get_m_oper_flag())
+              c.sendMsg(Response::setMode(c.get_m_nickname(),
+                                          c.get_m_username(),
+                                          c.get_m_hostname(), option));
+          } else if (!option.compare("+i")) {
+            if (!c.get_m_invisible_flag()) {
+              c.sendMsg(Response::setMode(c.get_m_nickname(),
+                                          c.get_m_username(),
+                                          c.get_m_hostname(), option));
+              c.set_m_invisible_flag(true);
+            }
+          } else if (!option.compare("-i")) {
+            if (c.get_m_invisible_flag()) {
+              c.sendMsg(Response::setMode(c.get_m_nickname(),
+                                          c.get_m_username(),
+                                          c.get_m_hostname(), option));
+              c.set_m_invisible_flag(false);
+            }
+          }
+          // o,i를 제외한 다른 플래그들은 에러처리
+          else
+            c.sendMsg(Response::errUmodeUnknownFlag());
+        } else {
+          try {
+            m_server->get_m_client(type);
+            c.sendMsg(Response::errUsersDontMatch());
+          } catch (const std::exception &e) {
+            c.sendMsg(Response::errNoSuchNick(cmd, type));
+          }
         }
       }
     }
