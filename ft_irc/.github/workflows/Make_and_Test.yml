@@ -1,0 +1,32 @@
+name: Make & Simple Test
+
+on:
+  push:
+    branches: [ "main", "Making-Tester" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install Packages
+      run : sudo apt-get update && sudo apt-get install cmake valgrind python3 python-is-python3 -y -qq
+    - uses: actions/checkout@v3
+    - name: Compile Serv
+      run: make fclean all
+    - name: Excute Serv
+      run: valgrind --log-file=memcheck.txt ./ircserv 9090 a &
+    - name: Test
+      run: python tester.py
+    - name: Leak Check
+      run:
+        VALGRIND_PS=$(ps -A | grep 'memcheck' | head -1 | awk '{print $1}');
+        kill -2 $VALGRIND_PS;
+        sleep 1;
+        LEAKS_FLAG=$(cat memcheck.txt | grep 'All heap blocks were freed -- no leaks are possible' | wc -l); 
+        if [ $LEAKS_FLAG -eq 0 ];then 
+          exit 1; 
+        fi
